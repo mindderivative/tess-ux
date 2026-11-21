@@ -46,7 +46,7 @@ Not applicable: one variant; embedded in a panel or a window.
 
 ## Tokens used
 
-Palette entries map to roles: `background` is `surface_container_lowest`, `foreground` is `on_surface`, `selection` is `secondary_container` at 100 percent with text `on_secondary_container`, `cursor` is `primary` (Tesserae choices, #needs-verification as design). The 16 ANSI colours need 4.5 to 1 against `background` for text (WCAG 2.2 SC 1.4.3); black on a dark background fails in most schemes and needs a palette check. Font: a monospace role of [[Typography]].
+Palette entries map to roles: `background` is `surface_container_lowest`, `foreground` is `on_surface`, `selection` is `primary` at 30 percent with the text colour unchanged (as [[Text Selection]]), `cursor` is `primary` (Tesserae choices, #needs-verification as design). The 16 ANSI colours need 4.5 to 1 against `background` for text (WCAG 2.2 SC 1.4.3); black on a dark background fails in most schemes and needs a palette check. Font: a monospace role of [[Typography]].
 
 ## Sizing and density
 

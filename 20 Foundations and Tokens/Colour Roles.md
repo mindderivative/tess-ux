@@ -277,7 +277,7 @@ Measured contrast of the shipped shell theme (WCAG formula):
 - [ ] AC-COL-8 (scripted input): Scripted scheme switch. Change the scheme from light to dark at runtime and capture each surface of AC-COL-6. Pass: no sampled surface keeps a light-scheme colour (luminance rule of AC-COL-6) after 200 ms.
 - [ ] AC-COL-9: Contrast script on composited colours. For each role used with an alpha suffix, the ratio is computed on the colour composited over the actual background. Pass: the composited pair meets the threshold of Rules 3.
 - [ ] AC-COL-10: Review. Each colour used for a state or error has a second cue per Rules 6. Pass: reviewer finds none that is colour only.
-- [ ] AC-COL-11 (token test): the scheme generator named in the project's claim, run with seed `#6750A4`, returns every role of the standard light and dark schemes within the tolerance of Rules 11 of the reference table, and the engine baseline scheme does the same. Pass: 98 of 98 values within tolerance for each of the two sources.
+- [ ] AC-COL-11 (token test): the scheme generator named in the project's claim, run with seed `#6750A4`, returns every role of the standard light and dark schemes within the tolerance of Rules 11 of the reference table, and the engine baseline scheme does the same. Pass: 98 of 98 values within tolerance for each of the two sources. The check for a JSON dump of a scheme is `python3 tools/compare_scheme.py scheme.json`.
 
 ## Status in code
 
