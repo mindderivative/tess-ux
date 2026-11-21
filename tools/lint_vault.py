@@ -38,7 +38,9 @@ SKIP_DIRS = {".git", ".obsidian", ".claude", ".copilot", "tools", "graphify-out"
 COMPONENT_DIR = "30 Component Specifications"
 DIM_SECTION = "Dimensions and defaults"
 DIMENSIONS_ENFORCED = False  # set True when every component note carries the table
-DIM_COLUMNS = ["Part", "Property", "Token", "Default", "Compact", "Dense", "Source"]
+DIM_COLUMNS = ["Part", "Property", "Token", "Default", "Compact", "Dense", "Source", "Settable"]
+SETTABLE_PROJECTS = ["tess-ui", "tess-shell", "tre"]
+SETTABLE_VALUE = re.compile(r"^(yes\b.*|via\s+\S.*|hardcoded in tre.*|no hook.*|n/a:\s*.{8,})$", re.I)
 DIM_PROPS = {"height", "min width", "min height", "padding", "margin", "gap", "border width", "border color",
              "corner radius", "font", "icon size", "elevation"}
 DIM_REQUIRED = ["height", "padding", "margin", "gap", "border width", "border color", "corner radius", "font",
@@ -335,9 +337,9 @@ def check_dimensions(notes: list[Note], f: Findings) -> tuple[int, int]:
             continue
         seen = set()
         for ln, cells in rows[1:]:
-            if len(cells) != 7:
-                f.add("DIM", "error", n, ln, f"row has {len(cells)} cells, expected 7"); errs += 1; continue
-            part, prop, tok, d, c, ds, src = cells
+            if len(cells) != 8:
+                f.add("DIM", "error", n, ln, f"row has {len(cells)} cells, expected 8"); errs += 1; continue
+            part, prop, tok, d, c, ds, src, settable = cells
             if prop not in DIM_PROPS:
                 f.add("DIM", "error", n, ln, f"unknown property '{prop}'"); errs += 1; continue
             seen.add(prop)
@@ -346,6 +348,14 @@ def check_dimensions(notes: list[Note], f: Findings) -> tuple[int, int]:
             for lvl, v in (("Default", d), ("Compact", c), ("Dense", ds)):
                 if not (NA.match(v) or (VALUE_OK.search(v) and "TBD" not in v.upper())):
                     f.add("DIM", "error", n, ln, f"{prop} {lvl}: needs a value or 'N/A: <reason of 8+ characters>' (got '{v}')"); errs += 1
+            segs = [s.strip() for s in settable.split(";") if s.strip()]
+            got = {}
+            for s in segs:
+                k, _, v = s.partition(":")
+                got[k.strip()] = v.strip()
+            bad = [k for k in SETTABLE_PROJECTS if k not in got or not SETTABLE_VALUE.match(got[k])]
+            if bad or set(got) - set(SETTABLE_PROJECTS):
+                f.add("DIM", "error", n, ln, f"{prop}: Settable needs 'tess-ui: <v>; tess-shell: <v>; tre: <v>' with v = yes | via <route> | hardcoded in tre | no hook | n/a: <reason> (problem: {', '.join(bad) or 'extra key'})"); errs += 1
             if not src:
                 f.add("DIM", "error", n, ln, f"{prop}: empty Source cell"); errs += 1
             elif not re.search(r"\[\[|https?://|tess-ui:|tess-shell:|tre:|shell-vault:|MD3|WCAG", src):

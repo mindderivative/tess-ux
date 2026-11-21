@@ -39,7 +39,7 @@ def collect(root: Path):
             continue
         _, trs = parsed
         for _, cells in trs[1:]:
-            if len(cells) == 7 and cells[1] in lv.DIM_PROPS:
+            if len(cells) == 8 and cells[1] in lv.DIM_PROPS:
                 rows.append((n.stem, *cells))
     return rows
 
@@ -78,16 +78,16 @@ def render(root: Path) -> str:
         if not pr:
             out += ["No component note has a row for this property yet.", ""]
             continue
-        out += ["| Component | Part | Token | Default | Compact | Dense | Source |", "|---|---|---|---|---|---|---|"]
-        for comp, part, _, tok, d, c, ds, src in pr:
-            out.append(f"| [[{comp}]] | {esc(part)} | {esc(tok)} | {esc(d)} | {esc(c)} | {esc(ds)} | {esc(src)} |")
+        out += ["| Component | Part | Token | Default | Compact | Dense | Source | Settable from Python |", "|---|---|---|---|---|---|---|---|"]
+        for comp, part, _, tok, d, c, ds, src, st in pr:
+            out.append(f"| [[{comp}]] | {esc(part)} | {esc(tok)} | {esc(d)} | {esc(c)} | {esc(ds)} | {esc(src)} | {esc(st)} |")
         out.append("")
     orphan = [r for r in rows if r[3] in ("-", "") and not lv.NA.match(r[4])]
     out += ["## Values without a token", "",
             "Rows whose Token cell is `-` and whose default is a value, not N/A. Each has a Source (the lint requires it); the list shows which values are not yet tokens.", ""]
     if orphan:
         out += ["| Component | Part | Property | Default | Source |", "|---|---|---|---|---|"]
-        for comp, part, prop, _, d, _, _, src in sorted(orphan, key=lambda r: (r[0].lower(), r[2])):
+        for comp, part, prop, _, d, _, _, src, _st in sorted(orphan, key=lambda r: (r[0].lower(), r[2])):
             out.append(f"| [[{comp}]] | {esc(part)} | {prop} | {esc(d)} | {esc(src)} |")
     else:
         out.append("None.")

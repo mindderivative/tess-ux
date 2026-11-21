@@ -52,23 +52,24 @@ Minimum target size (dp), height and padding per density (default, compact, dens
 
 Mandatory. One row per visual part and property; every cell holds a value or `N/A: <reason>`, never a blank. The columns and the property names are fixed so that tools can read the table (`tools/lint_vault.py` checks it, `tools/defaults_matrix.py` collects it into [[Defaults Matrix]]).
 
-| Part | Property | Token | Default | Compact | Dense | Source |
-|---|---|---|---|---|---|---|
-| component | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] |
-| component | padding | `space.*` | 0 24 0 24 | 0 16 0 16 | 0 12 0 12 | design choice, [[ADR-0002 Desktop density levels and target sizes]] |
-| component | margin | - | N/A: the parent container sets the outer space | N/A: same | N/A: same | [[Spacing and Density]] |
-| component | gap | `space.2` | 8 | 8 | 4 | [[Spacing and Density]] |
-| component | border width | - | 0 | 0 | 0 | MD3 token file URL |
-| component | border color | - | N/A: no border | N/A: no border | N/A: no border | MD3 token file URL |
-| component | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] |
-| component | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 12/16/500/0.5 | [[Typography]] |
-| component | icon size | `density.icon` | 18 | 18 | 16 | [[Iconography]] |
-| component | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] |
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| component | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | padding | `space.*` | 0 24 0 24 | 0 16 0 16 | 0 12 0 12 | design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | margin | - | N/A: the parent container sets the outer space | N/A: as in Default | N/A: as in Default | [[Spacing and Density]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | gap | `space.2` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | border width | - | 0 | 0 | 0 | MD3 token file URL | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | border color | - | N/A: no border | N/A: no border | N/A: no border | MD3 token file URL | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 12/16/500/0.5 | [[Typography]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | icon size | `density.icon` | 18 | 18 | 16 | [[Iconography]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
+| component | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style key); tess-shell: yes (block key); tre: yes (node property) |
 
 Rules:
 - Properties (exact names): `height`, `min width`, `min height`, `padding`, `margin`, `gap`, `border width`, `border color`, `corner radius`, `font`, `icon size`, `elevation`. The ten properties `height`, `padding`, `margin`, `gap`, `border width`, `border color`, `corner radius`, `font`, `icon size` and `elevation` appear at least once in every component note; add `min width` and `min height` where they exist and extra rows for parts that differ.
 - Units: dp for lengths, written as numbers without the unit; `padding` is four numbers in the order top right bottom left (CSS order); `font` is size/line height/weight/tracking in sp, dp, weight and sp; `border color` and colour rows name a role; `elevation` is the level 0 to 5. Percentages and ratios carry their unit.
 - The Token column names the token or `-`. The Source column links the foundation note, the MD3 token file or a project path. A Tesserae design choice names its ADR or a proposed ADR and carries `#needs-verification-as-design-choice` in the note text.
+- The Settable column answers, for each default, whether a project can change it from Python without touching engine code ([[ADR-0020 The engine never blocks the design]]): `tess-ui: <v>; tess-shell: <v>; tre: <v>` with `<v>` one of `yes` (a property or key, named in parentheses), `via <route>` (a stylesheet key, token or theme entry), `hardcoded in tre` (the engine fixes it: name the constant; this is an engine request), `no hook` (the project layer does not expose it), `n/a: <reason>` (for example the element does not exist in that project). The lookup table is [[Settable Properties Reference]].
 - `N/A: <reason>` needs a reason of at least 8 characters. A blank cell, `-` in a value column or `TBD` fails the lint.
 
 ## Layout and overflow
