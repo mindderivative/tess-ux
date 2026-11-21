@@ -1,6 +1,9 @@
 # Hidden files and folders (.obsidian, .claude, ...), except this file
 .*
 !.gitignore
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
 
 # Agent instructions (local only)
 AGENTS.md
