@@ -54,13 +54,13 @@ flowchart LR
 
 ## States
 
-The thumb colour role is `on_surface_variant` ([[Colour Roles]]). The opacities are Tesserae design choices recorded by [[ADR-0003 Scrollbar rule]]; the state-layer percentages of [[ADR-0009 State layer percentages]] do not apply, because a thumb is a painted indicator and not a pressable surface. #needs-verification (design choice, no MD3 value exists).
+The thumb colour role is `on_surface_variant` ([[Colour Roles]]). The opacities are Tesserae design choices accepted by [[ADR-0012 Scrollbar thumb opacity and hit area exception]] (amending [[ADR-0003 Scrollbar rule]]); the state-layer percentages of [[ADR-0009 State layer percentages]] do not apply, because a thumb is a painted indicator and not a pressable surface. No MD3 value exists for a scrollbar thumb; the contrast check of AC-SCB-09 is the basis of the rest value.
 
 | State | Visual change | Token values |
 |---|---|---|
-| Rest | thumb visible whenever the axis overflows | `scrollbar.thumb.opacity.rest` 0.38 |
-| Hover (pointer inside the hit area) | thumb darker, same size | `scrollbar.thumb.opacity.hover` 0.60 |
-| Dragged | thumb darker still | `scrollbar.thumb.opacity.drag` 0.80 |
+| Rest | thumb visible whenever the axis overflows | `scrollbar.thumb.opacity.rest` 0.60 |
+| Hover (pointer inside the hit area) | thumb darker, same size | `scrollbar.thumb.opacity.hover` 0.80 |
+| Dragged | thumb at full opacity | `scrollbar.thumb.opacity.drag` 1.00 |
 | Focus | none on the thumb; the container shows the [[Focus Ring]] only if it is itself focusable and has no focusable descendant | focus ring tokens |
 | Disabled | not applicable; a container that cannot scroll shows no thumb | none |
 | No overflow on an axis | no thumb for that axis, no gutter for that axis | none |
@@ -78,7 +78,7 @@ Colour from [[Colour Roles]], radius from [[Shape]], density and targets from [[
 | `scrollbar.thumb.min_length` | 32 dp | along the axis |
 | `scrollbar.thumb.radius` | `full` (4 dp at 8 dp thickness) | [[Shape]] |
 | `scrollbar.thumb.color` | role `on_surface_variant` | |
-| `scrollbar.thumb.opacity.rest` / `.hover` / `.drag` | 0.38 / 0.60 / 0.80 | #needs-verification (design choice); see AC-SCB-09 for the contrast check that can overrule 0.38 |
+| `scrollbar.thumb.opacity.rest` / `.hover` / `.drag` | 0.60 / 0.80 / 1.00 | accepted by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]; contrast of the rest value: AC-SCB-09 |
 | `scrollbar.track.color` | none (transparent) | a track-less thumb is allowed by [[ADR-0003 Scrollbar rule]] |
 | `scrollbar.gutter` | 12 dp (equals `scrollbar.hit.thickness`) | reserved at the end edge of an axis that overflows; #needs-verification (design choice) |
 | `scrollbar.corner` | 12 dp square, empty | where both axes overflow |
@@ -92,7 +92,7 @@ The values do not change with density: the bar is a pointer target of its own an
 ## Sizing and density
 
 - Thumb 8 dp across the axis, hit strip 12 dp, minimum thumb length 32 dp (a 24 dp minimum target length is met on the long side).
-- The 12 dp hit thickness is below the 24 dp minimum pointer target of WCAG 2.2 SC 2.5.8. Scrolling is also available by wheel, trackpad and keyboard, and the thumb is a spatial control; whether an exception of SC 2.5.8 covers it is #needs-verification (see Accessibility).
+- The 12 dp hit thickness is below the 24 dp minimum pointer target of WCAG 2.2 SC 2.5.8. The note relies on the equivalent-control exception of that criterion, accepted by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: every scroll container offers keyboard scrolling (arrows, Page Up, Page Down, Home, End) and wheel scrolling, so the thumb is never the only way to scroll. A container that cannot be scrolled by keyboard does not qualify and must use a 24 dp hit thickness (AC-SCB-21).
 - Thumb length along an axis = max(`scrollbar.thumb.min_length`, lane x viewport / content), where lane = viewport extent - 2 x `scrollbar.margin` (minus `scrollbar.corner` when the other axis also overflows).
 
 ## Layout and overflow
@@ -141,8 +141,8 @@ The scrollbar has no tooltip. A scroll offset indicator tooltip ("page 3 of 9") 
 - A container with overflow and no focusable descendant is a Tab stop with an accessible name (its pane label) so that arrows scroll it ([[14 Accessibility Basics]]).
 - Assistive technology can request that a node scroll into view and the container honours it.
 - The thumb is not a separate focus stop and is hidden from the accessibility tree; its position equals the container offset. Whether to expose a `scrollbar` role with value is #needs-verification.
-- Thumb contrast: the thumb at rest needs 3 to 1 against the container colour for WCAG 2.2 SC 1.4.11 non-text contrast when it is the only cue for hidden content. Calculation for the baseline scheme (`on_surface_variant` over `surface`): at 0.38 the ratio is 2.57 to 1 in dark and 1.94 to 1 in light; at 0.60 it is 4.61 and 3.11; at 0.80 it is 7.31 and 5.11. The contract value 0.38 therefore fails the 3 to 1 test; AC-SCB-09 is the arbiter and is expected to raise `scrollbar.thumb.opacity.rest` to at least 0.60 for both schemes. The figures were computed while drafting this note and are not yet from a shipped contrast script.
-- Target size: see Sizing. #needs-verification
+- Thumb contrast: the thumb at rest needs 3 to 1 against the container colour for WCAG 2.2 SC 1.4.11 non-text contrast when it is the only cue for hidden content. Calculation for the baseline scheme (`on_surface_variant` over `surface`): at 0.38 the ratio is 2.57 to 1 in dark and 1.94 to 1 in light; at 0.60 it is 4.61 and 3.11; at 1.00 the full role colour applies. [[ADR-0012 Scrollbar thumb opacity and hit area exception]] sets the rest opacity to 0.60 for that reason. The figures were computed while drafting this note and are not yet from a shipped contrast script.
+- Target size: see Sizing; the 12 dp hit thickness relies on the equivalent-control exception of WCAG 2.2 SC 2.5.8 (ADR-0012), tested by AC-SCB-21.
 
 ## Dark and light
 
@@ -161,8 +161,8 @@ Both axes enabled, thumb visible whenever overflow exists, no auto-hide, no trac
 - [ ] AC-SCB-05: Geometry check. Thumb length = max(32, lane x viewport / content) within 1 dp, for content/viewport ratios 1.01, 2, 10 and 1000 on a 400 dp viewport.
 - [ ] AC-SCB-06: Scripted input. A press at 6 dp from the thumb centre across the axis (inside the 12 dp hit strip) grabs the thumb; a press at 8 dp does not. Passes when the drag moves the offset in the first case and not in the second.
 - [ ] AC-SCB-07: Pixel check. After 10 s of no input the thumb is painted with the rest opacity, and no frame between has a lower thumb alpha (no auto-hide).
-- [ ] AC-SCB-08: Pixel check and token test. Thumb alpha is 0.38 at rest (or the value set by AC-SCB-09), 0.60 under the pointer, 0.80 while dragged, role `on_surface_variant`, in light and dark.
-- [ ] AC-SCB-09: Contrast script. For the baseline light and dark schemes, the thumb composited at the rest opacity over the container colour reaches at least 3 to 1. Passes at 3.0 or higher; fails at the contract value 0.38 (computed 2.57 and 1.94).
+- [ ] AC-SCB-08: Pixel check and token test. Thumb alpha is 0.60 at rest, 0.80 under the pointer, 1.00 while dragged, role `on_surface_variant`, in light and dark.
+- [ ] AC-SCB-09: Contrast script. For the baseline light and dark schemes, the thumb composited at the rest opacity 0.60 over the container colour reaches at least 3 to 1. Passes at 3.0 or higher (computed 4.61 dark, 3.11 light); a rest opacity of 0.38 fails (2.57 and 1.94).
 - [ ] AC-SCB-10: Scripted input. With focus in a container with 1000 dp of overflow and a 400 dp viewport: Down moves the offset by 40, Page Down by 360, End to 600, Home to 0, Right on a vertical-only container by 0.
 - [ ] AC-SCB-11: Scripted input. A wheel notch moves 40 dp; Shift plus wheel moves the horizontal offset 40 dp; a wheel over an inner container already at its end moves the outer container.
 - [ ] AC-SCB-12: Scripted input. Dragging the thumb by d dp changes the offset by d x (content - viewport) / (lane - thumb) within 1 dp, also when the pointer leaves the gutter during the drag.
@@ -174,6 +174,7 @@ Both axes enabled, thumb visible whenever overflow exists, no auto-hide, no trac
 - [ ] AC-SCB-18: Config-app sweep (F6). For every scroll container of the configuration window at 800 by 600 and 1920 by 1080, each axis with content extent greater than viewport extent shows its bar. Passes when no container has overflow on an axis without a bar.
 - [ ] AC-SCB-19: AT tree assertion. A scroll request from assistive technology for an off-screen node brings it inside the viewport, and an overflowing container with no focusable descendant is reachable by Tab.
 - [ ] AC-SCB-20: Pixel check. Content is clipped to the container bounds and its corner radius; no pixel of the content lies outside the frame.
+- [ ] AC-SCB-21: Scripted input and token test. The equivalent-control exception holds: every scroll container with `scrollbar.hit.thickness` below 24 dp responds to Up, Down, Page Up, Page Down, Home and End when focused and to the wheel when hovered (AC-SCB-10, AC-SCB-11). Pass: a container that fails either test uses `scrollbar.hit.thickness` of at least 24 dp.
 
 ## Status in code
 

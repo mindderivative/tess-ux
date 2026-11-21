@@ -15,6 +15,9 @@ depends_on: []
 > [!important] Status
 > `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-21. The owner can overturn it. Question: OQ-04 in [[Open Questions]].
 
+> [!note] Amended
+> Thumb opacity 60, 80 and 100 percent and the hit area exception: [[ADR-0012 Scrollbar thumb opacity and hit area exception]], 2026-11-21.
+
 ## Context
 
 tess-ui styles only the colour; tre draws a 4 px thumb without track or auto-hide; one axis per scroll view; the shell has no scrollbar. Owner feedback F6.
