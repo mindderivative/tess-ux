@@ -121,7 +121,7 @@ The 4 dp start threshold and the 24 dp autoscroll band are density independent. 
 | tess-shell | `tess-shell:src/tess_shell/surfaces/manager.py`, `tess-shell:docs/guide/surfaces.md#panel` | partly meets: `Movable` Panel and `DRAG` Peek trigger exist with a saved position; no content drag and drop; no keyboard or menu alternative for `Movable` (AC-DNP-1, AC-DNP-2 fail for Panel move); slider drag has arrow keys, Page keys, Home, End (AC-DNP-2 meets for sliders by reading) |
 | tre | `tre:docs/guide/events-and-input.md` (Pointer capture, Files dragged from the OS), `tre:docs/guide/docking.md` | partly meets as engine: `capture_pointer`, `release_pointer`, `dock_target`, `dock_drop`, `file_hover`, `file_drop`, `file_hover_cancel`; no handle, highlight or drag image; no OS file drop on Wayland (winit 0.30), no drag source, X11 position can be missing |
 
-Request candidates: a drag session helper (threshold, Escape cancel, autoscroll, drag image) in tess-ui; Alt+Up and Alt+Down in `ListEditor`; routed through the Orchestrator. Engine limits are recorded, not requested.
+Request candidates: a drag session helper (threshold, Escape cancel, autoscroll, drag image) in tess-ui; Alt+Up and Alt+Down in `ListEditor`; routed through the Orchestrator. An engine limit is an engine request with a UXREQ number, never a spec exception ([[ADR-0020 The engine never blocks the design]]); [[UXREQ-007 Drag cancel by Escape and edge auto-scroll]] covers drag cancel and autoscroll.
 
 ## Deviations from Material Design 3
 

@@ -17,7 +17,7 @@ depends_on: ["[[17 Conformance]]", "[[Test Method]]"]
 
 ## Scope and method
 
-The vault has no "Status in code" column for the libraries: they are not toolkit or shell. This note reads (1) every vault note that names them (the [[Inventory]] rows for TDL, TEL, colour parsing, sides, radius and image decoding; [[Existing Tokens]]; the research note of gaps) and (2) the criteria whose test needs a computation that a library could own. Severity as in [[Adoption tre]]: high (a MUST criterion cannot be tested or met without it), medium (the criterion fails or cannot be run today, and application code can supply it), low (a SHOULD or a convenience).
+The vault has no "Status in code" column for the libraries: they are not toolkit or shell. This note reads (1) every vault note that names them (the [[Inventory]] rows for TDL, TEL, colour parsing, sides, radius and image decoding; [[Existing Tokens]]; the research note of gaps) and (2) the criteria whose test needs a computation that a library could own. Severity as in [[Adoption tre]]: high (needs a library feature for a MUST criterion), medium (the criterion fails or cannot be run today, and application code can supply it), low (a SHOULD or a convenience).
 
 ## tess-dl
 

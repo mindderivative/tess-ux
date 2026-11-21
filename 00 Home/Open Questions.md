@@ -64,12 +64,12 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 | OQ-29 | Node Graph panning instead of scrollbars | Accepted as a deviation from ADR-0003: [[ADR-0017 Node Graph pans instead of scrolling]] |
 | OQ-30 | Terminal keyboard trap | Accepted, escape chord: [[ADR-0018 Terminal escape chord]] |
 | OQ-31 | Focus chords for banner and snackbar | Accepted as proposed defaults, collision check required: [[ADR-0019 Banner and snackbar focus chords]] |
+| OQ-25 | Shell Bar auto-hide against keyboard reachability | Closed 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]]: Shortcut Mode reveals a hidden Bar and moves focus to it; plain keys still do not reveal it |
 
 ## Open for the owner
 
 | ID | Question | Recommendation | Evidence |
 |---|---|---|---|
-| OQ-25 | Shell Bar auto-hide: the owner's decision of 2026-10-27 says no key reveals a Bar; the accessibility rule says every hidden element is keyboard reachable. Which wins? | Shortcut Mode reveals a hidden Bar, and keyboard focus keeps it out of hiding; the 2026-10-27 decision then applies to plain keys only | [[Auto Hide]], [[Bar]], [[Accessibility Rules]] |
 | OQ-23 | Shell state layers (ADR-0009): adopt or keep the opacity literals | Adopt, at the shell audit | [[State Layers]], [[Adoption tess-shell]] |
 
 Back to [[Index]].

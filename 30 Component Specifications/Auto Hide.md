@@ -15,10 +15,10 @@ depends_on: ["[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR
 > [!info] Summary
 > Auto hide slides a Bar out past its screen edge after the pointer has left it and brings it back when the pointer touches a thin hover strip on that edge. Tesserae-only behaviour; the nearest Material Design 3 pattern is the Top app bar scroll behaviour (the bar leaves and returns with scrolling, see [Top app bar](https://m3.material.io/components/top-app-bar/overview)). Status: designed and decided, not built; every key is "Not built" in the shell loader. Source of truth in code: see Status in code.
 
-Auto hide is not an MD3 element. The Top app bar hides on scroll and returns on a reverse scroll (Material Components Android `layout_scrollFlags`, `enterAlways`); a desktop Bar hides on pointer absence and returns on pointer presence at the edge. The decisions below are the owner's of 2026-10-27; the keyboard rules in this note are proposals marked as such.
+Auto hide is not an MD3 element. The Top app bar hides on scroll and returns on a reverse scroll (Material Components Android `layout_scrollFlags`, `enterAlways`); a desktop Bar hides on pointer absence and returns on pointer presence at the edge. The decisions below are the owner's of 2026-10-27, amended on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
-> [!warning] Open conflict (open, owner decides): OQ-25
-> Two rules collide and neither is decided here. The owner's decision of 2026-10-27 says no key reveals a Bar (`Reveal_Key` default none). The accessibility rule [[Accessibility Rules]] AR-9 says every hidden element is reachable by keyboard, so a hidden Bar with no key to reveal it fails it. Status: `open, owner decides`, question id OQ-25. The proposed [[Keyboard Navigation|Shortcut Mode]] reveal below stays the recommendation; it is not a decision.
+> [!important] Decision: Shortcut Mode reveals a hidden Bar (OQ-25, closed 2026-11-21, [[ADR-0021 Shortcut Mode reveals a hidden Bar]])
+> A hidden Bar is revealed by [[Keyboard Navigation|Shortcut Mode]], a keyboard path with no always-on key: entering the mode shows the Bar and moves focus to it; leaving the mode or pressing Escape hides it again per `Auto_Hide` and `Auto_Hide_Delay`; a Bar that holds keyboard focus is not hidden. Plain keys still do not reveal a Bar (`Reveal_Key` default none, 2026-10-27), so [[Accessibility Rules]] AR-9 passes through the mode.
 
 ## Purpose
 
@@ -36,7 +36,7 @@ Give the screen back to windows when the Bar is not in use, without moving windo
 2. Hover strip: the thin part of the Bar that stays on the screen edge and takes the pointer while the rest is out. Its thickness is open #needs-verification (a strip at the screen edge is reached by pushing the pointer against the edge, so a depth of 1 dp to a few dp suffices).
 3. Delay timer: `Auto_Hide_Delay` milliseconds, started when the pointer leaves the Bar.
 4. Reserved zone: set to the full zone while the Bar is out, 0 when it is hidden.
-5. Reveal paths: pointer on the strip, keyboard (proposed), shell actions `Show`, `Hide`, `Toggle` with `Target`.
+5. Reveal paths: pointer on the strip, Shortcut Mode (keyboard, [[ADR-0021 Shortcut Mode reveals a hidden Bar]]), shell actions `Show`, `Hide`, `Toggle` with `Target`.
 
 ## Variants
 
@@ -87,7 +87,7 @@ Roles of the Bar itself are in [[Bar]].
 - Pointer: the pointer leaving the Bar (body and strip, and any popup the Bar opened) starts the delay; the pointer returning before it ends cancels the hide and the next leave starts a full delay; the pointer on the strip while hidden reveals the Bar.
 - Hide sequence (decided 2026-10-27): slide the Bar out by animating the edge margin (a negative margin slides it past the edge; the compositor accepts it), then set the exclusive zone to 0 when the slide ends.
 - Show sequence: set the zone first, then slide in. Windows reflow once per hide and once per show, not on every frame.
-- Keyboard: the owner decided that no key reveals a Bar by default (`Reveal_Key` default none, 2026-10-27; the key was removed from the loader on 2026-11-17 because `Auto_Hide` is not built, and returns with it). That leaves a keyboard-only user with no path, which conflicts with AR-9: open conflict, `open, owner decides`, OQ-25. Recommendation (proposed, not decided): (1) `Enter_Shortcut_Mode` reveals every auto-hidden Bar of the shell and `Exit_Shortcut_Mode` restores the timer ([[Keyboard Navigation|Shortcut Mode]]), as it already shows every peek of a Frame; (2) a Bar that takes the keyboard stays revealed while it has it. The Bar vault leaves open whether the shell warns at first start or reveals the Bar on keyboard focus; this note recommends both (1) and (2).
+- Keyboard (decided 2026-11-21, [[ADR-0021 Shortcut Mode reveals a hidden Bar]]): `Reveal_Key` default none (2026-10-27; the key was removed from the loader on 2026-11-17 because `Auto_Hide` is not built, and returns with it), so no plain key reveals a Bar. `Enter_Shortcut_Mode` reveals every auto-hidden Bar of the shell and moves focus to the first focusable module of the Bar ([[Keyboard Navigation|Shortcut Mode]]), as it already shows every peek of a Frame. `Exit_Shortcut_Mode` or Escape hides the Bar again after `Auto_Hide_Delay`. A Bar that holds keyboard focus is not hidden while it holds it.
 - Actions: `Show`, `Hide`, `Toggle` with `Target: <Bar name>` reveal and hide a Bar and are also reachable from a global shortcut ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]).
 - Open popup: proposed: while a Popup opened from a module of the Bar is open, the Bar stays out; the delay starts when the popup closes ([[Popup]]).
 - Fullscreen: a fullscreen window covers the Bar; the hover strip takes no input while a fullscreen window is active on the monitor.
@@ -111,7 +111,7 @@ A hidden Bar shows no tooltip. A tooltip or popup opened from a module while the
 - A Bar with a recording or warning indicator that must be seen is not hidden: the author sets `Auto_Hide: false` for it (a design rule of this note, not a WCAG requirement).
 - Time limit: the delay is an author setting between 0 and a large value; no content is lost when the Bar hides, so WCAG 2.2 SC 2.2.1 does not apply.
 - Reduced motion: see Motion.
-- Keyboard path: see Behaviour; the proposals would make AR-9 pass, but the conflict with the owner's decision of 2026-10-27 is open (`open, owner decides`, OQ-25).
+- Keyboard path: see Behaviour; Shortcut Mode reveals a hidden Bar, so AR-9 passes ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]).
 
 ## Dark and light
 
@@ -139,8 +139,8 @@ Check types follow [[Test Method]]. All criteria currently fail because the feat
 - [ ] AC-AHD-6 (scripted input, reflow once): a maximised window receives at most one configure event for a hide and at most one for a show. Pass: counts at most 1 and 1.
 - [ ] AC-AHD-7 (scripted input, hover strip): while hidden, the input region equals the strip rectangle (full Bar length by the strip depth, ±1 dp); a pointer press 2 dp beyond the strip reaches the window below; a pointer on the strip reveals the Bar within 500 ms. Pass: region size, pass-through and reveal time as stated.
 - [ ] AC-AHD-8 (scripted input, no default key): with no `Reveal_Key` written, no global shortcut for the Bar is registered. Pass: registered shortcut count 0 for the Bar.
-- [ ] AC-AHD-9 (scripted input, keyboard path, proposed; depends on OQ-25, open, owner decides): `Enter_Shortcut_Mode` reveals the hidden Bar and puts focus on its first focusable module; `Exit_Shortcut_Mode` returns focus to the previous window and restarts the delay. Pass: Bar visible within 300 ms of the mode key; focus path as stated. Hand check on KWin for the mode's keyboard.
-- [ ] AC-AHD-10 (scripted input, focus holds the Bar, proposed): while the Bar holds the keyboard it does not hide, whatever the delay; it hides after the delay once focus leaves. Pass: state visible for 5 s with focus; hiding begins after the delay.
+- [ ] AC-AHD-9 (scripted input, keyboard path, ADR-0021): `Enter_Shortcut_Mode` reveals the hidden Bar and puts focus on its first focusable module; `Exit_Shortcut_Mode` returns focus to the previous window and restarts the delay. Pass: Bar visible within 300 ms of the mode key; focus path as stated. Hand check on KWin for the mode's keyboard.
+- [ ] AC-AHD-10 (scripted input, focus holds the Bar, ADR-0021): while the Bar holds the keyboard it does not hide, whatever the delay; it hides after the delay once focus leaves. Pass: state visible for 5 s with focus; hiding begins after the delay.
 - [ ] AC-AHD-11 (scripted input, popup holds the Bar, proposed): with a Popup from a Bar module open and the pointer in the popup, the Bar stays out; closing the popup starts the delay. Pass: Bar state visible until delay after close.
 - [ ] AC-AHD-12 (scripted input, actions): `Hide`, `Show` and `Toggle` with `Target: <Bar name>` hide and show it with the same sequences as the pointer. Pass: states as stated.
 - [ ] AC-AHD-13 (scripted input, reduced motion): with reduced motion on, hide and show reach the end state on the next frame with no intermediate margin value and no opacity between 0 and 1; the zone changes once. Pass: sampled margins are the start and end values only.
@@ -150,6 +150,8 @@ Check types follow [[Test Method]]. All criteria currently fail because the feat
 - [ ] AC-AHD-17 (pixel check, idle): a hidden Bar with no module update commits 0 frames over 5 s. Pass: frame count 0.
 - [ ] AC-AHD-18 (scripted input, live change): a reload that sets `Auto_Hide: false` on a hidden Bar shows it and restores its zone in one step. Pass: Bar visible and zone full after the reload frame.
 - [ ] AC-AHD-19 (AT tree assertion): a hidden Bar's modules are not in the tab order; after a keyboard reveal the Bar's name is announced politely once. Pass: tab order count 0 while hidden; announcement count 1.
+- [ ] AC-AHD-20 (scripted input, Escape and leaving the mode, ADR-0021): with the Bar revealed by Shortcut Mode, Escape and `Exit_Shortcut_Mode` each start the delay and the Bar hides after `Auto_Hide_Delay` (1000 ms by default, one frame tolerance); with `Auto_Hide: false` it stays visible. Pass: hide start times as stated.
+- [ ] AC-AHD-21 (scripted input, plain keys do not reveal, ADR-0021): with the Bar hidden and no mode active, a press of each of 20 plain keys (letters, digits, Tab, Enter, arrows) leaves the Bar hidden and the zone at 0. Pass: Bar state hidden after 20 of 20 presses.
 
 ## Status in code
 

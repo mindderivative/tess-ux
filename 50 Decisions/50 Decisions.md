@@ -12,7 +12,7 @@ depends_on: []
 
 # 50 Decisions
 
-Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0019 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
+Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0021 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
 
 ## Notes
 
@@ -35,5 +35,7 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0017 Node Graph pans instead of scrolling]]
 - [[ADR-0018 Terminal escape chord]]
 - [[ADR-0019 Banner and snackbar focus chords]]
+- [[ADR-0020 The engine never blocks the design]]
+- [[ADR-0021 Shortcut Mode reveals a hidden Bar]]
 
 Back to [[Index]].

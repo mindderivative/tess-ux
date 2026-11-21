@@ -18,7 +18,7 @@ How the two specifications get written, in what order, how their rules are teste
 
 - Phase 0: inventory, tokens, plan (done). Phase 1: owner-feedback slice (done). Phase 2: chapters 03 to 17, 9 patterns, component families, shell surfaces and modules, blocks and engine surfaces (written, in review and merged). Phase 3: integration, vault lint, adoption worklists.
 - Component notes: 113, patterns: 9, chapters: 17 (16 is the [[Deviations from MD3]] register). The [[Inventory]] maps all 276 rows: own note, covered in another note, or backlog (23 rows, `not yet specified`).
-- Next: the Backlog in [[Inventory]], audits ([[Adoption Plan]]), the open decisions OQ-23, OQ-25 and OQ-32 in [[Open Questions]], and verification of the `#needs-verification` items ([[MD3 Verification Status]]).
+- Next: the Backlog in [[Inventory]], audits ([[Adoption Plan]]), the open decisions OQ-23 and OQ-32 in [[Open Questions]], and verification of the `#needs-verification` items ([[MD3 Verification Status]]).
 
 ## Principles of the work
 

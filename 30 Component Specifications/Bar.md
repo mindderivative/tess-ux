@@ -98,7 +98,7 @@ The thickness across the edge is `Height` for a top or bottom Bar and `Width` fo
 ## Behaviour
 
 - Pointer: a click on a module acts on the module. The body takes the pointer; the shadow margin does not (the input region is the body). Hover opens nothing on the Bar itself; tray and clock hover tooltips belong to the modules ([[Tooltip]]).
-- Keyboard: a Bar takes no keyboard by default (`Keyboard: NONE`; Tab does nothing in it). `ON_DEMAND` gives it the keyboard after a click. A Bar that holds a text field takes `ON_DEMAND` whatever is written, and the shell logs a warning when `NONE` was written. Keyboard-only access to a Bar is through [[Keyboard Navigation|Shortcut Mode]] (`Enter_Shortcut_Mode`, then `Next_Focus` and `Previous_Focus` by `Tab_Index`) and the Bar's `Shortcut_Mode` key; see [[Keyboard Navigation]]. A hidden or auto-hidden Bar needs a keyboard way to reveal it ([[Auto Hide]]). Open conflict (`open, owner decides`, OQ-25): the owner's decision of 2026-10-27 says no key reveals a Bar, and the accessibility rule that every hidden element is keyboard reachable (AR-9) says one must; both stay recorded here and in [[Auto Hide]], and the proposed Shortcut Mode reveal stays the recommendation, not a decision.
+- Keyboard: a Bar takes no keyboard by default (`Keyboard: NONE`; Tab does nothing in it). `ON_DEMAND` gives it the keyboard after a click. A Bar that holds a text field takes `ON_DEMAND` whatever is written, and the shell logs a warning when `NONE` was written. Keyboard-only access to a Bar is through [[Keyboard Navigation|Shortcut Mode]] (`Enter_Shortcut_Mode`, then `Next_Focus` and `Previous_Focus` by `Tab_Index`) and the Bar's `Shortcut_Mode` key; see [[Keyboard Navigation]]. A hidden or auto-hidden Bar is revealed by Shortcut Mode, which moves focus to it; leaving the mode or pressing Escape hides it again per `Auto_Hide` and `Auto_Hide_Delay`; a Bar that holds keyboard focus is not hidden; plain keys do not reveal it ([[ADR-0021 Shortcut Mode reveals a hidden Bar]], [[Auto Hide]]).
 - Touch: modules take 48 by 48 dp hit areas in a touch context.
 - Reservation: the zone is the thickness plus `Gap` when `Layer` is `TOP` and `Reserve` is true. The compositor adds the margin to the zone, so a Bar with `Height: 32` and `Gap: 8` reserves 48 px (measured on KWin 6.8.2 and sway, 2026-11-04): 8 px above the Bar, the Bar, 8 px below. A Bar reserves on its own output only.
 - Layers: `BOTTOM`, `TOP` or `OVERLAY`; default `TOP`. Reserved space exists only on `TOP`. `BACKGROUND` is not offered. The layer-shell protocol leaves the order of two surfaces on one layer undefined, so a surface that must draw over a Bar is on a higher layer.
@@ -121,7 +121,7 @@ A Bar carries no tooltip. Each module that needs one puts it on its own control 
 
 - Role and name: tre publishes the Bar as one window of the application; the window node has no accessible name in tre, so the shell sets one per Bar ("Top bar", "Dock"). Modules inside carry roles, labels and states ([[Accessibility Rules]] AR-1, AR-2).
 - Keys: Tab walks the focusable modules when the Bar takes the keyboard; Enter and Space activate a focused button ([[Button]]).
-- Every action reachable by pointer is reachable by keyboard (AR-9) through [[Keyboard Navigation|Shortcut Mode]] or a global shortcut ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]). For an auto-hidden Bar this rule conflicts with the owner's decision of 2026-10-27 that no key reveals a Bar: open conflict, `open, owner decides`, OQ-25; the proposed Shortcut Mode reveal is the recommendation ([[Auto Hide]]).
+- Every action reachable by pointer is reachable by keyboard (AR-9) through [[Keyboard Navigation|Shortcut Mode]] or a global shortcut ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]). For an auto-hidden Bar, Shortcut Mode reveals it ([[ADR-0021 Shortcut Mode reveals a hidden Bar]], [[Auto Hide]]).
 - Contrast: `on_surface` on the fill at least 4.5 to 1 in light, dark and high contrast; the measured shell pairs are 14.87, 15.31 and 21.00 ([[Colour Roles]]).
 - Announcements: the shell speaks changes through one window of the shell (the Frame, else the Bar), by owner decision of 2026-11-19; whether Orca reads an unfocused window is untested ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Screen position: a screen reader gets the tree but no screen position for a layer surface.
@@ -168,6 +168,7 @@ Check types follow [[Test Method]]. Geometry checks run at scale 1.0, 1.25 and 2
 - [ ] AC-BAR-18 (contrast script, no stylesheet): with no `Appearance.Stylesheets` key, a Bar module's text contrast against the Bar fill is at least 4.5 to 1 in light and dark (owner feedback S1). Pass: 2 of 2.
 - [ ] AC-BAR-19 (geometry check, hit areas): every interactive node in a Bar has a hit area of at least 24 by 24 dp (48 by 48 in a touch context) read from the engine hit test. Pass: zero smaller targets ([[Spacing and Density]], AC-DEN-7).
 - [ ] AC-BAR-20 (review, no look of its own): the style keys a Bar accepts (`Background`, `Fill`, `Opacity`, `Elevation`, `Shadows`, `Shadow_Bleed`) are a subset of the keys a Panel accepts and use the same tokens (see AC-PNL-10). Pass: reviewer finds no Bar-only look key.
+- [ ] AC-BAR-21 (scripted input, hidden Bar reachable by keyboard, ADR-0021): with a hidden Bar, `Enter_Shortcut_Mode` shows it and moves focus to it; Escape or `Exit_Shortcut_Mode` hides it again after `Auto_Hide_Delay`; while it holds keyboard focus it is not hidden; a plain key press with no mode active leaves it hidden. Pass: states as stated (the same checks as AC-AHD-9, AC-AHD-10, AC-AHD-20 and AC-AHD-21 in [[Auto Hide]]).
 
 ## Status in code
 
@@ -188,7 +189,6 @@ Check types follow [[Test Method]]. Geometry checks run at scale 1.0, 1.25 and 2
 | Thickness 48, 40, 36 dp (MD3 Navigation bar 80 dp) | desktop density, one-line modules | [[ADR-0002 Desktop density levels and target sizes]] |
 | Text is not rotated on a vertical Bar | readability; rotation is opt-in and not built | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Keyboard default is none; access by Shortcut Mode | a layer surface that grabs the keyboard unasked steals it from windows | none (shell design of 2026-10-27) |
-| Open conflict, not a deviation yet: auto-hidden Bar with no key that reveals it (owner decision 2026-10-27) against AR-9 (every hidden element keyboard reachable) | `open, owner decides`, OQ-25; recommendation: Shortcut Mode reveals the Bar | none (owner decision pending, see [[Auto Hide]]) |
 
 ## Sources
 
