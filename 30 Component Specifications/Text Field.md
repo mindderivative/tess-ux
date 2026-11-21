@@ -67,7 +67,7 @@ State layer percentages and the focus ring come from [[State Layers]] and [[Focu
 | Read-only | rest look, caret not drawn, selection allowed | design choice, review |
 | Placeholder shown | text colour `on_surface_variant` while the field is empty and focused, or has no label | [Material Web text-field](https://github.com/material-components/material-web/blob/main/docs/components/text-field.md) |
 
-Selection fill: role `primary` at 30 percent behind the text, text colour unchanged (tre draws selected text with the text colour at 30 percent, `tre:docs/guide/text.md`). Caret colour: role `primary` (Material Web `caret-color` token). A project that cannot read these roles keeps the engine default (caret = text colour) and records it in its audit.
+Selection fill: role `primary` at 30 percent behind the text, text colour unchanged. The role follows Compose Material 3 `rememberTextSelectionColors` (`primary`; MD3 alpha 0.4, https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/MaterialTheme.kt; the Material Web text field tokens give the caret colour and no selection colour); the alpha is 30 percent because 40 percent gives body text only 3.74 to 1 on the dark `surface_bright` container (see [[Text Selection]]). The engine draws the text colour at 30 percent for a text input that sets its own fill and the scheme's `secondary_container` otherwise (`tre:docs/guide/text.md`). Caret colour: role `primary` (Material Web `caret-color` token). A project that cannot read these roles keeps the engine default (caret = text colour) and records it in its audit.
 
 ## Tokens used
 

@@ -76,6 +76,10 @@ python3 tools/contrast_check.py [vault root] --json
 - The ratio is the WCAG 2.2 formula (L1 + 0.05) divided by (L2 + 0.05) with sRGB relative luminance.
 - Pairs written in prose without code-span role names are not read; the script reports how many pairs and stated ratios it compared.
 
+## Scheme comparison
+
+`python3 tools/compare_scheme.py scheme.json` compares a colour scheme dump with the Colour Roles reference table: `{"light": {role: "#RRGGBB"}, "dark": {...}}` with the 49 snake_case roles. A role matches within a per channel difference of 2 or CIEDE2000 below 1.0; the report lists mismatched and missing roles and exits 1 on any. It is not run in CI (it needs an engine dump). Result for tre's baseline scheme (tre PR 330, `scheme_colors('light')` and `('dark')`): 98 of 98 role values match the reference.
+
 ## Known violations
 
 `tools/known_violations.json` lists spec-documented violations by a project (fields: project, ac, section, match, tracked, reason). The contrast check reports a matching error as a warning that names the project and its worklist id, so the tool is green on the specification and still lists the project debt. An entry that no longer matches any error is itself reported as a warning and is removed. The current entry is the tess-shell `accent` colour on `surface` in the dark scheme (TSH-043, AC-COL-3).
