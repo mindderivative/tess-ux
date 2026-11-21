@@ -22,7 +22,7 @@ The UX Design Specification and the UX Component Design Specification: the guidi
 | Phase | Phase 3: integration, quality pass and adoption plan |
 | UX Design Specification | 17 chapters drafted ([[10 UX Design Specification]]); chapter 16 is [[Deviations from MD3]] |
 | UX Component Design Specification | 113 component notes and 9 patterns drafted ([[30 Component Specifications]], [[40 Patterns]]); coverage per element in [[Inventory]] |
-| Open decisions | [[Open Questions]] (OQ-23, OQ-25, OQ-32) |
+| Open decisions | [[Open Questions]] (OQ-23, OQ-25) |
 | Adoption | [[Adoption Plan]] and audit worklists in [[70 Adoption]]; vault lint in [[Vault Lint]] |
 | Updated | 2026-11-21 |
 
