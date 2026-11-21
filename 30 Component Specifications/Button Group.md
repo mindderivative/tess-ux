@@ -69,6 +69,37 @@ Heights are those of [[Button]] ([[ADR-0002 Desktop density levels and target si
 - The hit areas never overlap; in a connected group the 2 dp gap is in neither (at least 24 by 24 dp each, the Button rule).
 - The label of each button is vertically centred as in [[Button]].
 
+## Dimensions and defaults
+
+The group paints nothing and adds no padding; every button follows [[Button]]. The dense standard gap and the connected inner corner are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| group container, buttons | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| button | min width | - | 64 | 48 | 48 | as [[Button]]; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| button | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| button (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| group container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | the group has no paint of its own, [[Button Group]] Anatomy | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| button (no icon) | padding | `space.*` | 0 24 0 24 | 0 16 0 16 | 0 12 0 12 | as [[Button]]; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| group container | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| buttons (standard) | gap | `space.3` | 8 | 8 | 4 | [[Button Group]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| buttons (connected) | gap | `space.1` | 2 | 2 | 2 | [[Button Group]] Sizing, [Android ButtonGroup](https://github.com/material-components/material-components-android/blob/master/docs/components/ButtonGroup.md) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| button (icon to label) | gap | `density.icon_label_gap` | 8 | 8 | 4 | as [[Button]], [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| group container | border width | - | 0 | 0 | 0 | the group draws no border; each button draws its own as [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| button (outlined variant) | border width | - | 1 | 1 | 1 | as [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| group container | border color | - | N/A: the group draws no border; border is the button's | N/A: the group draws no border; border is the button's | N/A: the group draws no border; border is the button's | [[Button Group]] Anatomy | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| button (outlined variant) | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| button (standard, and outer corners when connected) | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| button (connected inner corners) | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]]; design choice, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| button label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| button icon | icon size | - | 18 | 18 | 16 | as [[Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| overflow button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| overflow button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| group container, buttons | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; an elevated-variant button rests at level 1 as [[Button]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring (each button) | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (each button) | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (each button) | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the button) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - A group wider than its region wraps only when standard; a connected group never wraps. Instead the buttons that do not fit move to the overflow button's [[Menu]], from the end, keeping order; a button in a `single` or `multiple` group that is selected and overflowed shows its selection in the menu item ([[10 Layout Overflow and Scrolling]]).
@@ -123,6 +154,7 @@ Mode none, variant filled, size small (40 dp), standard gap, horizontal, not con
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/ButtonGroup_View.tdl`, `tess-ui:src/tess_ui/widgets/buttons.py` (`button_group`), `tess-ui:docs/components/button-groups.md`, test `tess-ui:tests/test_button_group.py` | partly meets: modes none, single, multiple, `Connected` 2 px gap with 4 px inner corners and full outer corners, vertical orientation, Button toggle with `Selected` (AC-BTG-1 partly: heights are Button's, gap 8 at every density; AC-BTG-3 meets by reading for `single`, but the group uses one Tab stop for `multiple` and `none` too: AC-BTG-4 and AC-BTG-5 fail), group role only, no `radiogroup`, `radio` or `pressed` roles stated (AC-BTG-6 fails or unverified), pressed widening and overflow button not built (AC-BTG-7, AC-BTG-8 fail), icon-only tooltips not set (AC-BTG-10 unverified), no density |
+| tess-ui | `tess-ui:src/tess_ui/views/ButtonGroup_View.tdl` dimensions | differs: standard gap 8 at every density (spec 4 at dense; AC-BTG-1); overflow button absent (AC-BTG-8) |
 | tess-shell | none found | absent |
 | tre | none | not applicable |
 

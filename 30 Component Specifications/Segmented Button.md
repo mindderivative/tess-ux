@@ -79,6 +79,31 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]]; contr
 - The label is vertically centred in the segment (space above equals space below ±0.5 dp) at every density.
 - Selecting never changes the control's width: the check replaces the icon, or for a label-only segment it reserves its 18 dp width in every segment of the control (design choice, avoids a layout jump #needs-verification).
 
+## Dimensions and defaults
+
+Values agree with the Sizing table above; segment paddings and minimum widths are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| segment | min width | - | 48 | 40 | 32 | [[Segmented Button]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| segment | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| segment (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| segment | padding | `space.*` | 0 12 0 12 | 0 12 0 12 | 0 8 0 8 | [[Segmented Button]] Sizing (tess-ui 12); design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| segment (icon to label) | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 1 | 1 | 1 | [outlined segmented button tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-segmented-button.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| dividers | border width | - | 1 | 1 | 1 | [[Segmented Button]] Anatomy | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| dividers | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| segment label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| icon, check | icon size | - | 18 | 18 | 16 | [[Iconography]], [[Segmented Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; the segmented button tokens define no elevation | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the segment) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - Two to five segments. A sixth segment is an error of use; the control does not wrap. A label that does not fit ends with an ellipsis; the full label is the name and the tooltip on that segment ([[10 Layout Overflow and Scrolling]]).
@@ -134,6 +159,7 @@ Single choice, height from the density level, equal-minimum segments, no presele
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/SegmentedButton_View.tdl`, `tess-ui:src/tess_ui/widgets/buttons.py` (`segmented_button`), `tess-ui:docs/components/segmented-buttons.md`, test `tess-ui:tests/test_segmented_button.py` | partly meets: outlined pill 40 high, 1 px `outline`, `full` shape, clipped, dividers, selected `secondary_container` with check replacing the icon, `label_large`, 18 px icon, padding 12, gap 8 (AC-SEG-2 meets; AC-SEG-1 meets at default, fails compact and dense: height literal 40); single choice selects on focus with one Tab stop and arrows, multiple choice toggles with arrows moving focus (AC-SEG-4, AC-SEG-5 meet by reading; wrap and skip stated for disabled); roles are `radio` or `checkbox` under a `group` container: no `radiogroup` role and multiple uses `checkbox` (AC-SEG-6 fails); disabled sets opacity 0.38 on the whole segment including the selected container and divider (AC-SEG-3 fails); selecting an unselected label-only segment adds the check and widens the control (AC-SEG-7 fails); no tooltip support per segment (AC-SEG-11 not built); segment text colour literal `on_surface` is a role (meets) |
+| tess-ui | `tess-ui:src/tess_ui/views/SegmentedButton_View.tdl` dimensions | differs: height 40, padding 12, icon 18 and gap 8 at every density (spec 32, 28; padding 8, icon 16 and gap 4 at dense; AC-SEG-1) |
 | tess-shell | none found | absent |
 | tre | none | not applicable |
 

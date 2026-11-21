@@ -68,6 +68,38 @@ Tesserae by density; the control heights follow [[Button]] and [[ADR-0002 Deskto
 - The trailing button's hit area is at least 24 by 24 dp (it is at least 32 by 28 dp) and 48 dp high in touch contexts. The two hit areas do not overlap; the 2 dp gap belongs to neither.
 - Label vertically centred as for [[Button]].
 
+## Dimensions and defaults
+
+Both parts follow [[Button]]; the trailing width, its chevron padding (derived as `(width - chevron) / 2`) and the 4 dp inner corner are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| main button, trailing button | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| main button | min width | - | 64 | 48 | 48 | as [[Button]]; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| trailing button | min width | - | 48 | 40 | 32 | design choice, [[Split Button]] Sizing, proposed ADR for split button trailing width | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| main button, trailing button | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| main button, trailing button (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| main button (no icon) | padding | `space.*` | 0 24 0 24 | 0 16 0 16 | 0 12 0 12 | as [[Button]]; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| main button (leading icon) | padding | `space.*` | 0 24 0 16 | 0 16 0 12 | 0 12 0 8 | as [[Button]]; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| trailing button | padding | `space.*` | 0 15 0 15 | 0 11 0 11 | 0 8 0 8 | derived from width and chevron size, [[Split Button]] Sizing; design choice, proposed ADR for split button trailing width | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| split button | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| main and trailing button | gap | `space.1` | 2 | 2 | 2 | [Android SplitButton](https://github.com/material-components/material-components-android/blob/master/docs/components/SplitButton.md) (`spacing` 2dp) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| main button (icon to label) | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| main button, trailing button | border width | - | 0 | 0 | 0 | as [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| main button, trailing button (outlined variant) | border width | - | 1 | 1 | 1 | as [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| main button, trailing button | border color | - | N/A: filled, tonal, elevated and text variants draw no border | N/A: filled, tonal, elevated and text variants draw no border | N/A: filled, tonal, elevated and text variants draw no border | [[Button]] Variants table | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| main button, trailing button (outlined variant) | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| outer corners | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| inner corners | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]]; design choice, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| trailing button (menu open) | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| main button label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| main button leading icon | icon size | - | 18 | 18 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| trailing button chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| main button, trailing button | elevation | `elevation.level0` | 0 | 0 | 0 | as [[Button]]; the elevated variant rests at level 1 ([[Elevation]]) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring (each button) | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (each button) | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (each button) | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the button) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - The main label is one line with an end ellipsis; the trailing button keeps its width. The full label is the name and the tooltip of the main button.
@@ -121,6 +153,7 @@ Variant filled, size at the container's density, menu placement below. No toggle
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/SplitButton_View.tdl`, `tess-ui:src/tess_ui/widgets/buttons.py` (`split_button`), `tess-ui:docs/components/split-buttons.md`, test `tess-ui:tests/test_split_button.py` | partly meets: two Buttons 2 px apart, outer corners full and inner 4, round trailing while open, chevron swaps up and down (a swap, not a turn), group role, trailing `Expanded` and name "More options for ..." (AC-SPB-2, AC-SPB-3, AC-SPB-6 meet by reading), Tab reaches both, Down opens with focus on first row, press opens without focus (AC-SPB-5, AC-SPB-8 meet by reading; Up on trailing not documented), trailing width equals an icon-only Button of the size, not the table (AC-SPB-1 fails at compact and dense, as Button), tooltip on the trailing button not set (AC-SPB-8 partly), `haspopup` not set (AC-SPB-6 partly), no toggle form, no density |
+| tess-ui | `tess-ui:src/tess_ui/views/SplitButton_View.tdl` dimensions | differs: trailing width equals an icon-only Button of the size (40 at size s; spec 48, 40, 32; AC-SPB-1) |
 | tess-shell | none found | absent |
 | tre | none | not applicable |
 

@@ -78,6 +78,32 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]], [[Spa
 - Width kinds (narrow and wide, from MD3 Expressive) are allowed as named adoptions only; the default width equals the height.
 - Gap between adjacent icon buttons: 4 dp at default and compact, 2 dp at dense, unless a [[Spacing and Density]] row says otherwise.
 
+## Dimensions and defaults
+
+Values agree with the Sizing table above. The padding is the margin around the icon inside the container, `(container - icon) / 2`; compact and dense values, the square-form radius and the gap at dense are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | `density.icon_button_container` | 40 | 32 | 28 | width equals height; [filled icon button tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-icon-button.scss) | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | padding | `space.*` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | derived from container and icon size, [[Spacing and Density]]; design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| adjacent icon buttons | gap | `space.2` | 4 | 4 | 2 | [[Icon Button]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [filled icon button tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-icon-button.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container (outlined variant) | border width | - | 1 | 1 | 1 | [outlined icon button tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-icon-button.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | - | N/A: standard, filled and tonal variants draw no border | N/A: standard, filled and tonal variants draw no border | N/A: standard, filled and tonal variants draw no border | [[Icon Button]] Variants table | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container (outlined variant) | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container (round form) | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container (square form) | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], Expressive adoption, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container | font | - | N/A: the icon button shows no text; the label is only the name and tooltip | N/A: the icon button shows no text; the label is only the name and tooltip | N/A: the icon button shows no text; the label is only the name and tooltip | [[Icon Button]] Anatomy | tess-ui: n/a: the element shows no text; tess-shell: n/a: the element shows no text; tre: n/a: the element shows no text |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; the icon button tokens define no elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: via Shadows (spread and offset of the block shadow ring); tre: n/a: tre draws no focus ring |
+| focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: via Shadows (colour of the block shadow ring); tre: n/a: tre draws no focus ring |
+| focus ring | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the container) | tess-ui: no hook; tess-shell: via Shadows (spread and offset of the block shadow ring); tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 The container never shrinks below its size, never clips its icon, and never draws a tooltip inside its own box. In a toolbar that runs out of width the toolbar scrolls or overflows into a [[Menu]] (toolbar rule, later); the icon buttons never overlap. In a [[Form Row]] the icon button sits at the row's end, aligned to the vertical centre.
@@ -132,6 +158,8 @@ Variant standard; container and icon by the container's density; hit area equal 
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/IconButton_View.tdl`, `IconButton_Stylesheet.tdl` | partly meets: four variants and toggle exist; `Label` is the name and the tooltip (AC-ICB-5 and AC-ICB-6 meet by reading the docs); sizes xs to xl are 32, 40, 56, 96, 136 px, not the 40/32/28 density levels (AC-ICB-1 fails at dense); 48 px touch target around a 40 px button not built (AC-ICB-2 fails); disabled filled container 12 percent not built, a whole-button fade is used (AC-ICB-7 fails); state layer percentages 8, 10, 10 and 16 match the [[State Layers]] tokens (`tess-ui:src/tess_ui/interaction.py`) |
+| tess-ui | `tess-ui:src/tess_ui/views/IconButton_Stylesheet.tdl` dimensions | differs: icon 20, 24, 24 by size and container 32, 40, 56 by size, no density (spec icon 24, 20, 20 and container 40, 32, 28; AC-ICB-1) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Button/Button_Module.tdl` dimensions | differs: icon-only Button uses the Button height literal 32 (spec container 40 at default; AC-ICB-1) |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Button/Button_Module.tdl` (icon-only Button) | partly meets: role BUTTON, `Label` is the name and the shell warns at load when an icon-only Button has no name (AC-ICB-5 meets by reading); no variants, no toggle form, no density, no tooltip tie-in for icon-only (AC-ICB-1, AC-ICB-6, AC-ICB-7 absent) |
 | tre | none (no button primitive) | not applicable |
 

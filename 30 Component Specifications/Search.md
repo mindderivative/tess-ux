@@ -93,6 +93,40 @@ The bar keeps the MD3 56 dp at default density because it is the primary entry o
 - Hit area at least 24 by 24 dp at every density, 48 by 48 dp in a touch context.
 - The bar's minimum width is 240 dp (input at least 120 dp after the icons) #needs-verification-as-design-choice; MD3 Android gives the bar a maximum width option, no minimum ([Material Components Android search](https://github.com/material-components/material-components-android/blob/master/docs/components/Search.md)).
 
+## Dimensions and defaults
+
+Search bar at the three levels; the search field variant is a [[Text Field]] (rows marked field). Compact and dense bar values are design choices from the Sizing section #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| bar | height | - | 56 | 40 | 32 | Sizing table, `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl`; compact and dense: design choice, proposed ADR: compact and dense sizes of composite input controls | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| bar | min height | - | 56 | 40 | 32 | Sizing table, the 24 dp pointer minimum is met at every level, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| bar | min width | - | 240 | 240 | 240 | Sizing section, design choice, proposed ADR: minimum width of single-line input controls, [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| bar | padding | - | 0 12 0 4 | 0 4 0 4 | 0 4 0 4 | Sizing table, `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| bar | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| bar | gap | `space.2` | 4 | 4 | 4 | `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` (Gap 4), [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| bar | border width | - | 0 | 0 | 0 | the bar is a filled pill with no outline, `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| bar | border color | - | N/A: the bar draws no border | N/A: same as default | N/A: same as default | `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| bar | corner radius | `shape.full` | 28 | 20 | 16 | [[Shape]] (half the bar height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| bar | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]], Tokens used section (MD3 value #needs-verification) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Sizing table | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| leading, clear and trailing icon button | height | - | 48 | 32 | 28 | Sizing table, [[Icon Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| leading, clear and trailing icon button | min width | - | 48 | 32 | 28 | square container, [[Icon Button]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| leading, clear and trailing icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | Sizing table, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| leading, clear and trailing icon button | corner radius | `shape.full` | 24 | 16 | 14 | [[Shape]], `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` (24 at default) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| field (search field variant) | height | `density.control_height` | 40 | 32 | 28 | Sizing section, [[Text Field]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| field (search field variant) | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Text Field]], [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| field (search field variant) | icon size | - | 24 | 20 | 20 | [[Iconography]], [[Text Field]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| view panel | padding | `space.3` | 8 0 8 0 | 8 0 8 0 | 8 0 8 0 | `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl`, Sizing section | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| view panel | min width | - | 360 | 360 | 360 | the bar width (`Width` default 360), Sizing section, [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| view panel | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Shape]], `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl` | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| view panel | elevation | - | 0 | 0 | 0 | `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl` sets no elevation | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| view panel | border width | - | 0 | 0 | 0 | `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl` sets no border | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| view panel | border color | - | N/A: the panel draws no border | N/A: same as default | N/A: same as default | `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl` | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| result row | height | `density.row_height` | 40 | 32 | 24 | [[List Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| result count | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]], Tokens used section | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| empty text | padding | `space.5` | 12 16 12 16 | 12 16 12 16 | 12 16 12 16 | `tess-ui:src/tess_ui/views/SearchView_Stylesheet.tdl` (`none` part) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+
 ## Layout and overflow
 
 - The input is one line and never wraps. Overlong text: the unfocused bar truncates the query with an ellipsis; the focused input scrolls the caret into view ([[Text Field]], [[10 Layout Overflow and Scrolling]]).
@@ -183,6 +217,7 @@ All colours are roles; the frosted variant mixes the container role at 72 percen
 | tess-ui | `tess-ui:src/tess_ui/views/SearchBar_View.tdl`, `SearchBar_Stylesheet.tdl`, `SearchView_View.tdl`, `SearchView_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/search.py` | partly meets: bar 56 dp pill, elevation 3, 48 dp buttons with 24 dp icons, back arrow, clear button, trailing icons, avatar, frosted variant, panel with 28 dp corners and 400 dp maximum height, count and empty text, Escape and outside press close the view exist (AC-SRB-3, AC-SRB-4, AC-SRB-9, AC-SRB-10, AC-SRB-13 meet as documented); no density setting (AC-SRB-1 fails at compact and dense); the input is a `TextInput` named by the placeholder, no `searchbox` role documented (AC-SRB-7 unmeasured); Escape closes only, never clears (AC-SRB-5 fails); no Up and Down through the rows from the input (AC-SRB-6 fails, rows are pressed with the pointer); no full-screen view and no shortcut to focus the bar |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` (launcher filter input, placeholder "Search applications"), `shell-vault:40 Specifications/Modules/Applications Module.md` | partly meets: a filter input with a placeholder that updates a list on `On_Changed`; no bar, no back arrow, no clear button, no count announcement (AC-SRB-4, AC-SRB-8 absent); keyboard use of the launcher: `tess-shell:docs/guide/keyboard.md#the-launcher` |
 | tre | `tre:docs/guide/text.md` (text input `input_mode: "search"`), `tre:docs/guide/accessibility.md` | not applicable (primitive): `input_mode` search is kept for a keyboard that can adapt; active descendant is TRE-REQ-023 ([[Active Descendant]]) |
+| tess-ui | same files, Dimensions and defaults | differs: no density setting, bar fixed 56 where the spec has 56, 40 and 32 (AC-SRB-1) |
 
 ## Status in code
 

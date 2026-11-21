@@ -78,6 +78,36 @@ Field states are those of the outlined [[Text Field]]; the period selector takes
 - Hit area at least 24 by 24 dp at every density; 48 by 48 dp in a touch context ([[Spacing and Density]]).
 - Vertical centring by construction, as [[Text Field]] (AC-DEN-9); in the picker the 72 dp field centres the 52 dp line box.
 
+## Dimensions and defaults
+
+Inline variant values from the Sizing table; the picker variant keeps its own fixed sizes at every density (rows marked picker). Rows marked as design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| hour and minute field | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| hour and minute field | min width | - | 48 | 40 | 40 | design choice, proposed ADR: compact and dense sizes of composite input controls, [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| hour and minute field | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| hour and minute field | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Spacing and Density]], vertical = (height - line box) / 2 | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| hour and minute field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| hour and minute field | border color | `outline` | `outline` | `outline` | `outline` | MD3 outlined text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| hour and minute field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| hour and minute field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| hour and minute field (picker) | height | - | 72 | 72 | 72 | Variants table, `tess-ui:src/tess_ui/views/TimeInput_View.tdl`, MD3 value #needs-verification | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| hour and minute field (picker) | min width | - | 96 | 96 | 96 | Sizing section, `tess-ui:src/tess_ui/views/TimeInput_View.tdl` | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| hour and minute field (picker) | font | `display_medium` | 45/52/400/0 | 45/52/400/0 | 45/52/400/0 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| row | gap | `space.2` | 4 | 4 | 2 | Sizing table (gap field to colon), [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| row (picker) | gap | `space.4` | 12 | 12 | 12 | `tess-ui:src/tess_ui/views/TimeInput_View.tdl` (Gap 12), Sizing section | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| row | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]], the parts carry their own padding | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| row | margin | - | N/A: the parent container or Form Row sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]], [[Form Row]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| colon | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], the colon takes the role of the numerals | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| period selector | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Segmented Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| period selector | border width | - | 1 | 1 | 1 | [[Segmented Button]], States table (outline `outline`) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| period selector | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Segmented Button]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| period selector | corner radius | - | 8 | 8 | 8 | Tokens used section (picker, MD3 value #needs-verification), [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| period selector | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| control | icon size | - | N/A: the time input draws no icon | N/A: same as default | N/A: same as default | Anatomy section, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| control | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The control is a horizontal row: hour, colon, minute, period selector. It never wraps and never exceeds its parent; the fields have fixed widths because the content is exactly two digits.
@@ -159,6 +189,7 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 | tess-ui | `tess-ui:src/tess_ui/views/TimeInput_View.tdl`, `tess-ui:src/tess_ui/views/TimeInput_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/date_time.py` | partly meets: hour, minute, colon, optional period selector, 24 and 12-hour conversion, digits mask and out-of-range refusal exist (AC-TMI-3 to AC-TMI-5 meet as documented); picker variant only, 96 dp wide fields with a `display_medium` colon (AC-TMI-1 fails for the inline variant: absent; no density setting); Up and Down stepping exists in the Python `time_input_field` but not in the view (AC-TMI-6 fails for the view); no auto-advance, no Left and Right hand-over (AC-TMI-7 partly meets: Tab works); fields are `TextField` with role `textbox`, not `spinbutton` (AC-TMI-9 fails); the group name "Time" exists |
 | tess-shell | none | absent: no time input block or module |
 | tre | engine `text_input` (`tre:docs/guide/text.md`) | not applicable (primitive) |
+| tess-ui | same files, Dimensions and defaults | differs: only the picker variant exists (96 wide fields, 12 gap), the inline variant of 40/32/28 high and 48/40/40 wide fields is absent (AC-TMI-1); no density setting |
 
 Evidence: `tess-ui:docs/components/time-input.md`.
 

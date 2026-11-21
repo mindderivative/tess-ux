@@ -78,6 +78,44 @@ The field takes the height of a [[Text Field]] at each level ([[ADR-0002 Desktop
 - The value text is vertically centred in the field (space above equals space below ±0.5 dp) at every density, as [[Text Field]].
 - Hit area: the whole field (at least 24 dp high at every density, 48 dp in touch contexts).
 
+## Dimensions and defaults
+
+The field follows [[Text Field]] heights; every other value is a design choice modelled on [[List Item]] and on the tess-ui build (#needs-verification-as-design-choice). The field and row corners keep the 12 dp of the build, the swatch corners are scale steps.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| field | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| row | height | - | 56 | 48 | 40 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| field | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| field (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| layer | min width | - | 240 | 240 | 240 | the `Width` parameter range 240 to 640, [[Token Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| field | padding | `density.field_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Spacing and Density]], as [[Text Field]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| layer | padding | `space.3` | 8 8 8 8 | 4 4 4 4 | 4 4 4 4 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| field | margin | - | N/A: the form row cell sets the outer space | N/A: the form row cell sets the outer space | N/A: the form row cell sets the outer space | [[Form Row]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| field (swatch, value, chevron) | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| row (swatch, text, value) | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| field | border width | - | 1 | 1 | 1 | [[Token Button]] Anatomy (the outline stays 1 dp when focused) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| swatch | border width | - | 1 | 1 | 1 | [[Token Button]] Anatomy | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| field | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| swatch | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| layer | border width | - | 0 | 0 | 0 | the layer is a raised surface and draws no outline, [[Token Button]] Anatomy | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| layer | border color | - | N/A: the layer draws no border; elevation separates it | N/A: the layer draws no border; elevation separates it | N/A: the layer draws no border; elevation separates it | [[Token Button]] Anatomy | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| field, row, layer | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]]; tess-ui build, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| field swatch | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| row swatch | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| field value text, row name | font | `body_large` | 16/24/400/0.5 | 16/24/400/0.5 | 16/24/400/0.5 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| row detail line | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| row value | font | `label_medium` | 12/16/500/0.5 | 12/16/500/0.5 | 12/16/500/0.5 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| field chevron | icon size | - | 24 | 24 | 24 | [[Token Button]] Anatomy, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| field swatch | icon size | - | 24 | 20 | 16 | swatch box size, [[Token Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| row swatch | icon size | - | 32 | 28 | 24 | swatch box size, [[Token Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| field | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| layer | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]], [[Token Button]] Anatomy | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring (field) | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (field) | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring (field) | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the field) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - The value text is one line; a long ref ends with an ellipsis and the full ref is the tooltip on the field ([[ADR-0004 Tooltip rule]]). The swatch and chevron keep their size.
@@ -135,6 +173,7 @@ Rows 7, width 360, close on pick true, placeholder "Choose a token", label "Toke
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/TokenButton_View.tdl`, `TokenButton_Stylesheet.tdl`, `tess-ui:src/tess_ui/token_controls.py` (`TokenList`), `tess-ui:docs/components/token-buttons.md`, test `tess-ui:tests/test_token_button.py` | partly meets: swatch, ref text, search, virtual list (rows in view plus three), keyboard as specified, Escape and outside press, `Expanded`, `list` and `listitem` roles, alert for no result (AC-TKB-4 to AC-TKB-6, AC-TKB-8 meet by reading; AC-TKB-7 meets for the row count); field height `Min_Height` 48 at every density (AC-TKB-1 fails: no 40, 32, 28), row height 56 literal at every density (fails at compact and dense), corners 12 dp and layer padding 8 literal, layer elevation 2 (AC-TKB-3 meets roles), disabled fades the whole control (AC-TKB-12 partly), no tooltip with the full ref on truncation (AC-TKB-11 partly), `haspopup` not set (AC-TKB-8 partly) |
+| tess-ui | `tess-ui:src/tess_ui/views/TokenButton_Stylesheet.tdl` dimensions | differs: field min height 48 (spec 40, 32, 28; AC-TKB-1); row height 56 at every density (spec 48, 40 at compact and dense); gap 12 (spec 8, 8, 4); field swatch corner 6 (spec 4); layer padding 8 at every density (spec 4 at compact and dense) |
 | tess-shell | not used by the shell; tess-ui:apps/shell_config uses it (below) | not applicable |
 | tre | none | not applicable |
 
