@@ -50,7 +50,7 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 | OQ-20 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: thumb opacity 60 percent rest, 80 percent hover, 100 percent drag | closed | [[Scrollbar and Scroll Container]] |
 | OQ-21 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: the 12 dp hit area is accepted with the keyboard path as the equivalent control | closed | [[Scrollbar and Scroll Container]] |
 | OQ-22 | Closed 2026-11-21 by [[ADR-0013 Focus and pressed state layer 10 percent]]: focus and pressed state layers stay 10 percent | closed | [[State Layers]] |
-| OQ-32 | The accepted scrollbar thumb opacity (0.60 at rest) gives 3.11 to 1 over `surface` in the light scheme but 2.76 to 2.93 over the dimmer container roles, below 3 to 1. Raise the rest opacity or fix the container the thumb sits on? | Raise the rest opacity to 0.70 and recompute with `tools/contrast_check.py`; amend ADR-0012 | [[Scrollbar and Scroll Container]], [[Adoption Plan]] |
+| OQ-32 | Closed 2026-11-22 by the amendment of [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: thumb rest opacity 0.70 (minimum 3.40 to 1 over every surface role; 0.65 is the smallest value that reaches 3.0) | closed | [[Scrollbar and Scroll Container]] |
 | OQ-23 | Shell state layers (ADR-0009): adoption not decided; the shell audit will record the gap | Orchestrator asks the owner at the shell audit | [[State Layers]] |
 | OQ-24 | Closed 2026-11-21: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] and [[UXREQ-002 Virtual list keys and scroll to index]] are filed and approved in [[80 Requests]] | closed | [[Scrollbar and Scroll Container]] |
 

@@ -1,0 +1,10 @@
+[
+ {
+  "project": "tess-shell",
+  "ac": "AC-COL-3",
+  "section": "shell",
+  "match": "accent on surface [Dark]: computed 4.38",
+  "tracked": "TSH-043",
+  "reason": "the shell accent colour measures 4.38 to 1 on surface in the dark scheme; the specification keeps the 4.5 limit for text and the shell must not use accent for text or must change the colour"
+ }
+]

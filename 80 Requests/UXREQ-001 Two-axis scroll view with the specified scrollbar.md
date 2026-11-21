@@ -24,7 +24,7 @@ Owner feedback F6 (config-app demo, 2026-11-20, [[Owner Feedback 2026-11-20]]): 
 An opt-in two-axis scroll view whose behaviour matches [[Scrollbar and Scroll Container]]:
 
 - Orientation `both` (existing values keep their behaviour, so no existing view changes).
-- Scrollbar tokens (settable per view, defaults as listed): thumb thickness 8 dp, hit thickness 12 dp, margin 2 dp, minimum thumb length 32 dp, thumb radius half the thickness, thumb colour supplied by the caller, opacity 0.60 at rest, 0.80 on hover, 1.00 while dragged ([[ADR-0012 Scrollbar thumb opacity and hit area exception]]), no track, no auto-hide.
+- Scrollbar tokens (settable per view, defaults as listed): thumb thickness 8 dp, hit thickness 12 dp, margin 2 dp, minimum thumb length 32 dp, thumb radius half the thickness, thumb colour supplied by the caller, opacity 0.70 at rest, 0.80 on hover, 1.00 while dragged ([[ADR-0012 Scrollbar thumb opacity and hit area exception]]), no track, no auto-hide.
 - Gutter: 12 dp reserved at the end edge of an axis that overflows, none for an axis that does not.
 - Corner: a 12 dp square, empty, where both axes overflow; the two thumbs never overlap.
 - Wheel: 40 dp per notch (today 20), Shift plus wheel scrolls horizontally, a wheel over a view already at its end passes to the parent view.

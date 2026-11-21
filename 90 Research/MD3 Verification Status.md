@@ -71,7 +71,7 @@ How Material Design 3 values were checked in Phase 1 (closes OQ-12 for the slice
 | 14 Accessibility Basics | scrollbar thumb rest alpha 38 percent may fail 3 to 1 contrast | needs contrast computation once Colour Roles values exist |
 | Test Method | WCAG contrast ratio definition anchor and Accessibility Rules SC 1.1.1, 1.3.1, 3.3.1 | anchors not separately fetched |
 | Scrollbar and Scroll Container | MD3 has no scrollbar component or guidance (checked only Material Web repo and engine comment) | m3.material.io is a JS app, not readable |
-| Scrollbar and Scroll Container | thumb 8 dp, hit 12 dp, margin 2, min length 32, opacities 0.38/0.60/0.80, gutter 12 dp are Tesserae design choices | no MD3 values exist; contract marks them design choice |
+| Scrollbar and Scroll Container | thumb 8 dp, hit 12 dp, margin 2, min length 32, opacities 0.38/0.60/0.80 (rest amended to 0.70 by ADR-0012 and OQ-32), gutter 12 dp are Tesserae design choices | no MD3 values exist; contract marks them design choice |
 | Scrollbar and Scroll Container | rest opacity 0.38 fails WCAG 1.4.11 3:1 (computed 2.57 dark, 1.94 light, baseline on_surface_variant over surface) | computed in the note, no shipped contrast script yet |
 | Scrollbar and Scroll Container | 12 dp hit thickness vs WCAG 2.2 SC 2.5.8 24 dp: whether Spacing/Equivalent exception covers a scrollbar thumb | judgement, not confirmed |
 | Scrollbar and Scroll Container | wheel notch 40 dp, track-click repeat 400/100 ms, gutter reserved by the framework | design choices; engine moves 20 dp per notch |
