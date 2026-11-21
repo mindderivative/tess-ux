@@ -14,6 +14,9 @@ depends_on: []
 
 The tokens and defaults that exist in code today, with values and files, and where tess-ui, the shell and Material Design 3 (MD3) differ. Phase 0 result: nothing here is a decision. The target values are set in the foundation notes written in later phases, each with a proposed ADR.
 
+> [!note] Correction (Phase 1)
+> tess-ui's elevation shadow formulas equal Material Web's; the remark below that they are a legacy formula is wrong. See [[Elevation]] and [[MD3 Verification Status]].
+
 > [!info] Sources and trust
 > Values were read from the project sources (`tess-ui:`, `tess-shell:`, `tre:`, `shell-vault:` path prefixes, relative to each project root). MD3 values quoted from memory by the readers carry `#needs-verification` until checked against [m3.material.io](https://m3.material.io) (see [[Open Questions]] OQ-12). The four sections below the comparison keep each project's table whole.
 

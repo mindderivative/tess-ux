@@ -16,6 +16,22 @@ One note per element, written from `_templates/Component.md`. The element list a
 
 ## Notes
 
+- [[Tooltip]]
+- [[Popup]]
+- [[Menu]]
+- [[Dialog]]
+- [[Panel and Surface]]
+- [[Scrollbar and Scroll Container]]
+- [[Tree]]
+- [[Tree Node]]
+- [[List]]
+- [[List Item]]
+- [[Accordion]]
+- [[Form Row]]
+- [[Text Field]]
+- [[Switch]]
+- [[Icon Button]]
+- [[Button]]
 - [[Inventory]]: every element, its kind, sources, MD3 counterpart, code status and planned spec note.
 
 Back to [[Index]].
