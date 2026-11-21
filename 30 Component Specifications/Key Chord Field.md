@@ -78,6 +78,36 @@ Recording is signalled by text and by `pressed`, not by colour alone ([WCAG 1.4.
 - Hit area at least 24 by 24 dp, 48 by 48 dp in a touch context.
 - Vertical centring by construction, as [[Text Field]] (AC-DEN-9); the button label and icon are centred in the button.
 
+## Dimensions and defaults
+
+The control is a row of an outlined field and a Record button. Vertical padding of the field is `(height - line height) / 2`. Compact and dense paddings of the button are design choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| control | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| control | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]], the field and the button carry their own padding | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| control | margin | - | N/A: the parent container or Form Row sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]], [[Form Row]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| control | gap | `space.3` | 8 | 8 | 4 | Sizing table (gap field to button), [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| control | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| field | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Text Field]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| field | min width | - | 160 | 160 | 160 | Sizing section (the longest chord fits), [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| field | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| field | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Spacing and Density]], vertical = (height - line box) / 2 | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| field | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Text Field]], `primary` when focused, `error` when refused | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| Record button | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| Record button | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| Record button | min width | - | N/A: the width equals the wider of the "Record" and "Press keys" contents | N/A: same as default | N/A: same as default | Layout and overflow section, [[Button]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| Record button | padding | - | 0 16 0 16 | 0 12 0 12 | 0 8 0 8 | Sizing table, `tess-ui:src/tess_ui/views/KeyChordField_Stylesheet.tdl` (16 at default); compact and dense: design choice, proposed ADR: compact and dense sizes of composite input controls | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| Record button | gap | `density.icon_label_gap` | 8 | 8 | 4 | icon to label, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| Record button | border width | - | 1 | 1 | 1 | States table (outline 1 dp `outline`), [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| Record button | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Button]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| Record button | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], Tokens used section (tess-ui 12) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| Record button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], Tokens used section | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| Record button | icon size | - | 24 | 20 | 20 | Anatomy section, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+
 ## Layout and overflow
 
 - The control is a horizontal row: field (fills), button (fixed). The message line is the field's supporting text and wraps to at most 2 lines ([[Text Field]]).
@@ -164,6 +194,7 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (`KeyChordField`), `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`KeyChordWidget`) | partly meets: the field is used for `key_chord` keys and refuses text that is not a chord; shown in the settings form |
 | tess-shell | none (the shell reads the value; no field) ; `shell-vault:40 Specifications/Integration/Global Shortcuts.md` (parser, key names) | not applicable for the field; the parser must accept every canonical value (AC-KCF-6 is the shared test) |
 | tre | none (engine reports keys; no recorder) | not applicable |
+| tess-ui | same files, Dimensions and defaults | differs: Record button 56 high (`Min_Height: 56`), spec 40/32/28 (AC-KCF-11); no density setting, padding 16 at every level, spec 16/12/8 |
 
 Evidence: `tess-ui:docs/components/key-chord-fields.md`.
 

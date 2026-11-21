@@ -91,6 +91,35 @@ Heights and padding from [[Spacing and Density]] under [[ADR-0002 Desktop densit
 - Leading and trailing icon containers use the icon button sizes of [[Icon Button]] when pressable (clear, reveal); a decorative icon is 24 dp (20 dp at compact and dense) and takes no pointer.
 - MD3 filled field height is 56 dp; the Tesserae heights above are a recorded deviation (see the Deviations table). The tess-ui `TextField` view is 280 px wide by default; a field in a flexible row has a minimum width of 48 dp so it never collapses to zero, per [[10 Layout Overflow and Scrolling]] #needs-verification-as-design-choice.
 
+## Dimensions and defaults
+
+Single-line outlined field unless the Part says filled. Vertical padding is `(height - line height) / 2`, so the line box is centred by construction (AC-TXF-1). The dimensions follow the Sizing table; values not stated there come from the Material Web text field tokens. Rows marked as design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | - | 48 | 48 | 48 | design choice, proposed ADR: minimum width of single-line input controls, [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| container | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Spacing and Density]] (horizontal), vertical = (height - line box) / 2 from the Sizing table | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the parent container or Form Row sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]], [[Form Row]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (icon, prefix, input, suffix and trailing button sit in one row) | tess-ui: yes (style gap); tess-shell: n/a: the TextField block has no row of parts to space; tre: yes (gap) |
+| container | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | `outline` | `outline` | `outline` | `outline` | MD3 outlined text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], MD3 text fields are flat | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| active indicator | height | - | 1 | 1 | 1 | [Material Web filled text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-text-field.scss), 2 when focused (filled variant only) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| active indicator | border color | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | MD3 filled text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container (filled) | corner radius | `shape.extra_small_top` | 4 4 0 0 | 4 4 0 0 | 4 4 0 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| label | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], floating label | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | margin | `space.2` | 4 0 0 0 | 4 0 0 0 | 4 0 0 0 | MD3 filled text field `supporting-text-top-space` 4, https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-text-field.scss | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| supporting text | padding | `space.4` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Spacing and Density]], aligned with the field text edge | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| leading icon | icon size | - | 24 | 20 | 20 | [[Iconography]] (text field leading and trailing icon row) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| trailing icon button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| trailing icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| trailing icon button | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8 pointer minimum, 48 in a touch context | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+
 ## Layout and overflow
 
 - Horizontal alignment: start (left in left-to-right locales). Numeric fields may align end by explicit property.
@@ -187,6 +216,7 @@ All colours are roles ([[Colour Roles]]); the field has no literal colour. Under
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (config field, `TextInput` 32 px high, padding 8 left and right) | partly meets: heights equal compact (AC-TXF-3 meets for compact); vertical centring by hand-tuned top and bottom padding because the engine `text_input` has no vertical-align property (AC-TXF-1 and AC-TXF-2 unmeasured; F7 reported failing in the 2026-11-20 demo); ellipsis until focus via engine `overflow` is configurable and not verified in the app (AC-TXF-5, AC-TXF-6 unmeasured) |
 | tess-shell | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | partly meets: role textbox with `Label` else `Placeholder` as name (AC-TXF-9 meets for name), `Read_Only`, `Max_Length`, `Password` keys exist; no density, no error or helper text, no label variants (AC-TXF-3, AC-TXF-11, AC-TXF-12 absent) |
 | tre | engine `text_input` node (`tre:docs/guide/text.md`) | not applicable (primitive): provides `overflow`, `wrap`, `max_length`, `read_only`, `obscured`, `caret_blink`, `caret_color`, `selection_fill`; no vertical-align property; draws no focus ring or state layer; IME candidate window drawn by the platform at the caret |
+| tess-ui | same files, Dimensions and defaults | differs: no density setting (container fixed, AC-TXF-3 fails); config field `TextInput` 32 high with hand-tuned vertical padding where the spec derives 6 (AC-TXF-1); disabled is whole-field 0.38 opacity |
 
 Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
@@ -194,9 +224,9 @@ Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/views/TextField_View.tdl`, `tess-ui:src/tess_ui/views/TextField_Stylesheet.tdl`, `tess-ui:docs/components/text-fields.md` | exists, see Status in code |
-| tess-shell | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | exists |
-| tre | `tre:docs/guide/text.md` (text input properties) | engine primitive |
+| tess-ui | `tess-ui:src/tess_ui/views/TextField_View.tdl`, `tess-ui:src/tess_ui/views/TextField_Stylesheet.tdl`, `tess-ui:docs/components/text-fields.md` | exists, see Status in code; not settable: line height and tracking of the typed text (`_text_field_props` drops `line_height` and `letter_spacing`) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | exists; not settable: line height and letter spacing of the typed text (no `Line_Height` key on `TextField`) |
+| tre | `tre:docs/guide/text.md` (text input properties) | engine primitive; hardcoded: `text_input` takes no `line_height` or `letter_spacing` |
 
 ## Deviations from Material Design 3
 

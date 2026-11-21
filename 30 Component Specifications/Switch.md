@@ -78,6 +78,31 @@ The compact and dense rows are Tesserae design choices #needs-verification-as-de
 - Pointer target: the track and label together; at least 24 dp by 24 dp ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)); in touch contexts the hit area extends to 48 dp high, centred on the track, beyond the visual track and without overlapping a neighbouring control's hit area.
 - Row horizontal padding and gaps follow [[Spacing and Density]].
 
+## Dimensions and defaults
+
+Track, handle, icon and border come from the Material Web switch tokens; compact is the MD3 size and dense scales by `s` = 28/32 (#needs-verification-as-design-choice for the compact and dense values and for the label font, which the tokens do not set).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| row | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| row | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.5.8 | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| row | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.5.8 | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| row | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | design choice, [[ADR-0002 Desktop density levels and target sizes]] (the track is centred in the row height) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| row | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (label to track) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| track | height | - | 32 | 32 | 28 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.HEIGHT); tess-shell: via module override (Height: 22 in Toggle_Module.tdl); tre: yes (height) |
+| track | min width | - | 52 | 52 | 46 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.WIDTH); tess-shell: via module override (Width: 40 in Toggle_Module.tdl); tre: yes (min_width) |
+| track | border width | - | 2 | 2 | 2 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (off; 0 when on); the scaled 1.75 rounds to 2 | tess-ui: no hook (track border literal in Switch._build); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| track | border color | `outline` | `outline` | `outline` | `outline` | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (off rest) | tess-ui: via widget option color (on colour) and theme role outline; tess-shell: yes (Border_Color); tre: yes (border_color) |
+| track | corner radius | `shape.full` | 16 | 16 | 14 | [[Shape]] (half of the track height) | tess-ui: no hook (half of Switch.HEIGHT); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| track | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook (track is a Python-drawn node with no elevation option); tess-shell: yes (Elevation percentage on the Toggle::track Rectangle); tre: yes (shadows) |
+| handle | height | - | 24 | 24 | 21 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (on; off 16, 16, 14; pressed 28, 28, 24); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.OFF, ON and PRESSED); tess-shell: via module override (Diameter: 16 in Toggle_Module.tdl); tre: yes (height) |
+| handle | corner radius | `shape.full` | 12 | 12 | 10.5 | [[Shape]] (half of the on handle) | tess-ui: no hook (half of the handle size); tess-shell: n/a: a Circle part has no corner radius, it follows its Diameter; tre: yes (corner_radius) |
+| handle | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (disabled and rest handle at level 0) #needs-verification | tess-ui: no hook (handle is a Python-drawn node with no elevation option); tess-shell: n/a: Elevation is not a key of a Circle part; tre: yes (shadows) |
+| handle icon | icon size | - | 16 | 16 | 14 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: via widget option icons (on or off), the glyph size has no hook; tess-shell: n/a: the Toggle has no icon variant; tre: yes (width, height of the svg node) |
+| state layer | height | `density.control_height` | 40 | 32 | 28 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (height) |
+| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; design choice, proposed ADR: control label type role | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height, and no hook for letter spacing); tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 - The track keeps its size; it never shrinks, wraps or clips. The label may wrap (at most 2 lines) or truncate with an ellipsis; the track stays visible and aligned to the first line's centre.
@@ -139,8 +164,8 @@ Density from the container; plain variant; label after the track; both `Selected
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/controls.py` (`Switch`) | partly meets: 52 by 32, handles 16/24/28, role `switch` with `checked`, Space and Enter toggle, pointer cancel handled, reduced motion handled in durations (AC-SWI-1 meets at default, AC-SWI-3, AC-SWI-4, AC-SWI-6 meet by reading the code, unrun); disabled colours use 12 and 38 percent (AC-SWI-11 partly); no density scaling (AC-SWI-1 fails at compact and dense); the tooltip of the config form sits on the label box only per the 2026-11-21 bot facts, so F8 against the switch is addressed in the config form but the toolkit allows tooltips on rows (AC-SWI-8 unmeasured); F9 not reproduced in code, unmeasured (AC-SWI-5) |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: role SWITCH with `checked`, Space toggles, Enter does not, disabled takes no focus or key (AC-SWI-3 meets by reading); 40 by 22 dp track with a 16 dp thumb: not the MD3 or density size (AC-SWI-1 fails); state looks are opacity 0.85 hover, 0.7 pressed, 0.5 disabled literals, not State Layers (AC-SWI-11 fails; status `absent` for State Layers); no icon variant |
+| tess-ui | `tess-ui:src/tess_ui/controls.py` (`Switch`) | partly meets: 52 by 32, handles 16/24/28, role `switch` with `checked`, Space and Enter toggle, pointer cancel handled, reduced motion handled in durations (AC-SWI-1 meets at default, AC-SWI-3, AC-SWI-4, AC-SWI-6 meet by reading the code, unrun); disabled colours use 12 and 38 percent (AC-SWI-11 partly); no density scaling (AC-SWI-1 fails at compact and dense); the tooltip of the config form sits on the label box only per the 2026-11-21 bot facts, so F8 against the switch is addressed in the config form but the toolkit allows tooltips on rows (AC-SWI-8 unmeasured); F9 not reproduced in code, unmeasured (AC-SWI-5); settable: track, handle and state layer sizes and radii are class constants of `Switch`, with no style or token hook |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: role SWITCH with `checked`, Space toggles, Enter does not, disabled takes no focus or key (AC-SWI-3 meets by reading); 40 by 22 dp track with a 16 dp thumb: not the MD3 or density size (AC-SWI-1 fails); state looks are opacity 0.85 hover, 0.7 pressed, 0.5 disabled literals, not State Layers (AC-SWI-11 fails; status `absent` for State Layers); no icon variant; settable: track and thumb sizes are literals in `Toggle_Module.tdl` (a same-named module file overrides them); the state layer has no hook (absent) |
 | tre | none (no switch primitive; composed from box and path nodes) | not applicable |
 
 Evidence: F8, F9 in [[Owner Feedback 2026-11-20]].
@@ -149,8 +174,8 @@ Evidence: F8, F9 in [[Owner Feedback 2026-11-20]].
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/controls.py` (`Switch`), `tess-ui:docs/components/switches.md` | exists |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl` | exists as Toggle |
+| tess-ui | `tess-ui:src/tess_ui/controls.py` (`Switch`), `tess-ui:docs/components/switches.md` | exists; settable: track, handle and state layer sizes and radii are class constants of `Switch`, with no style or token hook |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl` | exists as Toggle; settable: track and thumb sizes are literals in `Toggle_Module.tdl` (a same-named module file overrides them); the state layer has no hook (absent) |
 | tess-ui (config app) | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`SwitchWidget`) | uses the tess-ui Switch |
 
 ## Deviations from Material Design 3
