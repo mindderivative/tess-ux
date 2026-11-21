@@ -14,6 +14,8 @@ depends_on: []
 
 > [!important] Status
 > `proposed`; held by the Orchestrator, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui (finding TUI-060 in [[Adoption tess-ui]]). Not routed until the Orchestrator releases it.
+>
+> Progress, 2026-11-22: delivered for windows in tre 0.6.11 (PR 334: `Window(first_present=..., background=...)` and `window.ready()`). Layer and popup surfaces follow in tre's `feat/first-present-layers`; the request stays open for them.
 
 ## Principle
 

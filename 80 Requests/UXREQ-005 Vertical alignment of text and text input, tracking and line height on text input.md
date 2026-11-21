@@ -1,7 +1,7 @@
 ---
 title: UXREQ-005 Vertical alignment of text and text input, tracking and line height on text input
 type: request
-status: approved
+status: done
 owner: phil
 created: 2026-11-22
 updated: 2026-11-22
@@ -13,7 +13,7 @@ depends_on: []
 # UXREQ-005 Vertical alignment of text and text input, tracking and line height on text input
 
 > [!important] Status
-> `approved` by bot:Orchestrator under the owner's delegation, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui (and later tess-shell). Routed through bot:Orchestrator. Findings: TRE-012 and TRE-013 in [[Adoption tre]].
+> `done`: delivered in tre 0.6.11 (`vertical_align` and `hit_testable` in PR 327; `letter_spacing` and `line_height` on `text_input`, in `docs/reference/properties.md` of the `v0.6.11` tag, consolidated in PR 337; checked against the tag documentation, not run). Earlier: `approved` by bot:Orchestrator under the owner's delegation, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui (and later tess-shell). Routed through bot:Orchestrator. Findings: TRE-012 and TRE-013 in [[Adoption tre]].
 
 ## Principle
 
