@@ -22,6 +22,7 @@ Sources, Material Design 3 extracts and evidence with links. Unverified claims c
 - [[Inventory Source tess-ui]]
 - [[Inventory Source tess-ui Foundations]]
 - [[Inventory Source tre]]
+- [[Settable Properties Reference]]
 - [[MD3 Verification Status]]
 
 Back to [[Index]].

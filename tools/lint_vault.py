@@ -36,6 +36,15 @@ CHECK_TYPES = [
 ]
 SKIP_DIRS = {".git", ".obsidian", ".claude", ".copilot", "tools", "graphify-out", "node_modules", "_templates"}
 COMPONENT_DIR = "30 Component Specifications"
+DIM_SECTION = "Dimensions and defaults"
+DIMENSIONS_ENFORCED = False  # set True when every component note carries the table
+DIM_COLUMNS = ["Part", "Property", "Token", "Default", "Compact", "Dense", "Source", "Settable"]
+SETTABLE_PROJECTS = ["tess-ui", "tess-shell", "tre"]
+SETTABLE_VALUE = re.compile(r"^(yes\b.*|via\s+\S.*|hardcoded in tre.*|no hook.*|n/a:\s*.{8,})$", re.I)
+DIM_PROPS = {"height", "min width", "min height", "padding", "margin", "gap", "border width", "border color",
+             "corner radius", "font", "icon size", "elevation"}
+DIM_REQUIRED = ["height", "padding", "margin", "gap", "border width", "border color", "corner radius", "font",
+                "icon size", "elevation"]
 FOUNDATION_DIR = "20 Foundations and Tokens"
 TOKEN_DEFINING_EXTRA = ["30 Component Specifications/Scrollbar and Scroll Container.md"]
 
@@ -247,7 +256,7 @@ def template_sections(root: Path) -> list[str]:
     if t.exists():
         for line in t.read_text(encoding="utf-8").split("\n"):
             m = re.match(r"^##\s+(.*?)\s*$", line)
-            if m:
+            if m and (DIMENSIONS_ENFORCED or m.group(1) != DIM_SECTION):
                 secs.append(m.group(1))
     return secs
 
@@ -279,6 +288,87 @@ def check_components(root: Path, notes: list[Note], f: Findings) -> None:
                 f.add("COMP", "error", n, dict(heads).get(s, 1), f"section '## {s}' out of template order")
             else:
                 pos = j + 1
+
+
+# ---- check 4b: dimensions and defaults table --------------------------------
+VALUE_OK = re.compile(r"\d|`[^`]+`")
+NA = re.compile(r"^N/A:\s*(.{8,})$")
+
+
+def parse_dimensions(n: Note) -> tuple[int, list[tuple[int, list[str]]]] | None:
+    """Return (heading line, [(line, cells)]) of the Dimensions and defaults table, or None."""
+    start = None
+    for i, line in enumerate(n.lines):
+        if n.kind[i] == "body" and re.match(r"^##\s+" + re.escape(DIM_SECTION) + r"\s*$", line):
+            start = i
+            break
+    if start is None:
+        return None
+    rows = []
+    for j in range(start + 1, len(n.lines)):
+        line = n.lines[j]
+        if re.match(r"^##\s", line):
+            break
+        if line.startswith("|") and not re.match(r"^\|\s*-", line):
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            rows.append((j + 1, cells))
+    return start + 1, rows
+
+
+def check_dimensions(notes: list[Note], f: Findings) -> tuple[int, int]:
+    total = valid = 0
+    for n in notes:
+        if not n.rel.startswith(COMPONENT_DIR + "/") or n.fm_scalar("type") != "component":
+            continue
+        if n.stem in ("Inventory", COMPONENT_DIR):
+            continue
+        total += 1
+        parsed = parse_dimensions(n)
+        if parsed is None:
+            if DIMENSIONS_ENFORCED:
+                f.add("DIM", "error", n, 1, f"missing section '## {DIM_SECTION}'")
+            else:
+                f.add("DIM", "info", n, 1, f"no '## {DIM_SECTION}' table yet")
+            continue
+        head, rows = parsed
+        errs = 0
+        if not rows or [c.lower() for c in rows[0][1]] != [c.lower() for c in DIM_COLUMNS]:
+            f.add("DIM", "error", n, head, "table header must be: " + " | ".join(DIM_COLUMNS))
+            continue
+        seen = set()
+        for ln, cells in rows[1:]:
+            if len(cells) != 8:
+                f.add("DIM", "error", n, ln, f"row has {len(cells)} cells, expected 8"); errs += 1; continue
+            part, prop, tok, d, c, ds, src, settable = cells
+            if prop not in DIM_PROPS:
+                f.add("DIM", "error", n, ln, f"unknown property '{prop}'"); errs += 1; continue
+            seen.add(prop)
+            if not part:
+                f.add("DIM", "error", n, ln, "empty Part cell"); errs += 1
+            for lvl, v in (("Default", d), ("Compact", c), ("Dense", ds)):
+                if not (NA.match(v) or (VALUE_OK.search(v) and "TBD" not in v.upper())):
+                    f.add("DIM", "error", n, ln, f"{prop} {lvl}: needs a value or 'N/A: <reason of 8+ characters>' (got '{v}')"); errs += 1
+            segs = [s.strip() for s in settable.split(";") if s.strip()]
+            got = {}
+            for s in segs:
+                k, _, v = s.partition(":")
+                got[k.strip()] = v.strip()
+            bad = [k for k in SETTABLE_PROJECTS if k not in got or not SETTABLE_VALUE.match(got[k])]
+            if bad or set(got) - set(SETTABLE_PROJECTS):
+                f.add("DIM", "error", n, ln, f"{prop}: Settable needs 'tess-ui: <v>; tess-shell: <v>; tre: <v>' with v = yes | via <route> | hardcoded in tre | no hook | n/a: <reason> (problem: {', '.join(bad) or 'extra key'})"); errs += 1
+            if not src:
+                f.add("DIM", "error", n, ln, f"{prop}: empty Source cell"); errs += 1
+            elif not re.search(r"\[\[|https?://|tess-ui:|tess-shell:|tre:|shell-vault:|MD3|WCAG", src):
+                f.add("DIM", "error", n, ln, f"{prop}: Source must link a note, a URL or a project path (got '{src}')"); errs += 1
+            elif "design choice" in src.lower() and "ADR" not in src:
+                f.add("DIM", "error", n, ln, f"{prop}: a design choice names its ADR or a proposed ADR"); errs += 1
+        for req in DIM_REQUIRED:
+            if req not in seen:
+                f.add("DIM", "error", n, head, f"required property row missing: {req}"); errs += 1
+        if errs == 0:
+            valid += 1
+    f.add("DIM", "info", "vault", 0, f"dimensions coverage: {valid} of {total} component notes carry a valid table")
+    return valid, total
 
 
 # ---- check 5: acceptance criteria ----------------------------------------
@@ -453,6 +543,7 @@ def main(argv: list[str]) -> int:
     check_frontmatter(notes, f)
     check_links_and_orphans(root, notes, f)
     check_components(root, notes, f)
+    check_dimensions(notes, f)
     check_ac(notes, f)
     check_tokens(root, notes, f)
     check_markdown(notes, f)
@@ -478,7 +569,7 @@ def main(argv: list[str]) -> int:
             loc = f"{it['file']}:{it['line']}" if it["line"] else it["file"]
             print(f"{it['severity'].upper():5} {loc}: {it['message']}")
         print("\nSummary")
-        for ck in ["FM", "LINK", "ORPHAN", "COMP", "AC", "TOKEN", "MD", "PRIV", "NV"]:
+        for ck in ["FM", "LINK", "ORPHAN", "COMP", "DIM", "AC", "TOKEN", "MD", "PRIV", "NV"]:
             c = counts.get(ck, {"error": 0, "warn": 0, "info": 0})
             print(f"  {ck:7} error {c['error']:4}  warn {c['warn']:4}  info {c['info']:4}")
         print(f"  #needs-verification: {sum(nv.values())} tags in {len(nv)} notes")
