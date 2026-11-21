@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, text]
-related: ["[[Text]]", "[[Text Box]]", "[[Marquee Text]]", "[[Text Field]]", "[[Form Row]]", "[[Text Truncation]]", "[[Disabled State]]", "[[Owner Feedback 2026-11-20]]", "[[Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Text]]", "[[Text Box]]", "[[Marquee Text]]", "[[Text Field]]", "[[Form Row]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[Owner Feedback 2026-11-20]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -42,10 +42,10 @@ Names something or shows one short value in one line: a caption beside a control
 | State | Visual change | Token values |
 |---|---|---|
 | Rest | `on_surface` text | [[Text]] |
-| Disabled | Opacity 0.5 (`Label:disabled`); MD3 text disabled is `on_surface` at 38 percent; spec follows [[Disabled State]] | [[Disabled State]] |
+| Disabled | Opacity 0.5 (`Label:disabled`); MD3 text disabled is `on_surface` at 38 percent; spec follows [[State Layers#Disabled scheme|Disabled State]] | [[State Layers#Disabled scheme|Disabled State]] |
 | Hover, focus, pressed, selected | Not applicable: not interactive | not applicable |
 | Empty | No text: the Label takes no width beyond its box; spec: an empty Label has zero width unless `Width` is set | not applicable |
-| Cut | A text wider than the Label ends with an ellipsis (spec); code default is `CLIP` | [[Text Truncation]] |
+| Cut | A text wider than the Label ends with an ellipsis (spec); code default is `CLIP` | [[03 Typography and Text Rules#Truncation across components|Text Truncation]] |
 
 ## Tokens used
 
@@ -81,7 +81,7 @@ Not applicable: a Label has no animation.
 
 - Role: none; `Label` = the text, so assistive technology reads it. Decorative duplicates are hidden with `A11y_Hidden` by the author.
 - Keys: none.
-- Announcements: a changing value is not live by default; a status value that matters uses a polite announcement from the module ([[Accessibility Announcements]]).
+- Announcements: a changing value is not live by default; a status value that matters uses a polite announcement from the module ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Contrast: 4.5:1 against its surface in all schemes ([[Accessibility Rules]] AR-16).
 
 ## Dark and light
@@ -104,9 +104,9 @@ Text takes `on_surface` through the Default stylesheet and follows the theme mod
 - [ ] AC-MOD-LBL-4 (geometry check): the Label's line box is 20 dp high with `body_medium` and is centred in a 40, 32 or 28 dp row within 1 px.
 - [ ] AC-MOD-LBL-5 (contrast script): Label text against the surface at least 4.5:1 in Light, Dark and High_Contrast.
 - [ ] AC-MOD-LBL-6 (scripted input): a Label inside a row is never focusable and receives no key.
-- [ ] AC-MOD-LBL-7 (scripted pointer): a Label with a tooltip shows exactly 1 layer after 500 ms and none from its row.
+- [ ] AC-MOD-LBL-7 (scripted input): a Label with a tooltip shows exactly 1 layer after 500 ms and none from its row.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

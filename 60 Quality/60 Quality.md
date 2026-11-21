@@ -4,7 +4,7 @@ type: index
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [index]
 related: []
 depends_on: []
@@ -16,7 +16,8 @@ Accessibility rules, the test method for acceptance criteria and the per-project
 
 ## Notes
 
-- [[Test Method]]
 - [[Accessibility Rules]]
+- [[Test Method]]
+- [[Vault Lint]]
 
 Back to [[Index]].

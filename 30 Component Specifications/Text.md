@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, content, text]
-related: ["[[Text Field]]", "[[Link]]", "[[Text Selection]]", "[[Text Truncation]]", "[[Text Measurement]]", "[[Rich Text]]", "[[Rich Text Span]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Form Row]]", "[[List Item]]", "[[Button]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[03 Typography and Text Rules]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[Text Field]]", "[[Link]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "Text Measurement", "[[Text|Rich Text]]", "[[Text|Rich Text Span]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Form Row]]", "[[List Item]]", "[[Button]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[03 Typography and Text Rules]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Typography]]", "[[Colour Roles]]", "[[10 Layout Overflow and Scrolling]]"]
 ---
 
@@ -22,12 +22,12 @@ Every label, heading, description, value and message in a Tesserae interface is 
 ## When to use and not
 
 - Use when: the words are not edited by the user: labels, headings, body text, values, status lines.
-- Do not use when: the user edits the words ([[Text Field]]), the words activate something (a whole-line [[Link]], a [[Button]]), or part of a longer text is a link (use rich text runs with a `link`, [[Rich Text]]).
+- Do not use when: the user edits the words ([[Text Field]]), the words activate something (a whole-line [[Link]], a [[Button]]), or part of a longer text is a link (use rich text runs with a `link`, [[Text|Rich Text]]).
 - A text that names a control belongs to that control's note (button label, [[List Item]] headline); this note states the rules they share.
 
 ## Anatomy
 
-1. Content: the characters, in one style or in runs of different styles ([[Rich Text Span]]).
+1. Content: the characters, in one style or in runs of different styles ([[Text|Rich Text Span]]).
 2. Line box: the line height of the type role; a block of lines stacks line boxes.
 3. Ellipsis (when truncated): the glyph `…` (U+2026) ending the last visible line.
 4. Selection highlight (when selectable): the role `primary` at 30 percent behind the glyphs.
@@ -81,7 +81,7 @@ Text on a coloured container takes the matching `on_` role (`on_primary_containe
 ## Sizing and density
 
 - A single-line text is as high as the line height of its role: 24, 20, 16 dp for `body_large`, `body_medium`, `body_small` ([[Typography]]). Density changes the role used (table above), not the role's own size.
-- Width: a text that hugs its content is the measured text width plus 2 px (`tre:docs/guide/text.md`, "Sizing text to its content", [[Text Measurement]]); a text in a flex row has `Min_Width 0` so it can shrink and truncate ([[10 Layout Overflow and Scrolling]]).
+- Width: a text that hugs its content is the measured text width plus 2 px (`tre:docs/guide/text.md`, "Sizing text to its content", Text Measurement); a text in a flex row has `Min_Width 0` so it can shrink and truncate ([[10 Layout Overflow and Scrolling]]).
 - Minimum text size: 11 dp (`label_small`) is the smallest role; no text is set below 11 dp. Body text in a wrapping block has a minimum container width of 120 dp ([[10 Layout Overflow and Scrolling]]).
 - Maximum measure: a reading paragraph is at most 840 dp wide ([[10 Layout Overflow and Scrolling]]).
 - A selectable text and a link have a pointer hit area of at least 24 by 24 dp when they act alone (a standalone link); inline links in a sentence are exempt ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum), exception for inline targets).
@@ -91,7 +91,7 @@ Text on a coloured container takes the matching `on_` role (`on_primary_containe
 This section applies chapter [[10 Layout Overflow and Scrolling]]; it does not restate its principles.
 
 - Single line (`Wrap: none`): content that exceeds the width is cut and ended with `…` (`Overflow: ellipsis`). Silent clipping (`Overflow: clip`) of text that can exceed its box is a defect (F5). The default of the engine is `clip` (`tre:docs/guide/text.md`; `Overflow` default `clip` in tess-ui and tess-shell), so a text that can exceed its box sets `ellipsis` explicitly, or the project's stylesheet does it for every Text (`Label { Overflow: ELLIPSIS }`, `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl`).
-- Paths and file names: middle truncation keeps the last segment ([[Text Truncation]]); this is a project computation, the engine ellipsis ends the line only.
+- Paths and file names: middle truncation keeps the last segment ([[03 Typography and Text Rules#Truncation across components|Text Truncation]]); this is a project computation, the engine ellipsis ends the line only.
 - Wrapping block (`Wrap: word`): breaks at word boundaries; a word longer than the container breaks at a glyph boundary; line height from the role; `Max_Lines` cuts at n lines and the last ends with `…` when `Overflow` is `ellipsis`. Without `Max_Lines` the block grows and its container scrolls ([[Scrollbar and Scroll Container]], [[ADR-0003 Scrollbar rule]]).
 - Alignment: `Text_Align` is `start`, `center` or `end`; `start` is the default and means left in a left-to-right locale. Numbers in columns align `end`. A centred label is centred in its box, not by padding.
 - Vertical centring: a single-line text in a control is centred on the control's content box by construction: the line box has the role's line height and the space above equals the space below within 1 px at every density ([[10 Layout Overflow and Scrolling]], AC-DEN-9). The engine places a text node at the top of its box; a control centres it by `Align_Content: center` (tess-ui, tess-shell) or by computing equal padding, never by a hand-tuned asymmetric padding (F7). A project whose engine has no vertical-align property computes the padding from the control height.
@@ -103,7 +103,7 @@ This section applies chapter [[10 Layout Overflow and Scrolling]]; it does not r
 - Pointer: static text takes no pointer events unless it is selectable or has a link; hover shows no change except the I-beam over selectable text and a hand over a link (`tre:docs/guide/text.md`).
 - Selection (`Selectable: true`): press and drag selects; double-click selects a word; triple-click selects a line; a drag that starts in one selectable text and moves into others selects across them; a press anywhere else clears the selection; the selection is `primary` at 30 percent ([[Text Selection]], `tre:docs/guide/text.md`).
 - Keyboard (selectable text with a selection): Ctrl+A selects all of the text, Ctrl+C copies, Shift+Left, Shift+Right extend by a character, Ctrl+Shift+Left and Ctrl+Shift+Right by a word, Shift+Up and Shift+Down by a line, Shift+Home and Shift+End to the start and end of the line (`tre:docs/guide/text.md`). Unselected static text is not focusable and not in the Tab order; a selectable text that a keyboard user must be able to copy is reachable through the focusable control that owns it (the row, the field label), or its container exposes a "Copy" command; a text that is the only copy of an error message or a path is selectable and the owning control exposes a copy action #needs-verification-as-design-choice.
-- Links in text: [[Link]] and [[Rich Text]].
+- Links in text: [[Link]] and [[Text|Rich Text]].
 - Touch: a long press selects a word on a selectable text where the platform does; otherwise as pointer.
 - IME: not applicable (static text takes no composition).
 
@@ -165,7 +165,7 @@ The colour is a role; the scheme recomputes it ([[Theme Following the System]]).
 
 Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

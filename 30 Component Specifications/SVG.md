@@ -6,14 +6,14 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, content, svg, block]
-related: ["[[SVG Block]]", "[[SVG Node]]", "[[Path Node]]", "[[Animated Icon]]", "[[Image]]", "[[Iconography]]", "[[Icon Button]]", "[[Colour Roles]]", "[[Motion]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]"]
+related: ["[[SVG|SVG Block]]", "[[SVG|SVG Node]]", "[[Path Node]]", "[[SVG|Animated Icon]]", "[[Image]]", "[[Iconography]]", "[[Icon Button]]", "[[Colour Roles]]", "[[Motion]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]"]
 depends_on: ["[[Iconography]]", "[[Colour Roles]]", "[[Motion]]"]
 ---
 
 # SVG
 
 > [!info] Summary
-> A vector document drawn as one scene, scaled to fit its box and centred, whose `currentColor` follows the theme. Material Design 3 uses SVG for icons and illustrations but has no SVG component: the counterpart is [Icons](https://m3.material.io/styles/icons/overview). The block is the author-facing element; the engine node is [[SVG Node]] and the shell block is [[SVG Block]]. Source of truth in code: see Status in code.
+> A vector document drawn as one scene, scaled to fit its box and centred, whose `currentColor` follows the theme. Material Design 3 uses SVG for icons and illustrations but has no SVG component: the counterpart is [Icons](https://m3.material.io/styles/icons/overview). The block is the author-facing element; the engine node is [[SVG|SVG Node]] and the shell block is [[SVG|SVG Block]]. Source of truth in code: see Status in code.
 
 ## Purpose
 
@@ -37,7 +37,7 @@ Draw icons, logos and illustrations that stay sharp at any size and any scale fa
 |---|---|---|
 | Themed monochrome | icons, simple logos | fills and strokes use `currentColor`; the colour is the owner's `Foreground` role |
 | Multicolour | illustrations, brand logos | fixed colours in the document; not themed |
-| Animated | an animated icon or spinner | the document carries SMIL animation, sampled by the `svg_time` property ([[Animated Icon]]) |
+| Animated | an animated icon or spinner | the document carries SMIL animation, sampled by the `svg_time` property ([[SVG|Animated Icon]]) |
 | Informative | the graphic carries meaning | has an alt text |
 | Decorative | the graphic only decorates | hidden from assistive technology |
 
@@ -129,18 +129,18 @@ Fitted `meet`, centred; `currentColor` = `on_surface`; decorative (hidden) witho
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py` (`svg`), `tess-ui:src/tess_ui/spec/svg.py`, `tess-ui:docs/components/svg.md` | partly meets: whole document drawn, scaled to fit and centred, `Foreground` is `currentColor` (AC-SVG-1, AC-SVG-2 meet by reading), `Src` or `Content`, `.svgz`, raster `<image>` from `data:` URLs or neighbouring files decoded by the toolkit (AC-SVG-6 partly: scripts are ignored by the engine #needs-verification), `Alt` gives `img`, none hides (AC-SVG-4 meets by reading), a missing file stops the view opening with the widget name (AC-SVG-5 partly: no error glyph); no size limit (AC-SVG-9 fails); no reduced-motion handling of `svg_time` in the widget code read (AC-SVG-7 unmeasured) |
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (the [[SVG Block]]), `shell-vault:41 TDL Reference/Block Reference.md` | partly meets: `Source` or `Icon`, `Color` or `Foreground` for `currentColor`, uniform fit and centred, hidden unless `Label` (AC-SVG-1, AC-SVG-2, AC-SVG-4 meet by reading); an unknown icon is an error at its value name (AC-SVG-5 partly); `svg_images` is not exposed, so an embedded raster does not draw (AC-SVG-6: not applicable until exposed); default size from the document is #needs-verification; no reduced-motion rule for animation (AC-SVG-7 unmeasured) |
-| tre | `tre:docs/reference/paint.md` (SVG documents), `tre:crates/engine-core/src/svg.rs`, `tre:crates/engine-core/src/svg_smil.rs` | not applicable as a component: the [[SVG Node]] parses and draws the scene, supports `svg_time` sampling and one blur or drop shadow filter only |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (the [[SVG|SVG Block]]), `shell-vault:41 TDL Reference/Block Reference.md` | partly meets: `Source` or `Icon`, `Color` or `Foreground` for `currentColor`, uniform fit and centred, hidden unless `Label` (AC-SVG-1, AC-SVG-2, AC-SVG-4 meet by reading); an unknown icon is an error at its value name (AC-SVG-5 partly); `svg_images` is not exposed, so an embedded raster does not draw (AC-SVG-6: not applicable until exposed); default size from the document is #needs-verification; no reduced-motion rule for animation (AC-SVG-7 unmeasured) |
+| tre | `tre:docs/reference/paint.md` (SVG documents), `tre:crates/engine-core/src/svg.rs`, `tre:crates/engine-core/src/svg_smil.rs` | not applicable as a component: the [[SVG|SVG Node]] parses and draws the scene, supports `svg_time` sampling and one blur or drop shadow filter only |
 
 Evidence: [[Gaps and Contradictions]] (SVG node drops all filters except one blur or drop shadow; icon facility has no named lookup or size tokens).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py`, `tess-ui:src/tess_ui/spec/svg.py` | exists, partial |
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` | exists as the SVG block |
-| tre | the [[SVG Node]] | mechanism |
+| tre | the [[SVG|SVG Node]] | mechanism |
 
 ## Deviations from Material Design 3
 

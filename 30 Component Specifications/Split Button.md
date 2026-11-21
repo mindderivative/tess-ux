@@ -82,7 +82,7 @@ Tesserae by density; the control heights follow [[Button]] and [[ADR-0002 Deskto
 
 ## Tooltip and overlay behaviour
 
-Tooltips only on the buttons: the trailing button shows "More options for <label>" (a tooltip on the control, [[ADR-0004 Tooltip rule]], [[ADR-0011 Tooltip hover grace for all tooltips]]); the main button has one only for a truncated label. No tooltip on the group. The tooltip closes when the menu opens. The menu is a [[Menu]] popup; focus returns to the trailing button on close ([[Popup]]).
+Tooltips only on the buttons: the trailing button shows "More options for {label}" (a tooltip on the control, [[ADR-0004 Tooltip rule]], [[ADR-0011 Tooltip hover grace for all tooltips]]); the main button has one only for a truncated label. No tooltip on the group. The tooltip closes when the menu opens. The menu is a [[Menu]] popup; focus returns to the trailing button on close ([[Popup]]).
 
 ## Motion
 
@@ -90,7 +90,7 @@ Chevron rotates 180 degrees over 100 ms and the trailing corners change at the s
 
 ## Accessibility
 
-- Role of the container: `group` named with the main label. Main part: role `button`, name = label. Trailing part: role `button`, `haspopup` menu, `expanded` true while the menu shows, name "More options for <label>" (WCAG 2.5.3: the name does not need to repeat visible text because the trailing button shows none).
+- Role of the container: `group` named with the main label. Main part: role `button`, name = label. Trailing part: role `button`, `haspopup` menu, `expanded` true while the menu shows, name "More options for {label}" (WCAG 2.5.3: the name does not need to repeat visible text because the trailing button shows none).
 - The menu follows the accessibility of [[Menu]] (role `menu`, items `menuitem`).
 - Contrast, focus ring: as [[Button]]; each button's ring is not clipped by its neighbour (the 2 dp gap and the ring offset overlap by design: the ring of the focused button draws on top).
 

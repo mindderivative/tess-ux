@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, shell, bar, layer-shell]
-related: ["[[Panel and Surface]]", "[[Popup]]", "[[Frame]]", "[[Auto Hide]]", "[[Peek]]", "[[Launcher]]", "[[Volume OSD]]", "[[Dock]]", "[[Vertical Bar]]", "[[Top App Bar]]", "[[Layer Window]]", "[[Reserved Space]]", "[[Input Region]]", "[[Shortcut Mode]]", "[[Keyboard Navigation]]", "[[Tasks Module]]", "[[Workspaces Module]]", "[[Tray Module]]", "[[Clock Module]]", "[[12 Overlays]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Elevation]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Panel and Surface]]", "[[Popup]]", "[[Frame]]", "[[Auto Hide]]", "[[Peek]]", "[[Launcher]]", "[[Volume OSD]]", "[[Dock]]", "[[Bar#Variants|Vertical Bar]]", "[[Top App Bar]]", "[[Layer Window]]", "[[Frame#Anatomy|Reserved Space]]", "[[Frame#Anatomy|Input Region]]", "[[Keyboard Navigation|Shortcut Mode]]", "[[Keyboard Navigation]]", "[[Tasks Module]]", "[[Workspaces Module]]", "[[Tray Module]]", "[[Clock Module]]", "[[12 Overlays]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Elevation]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0005 Theme follows the system]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 ---
 
@@ -25,7 +25,7 @@ Give the shell a permanent strip of status and launch controls along a screen ed
 
 - Use when: the content is shell-wide, always present and tied to an edge (clock, workspace switcher, tray, task list, dock).
 - Do not use when: the surface reserves nothing and floats or moves ([[Panel and Surface]], a Panel); the surface is a ring around the whole output ([[Frame]]; a thick Frame edge, a strip, does a Bar's job inside the Frame); the content is a menu or flyout ([[Popup]]); the content shows for a moment ([[Volume OSD]]); the strip is inside an application window (use [[Top App Bar]] or a toolbar there).
-- A dock is a Bar ([[Dock]]); a side bar is a Bar on `LEFT` or `RIGHT` ([[Vertical Bar]]).
+- A dock is a Bar ([[Dock]]); a side bar is a Bar on `LEFT` or `RIGHT` ([[Bar#Variants|Vertical Bar]]).
 
 ## Anatomy
 
@@ -44,7 +44,7 @@ Give the shell a permanent strip of status and launch controls along a screen ed
 | Floating full-span | as above plus `Gap: 8` | A bar that looks detached; still reserves its space |
 | Short, centred | `Edge: BOTTOM`, `Width: 560`, `Height: 64`, `Alignment: CENTER` | Dock |
 | Short, at one end | `Alignment: START` or `END`, `Offset` | Corner bar |
-| Vertical | `Edge: LEFT` or `RIGHT` | Side bar; children laid out vertically ([[Vertical Bar]]) |
+| Vertical | `Edge: LEFT` or `RIGHT` | Side bar; children laid out vertically ([[Bar#Variants|Vertical Bar]]) |
 | Non-reserving | `Layer: BOTTOM` or `OVERLAY`, or `Reserve: false` | Decorative strip, a dock that floats over windows |
 
 ## States
@@ -98,7 +98,7 @@ The thickness across the edge is `Height` for a top or bottom Bar and `Width` fo
 ## Behaviour
 
 - Pointer: a click on a module acts on the module. The body takes the pointer; the shadow margin does not (the input region is the body). Hover opens nothing on the Bar itself; tray and clock hover tooltips belong to the modules ([[Tooltip]]).
-- Keyboard: a Bar takes no keyboard by default (`Keyboard: NONE`; Tab does nothing in it). `ON_DEMAND` gives it the keyboard after a click. A Bar that holds a text field takes `ON_DEMAND` whatever is written, and the shell logs a warning when `NONE` was written. Keyboard-only access to a Bar is through [[Shortcut Mode]] (`Enter_Shortcut_Mode`, then `Next_Focus` and `Previous_Focus` by `Tab_Index`) and the Bar's `Shortcut_Mode` key; see [[Keyboard Navigation]]. A hidden or auto-hidden Bar needs a keyboard way to reveal it ([[Auto Hide]]).
+- Keyboard: a Bar takes no keyboard by default (`Keyboard: NONE`; Tab does nothing in it). `ON_DEMAND` gives it the keyboard after a click. A Bar that holds a text field takes `ON_DEMAND` whatever is written, and the shell logs a warning when `NONE` was written. Keyboard-only access to a Bar is through [[Keyboard Navigation|Shortcut Mode]] (`Enter_Shortcut_Mode`, then `Next_Focus` and `Previous_Focus` by `Tab_Index`) and the Bar's `Shortcut_Mode` key; see [[Keyboard Navigation]]. A hidden or auto-hidden Bar needs a keyboard way to reveal it ([[Auto Hide]]). Open conflict (`open, owner decides`, OQ-25): the owner's decision of 2026-10-27 says no key reveals a Bar, and the accessibility rule that every hidden element is keyboard reachable (AR-9) says one must; both stay recorded here and in [[Auto Hide]], and the proposed Shortcut Mode reveal stays the recommendation, not a decision.
 - Touch: modules take 48 by 48 dp hit areas in a touch context.
 - Reservation: the zone is the thickness plus `Gap` when `Layer` is `TOP` and `Reserve` is true. The compositor adds the margin to the zone, so a Bar with `Height: 32` and `Gap: 8` reserves 48 px (measured on KWin 6.8.2 and sway, 2026-11-04): 8 px above the Bar, the Bar, 8 px below. A Bar reserves on its own output only.
 - Layers: `BOTTOM`, `TOP` or `OVERLAY`; default `TOP`. Reserved space exists only on `TOP`. `BACKGROUND` is not offered. The layer-shell protocol leaves the order of two surfaces on one layer undefined, so a surface that must draw over a Bar is on a higher layer.
@@ -112,8 +112,8 @@ A Bar carries no tooltip. Each module that needs one puts it on its own control 
 
 ## Motion
 
-- Show and hide of a Bar: slide of the edge margin by `Animation { Type: SLIDE, Duration: 200 }` or fade, `Content_Fade` on by default; not built for a Bar (`Animation` is "Not built"). Rules in [[Auto Hide]] and [[Content Fade]].
-- A margin animation is one small commit per step; the zone changes once, at the start of a show and at the end of a hide, so windows reflow once ([[Surface Animation]]).
+- Show and hide of a Bar: slide of the edge margin by `Animation { Type: SLIDE, Duration: 200 }` or fade, `Content_Fade` on by default; not built for a Bar (`Animation` is "Not built"). Rules in [[Auto Hide]] and [[Auto Hide|Content Fade]].
+- A margin animation is one small commit per step; the zone changes once, at the start of a show and at the end of a hide, so windows reflow once ([[12 Overlays#Motion and reduced motion|Surface Animation]]).
 - Reduced motion: show and hide are instant, no slide, no fade.
 - An idle Bar draws no frames between module updates.
 
@@ -121,9 +121,9 @@ A Bar carries no tooltip. Each module that needs one puts it on its own control 
 
 - Role and name: tre publishes the Bar as one window of the application; the window node has no accessible name in tre, so the shell sets one per Bar ("Top bar", "Dock"). Modules inside carry roles, labels and states ([[Accessibility Rules]] AR-1, AR-2).
 - Keys: Tab walks the focusable modules when the Bar takes the keyboard; Enter and Space activate a focused button ([[Button]]).
-- Every action reachable by pointer is reachable by keyboard (AR-9) through [[Shortcut Mode]] or a global shortcut ([[Global Shortcuts]]).
+- Every action reachable by pointer is reachable by keyboard (AR-9) through [[Keyboard Navigation|Shortcut Mode]] or a global shortcut ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]). For an auto-hidden Bar this rule conflicts with the owner's decision of 2026-10-27 that no key reveals a Bar: open conflict, `open, owner decides`, OQ-25; the proposed Shortcut Mode reveal is the recommendation ([[Auto Hide]]).
 - Contrast: `on_surface` on the fill at least 4.5 to 1 in light, dark and high contrast; the measured shell pairs are 14.87, 15.31 and 21.00 ([[Colour Roles]]).
-- Announcements: the shell speaks changes through one window of the shell (the Frame, else the Bar), by owner decision of 2026-11-19; whether Orca reads an unfocused window is untested ([[Accessibility Announcements]]).
+- Announcements: the shell speaks changes through one window of the shell (the Frame, else the Bar), by owner decision of 2026-11-19; whether Orca reads an unfocused window is untested ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Screen position: a screen reader gets the tree but no screen position for a layer surface.
 
 ## Dark and light
@@ -188,6 +188,7 @@ Check types follow [[Test Method]]. Geometry checks run at scale 1.0, 1.25 and 2
 | Thickness 48, 40, 36 dp (MD3 Navigation bar 80 dp) | desktop density, one-line modules | [[ADR-0002 Desktop density levels and target sizes]] |
 | Text is not rotated on a vertical Bar | readability; rotation is opt-in and not built | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Keyboard default is none; access by Shortcut Mode | a layer surface that grabs the keyboard unasked steals it from windows | none (shell design of 2026-10-27) |
+| Open conflict, not a deviation yet: auto-hidden Bar with no key that reveals it (owner decision 2026-10-27) against AR-9 (every hidden element keyboard reachable) | `open, owner decides`, OQ-25; recommendation: Shortcut Mode reveals the Bar | none (owner decision pending, see [[Auto Hide]]) |
 
 ## Sources
 

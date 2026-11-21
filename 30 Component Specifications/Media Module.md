@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, media]
-related: ["[[Bar]]", "[[Icon Button]]", "[[Button]]", "[[Slider]]", "[[Marquee Text]]", "[[Image]]", "[[Disabled State]]", "[[Empty and Error States]]", "[[Accessibility Announcements]]", "[[Reduced Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Icon Button]]", "[[Button]]", "[[Slider]]", "[[Marquee Text]]", "[[Image]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -47,11 +47,11 @@ Control the playing media from the Bar and see the track, artist and player with
 | State | Visual change | Token values |
 |---|---|---|
 | Playing, paused, stopped | The play button's glyph changes (`pause` while playing, `play` otherwise) and its name changes (`Pause`, `Play`) | glyph shape, not colour |
-| Control the player cannot do | That button is disabled (`can_previous`, `can_play_pause`, `can_next`; the slider when `can_seek` is false): label and icon at 38 percent, no hover, no press, no tooltip, no focus | [[Disabled State]] |
+| Control the player cannot do | That button is disabled (`can_previous`, `can_play_pause`, `can_next`; the slider when `can_seek` is false): label and icon at 38 percent, no hover, no press, no tooltip, no focus | [[State Layers#Disabled scheme|Disabled State]] |
 | Hover, focus, pressed (buttons) | State layers 8, 10, 10 percent and focus ring ([[Button]], [[Icon Button]]) | [[State Layers]] |
 | Title cut | Ellipsis while not scrolling (disabled or reduced motion), full text in the tooltip | [[Marquee Text]] |
 | Hidden (service absent) | No bus or no player: hidden. Hidden means `Visible: false` on the root: the module takes no space in the [[Bar]], no spacing is left beside it, no placeholder is drawn and the root is absent from the accessibility tree. The player closing hides the module; a player starting shows it | root `Visible: <| available and has_player |>` |
-| Loading artwork | Placeholder icon until the image decodes; a bad file shows the error image | [[Image]], [[Empty and Error States]] |
+| Loading artwork | Placeholder icon until the image decodes; a bad file shows the error image | [[Image]], [[Iconography#Fallback icon|Empty and Error States]] |
 
 ## Tokens used
 
@@ -86,14 +86,14 @@ Finding (shared): the tooltip card is a literal copy in the `.tdl` of Audio, Bat
 
 ## Motion
 
-The slider handle and the Marquee are the only moving parts. The one-second position tick moves the slider by value, not by animation. Reduced motion: the Marquee stops and shows an ellipsis ([[Reduced Motion]]).
+The slider handle and the Marquee are the only moving parts. The one-second position tick moves the slider by value, not by animation. Reduced motion: the Marquee stops and shows an ellipsis ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]).
 
 ## Accessibility
 
 - Roles: root `GROUP` (holds controls), buttons `BUTTON`, slider `SLIDER` with `value_text`, artwork `IMG` hidden unless named.
 - Names: `Previous`, `Play` or `Pause`, `Next`, `Position`; root name `label` = `Song, Artist (Player), paused`; description = the tooltip.
 - Keys: as Behaviour.
-- Announcements: with `announce` true a new track is said once, politely, `Track changed: Song, Artist` (`Media_Module.py`); default false. The position tick is never announced ([[Accessibility Announcements]]).
+- Announcements: with `announce` true a new track is said once, politely, `Track changed: Song, Artist` (`Media_Module.py`); default false. The position tick is never announced ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Disabled controls are not focusable (AR-7).
 
 ## Dark and light
@@ -117,7 +117,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-MED-2 (scripted input): no player: root `Visible` false, width 0, absent from the accessibility tree, Bar spacing unchanged; a player appearing shows the module.
 - [ ] AC-MOD-MED-3 (scripted input): a player with `can_next` false: Next is disabled, takes no focus, no press and no tooltip.
 - [ ] AC-MOD-MED-4 (scripted input): Tab visits Previous, Play, Next and Position once each in order and leaves; Enter on Play calls play or pause once.
-- [ ] AC-MOD-MED-5 (scripted pointer): hover Play for 500 ms: one tooltip layer with text `Play` or `Pause`; hover the title: one layer with title, artist, player and state; never two layers.
+- [ ] AC-MOD-MED-5 (scripted input): hover Play for 500 ms: one tooltip layer with text `Play` or `Pause`; hover the title: one layer with title, artist, player and state; never two layers.
 - [ ] AC-MOD-MED-6 (static check): no node with role `group` carries a tooltip; no tooltip-bearing node has a tooltip-bearing descendant.
 - [ ] AC-MOD-MED-7 (scripted input): a slider drag to 50 percent sends no player call until release; release sends exactly one seek.
 - [ ] AC-MOD-MED-8 (geometry check): control containers are 40, 32 and 28 dp square at default, compact and dense; hit areas at least 24 dp and non-overlapping.
@@ -125,7 +125,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-MED-10 (pixel check): the tooltip card equals the plain [[Tooltip]] card; the module `.tdl` has no card literal.
 - [ ] AC-MOD-MED-11 (scripted input): with `announce` true a track change queues exactly one polite `Track changed:` announcement.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

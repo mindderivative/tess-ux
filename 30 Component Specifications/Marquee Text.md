@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, text, motion]
-related: ["[[Text]]", "[[Label]]", "[[Task Item]]", "[[Media Module]]", "[[Reduced Motion]]", "[[Disabled State]]", "[[Bar]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Text]]", "[[Label]]", "[[Task Item]]", "[[Media Module]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[Bar]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -47,8 +47,8 @@ Fits a long title, such as a window or a track title, into a fixed width in a [[
 | Fits | Static text, no animation, 0 frames at idle | [[Text]] |
 | Scrolling | Text moves at `Speed` (30 dp per second) and pauses `Pause` (1500 ms) at each end | [[Motion]] |
 | Paused (hover or focus) | Spec: the scroll stops while the pointer rests on the box or the box has keyboard focus; not built (see Accessibility) | WCAG 2.2 SC 2.2.2 |
-| Disabled | Opacity 0.5 (`Marquee_Text:disabled`), no scroll, ellipsis, tooltip with the whole text (the one tooltip that opens over a disabled block, `Tooltip_When_Disabled`) | [[Disabled State]] |
-| Reduced motion | No scroll; ellipsis; whole text in the tooltip | [[Reduced Motion]] |
+| Disabled | Opacity 0.5 (`Marquee_Text:disabled`), no scroll, ellipsis, tooltip with the whole text (the one tooltip that opens over a disabled block, `Tooltip_When_Disabled`) | [[State Layers#Disabled scheme|Disabled State]] |
+| Reduced motion | No scroll; ellipsis; whole text in the tooltip | [[14 Accessibility Basics#Reduced motion|Reduced Motion]] |
 | Hidden or off-screen | The scroll stops while the block is not visible | not applicable |
 
 ## Tokens used
@@ -82,7 +82,7 @@ One tooltip, on the Marquee box (the control), text = the whole text. 500 ms, 15
 
 ## Motion
 
-The scroll is the only motion: linear, `Speed` dp per second, pause 1500 ms at each end. With reduced motion on the text does not scroll ([[Reduced Motion]], rule 4 of [[Motion]]). WCAG 2.2 SC 2.2.2 (Pause, Stop, Hide) asks for a way to pause moving content that lasts more than 5 seconds and starts automatically: spec: pause on hover and keyboard focus, and no scroll under reduced motion #needs-verification (whether hover pause is a sufficient mechanism).
+The scroll is the only motion: linear, `Speed` dp per second, pause 1500 ms at each end. With reduced motion on the text does not scroll ([[14 Accessibility Basics#Reduced motion|Reduced Motion]], rule 4 of [[Motion]]). WCAG 2.2 SC 2.2.2 (Pause, Stop, Hide) asks for a way to pause moving content that lasts more than 5 seconds and starts automatically: spec: pause on hover and keyboard focus, and no scroll under reduced motion #needs-verification (whether hover pause is a sufficient mechanism).
 
 ## Accessibility
 
@@ -113,12 +113,12 @@ Text takes `on_surface` through the Default stylesheet (`Text` rule) in light, d
 - [ ] AC-MOD-MQT-3 (scripted input): with reduced motion on, a long text does not animate, ends with an ellipsis and the tooltip shows the whole text.
 - [ ] AC-MOD-MQT-4 (scripted input): with `Enabled` false the text does not animate, opacity is 0.5 and the tooltip still opens with the whole text when the text is cut, and not when it fits.
 - [ ] AC-MOD-MQT-5 (AT tree assertion): the node's accessible name equals the whole text, whatever the scroll position.
-- [ ] AC-MOD-MQT-6 (scripted pointer): hover for 500 ms: exactly 1 tooltip layer with the whole text; leave removes it within 150 ms plus one frame.
+- [ ] AC-MOD-MQT-6 (scripted input): hover for 500 ms: exactly 1 tooltip layer with the whole text; leave removes it within 150 ms plus one frame.
 - [ ] AC-MOD-MQT-7 (scripted input): with the pointer resting on the box the scroll position stays unchanged for 3 seconds (hover pause); moving away resumes.
 - [ ] AC-MOD-MQT-8 (static check): a Marquee inside a tooltip-bearing control shows no second tooltip: hovering the control shows exactly 1 layer.
 - [ ] AC-MOD-MQT-9 (contrast script): text against the surface at least 4.5:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
@@ -137,6 +137,6 @@ Text takes `on_surface` through the Default stylesheet (`Text` rule) in light, d
 ## Sources
 
 - WCAG 2.2 SC 2.2.2 Pause, Stop, Hide: https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html (content that moves for more than 5 seconds needs a pause, stop or hide mechanism, except when essential). Verified 2026-11-21.
-- WCAG 2.2 SC 2.3.3 Animation from Interactions and the reduced-motion preference are covered in [[Reduced Motion]].
+- WCAG 2.2 SC 2.3.3 Animation from Interactions and the reduced-motion preference are covered in [[14 Accessibility Basics#Reduced motion|Reduced Motion]].
 - WCAG 2.2 SC 1.4.13 Content on Hover or Focus: https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html
 - Tesserae sources: `shell-vault:50 Design System/Standard Modules.md`, `tess-shell:src/tess_shell/binder/marquee.py`.

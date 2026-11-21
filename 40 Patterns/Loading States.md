@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [pattern, state, loading, progress]
-related: ["[[40 Patterns]]", "[[Empty States]]", "[[Error States]]", "[[Notifications]]", "[[Button]]", "[[Progress Indicator]]", "[[Circular Progress Indicator]]", "[[Linear Progress Indicator]]", "[[Motion]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Gaps and Contradictions]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[40 Patterns]]", "[[Empty States]]", "[[Error States]]", "[[Notifications]]", "[[Button]]", "[[Progress Indicator]]", "[[Progress Indicator|Circular Progress Indicator]]", "[[Progress Indicator|Linear Progress Indicator]]", "[[Motion]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Gaps and Contradictions]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Motion]]", "[[Colour Roles]]", "[[Spacing and Density]]"]
 ---
 

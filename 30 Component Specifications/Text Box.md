@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, text]
-related: ["[[Text]]", "[[Label]]", "[[Text Editor]]", "[[Text Selection]]", "[[Text Truncation]]", "[[Scrollbar and Scroll Container]]", "[[Disabled State]]", "[[Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Text]]", "[[Label]]", "[[Text Editor]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[Scrollbar and Scroll Container]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -45,7 +45,7 @@ Shows a paragraph, a description or a message that needs more than one line.
 | Rest | `on_surface` text | [[Text]] |
 | Selected text (when `Selectable`) | Selection highlight in `primary` at a contrast of at least 3:1 against the text background ([[Text Selection]]) | [[Colour Roles]] |
 | Focus (when `Selectable`) | Focus ring 3 dp, 2 dp offset | [[Focus Ring]] |
-| Disabled | Opacity 0.5 (`TextBox:disabled`) | [[Disabled State]] |
+| Disabled | Opacity 0.5 (`TextBox:disabled`) | [[State Layers#Disabled scheme|Disabled State]] |
 | Empty | No text, zero height unless `Height` is set | not applicable |
 | Hover, pressed | Not applicable: no action | not applicable |
 
@@ -83,7 +83,7 @@ Not applicable: no animation.
 
 - Role: none, with `Label` = the text; a Text Box that holds the main content of a view takes `Role: TEXTBOX` and a `Label` from the author, and `read_only`.
 - Keys: as Behaviour.
-- Announcements: none; a changing message uses a polite announcement ([[Accessibility Announcements]]).
+- Announcements: none; a changing message uses a polite announcement ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Contrast 4.5:1 for text, 3:1 for the selection highlight.
 
 ## Dark and light
@@ -108,7 +108,7 @@ Text and selection roles follow the theme mode ([[Theme Following the System]]).
 - [ ] AC-MOD-TBX-6 (contrast script): text 4.5:1 against the surface and the selection highlight 3:1 against the text, in Light, Dark and High_Contrast.
 - [ ] AC-MOD-TBX-7 (geometry check): line height 20 dp with `body_medium`; minimum width 120 dp.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

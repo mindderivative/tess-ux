@@ -173,7 +173,7 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 
 Evidence: `tess-ui:docs/components/spin-boxes.md`.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

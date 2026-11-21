@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, communication, snackbar, live-region]
-related: ["[[Banner]]", "[[Notifications]]", "[[Notification Window]]", "[[Layer]]", "[[Timers]]", "[[Button]]", "[[Icon Button]]", "[[Dialog]]", "[[Popup]]", "[[Tooltip]]", "[[Colour Roles]]", "[[Elevation]]", "[[Shape]]", "[[Typography]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]"]
+related: ["[[Banner]]", "[[Notifications]]", "[[Notifications|Notification Window]]", "[[12 Overlays#Layers and routes|Layer]]", "Timers", "[[Button]]", "[[Icon Button]]", "[[Dialog]]", "[[Popup]]", "[[Tooltip]]", "[[Colour Roles]]", "[[Elevation]]", "[[Shape]]", "[[Typography]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[12 Overlays]]", "[[Colour Roles]]", "[[Elevation]]", "[[Motion]]"]
 ---
 
@@ -22,7 +22,7 @@ Confirm what the app did ("Note saved"), offer an immediate undo or retry, and r
 ## When to use and not
 
 - Use when: the message is brief (one or two lines), the user need not act, and a single optional action (Undo, Retry, View) is enough.
-- Do not use when: the user must decide or the message must stay until read (use [[Banner]] or [[Dialog]]); the message belongs to a field (inline error text, [[Text Field]]); the message is a system notification from another program (outside v1: [[Notification Window]]); the information is only in the snackbar and is needed later (put it in a log or a list).
+- Do not use when: the user must decide or the message must stay until read (use [[Banner]] or [[Dialog]]); the message belongs to a field (inline error text, [[Text Field]]); the message is a system notification from another program (outside v1: [[Notifications|Notification Window]]); the information is only in the snackbar and is needed later (put it in a log or a list).
 
 ## Anatomy
 
@@ -89,7 +89,7 @@ The snackbar is a transient message surface, so it follows the control heights o
 
 ## Layout and overflow
 
-- Position: inside the window, above the content, at the bottom edge, `margin` from the edge, at the start side (left in left-to-right locales) or centred. It sits in an in-window layer ([[Layer]]); it is clipped to the window, never a separate window ([[12 Overlays]]).
+- Position: inside the window, above the content, at the bottom edge, `margin` from the edge, at the start side (left in left-to-right locales) or centred. It sits in an in-window layer ([[12 Overlays#Layers and routes|Layer]]); it is clipped to the window, never a separate window ([[12 Overlays]]).
 - Text wraps at word boundaries to at most 2 lines; a third line is truncated with an ellipsis and the full text stays in the accessible name. The text width is the container width minus paddings minus the action and close controls. Text is vertically centred in the container within 1 px for one line.
 - Action label: one line, at most 1 word to 3 words; a label longer than the available space truncates with an ellipsis and keeps its full name.
 - Focus not obscured: if the control that has keyboard focus lies under the snackbar rectangle, the snackbar moves up by its own height plus 8 dp until the control is fully visible, or hides, so the focused control is never covered ([WCAG 2.4.11](https://www.w3.org/TR/WCAG22/#focus-not-obscured-minimum)) #needs-verification-as-design-choice.
@@ -98,10 +98,10 @@ The snackbar is a transient message surface, so it follows the control heights o
 ## Behaviour
 
 - Duration. A snackbar with text only stays 4000 ms; one with an action stays 10000 ms. A caller may set a duration from 4000 to 10000 ms, or untimed with a close control. The range comes from Compose Material 3: `SnackbarDuration.Short` is 4000 ms, `Long` is 10000 ms, and `Indefinite` stays until dismissed or replaced ([source](https://github.com/androidx/androidx/blob/androidx-main/compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/SnackbarHost.kt), `toMillis`, verified 2026-11-21). Material Components Android presets are shorter (`LENGTH_SHORT` 1500 ms, `LENGTH_LONG` 2750 ms, in `SnackbarManager.java`); Tesserae takes the Compose figures because a desktop user reads while their pointer is elsewhere and [WCAG 2.2.1](https://www.w3.org/TR/WCAG22/#timing-adjustable) asks for enough time. The statement "4 to 10 seconds" in the Material Design 3 guidelines is not readable by tools: #needs-verification.
-- The timer is a project timer ([[Timers]]); it stops while the pointer is over the snackbar or keyboard focus is inside it, and restarts at the full duration when the pointer leaves or focus leaves.
+- The timer is a project timer (Timers); it stops while the pointer is over the snackbar or keyboard focus is inside it, and restarts at the full duration when the pointer leaves or focus leaves.
 - One at a time. At most one snackbar is visible per window. A new message waits in a first-in first-out queue and shows when the current one has closed; no gap longer than 100 ms between them. A message with the same `id` as the visible or a queued one replaces it. A queue of more than 5 drops the oldest message that has no action. Rationale: MD3 and Material Components show one snackbar at a time ([Android docs](https://github.com/material-components/material-components-android/blob/master/docs/components/Snackbar.md): "Only one snackbar will be shown at a time"), but the Android library dismisses the old one on a new `show`; Tesserae queues so that a result is not lost.
 - Dismissal: timeout, the action (runs the action then closes), the close control, a replacing message. A press elsewhere in the window does not dismiss it and is not consumed by it. Escape while focus is inside it dismisses it and returns focus to the control that had it.
-- Keyboard. The snackbar is not modal and takes no focus when it appears, so typing is not interrupted. An action must still be reachable: while a snackbar with an action or close control is visible, its controls are the last stops of the window's Tab cycle, and the chord `Alt+Shift+N` moves focus to its action #needs-verification-as-design-choice. Without this a keyboard user cannot undo (WCAG 2.1.1). The key is the vault's proposal and needs the keyboard map of chapter 11.
+- Keyboard. The snackbar is not modal and takes no focus when it appears, so typing is not interrupted. An action must still be reachable: while a snackbar with an action or close control is visible, its controls are the last stops of the window's Tab cycle, and the chord Alt+Shift+N moves focus to the current snackbar's action ([[ADR-0019 Banner and snackbar focus chords]]). Without this a keyboard user cannot undo (WCAG 2.1.1). Alt+Shift+N is a proposed default: a collision check against the shell's shortcut map and the application's own map is required before a project adopts it, and the chord table of [[11 Interaction]] lists it as proposed.
 - Touch: swipe to dismiss is MD3 behaviour and is not built; where touch is the primary input it is required (swipe toward the nearest window edge dismisses).
 - The action runs once per snackbar; after it runs the snackbar closes and the action text is not shown again for the same message.
 
@@ -125,7 +125,7 @@ Reduced motion: appears and disappears in one frame, no slide ([[Motion]], rule 
 - Name: the message text; the action is a button named by its label; the close control is a button named "Close".
 - Focus: none moved on appearance. A user who triggers the action by keyboard gets focus returned to the element that had it ([[Popup]], focus return).
 - Contrast: text and action at least 4.5 to 1; computed values in Tokens used. Focus ring 3 to 1 against `inverse_surface`.
-- Timing: untimed or at least 4 s, paused on hover and focus ([WCAG 2.2.1](https://www.w3.org/TR/WCAG22/#timing-adjustable) offers a way to extend: the pause and the Alt+Shift+N chord).
+- Timing: untimed or at least 4 s, paused on hover and focus ([WCAG 2.2.1](https://www.w3.org/TR/WCAG22/#timing-adjustable) offers a way to extend: the pause and the proposed Alt+Shift+N chord of [[ADR-0019 Banner and snackbar focus chords]]).
 - Content that is the only record of an event is also kept elsewhere (a log), since the snackbar disappears.
 
 ## Dark and light
@@ -146,12 +146,13 @@ Single or two lines per text; bottom, start-aligned; margin 16 dp; width 344 dp;
 - [ ] AC-SNK-6 (scripted input): queue three messages in one loop turn: exactly one snackbar node exists at every frame; they show in call order; the gap between one closing and the next showing is at most 100 ms; a fourth with the id of the second replaces it in place. Pass: visible count at most 1 on each frame and order equal.
 - [ ] AC-SNK-7 (scripted input): queue 7 messages without actions: the queue length is at most 5 after the call and the dropped ones are the oldest. Pass: lengths and order equal.
 - [ ] AC-SNK-8 (scripted input): the action runs once on a pointer click and once on Enter or Space when it has focus; the snackbar closes after it; a second activation does nothing. Pass: handler count 1.
-- [ ] AC-SNK-9 (scripted input): with a snackbar with action visible and focus in a text field, typing continues to reach the field (the snackbar took no focus); Tab reaches the action as the last stop; `Alt+Shift+N` moves focus to the action; Escape dismisses it and returns focus to the text field. Pass: focus owner equals at each step (#needs-verification of the chord).
+- [ ] AC-SNK-9 (scripted input): with a snackbar with action visible and focus in a text field, typing continues to reach the field (the snackbar took no focus); Tab reaches the action as the last stop; the chord Alt+Shift+N (proposed default, [[ADR-0019 Banner and snackbar focus chords]]) moves focus to the action; Escape dismisses it and returns focus to the text field. Pass: focus owner equals at each step.
 - [ ] AC-SNK-10 (pixel check): the snackbar rectangle never overlaps the keyboard-focused control: place focus on a field under the snackbar; within 2 frames the snackbar is moved above it or hidden. Pass: bounds do not intersect.
 - [ ] AC-SNK-11 (scripted input): the announce queue holds exactly one polite entry per displayed message, none on timeout, none assertive; queued messages announce when they appear and not when they are queued. Pass: counts and politeness equal.
 - [ ] AC-SNK-12 (contrast script): text and action against the container at least 4.5 to 1, the focus ring against the container at least 3 to 1, in light, dark and high contrast. Pass: no ratio below the limit.
 - [ ] AC-SNK-13 (scripted input): with reduced motion on the snackbar is present on the first frame after show and absent on the first frame after close; with it off the enter takes 250 ms (within 2 frames). Pass: frame counts equal.
 - [ ] AC-SNK-14 (pixel check): a press on window content outside the snackbar reaches the content and leaves the snackbar open; a window narrower than 344 dp plus margins gives a snackbar of window width minus twice the margin. Pass: handler fired on content, snackbar still present, width equal.
+- [ ] AC-SNK-15 (review): a project that adopts Alt+Shift+N has run the collision check against the shell's shortcut map and each application's own map and records the result and any replacement chord ([[ADR-0019 Banner and snackbar focus chords]]). Pass: the record exists and lists no collision, or names the replacement.
 
 ## Status in code
 
@@ -163,13 +164,13 @@ Single or two lines per text; bottom, start-aligned; margin 16 dp; width 344 dp;
 
 Evidence: [[Gaps and Contradictions]] (snackbar: swipe to dismiss, lift above FAB; off-grid padding 14).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Snackbar_View.tdl`, `SnackbarHost_View.tdl` | exists |
 | tre | `tre:docs/guide/layers.md` | mechanism only |
-| tess-shell | none | absent; OSD is [[On-Screen Display]] |
+| tess-shell | none | absent; OSD is [[Volume OSD|On-Screen Display]] |
 
 ## Deviations from Material Design 3
 
@@ -178,7 +179,7 @@ Evidence: [[Gaps and Contradictions]] (snackbar: swipe to dismiss, lift above FA
 | Duration 4000 ms, 10000 ms with an action (Android presets 1500 and 2750 ms) | desktop reading time and WCAG 2.2.1; figures from Compose Material 3 | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Messages queue (Android replaces the visible snackbar) | a result must not be lost | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Heights 48, 40, 32 and two lines 64, 56, 48 (MD3 48 and 68) | density levels; padding on the 4 dp grid | [[ADR-0002 Desktop density levels and target sizes]] |
-| Keyboard path: last Tab stops and `Alt+Shift+N` | desktop keyboard-first; MD3 describes touch | [[ADR-0002 Desktop density levels and target sizes]] |
+| Keyboard path: last Tab stops and `Alt+Shift+N` (proposed default) | desktop keyboard-first; MD3 describes touch | [[ADR-0019 Banner and snackbar focus chords]] |
 | Role `status` with polite live region, never assertive | assertive is reserved for what must be acted on | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Focus ring role `inverse_primary` on the snackbar (vault ring role is `secondary`) | `secondary` has too little contrast on `inverse_surface` #needs-verification | [[ADR-0009 State layer percentages]] |
 

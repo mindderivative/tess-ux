@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, input, search]
-related: ["[[Text Field]]", "[[Icon Button]]", "[[List]]", "[[List Item]]", "[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Empty State]]", "[[Active Descendant]]", "[[Launcher]]", "[[Applications Module]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[State Layers]]", "[[Focus Ring]]", "[[Motion]]", "[[10 Layout Overflow and Scrolling]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
+related: ["[[Text Field]]", "[[Icon Button]]", "[[List]]", "[[List Item]]", "[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Empty States|Empty State]]", "[[Active Descendant]]", "[[Launcher]]", "[[Applications Module]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[State Layers]]", "[[Focus Ring]]", "[[Motion]]", "[[10 Layout Overflow and Scrolling]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Icon Button]]", "[[List]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
 ---
 
@@ -40,7 +40,7 @@ Search view (docked):
 7. Panel: surface under the bar with 28 dp corners.
 8. Result count: a visually small line that announces the number of results.
 9. Rows: [[List Item]] rows (history, suggestions, results) with optional supporting text and icon, in a scroll area.
-10. Empty text: shown when there is a query and no rows ([[Empty State]]).
+10. Empty text: shown when there is a query and no rows ([[Empty States|Empty State]]).
 
 ## Variants
 
@@ -122,7 +122,7 @@ The bar keeps the MD3 56 dp at default density because it is the primary entry o
 - Result count: announced politely after the list settles, once per query change, not per key.
 - Touch: a tap on the bar activates it and opens the platform keyboard; a 48 dp hit area for icon buttons in touch contexts; on compact windows the full-screen view is used.
 - IME: composition text is shown inline; the results update on committed text only, not on the pre-edit string, so a half-composed word does not flash a result list; the candidate window follows the caret ([[Text Field]]).
-- Validation hooks: a search query has no invalid value; a query that finds nothing is the empty state ([[Empty State]]), not an error. Patterns for filters, saved searches and errors from a search backend: [[Validation]] and [[Forms and Settings]].
+- Validation hooks: a search query has no invalid value; a query that finds nothing is the empty state ([[Empty States|Empty State]]), not an error. Patterns for filters, saved searches and errors from a search backend: [[Validation]] and [[Forms and Settings]].
 
 ## Tooltip and overlay behaviour
 
@@ -184,7 +184,7 @@ All colours are roles; the frosted variant mixes the container role at 72 percen
 | tess-shell | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` (launcher filter input, placeholder "Search applications"), `shell-vault:40 Specifications/Modules/Applications Module.md` | partly meets: a filter input with a placeholder that updates a list on `On_Changed`; no bar, no back arrow, no clear button, no count announcement (AC-SRB-4, AC-SRB-8 absent); keyboard use of the launcher: `tess-shell:docs/guide/keyboard.md#the-launcher` |
 | tre | `tre:docs/guide/text.md` (text input `input_mode: "search"`), `tre:docs/guide/accessibility.md` | not applicable (primitive): `input_mode` search is kept for a keyboard that can adapt; active descendant is TRE-REQ-023 ([[Active Descendant]]) |
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

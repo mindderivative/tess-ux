@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, window, engine, shell]
-related: ["[[Popup Window]]", "[[Application Window]]", "[[Overlay Window]]", "[[Panel and Surface]]", "[[Popup]]", "[[Accessibility Tree]]", "[[Anchored Placement]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[Surface Shadow]]", "[[Drag and Drop]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Popup Window]]", "[[Application Window]]", "[[Layer Window|Overlay Window]]", "[[Panel and Surface]]", "[[Popup]]", "[[Accessibility Tree]]", "[[Anchored Placement]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[Elevation#Margin a layer window reserves for its shadow|Surface Shadow]]", "[[Drag and Drop]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[14 Accessibility Basics]]", "[[12 Overlays]]"]
 aliases: ["Layer window", "Content-sized layer window"]
 ---
@@ -54,7 +54,7 @@ Let the shell draw bars and panels at screen edges, reserve space, accept input 
 
 ## Tokens used
 
-Background of the body: roles `surface` or `surface_container` ([[Colour Roles]]); shadow margin and corner radius by [[Surface Shadow]], [[Shape]] and [[Elevation]]; padding 0 on the root and `space.*` steps inside; the root is transparent.
+Background of the body: roles `surface` or `surface_container` ([[Colour Roles]]); shadow margin and corner radius by [[Elevation#Margin a layer window reserves for its shadow|Surface Shadow]], [[Shape]] and [[Elevation]]; padding 0 on the root and `space.*` steps inside; the root is transparent.
 
 ## Sizing and density
 

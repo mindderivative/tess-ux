@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, text-input, keyboard]
-related: ["[[Text Field]]", "[[Text Box]]", "[[Form Row]]", "[[Scrollbar and Scroll Container]]", "[[Reduced Motion]]", "[[Disabled State]]", "[[Accessibility Announcements]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Text Field]]", "[[Text Box]]", "[[Form Row]]", "[[Scrollbar and Scroll Container]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -40,7 +40,7 @@ Edits notes, descriptions or messages of several lines.
 
 ## States
 
-States, colours and tokens are those of [[Text Field]] (rest, hover, focus, error, disabled, read-only). This module adds: Empty (placeholder shown), Full (`Max_Length` reached: further input is refused and the supporting text may show the count), Disabled (`Enabled` false: no focus, no key, opacity per [[Disabled State]]).
+States, colours and tokens are those of [[Text Field]] (rest, hover, focus, error, disabled, read-only). This module adds: Empty (placeholder shown), Full (`Max_Length` reached: further input is refused and the supporting text may show the count), Disabled (`Enabled` false: no focus, no key, opacity per [[State Layers#Disabled scheme|Disabled State]]).
 
 ## Tokens used
 
@@ -72,13 +72,13 @@ No tooltip by default; a tooltip on the field (the control) is allowed for a hin
 
 ## Motion
 
-The caret blinks steady under reduced motion ([[Reduced Motion]]); there is no other animation.
+The caret blinks steady under reduced motion ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]); there is no other animation.
 
 ## Accessibility
 
 - Role: `TEXTBOX`, multi-line; name `Label` else `Placeholder` (the author must give one); `read_only` and `disabled` from the state.
 - Keys: as Behaviour; Tab must not trap focus (WCAG 2.2 SC 2.1.2).
-- Announcements: the field does not announce typing; an error or a limit reached is announced politely once ([[Accessibility Announcements]]).
+- Announcements: the field does not announce typing; an error or a limit reached is announced politely once ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - Contrast: text 4.5:1, the outline or indicator 3:1 ([[Text Field]]).
 
 ## Dark and light
@@ -106,14 +106,14 @@ Colours follow the scheme through [[Text Field]] tokens ([[Theme Following the S
 - [ ] AC-MOD-TED-7 (pixel check): the placeholder shows while empty, in `on_surface_variant`, and disappears on the first character.
 - [ ] AC-MOD-TED-8 (contrast script): text 4.5:1 and indicator 3:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/TextEditor/TextEditor_Module.tdl`, `TextEditor_Module.py` | partly meets: role, name from `Label` or `Placeholder`, `Read_Only`, `Max_Length`, `Wrap`, `Lines`, events (meets AC-MOD-TED-1, -2, -3, -6, -7 by reading); Tab inserts a tab and cannot leave the field (fails AC-MOD-TED-4); no density, `Lines` height from the engine (AC-MOD-TED-5 unverified) |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (TextEditor) | exists |
 | tess-ui | `tess-ui:src/tess_ui/views/TextField_View.tdl` | see [[Text Field]] (multi-line variant) |
-| tre | `text_input` with `multiline` | partly meets: Tab inserts a tab (request T-048) |
+| tre | `text_input` with `multiline` | partly meets: Tab inserts a tab unless `tab_navigates` is set (available since tre 0.6.8) |
 
 ## Deviations from Material Design 3
 

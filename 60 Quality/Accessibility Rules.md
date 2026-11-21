@@ -33,8 +33,8 @@ How to use: go down the list for every view; mark pass, fail or not run; link fa
 
 | ID | Rule | Test type | Defined in | Standard |
 |---|---|---|---|---|
-| AR-8 | Tab and Shift+Tab visit every focusable control once in visual order and return to the start; there is no trap. | scripted input | AC-A11Y-2 | WCAG 2.2 SC 2.1.2, 2.4.3 |
-| AR-9 | Every action reachable by pointer is reachable by keyboard only. | scripted input | AC-A11Y-4 | WCAG 2.2 SC 2.1.1 |
+| AR-8 | Tab and Shift+Tab visit every focusable control once in visual order and return to the start; there is no trap. A terminal block that takes every key keeps one reserved escape chord (default Ctrl+Shift+Escape, proposed) that moves focus out and is not sent to the program ([[ADR-0018 Terminal escape chord]]). | scripted input | AC-A11Y-2, AC-BLK-TRM-3, AC-BLK-TRM-9 | WCAG 2.2 SC 2.1.2, 2.4.3 |
+| AR-9 | Every action reachable by pointer is reachable by keyboard only. A resize or pan by dragging has a keyboard path: splitter keys ([[ADR-0014 Window resize border and splitter alternative]], AC-SPL-15) and node graph pan and zoom keys ([[ADR-0017 Node Graph pans instead of scrolling]], AC-NGR-6). Open conflict, `open, owner decides` (OQ-25): an auto-hidden Bar that no key reveals, by the owner's decision of 2026-10-27, against this rule ([[Auto Hide]], [[Bar]]); the Shortcut Mode reveal is the recommendation. | scripted input | AC-A11Y-4, AC-SPL-15, AC-NGR-6, AC-AHD-9 | WCAG 2.2 SC 2.1.1 |
 | AR-10 | A keyboard-focused control shows a focus indicator: ring 3 dp, offset 2 dp, role `secondary`; text fields use the 2 dp indicator or outline; not shown for mouse-click focus. | pixel check | AC-A11Y-3, AC-BTN-11 | WCAG 2.2 SC 2.4.7 |
 | AR-11 | The focus indicator is never hidden by another layer, including a tooltip. | pixel check | AC-A11Y-3 | WCAG 2.2 SC 2.4.11 |
 | AR-12 | Enter and Space activate a button; Space toggles a switch; Escape closes only the topmost transient layer. | scripted input | AC-BTN-5, AC-SWI-3, AC-A11Y-15 | WAI-ARIA Authoring Practices |
@@ -49,7 +49,7 @@ How to use: go down the list for every view; mark pass, fail or not run; link fa
 | AR-16 | Text pairs have contrast at least 4.5 to 1 (3 to 1 for large text) in light, dark and high contrast. | contrast script | AC-A11Y-5, AC-TXF-11, AC-BTN-9 | WCAG 2.2 SC 1.4.3 |
 | AR-17 | Non-text parts (icons, switch, outlines, focus indicator, scrollbar thumb) have contrast at least 3 to 1 against the adjacent colour. | contrast script | AC-A11Y-5, AC-A11Y-6, AC-SWI-7, AC-ICB-8 | WCAG 2.2 SC 1.4.11 |
 | AR-18 | Colour is never the only carrier of a state: each state differs in a shape, icon, text or position. | pixel check | AC-A11Y-16, AC-ICB-9 | WCAG 2.2 SC 1.4.1 |
-| AR-19 | Pointer targets are at least 24 dp by 24 dp or spaced by a 24 dp circle; touch hit areas are 48 dp. | geometry check | AC-A11Y-7, AC-SWI-9, AC-ICB-2, AC-BTN-8 | WCAG 2.2 SC 2.5.8 |
+| AR-19 | Pointer targets are at least 24 dp by 24 dp or spaced by a 24 dp circle; touch hit areas are 48 dp. The 6 dp window resize border is the recorded exception: the platform resize path (window manager keyboard resize, title bar maximise and restore) is the equivalent control ([[ADR-0014 Window resize border and splitter alternative]]). | geometry check | AC-A11Y-7, AC-SWI-9, AC-ICB-2, AC-BTN-8, AC-WIN-4 | WCAG 2.2 SC 2.5.8 |
 | AR-20 | Every colour comes from a role; no component carries a literal. | token test | AC-PRI-2, AC-TXF-12, AC-BTN-4 | vault principle 3 |
 
 ## Tooltips and overlays

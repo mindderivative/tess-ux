@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, content, image]
-related: ["[[Image Node]]", "[[SVG]]", "[[Video Player]]", "[[Icon Button]]", "[[Iconography]]", "[[Empty and Error States]]", "[[Loading States]]", "[[Error States]]", "[[Panel and Surface]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[Scrim]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]"]
+related: ["[[Image|Image Node]]", "[[SVG]]", "[[Video Player]]", "[[Icon Button]]", "[[Iconography]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Loading States]]", "[[Error States]]", "[[Panel and Surface]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[Scrim]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]"]
 depends_on: ["[[Shape]]", "[[Colour Roles]]", "[[Iconography]]"]
 ---
 
@@ -151,14 +151,14 @@ Fit `contain`, radius `none`, decorative (hidden) without an alt, placeholder ic
 
 Evidence: [[Gaps and Contradictions]] (Image clip to any shape except circle through the `avatar` class; fallback icon name differs between vault and code).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py` | exists, partial |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Image/Image_Module.tdl` | exists, partial |
 | shell vault | `shell-vault:50 Design System/Standard Modules.md`, `shell-vault:40 Specifications/Modules/Media Module.md` | design intent |
-| tre | the [[Image Node]] | mechanism |
+| tre | the [[Image|Image Node]] | mechanism |
 
 ## Deviations from Material Design 3
 

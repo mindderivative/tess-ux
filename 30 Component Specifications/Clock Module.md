@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, status]
-related: ["[[Bar]]", "[[Label]]", "[[Text]]", "[[Popup]]", "[[Theme Following the System]]", "[[Reduced Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Label]]", "[[Text]]", "[[Popup]]", "[[Theme Following the System]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -86,7 +86,7 @@ The tooltip text is not the only place the information lives: the accessible des
 
 ## Motion
 
-No animation. The time changes in one frame. Reduced motion has no effect ([[Reduced Motion]]).
+No animation. The time changes in one frame. Reduced motion has no effect ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]).
 
 ## Accessibility
 
@@ -113,8 +113,8 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 ## Acceptance criteria
 
 - [ ] AC-MOD-CLK-1 (AT tree assertion): the Face has a non-empty `Label` equal to the visible time text and a `Description` equal to the tooltip text; the node has no role `group`.
-- [ ] AC-MOD-CLK-2 (scripted pointer): pointer enters the hover box at t0: 0 tooltip layers at t0+499 ms, 1 layer at t0+517 ms; the layer text equals the `tooltip_format` date.
-- [ ] AC-MOD-CLK-3 (scripted pointer): pointer leaves the box and the tooltip: 0 layers within 150 ms plus one frame after leaving both (ADR-0011); Escape removes it within one frame.
+- [ ] AC-MOD-CLK-2 (scripted input): pointer enters the hover box at t0: 0 tooltip layers at t0+499 ms, 1 layer at t0+517 ms; the layer text equals the `tooltip_format` date.
+- [ ] AC-MOD-CLK-3 (scripted input): pointer leaves the box and the tooltip: 0 layers within 150 ms plus one frame after leaving both (ADR-0011); Escape removes it within one frame.
 - [ ] AC-MOD-CLK-4 (static check): the Clock tree has exactly one node with a `Tooltip` and it has no tooltip-bearing descendant and no ancestor tooltip.
 - [ ] AC-MOD-CLK-5 (pixel check): the tooltip card equals the plain [[Tooltip]] card: container `inverse_surface`, text `inverse_on_surface`, corner 4 dp, padding 8 by 4 dp, `body_small`; the Clock's own `.tdl` contains no card literal.
 - [ ] AC-MOD-CLK-6 (contrast script): the Face foreground against the Bar surface is at least 4.5:1 in Light, Dark and High_Contrast; the style file holds no colour literal.
@@ -123,7 +123,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-CLK-9 (scripted input): an invalid `timezone` leaves the local zone shown and logs exactly one warning.
 - [ ] AC-MOD-CLK-10 (scripted input): with reduced motion on, nothing changes: the Face is identical (no animation exists).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

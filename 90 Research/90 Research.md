@@ -4,7 +4,7 @@ type: index
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [index]
 related: []
 depends_on: []
@@ -16,12 +16,12 @@ Sources, Material Design 3 extracts and evidence with links. Unverified claims c
 
 ## Notes
 
-- [[MD3 Verification Status]]
 - [[Gaps and Contradictions]]
+- [[Inventory Source Shell Vault]]
+- [[Inventory Source tess-shell]]
 - [[Inventory Source tess-ui]]
 - [[Inventory Source tess-ui Foundations]]
-- [[Inventory Source tess-shell]]
-- [[Inventory Source Shell Vault]]
 - [[Inventory Source tre]]
+- [[MD3 Verification Status]]
 
 Back to [[Index]].

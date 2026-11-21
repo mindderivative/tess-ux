@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, dock, tabs, drag-and-drop, keyboard]
-related: ["[[Dock]]", "[[Splitter]]", "[[Tabs]]", "[[Menu]]", "[[Icon Button]]", "[[Tooltip]]", "[[Drag and Drop]]", "[[Melded Panel]]", "[[Panel and Surface]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Dock]]", "[[Splitter]]", "[[Tabs]]", "[[Menu]]", "[[Icon Button]]", "[[Tooltip]]", "[[Drag and Drop]]", "[[Panel and Surface#Variants|Melded Panel]]", "[[Panel and Surface]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Dock]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]"]
 ---
 
@@ -22,7 +22,7 @@ A dock panel names a piece of content (Files, Outline, Console) so the user can 
 ## When to use and not
 
 - Use when: content lives in a [[Dock]] zone or half and the user manages it as a unit.
-- Do not use when: a panel is page content that never moves ([[Panel and Surface]]); tabs choose between views of the same data ([[Tabs]]); the surface is a shell edge panel ([[Melded Panel]]).
+- Do not use when: a panel is page content that never moves ([[Panel and Surface]]); tabs choose between views of the same data ([[Tabs]]); the surface is a shell edge panel ([[Panel and Surface#Variants|Melded Panel]]).
 - A panel has either halves or content, not both. A half has no zone.
 
 ## Anatomy
@@ -114,9 +114,9 @@ Layers: [[ADR-0009 State layer percentages]], [[ADR-0013 Focus and pressed state
 
 ## Accessibility
 
-- Role and name: the tab has role `tab`, its title as the name and `selected` true on the shown tab; the content has role `tabpanel` named by its title; the strip has role `tablist` named "<Side> panels" for a zone or "<title> panels" for a half; the close button has role `button` named "Close <title>" (APG tabs pattern: aria-selected, aria-controls on tab, aria-labelledby on tabpanel).
+- Role and name: the tab has role `tab`, its title as the name and `selected` true on the shown tab; the content has role `tabpanel` named by its title; the strip has role `tablist` named "{Side} panels" for a zone or "{title} panels" for a half; the close button has role `button` named "Close {title}" (APG tabs pattern: aria-selected, aria-controls on tab, aria-labelledby on tabpanel).
 - Keys: as in Behaviour. Per the APG tabs pattern Left and Right Arrow move focus with wrap, Home and End optionally go to the ends, Space or Enter activate when activation does not follow focus, Shift+F10 opens a tab's menu and Delete optionally closes the tab; Tesserae adopts Home and End and not Delete.
-- Announcements: a changed title is announced by the name change; a panel moved to another zone or half is announced as "<title> moved to <side>" #needs-verification.
+- Announcements: a changed title is announced by the name change; a panel moved to another zone or half is announced as "{title} moved to {side}" #needs-verification.
 - Target sizes: tab 48 dp high and at least 24 dp wide; close button 24 by 24 dp (WCAG 2.2 SC 2.5.8).
 - Contrast: label `on_surface` and `on_surface_variant` on `surface` at least 4.5:1; indicator `primary` on `surface` at least 3:1; focus ring `secondary` at least 3:1.
 - Drag has a non-drag alternative: the tab menu (WCAG 2.2 SC 2.5.7).
@@ -148,7 +148,7 @@ All colours are role references; the tab, strip and highlight retint when the sc
 - [ ] AC-DKP-7 (scripted input): when the last panel leaves a half created by a drop, the half collapses and its neighbour regains the room within one frame; a half the view defined (not created by a drop) stays and shows its own content. Pass: half list and neighbour sizes.
 - [ ] AC-DKP-8 (scripted input): the close button of a `Closable` tab closes its panel: the tab is gone, the zone shows the next panel (else the previous), the close handler is called once with the panel, the panel's name is in `Closed`; removing the name from `Closed` reopens the panel as the last tab of its zone; a drag started on the close button moves nothing. Pass: tab list, shown panel, handler count and `Closed` after each step.
 - [ ] AC-DKP-9 (contrast script): `on_surface` and `on_surface_variant` on `surface` at least 4.5:1; `primary` indicator and highlight outline on `surface` at least 3:1; focus ring `secondary` on `surface` at least 3:1; in light and dark. Pass: all pairs.
-- [ ] AC-DKP-10 (AT tree assertion): tab role `tab` named by the title, `selected` true on the shown tab only; panel role `tabpanel` named by the title; strip role `tablist` named "<Side> panels" (zone) or "<title> panels" (half); close button role `button` named "Close <title>"; after retitling the tab, the tab name and the panel name equal the new title in the same frame. Pass: property equality.
+- [ ] AC-DKP-10 (AT tree assertion): tab role `tab` named by the title, `selected` true on the shown tab only; panel role `tabpanel` named by the title; strip role `tablist` named "{Side} panels" (zone) or "{title} panels" (half); close button role `button` named "Close {title}"; after retitling the tab, the tab name and the panel name equal the new title in the same frame. Pass: property equality.
 - [ ] AC-DKP-11 (scripted input): two panels with the same title in one dock are told apart: each has its own id, `layout()` records both, `restore()` puts each back, and moving or closing one by id affects only that one. Pass: panel list and `layout()` content for a dock with two panels titled "Console".
 - [ ] AC-DKP-12 (geometry check): a zone narrower than its tabs scrolls the strip horizontally with a scrollbar per [[Scrollbar and Scroll Container]]; the selected tab and the focused tab lie fully inside the strip viewport after selection or focus; the tabs do not wrap and do not shrink below their label width plus padding. Pass: scroll offset and tab rectangles for a strip with 12 tabs in a 240 dp zone #needs-verification.
 - [ ] AC-DKP-13 (scripted input): the tab menu opened with Shift+F10 or the Menu key lists "Move to ..." for each zone except the panel's own and each half, choosing an entry moves the panel and keeps focus on its tab, Escape closes the menu and returns focus to the tab. Pass: entries, panel side, focus node after each action.
@@ -159,7 +159,7 @@ All colours are role references; the tab, strip and highlight retint when the sc
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/docking.py` (`_tab`, `_rebuild`, `_key`, `TAB_HEIGHT` 48, `TAB_PADDING` 16, `INDICATOR` 2, `CLOSE_SIZE` 18, `HALF_EDGE` 0.25, `_band`), `tess-ui:src/tess_ui/dockhost.py`, `tess-ui:src/tess_ui/spec/dock.py`, `tess-ui:docs/components/dock-panel.md`, tests `tess-ui:tests/test_dock_halves.py`, `test_dock_close.py`, `test_docking.py` | Partly meets. Meets (per code and docs, not all run): tab 48 dp, padding 16, 2 dp indicator, `title_small` label, roving selected tab with arrow keys and wrap, `selected` state and roles `tab`, `tablist`, `tabpanel`, tab menu on the Menu key and Shift+F10, drop bands with a 25 percent edge, middle and strip, no drop on the panel's own halves, collapse of an emptied half, `Closable` with `Closed` two-way, retitle, layout and restore with halves (AC-DKP-1 at default, AC-DKP-3, AC-DKP-5 in part, AC-DKP-6, AC-DKP-7, AC-DKP-8, AC-DKP-10 in part, AC-DKP-13 in part). Fails AC-DKP-2: the close button is 18 by 18 dp. Fails AC-DKP-1 at compact and dense: tab height is fixed at 48 and padding at 16. Fails AC-DKP-5 in part: Home and End are not handled. Fails AC-DKP-4 in the drop highlight value only (12 percent, `HIGHLIGHT_ALPHA` 0x1F, not 16). Fails AC-DKP-11: panels are found by title and two panels with the same title clash (`tess-ui:docs/guide/docking.md`, Not yet covered). AC-DKP-12 (strip overflow) and AC-DKP-14 (long title) are not run and no handling was found in `_tab` (tabs are `flex_shrink` 0 at the label width): they probably fail [INFERENCE from code]. Not built: reordering tabs, floating panels, tearing a panel into a window, maximising a panel, dragging or closing a half's own content, layouts saved by name |
-| tess-shell | not applicable | Not applicable: a shell dock panel is a melded Panel ([[Melded Panel]]); there are no tabs or halves |
+| tess-shell | not applicable | Not applicable: a shell dock panel is a melded Panel ([[Panel and Surface#Variants|Melded Panel]]); there are no tabs or halves |
 | tre | `tre:docs/guide/docking.md`, `tre:crates/engine-core/src/dock.rs` | Primitive only: zones, `dock_panel`, `set_active_panel`, `undock_panel`, `start_panel_drag`, `dock_target` and `dock_drop`; no tab, handle, highlight or close |
 
 ## Deviations from Material Design 3

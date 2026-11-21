@@ -71,7 +71,7 @@ Only the first row differs by density in this spec; the code has a fixed 32 dp. 
 
 ## Layout and overflow
 
-- Overflow: the viewport clips; the content is reached by panning (drag the background) and zooming, not by a scrollbar. This is a deviation from [[ADR-0003 Scrollbar rule]] for a pannable canvas: the rule applies to scroll containers, and a canvas whose extent is unbounded pans instead; the viewport must still give a cue when nodes lie outside it (candidate: scroll indicators or a minimap, not built).
+- Overflow: the viewport clips; the content is reached by panning (drag the background, space-drag, arrow keys) and zooming, and the canvas shows no scrollbars ([[ADR-0017 Node Graph pans instead of scrolling]]). This is a recorded deviation from [[ADR-0003 Scrollbar rule]] with this reason: the canvas has no content extent, so there is nothing for a thumb to show. The viewport must still give a cue when nodes lie outside it (candidate: edge indicators or a minimap, not built).
 - `Fit: true` pans and zooms on open so every node shows, never beyond actual size (zoom 1.0), with 24 dp padding.
 - A node label that exceeds the title width truncates with an ellipsis ([[10 Layout Overflow and Scrolling]]); today the title text does not truncate #needs-verification.
 - Edges are drawn in a 20000 by 20000 unit space centred on the origin; nodes beyond about 10000 units from the origin lose their edges (engine and widget limit).
@@ -79,8 +79,8 @@ Only the first row differs by density in this spec; the code has a fixed 32 dp. 
 ## Behaviour
 
 - Pointer: drag the background pans (the pointer is captured); the wheel zooms about the pointer, keeping the graph point under the pointer fixed; drag a node moves it at the current zoom (delta divided by zoom), edges follow; pressing a node selects it, pressing the background clears the selection.
-- Keyboard: Tab focuses nodes in tree order; arrow keys on a focused node move it one `Snap` square or 8 dp; Enter and Space activate nothing. The spec requires also: Escape clears the selection; plus and minus (with Ctrl) zoom; arrow keys on the viewport pan; Home fits to view. These are not built (fail AC-NGR-5 to 7).
-- Dragging alternative: moving a node by arrow keys satisfies WCAG 2.2 SC 2.5.7 for node moves; panning by drag has no non-drag alternative today.
+- Keyboard: Tab focuses nodes in tree order; arrow keys on a focused node move it one `Snap` square or 8 dp; Enter and Space activate nothing. Keyboard pan and zoom are required ([[ADR-0017 Node Graph pans instead of scrolling]]): arrow keys on the focused viewport pan it, plus and minus (with Ctrl) zoom, Home fits to view; the spec also requires Escape to clear the selection. These are not built (fail AC-NGR-5 to 7).
+- Dragging alternative: moving a node by arrow keys satisfies WCAG 2.2 SC 2.5.7 for node moves; panning by drag has the keyboard pan as its alternative (AC-NGR-6, AC-NGR-7), not built today.
 - Touch: not specified; pinch zoom is not built.
 
 ## Tooltip and overlay behaviour
@@ -113,13 +113,14 @@ Offset (0, 0), zoom 1.0, `Snap` 0, `Arrows` false, `Fit` false, nothing selected
 - [ ] AC-NGR-3 (scripted input): dragging a node by 100 px at zoom 2.0 moves its position by 50 graph units; with `Snap: 20` the final position is a multiple of 20.
 - [ ] AC-NGR-4 (geometry check): after a node move every edge end lies at the right middle of its source and the left middle of its target within 1 dp.
 - [ ] AC-NGR-5 (scripted input): Escape with a selected node clears the selection.
-- [ ] AC-NGR-6 (scripted input): Ctrl+plus and Ctrl+minus zoom by 1.1 steps; arrow keys on the focused viewport pan by 40 dp; Home fits to view.
-- [ ] AC-NGR-7 (scripted input): every action available by background drag (pan) is available by keyboard (WCAG 2.2 SC 2.5.7).
+- [ ] AC-NGR-6 (scripted input): Ctrl+plus and Ctrl+minus zoom by 1.1 steps; arrow keys on the focused viewport pan by 40 dp; Home fits to view; the pan and zoom keys are required ([[ADR-0017 Node Graph pans instead of scrolling]]). Pass: offset and zoom after each key.
+- [ ] AC-NGR-7 (scripted input): every action available by background drag or space-drag (pan) and by wheel (zoom) is available by keyboard (WCAG 2.2 SC 2.5.7; [[ADR-0017 Node Graph pans instead of scrolling]]). Pass: offset and zoom reached by keys equal those reached by drag and wheel.
 - [ ] AC-NGR-8 (AT tree assertion): each node exposes role `group`, its label as name and `selected` true when chosen; for each edge the source node's description or `controls` names the target.
 - [ ] AC-NGR-9 (pixel check): the focused node shows the focus ring completely, not clipped by the viewport interior except at the viewport edge; selected node border is 2 dp `primary`.
 - [ ] AC-NGR-10 (token test): all colours resolve to role names listed in Tokens used; zero literals.
 - [ ] AC-NGR-11 (pixel check): a node whose label is wider than its title bar shows an ellipsis at the end of the label with no ink beyond the title padding.
 - [ ] AC-NGR-12 (scripted input): a press on the background sets the selection to none and a press on a node chooses exactly that node (the `Selected` signal).
+- [ ] AC-NGR-13 (geometry check): the node graph viewport draws no scrollbar and no scrollbar node at any zoom and offset, including when nodes lie outside the viewport (the recorded deviation from [[ADR-0003 Scrollbar rule]], [[ADR-0017 Node Graph pans instead of scrolling]]). Pass: zero scrollbar nodes in the viewport subtree in five zoom and offset cases.
 
 ## Status in code
 
@@ -134,7 +135,7 @@ Offset (0, 0), zoom 1.0, `Snap` 0, `Arrows` false, `Fit` false, nothing selected
 | Deviation | Reason | ADR |
 |---|---|---|
 | Element with no MD3 counterpart, built from MD3 surface roles | tools need it | [[ADR-0001 MD3 role names are the specification vocabulary]] |
-| Panning replaces a scrollbar on an unbounded canvas | scrollbars do not fit unbounded extent | [[ADR-0003 Scrollbar rule]] |
+| Panning and zooming replace scrollbars on the canvas; no scrollbar is shown | the canvas has no content extent, so there is no extent to show (deviation from ADR-0003, keyboard pan and zoom required) | [[ADR-0017 Node Graph pans instead of scrolling]] |
 | Dragged state layer 16 percent | MD3 dragged state | [[ADR-0009 State layer percentages]] |
 
 ## Sources

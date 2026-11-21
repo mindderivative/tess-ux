@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, window, popup, engine, shell]
-related: ["[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Layer Window]]", "[[Overlay Window]]", "[[Anchored Placement]]", "[[Accessibility Tree]]", "[[12 Overlays]]", "[[Surface Shadow]]", "[[Elevation]]", "[[Shape]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Layer Window]]", "[[Layer Window|Overlay Window]]", "[[Anchored Placement]]", "[[Accessibility Tree]]", "[[12 Overlays]]", "[[Elevation#Margin a layer window reserves for its shadow|Surface Shadow]]", "[[Elevation]]", "[[Shape]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Popup]]", "[[12 Overlays]]", "[[ADR-0004 Tooltip rule]]"]
 aliases: ["Popup window"]
 ---
@@ -52,7 +52,7 @@ Show menus, submenus, tray flyouts and tooltips outside the small surface of a b
 
 ## Tokens used
 
-Body `surface_container`, radius `extra-small` to `medium` by the element ([[Shape]]), shadow by [[Surface Shadow]]; shadow reach `m` (for example 20 dp) as a transparent margin inside the surface.
+Body `surface_container`, radius `extra-small` to `medium` by the element ([[Shape]]), shadow by [[Elevation#Margin a layer window reserves for its shadow|Surface Shadow]]; shadow reach `m` (for example 20 dp) as a transparent margin inside the surface.
 
 ## Sizing and density
 

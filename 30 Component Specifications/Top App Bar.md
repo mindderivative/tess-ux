@@ -6,14 +6,14 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, navigation, app-bar]
-related: ["[[Toolbar]]", "[[Tabs]]", "[[Status Bar]]", "[[Pagination]]", "[[Window Title Bar]]", "[[Title Bar]]", "[[Icon Button]]", "[[Search]]", "[[Menu]]", "[[Tooltip]]", "[[Navigation Rail]]", "[[Scrollbar and Scroll Container]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[Toolbar]]", "[[Tabs]]", "[[Status Bar]]", "[[Pagination]]", "[[Title Bar|Window Title Bar]]", "[[Title Bar]]", "[[Icon Button]]", "[[Search]]", "[[Menu]]", "[[Tooltip]]", "[[Navigation Rail]]", "[[Scrollbar and Scroll Container]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Icon Button]]", "[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]"]
 ---
 
 # Top App Bar
 
 > [!info] Summary
-> The bar at the top of a screen or content region: a navigation icon, the title and up to three action icons. Material Design 3 counterpart: [Top app bar](https://m3.material.io/components/top-app-bar/overview) (small, centre-aligned, medium, large). Source of truth in code: see Status in code. It is not the window's title bar ([[Window Title Bar]]).
+> The bar at the top of a screen or content region: a navigation icon, the title and up to three action icons. Material Design 3 counterpart: [Top app bar](https://m3.material.io/components/top-app-bar/overview) (small, centre-aligned, medium, large). Source of truth in code: see Status in code. It is not the window's title bar ([[Title Bar|Window Title Bar]]).
 
 ## Purpose
 
@@ -22,7 +22,7 @@ Names the current screen and holds the few actions that belong to it, with a con
 ## When to use and not
 
 - Use when: a screen or a page inside a window needs a title and one to three global actions.
-- Do not use when: the bar holds many commands (use a [[Toolbar]]); the bar is window chrome with window buttons and a drag region (use [[Window Title Bar]] and [[Title Bar]]); the bar reports state (use [[Status Bar]]); the bar switches views (use [[Tabs]]); the bar is a search field (use [[Search]]).
+- Do not use when: the bar holds many commands (use a [[Toolbar]]); the bar is window chrome with window buttons and a drag region (use [[Title Bar|Window Title Bar]] and [[Title Bar]]); the bar reports state (use [[Status Bar]]); the bar switches views (use [[Tabs]]); the bar is a search field (use [[Search]]).
 - A window uses one top app bar at most. A custom window title area may host it (`App(borderless=True)` in tess-ui), then it is also a drag region by the title bar rule.
 
 ## Anatomy
@@ -85,7 +85,7 @@ In Material Web the on-scroll container is `surface_container` with level 2 elev
 
 ## Behaviour
 
-- Pointer: icon buttons as [[Icon Button]]; the bar's title is not a control. With window controls (frameless windows), the bar's empty area is a drag region (see [[Window Title Bar]]).
+- Pointer: icon buttons as [[Icon Button]]; the bar's title is not a control. With window controls (frameless windows), the bar's empty area is a drag region (see [[Title Bar|Window Title Bar]]).
 - Keyboard: the navigation icon and the actions are Tab stops in visual order (start to end); no roving group, because at most four controls ([[Keyboard Navigation]]). Enter and Space activate. The title is a heading, not focusable.
 - Touch: tap on 48 dp hit areas in a touch context.
 - Collapse: bound to the scroll offset of the content under the bar (`At_Top` of a scroll view), one-way; the user cannot collapse the bar by hand.
@@ -136,7 +136,7 @@ Small variant, 64 dp at default density, `surface`, no frost, navigation icon la
 | tess-ui | `tess-ui:src/tess_ui/views/TopAppBar_View.tdl`, `tess-ui:src/tess_ui/views/TopAppBar_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/navigation.py` | partly meets. Four variants (64, 64, 112, 152 dp), `Collapsed` and `Scrolled` (surface to surface_container, 200 ms), frosted, title `Max_Lines 1` with ellipsis, heading 1, every icon an Icon Button with name and tooltip, up to three actions, role group named by the title (AC-TAB-1 partly: default only; AC-TAB-3 partly: ellipsis yes, title tooltip not read; AC-TAB-4 meets by reading; AC-TAB-5 meets by reading; AC-TAB-7 partly: group and heading, no banner role). Fails: no density (AC-TAB-1, AC-TAB-2 unmeasured); actions beyond three are cut by `actions[:3]` with no More menu (AC-TAB-10); the Python widget draws 48 px icon buttons; contextual action mode not built; action icons not `on_surface_variant` (AC-TAB-4) |
 | tess-ui | `tess-ui:apps/shell_config/` | not used: the config app has no top app bar |
 | tess-shell | none | absent (the shell panel is a [[Bar]], not an app bar) |
-| tre | `tre:docs/guide/custom-title-bars.md` | not applicable: custom title bars are window chrome ([[Window Title Bar]]) |
+| tre | `tre:docs/guide/custom-title-bars.md` | not applicable: custom title bars are window chrome ([[Title Bar|Window Title Bar]]) |
 
 ## Deviations from Material Design 3
 

@@ -145,7 +145,7 @@ Density from the container; plain variant; label after the track; both `Selected
 
 Evidence: F8, F9 in [[Owner Feedback 2026-11-20]].
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

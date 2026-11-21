@@ -249,6 +249,7 @@ Measured contrast of the shipped shell theme (WCAG formula):
 |---|---|---|
 | Alpha suffix | `role@N%` is the role colour with alpha N percent (0 to 100). Contrast is measured on the colour composited over its background. | `tess-ui:src/tess_ui/tokens.py` `resolve_color` |
 | Custom colours | A colour outside the 49 roles (warning, success) is a named custom colour with four derived roles: `x`, `on_x`, `x_container`, `on_x_container`, each pair meeting Rules 3. | This note |
+| `on_scrim` | The colour of text and icons drawn over a `scrim` band: `#FFFFFF` in light and dark. MD3 defines `scrim` and no `on_scrim`. Contrast: white over `scrim` at 0.60 over a white image is 5.74 to 1 (AC-CRS-10). | [[ADR-0016 Carousel caption colour]] |
 
 ## Rules
 
@@ -272,7 +273,7 @@ Measured contrast of the shipped shell theme (WCAG formula):
 - [ ] AC-COL-5: Token test (static scan). No view stylesheet, module file or Python view code contains a colour literal (`#RRGGBB`, `rgb(`) outside an allow-list of the three exemptions in Rules 1. Pass: scan reports zero hits.
 - [ ] AC-COL-6: Pixel check. Render each top-level surface type of the project with the dark scheme: window background, each panel, list and tree rows, popup. Sample the background pixel of each. Pass: relative luminance below 0.05 for every dark sample and above 0.6 for every light sample (the baseline dark surface roles measure 0.004 to 0.041, the light ones 0.70 to 1.0). This is the check that catches an all-white application under a dark scheme.
 - [ ] AC-COL-7: Token test. Every row of the shell mapping table resolves: each of the 12 shell roles maps to a role named in the Role set table or to a custom colour with the four derived roles. Pass: 12 of 12 documented.
-- [ ] AC-COL-8: Scripted scheme switch. Change the scheme from light to dark at runtime and capture each surface of AC-COL-6. Pass: no sampled surface keeps a light-scheme colour (luminance rule of AC-COL-6) after 200 ms.
+- [ ] AC-COL-8 (scripted input): Scripted scheme switch. Change the scheme from light to dark at runtime and capture each surface of AC-COL-6. Pass: no sampled surface keeps a light-scheme colour (luminance rule of AC-COL-6) after 200 ms.
 - [ ] AC-COL-9: Contrast script on composited colours. For each role used with an alpha suffix, the ratio is computed on the colour composited over the actual background. Pass: the composited pair meets the threshold of Rules 3.
 - [ ] AC-COL-10: Review. Each colour used for a state or error has a second cue per Rules 6. Pass: reviewer finds none that is colour only.
 

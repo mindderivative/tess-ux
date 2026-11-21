@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, shell, osd, panel, overlay]
-related: ["[[Panel and Surface]]", "[[Popup]]", "[[Launcher]]", "[[Bar]]", "[[On-Screen Display]]", "[[Audio Module]]", "[[Progress Bar]]", "[[Snackbar]]", "[[Input Region]]", "[[Layer Window]]", "[[Surface Animation]]", "[[Accessibility Announcements]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Iconography]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Panel and Surface]]", "[[Popup]]", "[[Launcher]]", "[[Bar]]", "[[Volume OSD|On-Screen Display]]", "[[Audio Module]]", "[[Progress Indicator|Progress Bar]]", "[[Snackbar]]", "[[Frame#Anatomy|Input Region]]", "[[Layer Window]]", "[[12 Overlays#Motion and reduced motion|Surface Animation]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Iconography]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]"]
 ---
 
@@ -50,7 +50,7 @@ Confirm a volume or mute change that the user made with a hardware key or a slid
 |---|---|---|
 | Hidden | Surface kept mapped, draws nothing, takes no input | not applicable |
 | Shown | Card drawn; timer `duration` runs | container `surface_container`, elevation 20 percent |
-| Level change while shown | Bar and readout update; the timer restarts | bar animates its width ([[Progress Bar]]) |
+| Level change while shown | Bar and readout update; the timer restarts | bar animates its width ([[Progress Indicator|Progress Bar]]) |
 | Muted | icon shape, word "Muted", bar at 0.4 opacity | three cues, none by colour alone |
 
 There is no hover, focus or pressed state: the card is click-through and never focused.
@@ -104,19 +104,19 @@ The card is a display, not a control, so it does not follow the density levels; 
 
 ## Tooltip and overlay behaviour
 
-No tooltip: the card has no control ([[Tooltip]]). It is a transient overlay, not modal, with no scrim, no focus and no dismissal by the user; it dismisses itself ([[12 Overlays]], [[Dismissal]]).
+No tooltip: the card has no control ([[Tooltip]]). It is a transient overlay, not modal, with no scrim, no focus and no dismissal by the user; it dismisses itself ([[12 Overlays]], [[12 Overlays#Dismissal|Dismissal]]).
 
 ## Motion
 
 - The bar animates its width on a change (a progress bar transition, 100 ms [[Motion]] `short2` is the shell's `short` duration).
-- Show and hide: none by default (the Panel appears and hides at once). A Panel `Animation { Type: FADE, Duration: 200 }` may be added ([[Surface Animation]]).
+- Show and hide: none by default (the Panel appears and hides at once). A Panel `Animation { Type: FADE, Duration: 200 }` may be added ([[12 Overlays#Motion and reduced motion|Surface Animation]]).
 - Reduced motion: show, hide and the bar transition are instant; the display time `duration` is unchanged.
 - The card stays on screen for `duration` (1500 ms default) after the last change.
 
 ## Accessibility
 
-- Role and name: the card is a group named "Volume, <output>, <45 %|muted>" that holds a progress bar named "Volume" with a value of 0 to 100; the icon and the two texts are hidden from assistive technology because the group's name says what they say.
-- It is not a live region. The Audio module's `announce` parameter speaks the change through one window of the shell, so a screen reader hears it once ([[Accessibility Announcements]]; whether Orca reads an unfocused window is untested).
+- Role and name: the card is a group named "Volume, {output}, <45 %|muted>" that holds a progress bar named "Volume" with a value of 0 to 100; the icon and the two texts are hidden from assistive technology because the group's name says what they say.
+- It is not a live region. The Audio module's `announce` parameter speaks the change through one window of the shell, so a screen reader hears it once ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]; whether Orca reads an unfocused window is untested).
 - Muted is shown by the icon's shape, by the word "Muted" and by the dimmed bar, never by colour alone (WCAG 2.2 SC 1.4.1).
 - Contrast: readout `on_surface` and name `on_surface_variant` on the container at least 4.5 to 1 (the shell pairs are 13.23 and 7.08 in dark, 16.46 and 7.20 in light); the bar fill `primary` on the container at least 3 to 1 (5.12 dark, 5.69 light, 11.29 high contrast). The track `outline` on the container is 2.69 (dark), 3.63 (light) and 21.00 (high contrast): the dark track is below 3 to 1, which is accepted because the value is also given as text (the readout); WCAG 2.2 SC 1.4.11 asks 3 to 1 for graphics needed to understand the content.
 - Display time: the card is a status message of a change the user caused; the same value is available in the Audio module and by keyboard ([[14 Accessibility Basics]]). The time is an author setting from 0 to 60000 ms (WCAG 2.2 SC 2.2.1 applies to time limits on content the user needs to read; a user who needs longer sets `duration`).
@@ -147,7 +147,7 @@ Check types follow [[Test Method]]. Hand checks follow the shell's hand-check ki
 - [ ] AC-OSD-5 (scripted input, click-through and keyboard): with the OSD shown, a pointer press on the card reaches the window below (handler count 1 below, 0 on the card) and a key press reaches the previously focused window; the Panel's keyboard-gained event count is 0. Pass: counts as stated.
 - [ ] AC-OSD-6 (geometry check, layout): at scale 1.0, 1.25 and 2.0 the card is 300 by 64 dp, the icon 24 by 24 dp, the content padding 16 dp horizontally and 8 dp vertically, the gaps 12 dp (and 6 dp between name and bar), the readout 64 dp wide, the bar 8 dp high and 156 dp wide with the name shown; the card's bottom edge is 80 dp above the output's bottom edge and its centre is the output's horizontal centre (±1 dp). Pass: equal to the dp. Placement relative to a bottom Bar is a hand check.
 - [ ] AC-OSD-7 (geometry check, overflow): an output name of 200 characters ends in an ellipsis and ends within the body width; the readout does not change width between "5 %", "100 %" and "Muted"; no glyph lies outside the container. Pass: ellipsis present; readout width constant (±0); 0 pixels outside.
-- [ ] AC-OSD-8 (AT tree assertion): the root is a group named "Volume, <output>, <45 %>" (or "muted"); it holds one progress bar named "Volume" with value 45 and maximum 100; the icon and the two texts are hidden; no live region is present on the module. Pass: tree equals the description.
+- [ ] AC-OSD-8 (AT tree assertion): the root is a group named "Volume, {output}, <45 %>" (or "muted"); it holds one progress bar named "Volume" with value 45 and maximum 100; the icon and the two texts are hidden; no live region is present on the module. Pass: tree equals the description.
 - [ ] AC-OSD-9 (scripted input, announce once): one volume change produces exactly one polite announcement (from the Audio module) and none from the OSD. Pass: announcement count 1 with the OSD present; politeness polite.
 - [ ] AC-OSD-10 (contrast script): `on_surface` and `on_surface_variant` on `surface_container` reach 4.5 to 1, and `primary` on `surface_container` reaches 3 to 1, in dark, light and high contrast. Pass: 9 of 9 pairs (computed from the shipped theme: all pass).
 - [ ] AC-OSD-11 (pixel check, muted not by colour alone): in a screenshot with mute on, a version of the frame converted to grey scale still differs from the level frame at the icon region (more than 5 percent of its pixels differ) and shows the word "Muted". Pass: both conditions true.

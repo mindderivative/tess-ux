@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, shell, peek, frame, owner-feedback]
-related: ["[[Frame]]", "[[Frame Strip]]", "[[Frame Meld]]", "[[Meld Join]]", "[[Peek Handle]]", "[[Peek Trigger]]", "[[Content Fade]]", "[[Auto Hide]]", "[[Bar]]", "[[Dock]]", "[[Attached Panel]]", "[[Panel and Surface]]", "[[Popup]]", "[[Shortcut Mode]]", "[[Global Shortcuts]]", "[[Drag Interaction]]", "[[Surface Animation]]", "[[12 Overlays]]", "[[Colour Roles]]", "[[Motion]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Frame]]", "[[Frame#Anatomy|Frame Strip]]", "[[Frame#Anatomy|Frame Meld]]", "[[Frame#Frame join: rendering decisions|Meld Join]]", "[[Peek#Anatomy|Peek Handle]]", "[[Peek#Behaviour|Peek Trigger]]", "[[Auto Hide|Content Fade]]", "[[Auto Hide]]", "[[Bar]]", "[[Dock]]", "[[Panel and Surface#Variants|Attached Panel]]", "[[Panel and Surface]]", "[[Popup]]", "[[Keyboard Navigation|Shortcut Mode]]", "[[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]", "[[Drag and Drop|Drag Interaction]]", "[[12 Overlays#Motion and reduced motion|Surface Animation]]", "[[12 Overlays]]", "[[Colour Roles]]", "[[Motion]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]"]
 ---
 
@@ -23,7 +23,7 @@ Let a dock, drawer or strip stay out of the way and come out when the user asks,
 
 ## When to use and not
 
-- Use when: a melded Panel or a Frame strip should rest as a sliver ([[Frame Meld]], [[Frame Strip]], [[Dock]]).
+- Use when: a melded Panel or a Frame strip should rest as a sliver ([[Frame#Anatomy|Frame Meld]], [[Frame#Anatomy|Frame Strip]], [[Dock]]).
 - Do not use when: a whole Bar should hide (use [[Auto Hide]]; a Bar peek is not built); the surface is an unmelded Panel (it has Show, Hide and an `Animation`, see [[Panel and Surface]]); the content is a menu ([[Popup]]).
 - A hover-only peek hides content from keyboard and touch users: pair `HOVER` with `CLICK` or a shortcut ([[Accessibility Rules]]).
 
@@ -32,8 +32,8 @@ Let a dock, drawer or strip stay out of the way and come out when the user asks,
 1. Tab or sliver: `Size` dp of the body standing out of the ring edge, with no content shown. It is the pointer target.
 2. Body: the Panel or strip; slides out along its slide axis.
 3. Handle: a small icon on the tab (dots, bar or chevron); part of the Frame painter, never a click target of its own.
-4. Contour: the ring and body drawn as one path with fillets ([[Meld Join]]).
-5. Content: faded with the slide ([[Content Fade]]).
+4. Contour: the ring and body drawn as one path with fillets ([[Frame#Frame join: rendering decisions|Meld Join]]).
+5. Content: faded with the slide ([[Auto Hide|Content Fade]]).
 
 ## Variants
 
@@ -96,7 +96,7 @@ The reserved space is the base thickness in every state; a peek never pushes win
 - Pointer, `CLICK`: a click on the tab or sliver opens it fully; a click on the handle closes it. No hover action.
 - Pointer, `DRAG`: a press on the tab then a move pulls the body along its slide axis; release at 50 percent or more opens it, below returns it; under 4 dp of movement toggles it.
 - `Trigger` takes one value or a list (`[HOVER, DRAG]`); a list is not built (the loader says a Peek takes one value). `Handle: AUTO` takes the icon of the first trigger.
-- Keyboard: no focusable handle exists yet. The ways in are the `Show`, `Hide`, `Toggle` actions and `Toggle_<Name>` shortcuts ([[Global Shortcuts]]), and [[Shortcut Mode]]: `Enter_Shortcut_Mode` shows every peek of the Frame at the same time; `Next_Focus` and `Previous_Focus` cycle through its panels, peeks, bars and strips by `Tab_Index`. This is the owner's decision of 2026-11-10; the mode's keys arrive only if the compositor gives the Frame the keyboard (not yet checked on KWin).
+- Keyboard: no focusable handle exists yet. The ways in are the `Show`, `Hide`, `Toggle` actions and `Toggle_<Name>` shortcuts ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]), and [[Keyboard Navigation|Shortcut Mode]]: `Enter_Shortcut_Mode` shows every peek of the Frame at the same time; `Next_Focus` and `Previous_Focus` cycle through its panels, peeks, bars and strips by `Tab_Index`. This is the owner's decision of 2026-11-10; the mode's keys arrive only if the compositor gives the Frame the keyboard (not yet checked on KWin).
 - Touch: a tap acts as a click; a drag as a drag; the tab is at least 24 by 24 dp, 48 by 48 in a touch context.
 - Faint content can be clicked during a slide because the engine delivers pointer events to a node at opacity 0; accepted until a mis-mapped click is seen.
 
@@ -106,7 +106,7 @@ The handle has no tooltip: it is not a click target ([[Tooltip]]). The revealed 
 
 ## Motion
 
-- Slide: the contour animates the body along its slide axis with the Panel's `Animation` duration (default 200 ms) and easing ([[Surface Animation]]); the join and the chevron run on the same clock and easing, with no Python per frame.
+- Slide: the contour animates the body along its slide axis with the Panel's `Animation` duration (default 200 ms) and easing ([[12 Overlays#Motion and reduced motion|Surface Animation]]); the join and the chevron run on the same clock and easing, with no Python per frame.
 - Chevron: one path with the same command sequence in both states; parameter 0 (collapsed) points away from the Frame, 1 (out) points toward it; it changes direction with the slide progress.
 - Content fade: content opacity equals the slide progress (0 collapsed, 1 out) with the slide's duration and easing, on by default, for a peek slide and drag, a plain show and hide of a melded Panel, and strip children with their strip; `Content_Fade: false` turns it off (accepted 2026-11-08).
 - `Handle_Opacity` does not change while the handle travels; hover raises it to 1.
@@ -155,7 +155,7 @@ Check types follow [[Test Method]]. Timings are measured on the engine clock in 
 - [ ] AC-PEK-13 (scripted input, reduced motion): with reduced motion on, a trigger puts the body in its end state on the next frame, content opacity is 0 or 1 only, and the chevron has its end direction. Pass: end state on frame 1; no intermediate sample.
 - [ ] AC-PEK-14 (contrast script, handle at rest): the handle colour at the default 0.6 against the Frame fill reaches 3 to 1 in the dark, light and high contrast modes. Pass: 3 of 3 (computed: 6.09 dark, 4.31 light for the fallback greys; high contrast not computed). A handle colour that is a hex literal fails the token rule of [[Panel and Surface]] AC-PNL-2 and is listed as a finding.
 - [ ] AC-PEK-15 (scripted input, keyboard way in): `Toggle_<Name>` (or `Show` with `Target`) opens and closes a named peek with no pointer event; `Enter_Shortcut_Mode` shows every peek of the Frame at once. Pass: states as stated. Hand check on KWin for the mode.
-- [ ] AC-PEK-16 (AT tree assertion): the tab or its handle exposes a role `button` and the name "Expand <name>" while collapsed and "Collapse <name>" while out. Pass: both names present. Status today: fails (handle nodes are not exposed).
+- [ ] AC-PEK-16 (AT tree assertion): the tab or its handle exposes a role `button` and the name "Expand {name}" while collapsed and "Collapse {name}" while out. Pass: both names present. Status today: fails (handle nodes are not exposed).
 - [ ] AC-PEK-17 (geometry check, target size): the pointer-sensitive tab is at least 24 by 24 dp (48 by 48 in a touch context); a `Size` below 24 dp is allowed only when AC-PEK-15 passes. Pass: hit area read from the engine hit test.
 - [ ] AC-PEK-18 (scripted input, single value): `Trigger: [HOVER, DRAG]` today produces a load error that says a Peek takes one value; when a list is built this criterion becomes: both triggers work and `AUTO` takes the first. Pass: error text as stated.
 

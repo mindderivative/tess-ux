@@ -60,6 +60,10 @@ Keys every Tesserae application MUST honour. A project may add keys; it MUST NOT
 | Menu key, Shift+F10 | focused item with a context menu | opens its context menu | APG keyboard interface table |
 | Ctrl+C, Ctrl+X, Ctrl+V, Ctrl+A | text field | clipboard and select all | tre text input |
 | Ctrl, Alt or Meta with any key | anywhere | shortcut: never navigation and never scroll | tre events reference |
+| Alt+Space | borderless window | opens the system menu (on by default, [[ADR-0015 System menu default in borderless windows]]) | [[Window]], [[Title Bar]] AC-TTB-18 |
+| Alt+Shift+B (proposed) | anywhere in a window with a banner | moves focus to the current banner's first action; proposed default, collision check required | [[ADR-0019 Banner and snackbar focus chords]], [[Banner]] AC-BNR-7 |
+| Alt+Shift+N (proposed) | anywhere in a window with a snackbar | moves focus to the current snackbar's action; proposed default, collision check required | [[ADR-0019 Banner and snackbar focus chords]], [[Snackbar]] AC-SNK-9 |
+| Ctrl+Shift+Escape (proposed) | focus in a terminal block | moves focus to the next focusable element outside the terminal; reserved before the program receives keys; proposed default, collision check against the shell's shortcut map required | [[ADR-0018 Terminal escape chord]], [[Terminal]] AC-BLK-TRM-3 |
 
 ### Tab order rules
 
@@ -149,6 +153,7 @@ A group is a set of related items that are one Tab stop. Roving focus is the tec
 7. Every shortcut is shown where its action is shown: in a menu item's shortcut text, and in the tooltip or accessible description of its control (`tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` puts the key in the label, for example "Add a child block (Ctrl+Shift+N)"; `shell-vault:40 Specifications/Integration/Global Shortcuts.md` shows keys in tooltips). Key names are written with `+` and capitalised: `Ctrl+Shift+N`.
 8. Ctrl on Linux and Windows is Cmd on macOS #needs-verification-as-design-choice.
 9. Global shortcuts of the shell work while no shell surface has focus and are registered with the desktop's shortcut service, so the user changes them in System Settings; the file gives only a default (`tess-shell:docs/guide/keyboard.md`).
+10. Chords marked proposed in the global keyboard map (Alt+Shift+B, Alt+Shift+N, Ctrl+Shift+Escape) are defaults, not rules: before a project adopts one it checks it against the shell's shortcut map, the desktop's own keys and each application's map (rules 4 and 5 above and AC-INT-13) and records the result and any replacement chord ([[ADR-0018 Terminal escape chord]], [[ADR-0019 Banner and snackbar focus chords]]). A terminal block keeps one escape chord whatever the project chooses.
 
 ## Pointer
 
@@ -356,6 +361,7 @@ Rows are test cases: a test drives the input in the given context and compares t
 - [ ] AC-INT-24 (scripted input): touch. A touch held 500 ms in place opens the context menu with no click on lift; moved 12 px it pans and opens nothing. Pass: events observed.
 - [ ] AC-INT-25 (review): every element note's Behaviour section states its keys, and every key is consistent with the global keyboard map. Pass: a reviewer finds zero contradictions; the Menu typeahead window is listed as an open conflict until aligned.
 - [ ] AC-INT-26 (review): no action or information is available only on hover, only by double click, only by drag or only by a gesture. Pass: reviewer list empty for each documented view.
+- [ ] AC-INT-27 (review): each chord marked proposed in the global keyboard map has a recorded collision check (shell shortcut map, desktop keys, application map) with the result, or a recorded replacement chord; a terminal block has exactly one reserved escape chord that is not delivered to its program. Pass: record present for 3 of 3 chords; zero unrecorded collisions.
 
 ## Sources
 

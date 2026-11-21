@@ -106,11 +106,11 @@ Conversion of these values to the bounce parameter of an engine spring (tre: def
 
 - [ ] AC-MOT-1: Token test. The theme returns the 16 durations of the Durations table. Pass: 16 of 16 exact in ms.
 - [ ] AC-MOT-2: Token test. The theme returns the 7 easings of the Easing table, and every definition of the name `emphasized` in the project (theme, transition spec, binder) equals cubic-bezier(0.2, 0, 0, 1). Pass: one value per name across all definitions.
-- [ ] AC-MOT-3: Numeric test. Evaluate each easing at x = 0.25, 0.5, 0.75. Pass: results equal the y column within 0.005.
-- [ ] AC-MOT-4: Scripted frame capture. Trigger a `short4` transition (Button Corner_Radius) at 60 Hz and capture frames. Pass: the end state appears no earlier than 200 ms and no later than 200 ms plus 2 frames (233 ms) after the trigger.
-- [ ] AC-MOT-5: Scripted reduced motion. Set the platform stub to reduced motion and trigger a Button hover colour change, a popup open and a marquee. Pass: the Button and popup are in their end state on the next frame; the marquee offset is unchanged over 2 s.
+- [ ] AC-MOT-3 (token test): Numeric test. Evaluate each easing at x = 0.25, 0.5, 0.75. Pass: results equal the y column within 0.005.
+- [ ] AC-MOT-4 (pixel check): Scripted frame capture. Trigger a `short4` transition (Button Corner_Radius) at 60 Hz and capture frames. Pass: the end state appears no earlier than 200 ms and no later than 200 ms plus 2 frames (233 ms) after the trigger.
+- [ ] AC-MOT-5 (scripted input): Scripted reduced motion. Set the platform stub to reduced motion and trigger a Button hover colour change, a popup open and a marquee. Pass: the Button and popup are in their end state on the next frame; the marquee offset is unchanged over 2 s.
 - [ ] AC-MOT-6: Token test (static scan). No view stylesheet sets `Duration` to a literal that is not in the allow-list (values equal to a token, each listed with its token name), and no stylesheet sets an easing to a literal curve. Pass: zero hits outside the allow-list.
-- [ ] AC-MOT-7: Numeric test. An effects spring (colour, opacity) never exceeds its target. Pass: the sampled value stays at or below the target (colour channel distance monotonic) for every frame; a spatial spring may exceed it by at most 10 percent of the distance.
+- [ ] AC-MOT-7 (token test): Numeric test. An effects spring (colour, opacity) never exceeds its target. Pass: the sampled value stays at or below the target (colour channel distance monotonic) for every frame; a spatial spring may exceed it by at most 10 percent of the distance.
 - [ ] AC-MOT-8: Scripted input. Trigger a transition and send a second trigger after 50 ms. Pass: the second transition starts from the current value without a jump larger than 1 dp or 1 colour step.
 - [ ] AC-MOT-9: Review. No element conveys state by motion alone (Rules 5). Pass: reviewer finds none.
 

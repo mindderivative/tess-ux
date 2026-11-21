@@ -6,14 +6,14 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, pattern, dock, docking, keyboard, drag-and-drop]
-related: ["[[Dock Panel]]", "[[Splitter]]", "[[Tabs]]", "[[Window]]", "[[Melded Panel]]", "[[Panel and Surface]]", "[[Drag and Drop]]", "[[Navigation Rail]]", "[[Menu]]", "[[Tooltip]]", "[[Scrim]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Dock Panel]]", "[[Splitter]]", "[[Tabs]]", "[[Window]]", "[[Panel and Surface#Variants|Melded Panel]]", "[[Panel and Surface]]", "[[Drag and Drop]]", "[[Navigation Rail]]", "[[Menu]]", "[[Tooltip]]", "[[Scrim]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[Splitter]]"]
 ---
 
 # Dock
 
 > [!info] Summary
-> A Dock arranges panels in zones (left, right, top, bottom, center) around the content of a window; each zone shows its panels as tabs, one at a time, and the user resizes zones with handles and moves panels between zones. MD3 has no dock; its nearest patterns are the [navigation rail](https://m3.material.io/components/navigation-rail/overview) and the canonical pane layouts, and the tab strip follows the MD3 secondary tabs. The word dock also names a different thing in tess-shell (a melded panel with a peek on a screen edge): that realisation is specified in [[Melded Panel]] and its requirements are listed under Behaviour. Source of truth in code: see Status in code.
+> A Dock arranges panels in zones (left, right, top, bottom, center) around the content of a window; each zone shows its panels as tabs, one at a time, and the user resizes zones with handles and moves panels between zones. MD3 has no dock; its nearest patterns are the [navigation rail](https://m3.material.io/components/navigation-rail/overview) and the canonical pane layouts, and the tab strip follows the MD3 secondary tabs. The word dock also names a different thing in tess-shell (a melded panel with a peek on a screen edge): that realisation is specified in [[Panel and Surface#Variants|Melded Panel]] and its requirements are listed under Behaviour. Source of truth in code: see Status in code.
 
 ## Purpose
 
@@ -39,7 +39,7 @@ A tool window (editor, inspector, file tree, console) holds many panels and the 
 | Variant | Use | Differences |
 |---|---|---|
 | Panel dock (tess-ui `Dock`) | IDE-like tool windows | Zones, tabs, handles, splits, layout save and restore |
-| Edge dock (tess-shell) | A shell panel at a screen edge | A melded Panel with Peek on a Frame; no tabs, no splits ([[Melded Panel]]) |
+| Edge dock (tess-shell) | A shell panel at a screen edge | A melded Panel with Peek on a Frame; no tabs, no splits ([[Panel and Surface#Variants|Melded Panel]]) |
 
 ## States
 
@@ -91,7 +91,7 @@ Tab and strip heights per density are in [[Dock Panel]].
 - Keyboard: a tab strip is one Tab stop (the shown tab); Left and Right Arrow move to the previous or next tab and show its panel, wrapping at the ends; Home and End go to the first and last tab; Enter shows the focused tab's panel; the Menu key or Shift+F10 on a tab opens its menu with "Move to ..." for each zone and each half, which moves the panel without dragging and keeps focus on the moved tab. A handle is a Tab stop: arrows move it by 16 dp, Home goes to the minimum, End to the maximum (as [[Splitter]]).
 - Touch: tabs are 48 dp high, handles 48 dp in a touch context; a long press on a tab opens its menu #needs-verification (design choice).
 - Drag cancel: Escape during a tab drag cancels it; the panel returns to where it was and no drop happens.
-- Edge dock (tess-shell): the dock rests as a thin tab of `Size` px (default 24) on the screen edge and opens by `Trigger` (HOVER after 150 ms, CLICK or DRAG) and closes after 300 ms away; the keyboard opens it (a focusable handle named "Expand dock"; today only the Frame's shortcut mode) ([[Melded Panel]]).
+- Edge dock (tess-shell): the dock rests as a thin tab of `Size` px (default 24) on the screen edge and opens by `Trigger` (HOVER after 150 ms, CLICK or DRAG) and closes after 300 ms away; the keyboard opens it (a focusable handle named "Expand dock"; today only the Frame's shortcut mode) ([[Panel and Surface#Variants|Melded Panel]]).
 
 ## Tooltip and overlay behaviour
 
@@ -107,11 +107,11 @@ Tab and strip heights per density are in [[Dock Panel]].
 
 ## Accessibility
 
-- Each zone's strip has role `tablist` named "<Side> panels" (Left panels, Right panels); each tab has role `tab`, the panel's title as its name and `selected` true on the shown tab only; each shown panel has role `tabpanel` named by its tab (the APG tabs pattern).
+- Each zone's strip has role `tablist` named "{Side} panels" (Left panels, Right panels); each tab has role `tab`, the panel's title as its name and `selected` true on the shown tab only; each shown panel has role `tabpanel` named by its tab (the APG tabs pattern).
 - Keys: as in Behaviour; the dock never traps focus: Tab leaves a strip to the shown panel and on to the next control.
 - Drag and drop has a pointer-free alternative: the tab menu "Move to ...", per WCAG 2.2 SC 2.5.7 Dragging Movements (single-pointer alternative) and SC 2.1.1 (keyboard).
-- A zone change is announced: moving a panel announces "<title> moved to <side>" through `Window.announce` (polite) #needs-verification (a design choice; the engine announce has not been heard with a screen reader, [[Accessibility Rules]] AR-29).
-- Handles: see [[Splitter]]; the role is `separator`.
+- A zone change is announced: moving a panel announces "{title} moved to {side}" through `Window.announce` (polite) #needs-verification (a design choice; the engine announce has not been heard with a screen reader, [[Accessibility Rules]] AR-29).
+- Handles: see [[Splitter]]; the role is `separator`. Per [[ADR-0014 Window resize border and splitter alternative]] a zone handle has the splitter's keyboard path (arrow keys, Home, End), which is required and is the dragging alternative for resizing (SC 2.5.7); a zone has a close button for hiding it.
 - Contrast: tab text per [[Dock Panel]]; grip at least 3:1; drop highlight outline `primary` at least 3:1 against the zone container.
 - Target sizes: tabs and handles at least 24 dp; close buttons at least 24 by 24 dp.
 
@@ -139,21 +139,23 @@ All colours are roles; the dock follows the application's scheme and retints whe
 - [ ] AC-DCK-4 (scripted input): a press on a handle and a move of 40 dp changes the zone by 40 dp in the growing direction, clamped; the drag continues outside the handle (captured); release ends it. Pass: zone size after each of three runs.
 - [ ] AC-DCK-5 (scripted input): a press on a tab and a move of 3 dp is a click (shows the panel, no drag); a move of 4 dp or more starts a drag and does not select the panel on release over the same tab; with the pointer over zone Z the zone shows the drop highlight (pixel: `primary` at 16 percent blend inside, 2 dp `primary` outline at the edge); releasing over Z moves the panel to Z and shows it; releasing over no zone leaves it. Pass: panel side and highlight pixels in each case.
 - [ ] AC-DCK-6 (scripted input): Escape during a tab drag cancels it: the panel stays in its zone, no `on_move` call, the highlight is removed within one frame. Pass: side, call count and layer pixels.
-- [ ] AC-DCK-7 (scripted input): the Menu key and Shift+F10 on a focused tab open the tab menu with one "Move to <side>" entry per zone other than the current one, and one per half; choosing one moves the panel, shows it and leaves keyboard focus on the moved tab. Pass: menu entries, panel side and focused node.
+- [ ] AC-DCK-7 (scripted input): the Menu key and Shift+F10 on a focused tab open the tab menu with one "Move to {side}" entry per zone other than the current one, and one per half; choosing one moves the panel, shows it and leaves keyboard focus on the moved tab. Pass: menu entries, panel side and focused node.
 - [ ] AC-DCK-8 (scripted input): a strip is one Tab stop: only the selected tab is focusable; Left and Right Arrow move to the previous and next tab and select it, wrapping; Home and End select the first and last tab; Enter or Space selects the focused tab. Pass: focused and selected tab ids after each key.
 - [ ] AC-DCK-9 (scripted input): `layout()` then `restore()` round-trips: panel zones, shown tab per zone, zone sizes (clamped), split sizes and halves are equal; a title, zone or half the dock does not have is skipped without error; an edit of the view while the app runs keeps the user's arrangement. Pass: `layout()` before equals `layout()` after for the restored dock.
-- [ ] AC-DCK-10 (AT tree assertion): each zone strip has role `tablist` named "<Side> panels"; each tab role `tab` with its title as name and `selected` true on the shown tab only; each shown panel role `tabpanel` named by its title; a hidden panel is not in the tree; handles have role `separator` and a name that says "Resize the <side> panels". Pass: property equality for a dock with 5 zones.
+- [ ] AC-DCK-10 (AT tree assertion): each zone strip has role `tablist` named "{Side} panels"; each tab role `tab` with its title as name and `selected` true on the shown tab only; each shown panel role `tabpanel` named by its title; a hidden panel is not in the tree; handles have role `separator` and a name that says "Resize the {side} panels". Pass: property equality for a dock with 5 zones.
 - [ ] AC-DCK-11 (token test): zone, strip and tab colours are role references (`surface`, `on_surface`, `on_surface_variant`, `primary`, `surface_variant`, `outline`); a scheme change retints the dock in place within one frame. Pass: zero colour literals; resolved values equal the scheme before and after `set_dark`.
 - [ ] AC-DCK-12 (scripted input): a zone with no panel is hidden together with its handle; removing the last panel of a split half collapses the half and its neighbour takes the room back (one frame); re-adding a panel to the empty side brings the zone back at its last size. Pass: zone visibility and sizes.
 - [ ] AC-DCK-13 (scripted input): a window shrinks from 1100 to 480 dp wide with left and right zones at 240 dp: the center zone stays at least its minimum (120 dp) and no zone overlaps another or paints outside the window. Pass: zone rectangles at each of five widths #needs-verification (the combined-zone rule is a Tesserae choice).
 - [ ] AC-DCK-14 (scripted input): the edge dock of tess-shell opens by the keyboard: a key route reaches the peek handle (focusable, named "Expand dock") and Enter opens it; HOVER opens after 150 ms and closes after 300 ms away; the resting tab is at least 24 dp on its short side. Pass: open state after each input. Hand check on KWin (not automated) for the focusable handle.
-- [ ] AC-DCK-15 (review): the application offers no layout feature that only drag can do: every move has the tab menu, every size has the handle keys, every close has the close button; reviewer records each. Pass: sign-off.
+- [ ] AC-DCK-15 (review): the application offers no layout feature that only drag can do: every move has the tab menu, every size has the handle keys, every close has the close button; reviewer records each ([[ADR-0014 Window resize border and splitter alternative]]). Pass: sign-off.
+- [ ] AC-DCK-16 (scripted input): every zone handle meets the keyboard path of [[Splitter]] (AC-SPL-15): Tab focuses it, and the arrow keys on its axis, Home and End resize it as AC-DCK-3 states, with no resize function reachable by drag alone ([[ADR-0014 Window resize border and splitter alternative]]). Pass: zone size after each key; a handle without the path fails.
 
 ## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/docking.py` (`Dock`, `TAB_HEIGHT` 48, `DRAG_THRESHOLD` 4, `HALF_EDGE` 0.25), `tess-ui:src/tess_ui/dockhost.py` (`DockHost`, `HANDLE_SPAN` 16, `MIN_ZONE` 120, `MAX_SHARE` 0.7, `STEP` 16, `DEFAULT_SIZE`), `tess-ui:src/tess_ui/spec/dock.py`, `tess-ui:docs/components/dock.md`, `tess-ui:docs/guide/docking.md`, tests `test_docking.py`, `test_dock_view.py`, `test_dock_halves.py`, `test_dock_close.py`, `test_window_dock_example.py` | Partly meets. Meets (per code and docs, not all run): zone defaults and clamps (AC-DCK-1), drag threshold and drop highlight (AC-DCK-5), the "Move to ..." menu from the Menu key and Shift+F10 (AC-DCK-7), one Tab stop strip with arrows and wrap (`tab.node.set(selected=on, focusable=entry.node == stop)`), layout and restore (AC-DCK-9), tablist, tab and tabpanel roles (AC-DCK-10), arrow, Home and End on handles, close, reopen, halves with collapse. Fails AC-DCK-2: handle 16 dp, not 24. Fails AC-DCK-6: no Escape handling in a drag. Fails AC-DCK-8 in part: Home and End on the tab strip do nothing. Fails AC-DCK-5 in the highlight value: `HIGHLIGHT_ALPHA` 0x1F is 12 percent, quoted as the MD3 pressed or dragged overlay, which is 16 percent dragged and 10 percent pressed in the current tokens. Fails AC-DCK-10 in the handle role (`slider`, not `separator`). Not run: AC-DCK-11, AC-DCK-12 (empty zone), AC-DCK-13. Drag and drop of panels is built for tabs moving between zones and onto halves; not built: floating panels, tearing a panel off into a window, maximising a panel, reordering tabs, layouts saved by name, dragging or closing a half's own content, panel identity (panels are found by title) |
+| tess-ui (ADR-0014) | `tess-ui:src/tess_ui/dockhost.py` | AC-DCK-16: arrow, Home and End on zone handles are built (row above), so the required keyboard path is met for resizing; not run [INFERENCE from the row above]. The handle role (`slider`, not `separator`) stays under AC-DCK-10 |
 | tess-shell | `tess-shell:src/tess_shell/surfaces/join.py`, `frame.py`, `tess-shell:docs/guide/surfaces.md` (Melded Panels, Peek), `shell-vault:40 Specifications/Surfaces/Frame.md` | Partly meets as the edge dock: a melded Panel with Peek (`Size` 24 default, `Enter_Delay` 150, `Exit_Delay` 300, `Trigger` HOVER, CLICK, DRAG). AC-DCK-14: the handle is part of the painter, not a focusable control named "Expand dock"; the keyboard route is the Frame's shortcut mode (decided 2026-11-10); real KWin behaviour is a hand check, not run. No tabs, no splits and no drag of panels in the shell. Dock is not a surface kind in code |
 | tre | `tre:docs/guide/docking.md`, `tre:crates/engine-core/src/dock.rs` | Exists as the mechanism: `add_dock_zone`, `dock_panel`, `set_active_panel`, `start_panel_drag`, `undock_panel`, the `dock_target` and `dock_drop` events, moving without a drag by calling `dock_panel` again. The engine draws no handle and no highlight; those are tess-ui's |
 

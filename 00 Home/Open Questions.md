@@ -4,7 +4,7 @@ type: questions
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [questions, decisions]
 related: ["[[Plan]]", "[[Gaps and Contradictions]]"]
 depends_on: []
@@ -50,7 +50,26 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 | OQ-20 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: thumb opacity 60 percent rest, 80 percent hover, 100 percent drag | closed | [[Scrollbar and Scroll Container]] |
 | OQ-21 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: the 12 dp hit area is accepted with the keyboard path as the equivalent control | closed | [[Scrollbar and Scroll Container]] |
 | OQ-22 | Closed 2026-11-21 by [[ADR-0013 Focus and pressed state layer 10 percent]]: focus and pressed state layers stay 10 percent | closed | [[State Layers]] |
+| OQ-32 | The accepted scrollbar thumb opacity (0.60 at rest) gives 3.11 to 1 over `surface` in the light scheme but 2.76 to 2.93 over the dimmer container roles, below 3 to 1. Raise the rest opacity or fix the container the thumb sits on? | Raise the rest opacity to 0.70 and recompute with `tools/contrast_check.py`; amend ADR-0012 | [[Scrollbar and Scroll Container]], [[Adoption Plan]] |
 | OQ-23 | Shell state layers (ADR-0009): adoption not decided; the shell audit will record the gap | Orchestrator asks the owner at the shell audit | [[State Layers]] |
 | OQ-24 | Closed 2026-11-21: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] and [[UXREQ-002 Virtual list keys and scroll to index]] are filed and approved in [[80 Requests]] | closed | [[Scrollbar and Scroll Container]] |
+
+## Decided in Phase 2 (2026-11-21, by bot:Orchestrator under the owner's delegation)
+
+| ID | Question | Decision |
+|---|---|---|
+| OQ-26 | Window resize border 6 dp against the 24 dp target; splitter dragging alternative | Accepted: [[ADR-0014 Window resize border and splitter alternative]] |
+| OQ-27 | System menu default in borderless windows | Accepted, on by default: [[ADR-0015 System menu default in borderless windows]] |
+| OQ-28 | Carousel caption colour | Accepted, `on_scrim` over `scrim` at 0.60: [[ADR-0016 Carousel caption colour]] |
+| OQ-29 | Node Graph panning instead of scrollbars | Accepted as a deviation from ADR-0003: [[ADR-0017 Node Graph pans instead of scrolling]] |
+| OQ-30 | Terminal keyboard trap | Accepted, escape chord: [[ADR-0018 Terminal escape chord]] |
+| OQ-31 | Focus chords for banner and snackbar | Accepted as proposed defaults, collision check required: [[ADR-0019 Banner and snackbar focus chords]] |
+
+## Open for the owner
+
+| ID | Question | Recommendation | Evidence |
+|---|---|---|---|
+| OQ-25 | Shell Bar auto-hide: the owner's decision of 2026-10-27 says no key reveals a Bar; the accessibility rule says every hidden element is keyboard reachable. Which wins? | Shortcut Mode reveals a hidden Bar, and keyboard focus keeps it out of hiding; the 2026-10-27 decision then applies to plain keys only | [[Auto Hide]], [[Bar]], [[Accessibility Rules]] |
+| OQ-23 | Shell state layers (ADR-0009): adopt or keep the opacity literals | Adopt, at the shell audit | [[State Layers]], [[Adoption tess-shell]] |
 
 Back to [[Index]].

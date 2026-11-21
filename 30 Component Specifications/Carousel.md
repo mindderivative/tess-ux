@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, containment, carousel, scrolling]
-related: ["[[Card]]", "[[List]]", "[[Scroll View]]", "[[Scroll Behaviour]]", "[[Scrollbar and Scroll Container]]", "[[Icon Button]]", "[[Tooltip]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0012 Scrollbar thumb opacity and hit area exception]]"]
+related: ["[[Card]]", "[[List]]", "[[ScrollBox|Scroll View]]", "[[Scrollbar and Scroll Container#Behaviour|Scroll Behaviour]]", "[[Scrollbar and Scroll Container]]", "[[Icon Button]]", "[[Tooltip]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0012 Scrollbar thumb opacity and hit area exception]]"]
 depends_on: ["[[Scrollbar and Scroll Container]]", "[[Shape]]", "[[Motion]]", "[[ADR-0003 Scrollbar rule]]"]
 ---
 
@@ -27,7 +27,7 @@ Let a user browse a collection of visual items (photos, albums, previews) in one
 
 ## Anatomy
 
-1. Container: a horizontal scroll container ([[Scroll View]]) of the set width and height; it clips its items.
+1. Container: a horizontal scroll container ([[ScrollBox|Scroll View]]) of the set width and height; it clips its items.
 2. Item (several): a rounded container with an image filling it.
 3. Caption band (optional): a band at the item bottom with the title and, optionally, supporting text.
 4. Title: `title_medium`, one line, ellipsis.
@@ -71,12 +71,12 @@ State layer colour `on_surface` on the item; percentages hover 8, focus 10, pres
 |---|---|
 | Item container | `surface` (Material Web `container-color`), shape `extra_large` (28 dp, `corner-extra-large`) |
 | Item fill when no image | `surface_container_highest` |
-| Caption band | `scrim` at 60 percent (Tesserae value; see Accessibility) |
-| Title, supporting text | `title_medium`, `body_small`; colour `#FFFFFF` and `#FFFFFF` at 80 percent over the band |
+| Caption band | `scrim` at 0.60 opacity ([[ADR-0016 Carousel caption colour]]) |
+| Title, supporting text | `title_medium`, `body_small`; colour `on_scrim` (supporting text at 80 percent of `on_scrim`) over the band |
 | Outline (optional) | 1 dp `outline` (`with-outline-outline-width` 1 px) |
 | Focus ring | `secondary` ([[Focus Ring]]) |
 
-See [[Colour Roles]], [[Typography]], [[Shape]], [[Elevation]], [[Motion]], [[Spacing and Density]]. The caption text colour is a literal because the image under it does not follow the theme; see Deviations.
+See [[Colour Roles]], [[Typography]], [[Shape]], [[Elevation]], [[Motion]], [[Spacing and Density]]. The caption text colour is the role `on_scrim` ([[ADR-0016 Carousel caption colour]]); there is no colour literal. The contrast figures below assume `on_scrim` resolves to white (the scheme value is defined in [[Colour Roles]]).
 
 ## Sizing and density
 
@@ -107,7 +107,7 @@ Layouts for a carousel of width W (tess-ui formulas, adopted as the spec at defa
 
 ## Behaviour
 
-- Pointer: wheel scrolls the strip horizontally (a vertical wheel turn scrolls sideways when the strip cannot scroll vertically; Shift plus wheel always); dragging the strip scrolls it with momentum; dragging the thumb scrolls it. On release the strip settles with an item at the start (centre in centre hero) (snap, [[Scroll Behaviour]]). A press on an item chooses it.
+- Pointer: wheel scrolls the strip horizontally (a vertical wheel turn scrolls sideways when the strip cannot scroll vertically; Shift plus wheel always); dragging the strip scrolls it with momentum; dragging the thumb scrolls it. On release the strip settles with an item at the start (centre in centre hero) (snap, [[Scrollbar and Scroll Container#Behaviour|Scroll Behaviour]]). A press on an item chooses it.
 - Keyboard: the carousel is one group; Left and Right Arrow move focus to the previous and next item and scroll it fully into view (AC-LAY-14); Home and End move to the first and last item; Enter and Space choose the focused item; Tab leaves the carousel to the next control (the focus group is one Tab stop; Shift+Tab enters on the last focused item). A carousel never traps focus.
 - Touch: swipe scrolls with momentum and settles on snap; a tap chooses; hit areas are 48 by 48 dp at least in a touch context.
 - Auto-advance (opt-in): off by default. When on, it pauses while the pointer is over the carousel or focus is inside it, offers a visible pause and play control ([[Icon Button]]), and does not start under reduced motion (WCAG 2.2 SC 2.2.2 Pause, Stop, Hide; [[Motion]] rule 4; APG carousel pattern).
@@ -119,7 +119,7 @@ The tooltip belongs to the item, which is the control: when a title or supportin
 
 ## Motion
 
-Scrolling and settling: the scroll offset eases to the snap point; the tre engine settles 120 ms after the last wheel event and then animates 200 ms (`short4`) ([[Scroll Behaviour]], `tre:docs/guide/nodes-and-layout.md`). State changes: 150 ms colour, 200 ms elevation ([[Motion]]). MD3 sizes items continuously as they scroll (a large item shrinks as it leaves); this change of size while scrolling is optional in Tesserae and not built. With reduced motion on, settling and state changes complete on the next frame and no auto-advance runs.
+Scrolling and settling: the scroll offset eases to the snap point; the tre engine settles 120 ms after the last wheel event and then animates 200 ms (`short4`) ([[Scrollbar and Scroll Container#Behaviour|Scroll Behaviour]], `tre:docs/guide/nodes-and-layout.md`). State changes: 150 ms colour, 200 ms elevation ([[Motion]]). MD3 sizes items continuously as they scroll (a large item shrinks as it leaves); this change of size while scrolling is optional in Tesserae and not built. With reduced motion on, settling and state changes complete on the next frame and no auto-advance runs.
 
 ## Accessibility
 
@@ -127,13 +127,13 @@ Scrolling and settling: the scroll offset eases to the snap point; the tre engin
 - Name: item name is the title; an item without a title needs a label. Position is announced as "n of m" through set size and position (AC-LAY-13).
 - Keys: see Behaviour. Escape does nothing in a carousel (no overlay).
 - Contrast: the caption text on the band is at least 4.5:1 against the worst-case image under the band, a white pixel field (see below); the focus ring at least 3:1.
-- Caption legibility: white text on a band of `scrim` at alpha a over a white image has contrast 1.05 / (L + 0.05) with L the luminance of the darkened white; 4.5:1 needs L at most 0.183, hence a at least 0.535. Tesserae uses 0.60 (contrast 5.7:1 against white). The 0.32 band of tess-ui gives 2.2:1 over white and fails.
+- Caption legibility ([[ADR-0016 Carousel caption colour]]): `on_scrim` text (white) on a `scrim` band (black) at alpha a over a white image has contrast 1.05 / (L + 0.05), with L the luminance of the darkened white; 4.5:1 needs L at most 0.183, hence a at least 0.535. At a = 0.60 the band over white is sRGB 102 (0.40 of 255), L = 0.1329, and the contrast is 1.05 / 0.1829 = 5.74:1 (recomputed 2026-11-21, 5.7:1 as in the ADR). The 0.32 band of tess-ui gives 2.2:1 over white and fails.
 - Auto-advance, when on, is controllable (SC 2.2.2); content moving under reduced motion is stopped.
 - Images carry a text alternative through the title; a purely decorative image is hidden from assistive technology ([[Accessibility Rules]] AR-5).
 
 ## Dark and light
 
-The item container, the fill when no image, the state layer and the ring follow the theme ([[Theme Following the System]]). The image and the caption (white on a `scrim` band) are the same in both themes.
+The item container, the fill when no image, the state layer and the ring follow the theme ([[Theme Following the System]]). The image and the caption (`on_scrim` on a `scrim` band at 0.60) are the same in both themes.
 
 ## Defaults
 
@@ -156,12 +156,12 @@ The item container, the fill when no image, the state layer and the ring follow 
 - [ ] AC-CRS-5 (scripted input): focus the first item; Right Arrow x5 moves focus to item 6 and the item lies fully inside the viewport with its ring (5 dp beyond the border box) visible; End focuses the last item and Home the first; Enter and Space on a focused item deliver its value once.
 - [ ] AC-CRS-6 (scripted input): Tab from the control before the carousel lands on the carousel once; one more Tab leaves it; Shift+Tab returns to the last focused item; no key sequence traps focus.
 - [ ] AC-CRS-7 (geometry check): a carousel with content wider than its width shows a horizontal thumb meeting [[Scrollbar and Scroll Container]] dimensions at 60, 80 and 100 percent opacity for rest, hover and drag; with content that fits, no thumb shows.
-- [ ] AC-CRS-8 (layout test): a title of 60 characters in a 160 dp wide item shows one line ending in `…`, the accessible name and the tooltip text are the full title, and hovering 500 ms (or keyboard focus) shows the tooltip with the item as trigger.
+- [ ] AC-CRS-8 (geometry check): a title of 60 characters in a 160 dp wide item shows one line ending in `…`, the accessible name and the tooltip text are the full title, and hovering 500 ms (or keyboard focus) shows the tooltip with the item as trigger.
 - [ ] AC-CRS-9 (AT tree assertion): the container has role `list` and a non-empty name, each item has role `listitem` with the title as name and set size and position, no `listitem` lacks a `list` ancestor.
-- [ ] AC-CRS-10 (contrast script): white caption text over a white image under the band measures at least 4.5:1; the focus ring at least 3:1 against the image edge sample.
+- [ ] AC-CRS-10 (contrast script): the caption text role is `on_scrim` and the band role is `scrim` at 0.60 ([[ADR-0016 Carousel caption colour]]); `on_scrim` text over a white image under the band measures at least 5.7:1 (computed 5.74:1) and in no case below 4.5:1; the focus ring at least 3:1 against the image edge sample. Pass: measured ratios and zero colour literals in the caption.
 - [ ] AC-CRS-11 (token test): state layers on an item: hover 0.08, focus 0.10, pressed 0.10 of `on_surface`; elevation 1 on hover, 0 at rest, focus and pressed.
-- [ ] AC-CRS-12 (scripted frame capture): the settle animation after a wheel turn ends at most 400 ms after the last event; with reduced motion the end state is drawn on the next frame and an enabled auto-advance does not start.
-- [ ] AC-CRS-13 (scripted state): with auto-advance enabled, the carousel stops advancing while the pointer is over it and while focus is inside it, and a pause control is reachable by keyboard.
+- [ ] AC-CRS-12 (pixel check): the settle animation after a wheel turn ends at most 400 ms after the last event; with reduced motion the end state is drawn on the next frame and an enabled auto-advance does not start.
+- [ ] AC-CRS-13 (scripted input): with auto-advance enabled, the carousel stops advancing while the pointer is over it and while focus is inside it, and a pause control is reachable by keyboard.
 - [ ] AC-CRS-14 (scripted input): a disabled item takes no focus and no press and is drawn at 38 percent opacity.
 - [ ] AC-CRS-15 (review): the carousel is used only for visual items; no item is reachable only by drag (the scrollbar, keyboard and wheel reach every item).
 
@@ -177,7 +177,7 @@ The item container, the fill when no image, the state layer and the ring follow 
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Caption band `scrim` at 0.60 and white caption text as a literal | the image does not follow the theme, so no role pair guarantees 4.5:1; 0.60 meets it over a white image; the literal is an exception to [[Accessibility Rules]] AR-20 and needs an owner decision (a fixed `on_scrim` colour) | [[Deviations from MD3]] |
+| Caption band `scrim` at 0.60 with caption text `on_scrim` | the image does not follow the theme, so no role pair under the image guarantees 4.5:1; the band at 0.60 gives 5.7:1 over a white image; no colour literal remains | [[ADR-0016 Carousel caption colour]] |
 | Scrollbar thumb shown whenever items overflow | owner rule for every scroll container | [[ADR-0003 Scrollbar rule]] |
 | Gap, caption band and small item width scale with density | desktop information density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Items do not resize continuously while scrolling (not built) | engine has no per-item size animation tied to scroll; MD3 describes the effect | [[Deviations from MD3]] |

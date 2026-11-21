@@ -40,7 +40,7 @@ depends_on: ["[[17 Conformance]]", "[[Test Method]]"]
 |---|---|
 | AC id | the identifier, for example `AC-BTN-5`; copied exactly |
 | Note | the wikilink of the note that holds the criterion |
-| Check type | one of the seven types of [[Test Method]] as the criterion names it |
+| Check type | one of the eight types of [[Test Method]] as the criterion names it |
 | Result | pass, fail, not run, not testable or not applicable |
 | Evidence | see the table above; "looks right" is not evidence |
 | Owner | the person or bot who answers for a failing or open row; empty for a pass |

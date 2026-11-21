@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [pattern, notification, snackbar, banner]
-related: ["[[40 Patterns]]", "[[Snackbar]]", "[[Banner]]", "[[Dialog]]", "[[Notification Window]]", "[[On-Screen Display]]", "[[Volume OSD]]", "[[Error States]]", "[[Loading States]]", "[[Validation]]", "[[Popup]]", "[[Button]]", "[[Motion]]", "[[Elevation]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Gaps and Contradictions]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[40 Patterns]]", "[[Snackbar]]", "[[Banner]]", "[[Dialog]]", "[[Notifications|Notification Window]]", "[[Volume OSD|On-Screen Display]]", "[[Volume OSD]]", "[[Error States]]", "[[Loading States]]", "[[Validation]]", "[[Popup]]", "[[Button]]", "[[Motion]]", "[[Elevation]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Gaps and Contradictions]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[12 Overlays]]", "[[14 Accessibility Basics]]"]
 ---
 
@@ -37,7 +37,7 @@ Match the interruption to the message: the least intrusive surface that still re
 5. Queue: first in, first out within one priority; an assertive message jumps the queue; messages with the same id within 2 s are merged; the queue holds 5, then drops the oldest low-priority message; the shell sends announcements through one window ([[14 Accessibility Basics]]).
 6. Every notification is announced: a snackbar and a banner are live regions, polite by default; assertive only for what the user must act on (data loss, critical battery). A dialog takes focus and announces itself through its role.
 7. Keyboard: the action and the close button of a snackbar are Tab stops reachable while it shows, and F6 reaches a banner and a persistent snackbar ([[Keyboard Navigation]]); the app may also bind a shortcut for the action (Ctrl+Z for Undo) and names it in the text. Escape is not defined for snackbars and banners: [[11 Interaction]] gives Escape one transient layer per press in a fixed order that has no snackbar step (record in the audit of that order). A transient message whose action cannot be reached by keyboard within its duration fails WCAG 2.2 SC 2.2.1 and is not allowed.
-8. Position: snackbar at the bottom start of the window, 16 dp from the edges, above a bottom bar or FAB (tess-ui "Not built"); never over the focused control; a window of width below 600 dp centres it. A system notification and an on-screen display belong to the shell and are placed by the shell ([[Notification Window]], [[On-Screen Display]]).
+8. Position: snackbar at the bottom start of the window, 16 dp from the edges, above a bottom bar or FAB (tess-ui "Not built"); never over the focused control; a window of width below 600 dp centres it. A system notification and an on-screen display belong to the shell and are placed by the shell ([[Notifications|Notification Window]], [[Volume OSD|On-Screen Display]]).
 9. A snackbar and a banner never carry the only copy of an outcome that the user must keep: the result is also in the document, a log or the status line.
 10. Reduced motion: appearance by fade of at most 100 ms or none; no slide ([[Motion]]).
 11. Colour: snackbar `inverse_surface` with `inverse_on_surface` text and `inverse_primary` action; banner `tertiary_container` or `error_container` with the matching `on_` role plus an icon (config app disk banner uses `tertiary_container`); dialogs per [[Dialog]].
@@ -52,8 +52,8 @@ Match the interruption to the message: the least intrusive surface that still re
 | File changed on disk, connection lost, sync paused | medium | until resolved | [[Banner]] | Reload, Keep mine | polite |
 | About to lose data, critical battery | high | until answered | [[Dialog]] (modal) | confirm, cancel | assertive |
 | Destructive action needs a decision | high | until answered | [[Dialog]] | confirm, cancel | role `alertdialog` |
-| A system value changed by a key (volume, brightness) | low | 1.5 s | shell [[On-Screen Display]] | none | polite |
-| Event while the app is not in front | per event | OS decides | system notification ([[Notification Window]]) | open | OS |
+| A system value changed by a key (volume, brightness) | low | 1.5 s | shell [[Volume OSD|On-Screen Display]] | none | polite |
+| Event while the app is not in front | per event | OS decides | system notification ([[Notifications|Notification Window]]) | open | OS |
 | Background refresh finished | none | none | no notification; `busy` only | none | none |
 
 ## Examples (short snippets only)

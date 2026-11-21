@@ -13,7 +13,7 @@ depends_on: ["[[Accessibility Tree]]", "[[14 Accessibility Basics]]"]
 # Active Descendant
 
 > [!info] Summary
-> Active descendant lets a node that keeps the keyboard (a search field) tell assistive technology which row of a list under it is current, while keyboard focus stays on the field. It has no MD3 counterpart; the pattern is the WAI-ARIA `aria-activedescendant` of the [combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It is unreleased in the engine (TRE-REQ-023).
+> Active descendant lets a node that keeps the keyboard (a search field) tell assistive technology which row of a list under it is current, while keyboard focus stays on the field. It has no MD3 counterpart; the pattern is the WAI-ARIA `aria-activedescendant` of the [combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/). It is carried by tre 0.6.10 (TRE-REQ-023); the tre guide still calls it unreleased.
 
 ## Purpose
 
@@ -106,7 +106,7 @@ Not applicable.
 |---|---|---|
 | tess-ui | none found for `active_descendant` in `tess-ui:src` | absent: fails AC-ADE-1 to 8 |
 | tess-shell | `tess-shell:docs/design/60 Quality/Accessibility.md` (Launcher waits for tre), `tess-shell:src/tess_shell/modules/context.py` (`announce`) | absent: no `active_descendant` key; fallback announcements exist (AC-ADE-7 not verified) |
-| tre | `tre:docs/guide/accessibility.md` (Active descendant), `tre:crates/engine-core/src/tree/access.rs`, `tre:crates/engine-core/src/access.rs` | partly meets: property on any node, same-window target, hidden target left out; unreleased (TRE-REQ-023); no `ActiveDescendantChanged` on Linux |
+| tre | `tre:docs/guide/accessibility.md` (Active descendant), `tre:crates/engine-core/src/tree/access.rs`, `tre:crates/engine-core/src/access.rs` | partly meets: property on any node, same-window target, hidden target left out; in tre 0.6.10 (TRE-REQ-023; the tre guide still says unreleased); no `ActiveDescendantChanged` on Linux |
 
 ## Deviations from Material Design 3
 

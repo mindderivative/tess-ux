@@ -106,7 +106,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-AOU-7 (static check): no node of the module carries a `Tooltip`.
 - [ ] AC-MOD-AOU-8 (contrast script): row text against the popup container is at least 4.5:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
