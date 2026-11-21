@@ -19,11 +19,13 @@ The UX Design Specification and the UX Component Design Specification: the guidi
 
 | Item | Value |
 |---|---|
-| Phase | Vault created, inventory not started |
-| UX Design Specification | not started |
-| UX Component Design Specification | not started |
+| Phase | Phase 0 done (inventory and plan), awaiting maintainer decisions |
+| UX Design Specification | outline in [[Plan]], no chapter written |
+| UX Component Design Specification | [[Inventory]] done (276 rows), no component note written |
+| Open decisions | [[Open Questions]] |
 | Updated | 2026-11-21 |
 
 ## Recent changes
 
+- 2026-11-21: Phase 0: [[Inventory]], [[Existing Tokens]], [[Plan]], [[Gaps and Contradictions]], templates and folder indexes.
 - 2026-11-21: vault created. Scope and rules in AGENTS.md (local only).
