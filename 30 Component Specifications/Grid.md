@@ -56,6 +56,25 @@ Gaps and padding from [[Spacing and Density]]: form grid column gap 12 dp (`spac
 
 Row heights come from the controls in the cells ([[Spacing and Density]]).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: content-sized: the rows sum to the container height | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| form grid rows | gap | `space.3` | 8 | 8 | 4 | design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (row_gap) |
+| form grid columns | gap | `space.4` | 12 | 8 | 8 | design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (column_gap) |
+| form grid row | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height of the cell child, or minmax in grid_template_rows) |
+| container | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: no border by default; paint is the Box rule | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container | font | - | N/A: a Grid draws no text; text belongs to its cells | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: a grid box draws no text |
+| container | icon size | - | N/A: a Grid draws no icon; icons are in its cells | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: a grid box draws no icon |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
+The Grid is planned (see Status in code); these are the values it takes when built. The gap values are Tesserae choices (#needs-verification-as-design-choice). The row minimum is the height of the control in the cell, not a Grid property.
+
 ## Layout and overflow
 
 - A track of `AUTO` sizes to its widest cell; a text cell has minimum width 0 in an `EXPAND` track so it truncates ([[10 Layout Overflow and Scrolling]]).

@@ -52,6 +52,28 @@ Palette entries map to roles: `background` is `surface_container_lowest`, `foreg
 
 Not applicable by density: the box follows `Columns`, `Rows` and the font; 80 by 24 at 13 dp is the shell default (#needs-verification). Minimum 20 columns by 5 rows in a panel.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| grid | height | - | 432 | 432 | 432 | [[Terminal]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: via rows and font_size (the box follows its grid and font) |
+| grid | min height | - | 90 | 90 | 90 | [[Terminal]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| grid | min width | - | N/A: 20 columns need the cell width of the monospace face, which the engine reports | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| grid | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Terminal]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (padding, the cells draw inside it) |
+| grid | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| grid | gap | - | N/A: cells abut; the program places every character | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: cells abut and the program places every character |
+| grid | border width | - | 0 | 0 | 0 | [[Terminal]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (stroke_width) |
+| grid | border color | - | N/A: no border; focus is shown by the ring | N/A: same as default | N/A: same as default | [[Terminal]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (stroke_color) |
+| focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | margin | `space.1` | 2 | 2 | 2 | [[Focus Ring]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| grid | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| grid | font | - | 13/18/400/0 | 13/18/400/0 | 13/18/400/0 | design choice, proposed ADR Terminal monospace font size, [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: hardcoded in tre (font_size is a property, but MONOSPACE_FONT_FAMILY in engine-render/src/text.rs and the line height from the font metrics are fixed) |
+| grid | icon size | - | N/A: the grid draws characters only | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the grid draws characters only |
+| grid | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
+The grid is 80 by 24 cells: height 24 x 18 = 432 and minimum 5 x 18 = 90. The font row is the monospace face at 13 sp with 18 sp line height (the shell default size; #needs-verification-as-design-choice); [[Typography]] has no monospace role, so the face is a Tesserae choice. Nothing here changes with density: the box follows `Columns`, `Rows` and the font.
+
 ## Layout and overflow
 
 - The box size equals the grid; a window resize changes `Columns` and `Rows` and tells the shell program.
@@ -105,7 +127,7 @@ Palette is two sets (dark and light) of the roles above; the terminal follows th
 |---|---|---|
 | tess-shell | `shell-vault:41 TDL Reference/Block Reference.md` (Terminal, post-v1); no `Terminal` in `tess-shell:src/tess_shell/schema/blocks.py` | absent: fails AC-BLK-TRM-1 to 7, 9 and 10 (AC-BLK-TRM-8 holds by absence) |
 | tess-ui | none | absent |
-| tre | `tre:docs/guide/text.md` (Terminal), `tre:docs/reference/properties.md`, `tre:crates/engine-py/src/terminal.rs` | partly meets: PTY, grid, scrollback, palette, selection; no escape chord (fails AC-BLK-TRM-3, AC-BLK-TRM-9, AC-BLK-TRM-10; [[ADR-0018 Terminal escape chord]] needs the engine to reserve the chord); no scrollbar |
+| tre | `tre:docs/guide/text.md` (Terminal), `tre:docs/reference/properties.md`, `tre:crates/engine-py/src/terminal.rs` | partly meets: PTY, grid, scrollback, palette, selection; no escape chord (fails AC-BLK-TRM-3, AC-BLK-TRM-9, AC-BLK-TRM-10; [[ADR-0018 Terminal escape chord]] needs the engine to reserve the chord); no scrollbar. Settable: the font family (`MONOSPACE_FONT_FAMILY`) and the line height (font metrics) cannot be set, `font_size` can (engine request) |
 
 ## Deviations from Material Design 3
 

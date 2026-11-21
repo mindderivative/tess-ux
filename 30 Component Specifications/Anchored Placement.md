@@ -53,6 +53,28 @@ Offsets and gaps use the spacing steps ([[Spacing and Density]]): a badge sits 2
 
 Not applicable: placement does not change sizes. A badge's hit area belongs to its control.
 
+## Dimensions and defaults
+
+Placement draws nothing; the rows give the gaps, offsets and margins it applies to the placed element. The values are the same at every density. Rows marked design choice are Tesserae choices #needs-verification. Flip: a layer flips to the opposite side when the preferred side has less free space than the overlay size plus the gap and the opposite side has more; the slack before flipping is 0 dp. Shift: after the flip a layer is moved along the other axis to keep the viewport margin.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| placement | height | - | N/A: placement sizes nothing; the placed node keeps its own size | N/A: same as the Default column | N/A: same as the Default column | [[Anchored Placement#Sizing and density]] | tess-ui: n/a: placement sizes nothing; tess-shell: n/a: placement sizes nothing; tre: n/a: placement sizes nothing |
+| placement | padding | - | N/A: placement adds no box, so no content padding | N/A: same as the Default column | N/A: same as the Default column | [[Anchored Placement#Sizing and density]] | tess-ui: n/a: placement adds no box; tess-shell: n/a: placement adds no box; tre: n/a: placement adds no box |
+| anchored node, default offset | margin | `space.0` | 0 | 0 | 0 | [[Anchored Placement#Defaults]] (`offset` (0, 0)) | tess-ui: yes (style offset); tess-shell: n/a: element absent in tess-shell; tre: yes (offset) |
+| anchored badge, offset inside the corner | margin | `space.1` | 2 | 2 | 2 | design choice, proposed ADR anchored badge offset, [[Spacing and Density]] (AC-ANC-1 uses 2 dp) | tess-ui: yes (style offset); tess-shell: n/a: element absent in tess-shell; tre: yes (offset) |
+| layer, viewport margin (window edge to flipped or shifted layer) | margin | `space.3` | 8 | 8 | 8 | design choice, proposed ADR layer viewport margin, [[Popup Window#Sizing and density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: hardcoded in tre (overlay.rs shift keeps the layer inside the window edge, margin 0) |
+| tooltip layer to trigger | gap | `space.2` | 4 | 4 | 4 | [[Tooltip]], [[ADR-0004 Tooltip rule]] | tess-ui: no hook; tess-shell: yes (Gap on the tooltip Popup); tre: yes (offset) |
+| menu, popover or submenu layer to anchor | gap | `space.0` | 0 | 0 | 0 | [[Menu]], [[Popup]] | tess-ui: no hook; tess-shell: yes (Gap on the Popup); tre: yes (offset) |
+| tray menu popup window to anchor | gap | `space.2` | 4 | 4 | 4 | [[Popup]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap on the Popup); tre: yes (offset of the PopupWindow) |
+| flip threshold (extra free space the preferred side must keep) | gap | `space.0` | 0 | 0 | 0 | design choice, proposed ADR layer flip threshold, [[Anchored Placement#Anatomy]] (flip when the preferred side lacks room and the opposite has more) | tess-ui: no hook; tess-shell: via Adjust (compositor flip, no threshold); tre: hardcoded in tre (overlay.rs flip rule, slack 0, flip=False turns it off) |
+| placement | border width | - | N/A: placement draws no border; the placed element draws its own | N/A: same as the Default column | N/A: same as the Default column | [[Anchored Placement#Sizing and density]] | tess-ui: n/a: placement draws no border; tess-shell: n/a: placement draws no border; tre: n/a: placement draws no border |
+| placement | border color | - | N/A: placement carries no colour | N/A: same as the Default column | N/A: same as the Default column | [[Anchored Placement#Tokens used]] | tess-ui: n/a: placement carries no colour; tess-shell: n/a: placement carries no colour; tre: n/a: placement carries no colour |
+| placement | corner radius | - | N/A: the placed element owns its shape; a clipped badge follows the parent's rounded edge | N/A: same as the Default column | N/A: same as the Default column | [[Shape]] | tess-ui: n/a: the placed element owns its shape; tess-shell: n/a: the placed element owns its shape; tre: n/a: the placed element owns its shape |
+| placement | font | - | N/A: placement draws no text | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: placement draws no text; tess-shell: n/a: placement draws no text; tre: n/a: placement draws no text |
+| placement | icon size | - | N/A: placement draws no icon | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: placement draws no icon; tess-shell: n/a: placement draws no icon; tre: n/a: placement draws no icon |
+| placement | elevation | - | N/A: the placed element sets its level; a layer's shadow is its own | N/A: same as the Default column | N/A: same as the Default column | [[Elevation]] | tess-ui: n/a: the placed element sets its level; tess-shell: n/a: the placed element sets its level; tre: n/a: the placed element sets its level |
+
 ## Layout and overflow
 
 - An anchored node is laid out after the layout in the same pass and follows the anchor with no lag, through scrolling and transforms above either.
@@ -103,9 +125,9 @@ Not applicable.
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/composed.py` (anchor and placement for anchored nodes and tooltip layers), `tess-ui:src/tess_ui/overlays.py` (`show_layer`) | partly meets: uses both mechanisms; badge name rule (AC-ANC-9) not verified; dismissal on scroll and activation of tooltips is open in [[Tooltip]] |
+| tess-ui | `tess-ui:src/tess_ui/composed.py` (anchor and placement for anchored nodes and tooltip layers), `tess-ui:src/tess_ui/overlays.py` (`show_layer`) | partly meets: uses both mechanisms; badge name rule (AC-ANC-9) not verified; dismissal on scroll and activation of tooltips is open in [[Tooltip]]; tooltip and menu layers pass no `offset` to `show_layer`, so their gap, the viewport margin and the flip rule cannot be set from the project layer (project request) |
 | tess-shell | `tess-shell:src/tess_shell/surfaces/popup.py` (`placement` helper for popups) | not applicable to `anchor`: bars use popup windows ([[Popup Window]]) |
-| tre | `tre:docs/guide/nodes-and-layout.md` (Anchored layout), `tre:docs/guide/layers.md`, `tre:crates/engine-core/src/overlay.rs` | meets AC-ANC-1 to 8 by documented behaviour (0.5.7 for anchors, points and offset) |
+| tre | `tre:docs/guide/nodes-and-layout.md` (Anchored layout), `tre:docs/guide/layers.md`, `tre:crates/engine-core/src/overlay.rs` | meets AC-ANC-1 to 8 by documented behaviour (0.5.7 for anchors, points and offset); the viewport margin and the flip threshold are fixed in the engine (margin 0, slack 0; only `flip=False` changes it), an engine request |
 
 ## Deviations from Material Design 3
 

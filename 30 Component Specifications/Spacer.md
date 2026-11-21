@@ -49,6 +49,23 @@ None: no colour, shape or type. Gaps between the Spacer and its siblings come fr
 
 Not applicable: the size is the free space. A Spacer has no minimum; in a container too small for its other children it collapses to 0 dp and never forces overflow.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| spacer | height | - | N/A: the size is the free space left on the main axis; nothing is fixed | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: yes (height) |
+| spacer | min width | - | 0 | 0 | 0 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| spacer | min height | - | 0 | 0 | 0 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: yes (min_height) |
+| spacer | padding | - | N/A: the block has no content to inset | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no content and no Padding key; tre: n/a: the box has no content to inset |
+| spacer | margin | - | N/A: gaps come from the container `Spacing`, not from the Spacer | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: yes (margin) |
+| spacer | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the box has no children |
+| spacer | border width | - | N/A: the block paints nothing, so it has no border | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block paints nothing and has no border key; tre: n/a: the block paints nothing |
+| spacer | border color | - | N/A: the block paints nothing, so it has no border | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block paints nothing and has no border key; tre: n/a: the block paints nothing |
+| spacer | corner radius | - | N/A: the block paints nothing, so no corner is drawn | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block paints nothing and has no radius key; tre: n/a: the block paints nothing |
+| spacer | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no text; tre: n/a: the block draws no text |
+| spacer | icon size | - | N/A: the block draws no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no icon; tre: n/a: the block draws no icon |
+| spacer | elevation | - | N/A: the block paints nothing, so it casts no shadow | N/A: same as default | N/A: same as default | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block paints nothing and has no elevation key; tre: n/a: the block paints nothing |
+
 ## Layout and overflow
 
 - Takes free space on the container main axis only; across the axis it stretches with `Align_Items`.

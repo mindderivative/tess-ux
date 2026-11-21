@@ -58,6 +58,27 @@ Fill and stroke: roles ([[Colour Roles]]; an icon takes `on_surface` or the role
 
 Icon sizes follow the Icon Button values of [[Spacing and Density]]. The hit area belongs to the control around the icon.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| icon | height | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| path | height | - | N/A: a non-icon path takes the box the owner sets; the view box is fitted into it | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| path | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style padding); tess-shell: no hook (the Path has no Padding key); tre: yes (padding) |
+| path | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| path | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: an Icon has no children; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the path has no children |
+| icon | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| icon | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| path | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| stroke | border width | - | 2 | 2 | 2 | [[Path Block]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| path | border color | - | N/A: the owner supplies the stroke role; an icon takes `on_surface` as its fill | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| path | corner radius | - | N/A: the outline comes from the path data; the block has no box radius | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: n/a: an Icon takes no corner radius; tess-shell: n/a: the Path has no radius key; tre: n/a: a path has no box and ignores corner_radius |
+| path | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: an Icon draws no text; tess-shell: n/a: the block draws no text; tre: n/a: the path draws no text |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: yes (style width and height of the Icon); tess-shell: yes (Width, Height of the Path block); tre: yes (width, height of the path node) |
+| path | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: no hook (the Path has no Elevation or Shadows key); tre: yes (shadows) |
+
+The icon size follows the Icon Button values of [[Spacing and Density]]. Stroke width stays in dp however the view box scales; a stroke is 2 to 4 dp. The 24 dp minimum is the hit area of the control around the icon.
+
 ## Layout and overflow
 
 - The path is fitted into the content box (box minus padding) and centred; it does not stretch.
@@ -104,7 +125,7 @@ Roles per scheme; an icon uses `Foreground`/`Color` roles so it follows the them
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (`Path`: `Data`, `View_Box`, `Trim_Start`, `Trim_End`, `Hit_Shape`, fill and border keys) | meets; reduced motion for trim is the module's job (AC-BLK-PTH-6 not verified) |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (`Path`: `Data`, `View_Box`, `Trim_Start`, `Trim_End`, `Hit_Shape`, fill and border keys) | meets; reduced motion for trim is the module's job (AC-BLK-PTH-6 not verified). Settable: the Path has no `Padding` and no `Elevation` or `Shadows` key, so those two defaults cannot be changed (project request) |
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py` (`icon`, edges of the node graph use `path`) | partly meets: path edges exist; no named icon lookup |
 | tre | `tre:docs/reference/paint.md` (Paths, hit testing, morphing), `tre:crates/engine-core/src/path.rs` | meets: `hit_shape` since 0.5.9, trim, morph |
 

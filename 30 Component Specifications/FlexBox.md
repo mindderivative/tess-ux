@@ -52,6 +52,25 @@ Not applicable: a FlexBox has no states of its own (see [[Box]]).
 
 Not applicable: no size of its own. A row of controls gets its height from the tallest child, so the control heights per density (40, 32, 28 dp, [[Spacing and Density]]) set the row height. The gap between adjacent controls is at least `space.1` (2 dp) when each has a 24 dp hit area, and 8 dp at `default` and `compact` and 4 dp at `dense` as the default.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: content-sized: the tallest child sets the row height (40, 32, 28 for controls) | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | `space.3` | 8 | 8 | 4 | design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| child with a hit area | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| child with a hit area | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | - | N/A: no border by default; paint is the Box rule | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container | font | - | N/A: a FlexBox draws no text; text belongs to its children | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: a Container draws no text; tess-shell: n/a: a FlexBox draws no text and has no font key; tre: n/a: a box draws no text |
+| container | icon size | - | N/A: a FlexBox draws no icon; icons are children | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: a Container draws no icon; tess-shell: n/a: a FlexBox draws no icon and has no icon key; tre: n/a: a box draws no icon |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
+The gap row is the spec default for a row of related controls (8, 8, 4); the block's own `Spacing` default in the shell schema is 0, so a module sets the step explicitly (design choice, #needs-verification-as-design-choice). The child minimum is the 24 dp hit area; a touch context uses 48.
+
 ## Layout and overflow
 
 - Shrinking: a child holding text has `Min_Width` 0 and `Flex_Shrink` 1 so it truncates with an ellipsis; icons, switches and buttons keep a fixed minimum equal to their hit area and `Flex_Shrink` 0 ([[10 Layout Overflow and Scrolling]], Minimum widths; AC-LAY-6).
@@ -98,7 +117,7 @@ As [[Box]].
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (`FlexBox`) | meets: keys `Flex`, `Wrap`, `Align_Items`, `Justify_Content`, `Spacing`, `Padding`; engine defaults unverified |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py` (`FlexBox`) | meets: keys `Flex`, `Wrap`, `Align_Items`, `Justify_Content`, `Spacing`, `Padding`; engine defaults unverified. Dimension difference: `Spacing` default 0 (spec default gap 8, 8, 4 for a row of controls) |
 | tess-ui | `tess-ui:src/tess_ui/views/*_View.tdl` (`Container` with `Flex_Direction`) | partly meets: same engine layout; spacing literals off the scale (value 14 in `Snackbar_Stylesheet.tdl`) fail AC-BLK-FLX-2 |
 | tre | `tre:docs/guide/nodes-and-layout.md` (Flex layout), `tre:docs/reference/properties.md` | meets: taffy flexbox with direction, wrap, gap, grow, shrink, basis, min and max, percentage and calc sizes |
 

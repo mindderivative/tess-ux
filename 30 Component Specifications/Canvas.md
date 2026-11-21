@@ -50,6 +50,25 @@ Every colour the callback draws comes from a role ([[Colour Roles]]), resolved b
 
 Not applicable: size is set by the owner. A canvas element that is a pointer target (a chart point) has a hit area of at least 24 dp (48 dp in touch contexts, [[Spacing and Density]]).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| canvas | height | - | N/A: the owner sets the size; the painter draws inside it | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| canvas | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding, painter coordinates start at it) |
+| canvas | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| canvas | gap | - | N/A: the painter callback places every shape; the block lays out nothing | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: the painter places every shape; tess-shell: n/a: element absent in tess-shell; tre: n/a: the painter places every shape |
+| data point target | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| data point target | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| canvas | border width | - | N/A: the block draws no border; the callback paints what it needs | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (stroke_width) |
+| canvas | border color | - | N/A: the block draws no border; the callback paints what it needs | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (stroke_color) |
+| canvas | corner radius | - | N/A: the painter clips to the rectangular box | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| canvas | font | - | N/A: the engine canvas has no text drawing call | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: the engine canvas has no text drawing call; tess-shell: n/a: element absent in tess-shell; tre: n/a: the engine canvas has no text drawing call |
+| canvas | icon size | - | N/A: the block draws no icon; the callback may draw paths | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: the canvas draws no icon; tess-shell: n/a: element absent in tess-shell; tre: n/a: the canvas draws no icon |
+| canvas | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
+The 24 dp minimum applies to a chart point that is a pointer target (48 in touch contexts).
+
 ## Layout and overflow
 
 - The painter clips to the box; nothing paints outside it.

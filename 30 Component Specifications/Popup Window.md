@@ -58,6 +58,30 @@ Body `surface_container`, radius `extra-small` to `medium` by the element ([[Sha
 
 Size is fixed at creation: measured by building the content first (the shell measures in a headless window), then `size = body + 2 x shadow margin`. Menu rows and widths follow [[Menu]] and [[Spacing and Density]]. The body must fit the output with 8 dp space to the edge or scroll its rows.
 
+## Dimensions and defaults
+
+The popup window adds only a transparent shadow margin around the body and fixes the placement gap; body padding, rows and type belong to [[Menu]] and [[Tooltip]]. Density does not change the surface rules, so the three level columns repeat one value. The 8 dp output margin is the note's own rule; the tooltip rows come from [[Tooltip]] and the menu rows from [[Popup]]. Any value without a source in those notes is a Tesserae design choice #needs-verification.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| popup surface | height | - | N/A: fixed at creation from the measured body plus shadow margins | N/A: same as the Default column | N/A: same as the Default column | [[Popup Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height, measured from content otherwise); tre: yes (size at creation, fixed after) |
+| catcher | height | - | 1 | 1 | 1 | `tre:docs/reference/layer-window.md` (1 by 1 transparent popup) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the shell opens popups with a grab and no catcher; tre: yes (size) |
+| catcher | min width | - | 1 | 1 | 1 | `tre:docs/reference/layer-window.md` (1 by 1 transparent popup) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the shell opens popups with a grab and no catcher; tre: yes (size) |
+| body | padding | - | N/A: the surface adds no padding; the element sets it ([[Menu]], [[Tooltip]]) | N/A: same as the Default column | N/A: same as the Default column | [[Menu]], [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: yes (padding) |
+| body (menu, flyout, rich tooltip) shadow margin | margin | `elevation.level2` | 10 | 10 | 10 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (geometry, margin inside the surface) |
+| body (plain tooltip) shadow margin | margin | `elevation.level0` | 0 | 0 | 0 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (geometry, margin inside the surface) |
+| body to output edge | margin | `space.3` | 8 | 8 | 8 | [[Popup Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: hardcoded in tre (compositor flip and slide through constraint_adjustment, margin 0) |
+| body to anchor rectangle | gap | `space.0` | 0 | 0 | 0 | [[Popup]] (`Gap` default 0) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap); tre: yes (offset) |
+| body to anchor rectangle, tray menu | gap | `space.2` | 4 | 4 | 4 | [[Popup]] (the shell uses 4 for tray menus) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap); tre: yes (offset) |
+| body | border width | - | 0 | 0 | 0 | [[Popup]] (no border) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (border_width) |
+| body | border color | - | N/A: the popup body draws no border | N/A: same as the Default column | N/A: same as the Default column | [[Popup]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: yes (border_color) |
+| body (menu, plain tooltip) | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Popup]], [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| body (flyout, rich tooltip) | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], [[Popup]], [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| popup surface | font | - | N/A: the surface draws no text; the element sets its type role | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| popup surface | icon size | - | N/A: the surface draws no icon; the element sets icon size | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| body (menu, flyout, rich tooltip) | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]], [[Popup]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| body (plain tooltip) | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Placement is the compositor's: with `geometry` set, flips and slides apply to the body, not the margin; `configure` x and y are the body's.
@@ -106,9 +130,9 @@ Roles per scheme; the body is opaque ([[ADR-0004 Tooltip rule]]).
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/surfaces/popup.py` (a `PopupWindow` per open, measured in a headless window, one open at a time, tooltips as popups with `Enter_Delay` and `Exit_Delay`), `tess-shell:src/tess_shell/surfaces/popup_measure.py` | partly meets: tooltip exit delay 200 ms in the shell against 150 ms in ADR-0011 (fails AC-PPW-6, #needs-verification of the shipped value); the other criteria not verified |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/popup.py` (a `PopupWindow` per open, measured in a headless window, one open at a time, tooltips as popups with `Enter_Delay` and `Exit_Delay`), `tess-shell:src/tess_shell/surfaces/popup_measure.py` | partly meets: tooltip exit delay 200 ms in the shell against 150 ms in ADR-0011 (fails AC-PPW-6, #needs-verification of the shipped value); the other criteria not verified; the 8 dp body to output edge margin cannot be set (no key; the compositor adjusts by `Adjust`), a project request |
 | tess-ui | `tess-ui:src/tess_ui/overlays.py`, `tess-ui:src/tess_ui/composed.py` | not applicable: tess-ui popups are layers inside its window |
-| tre | `tre:docs/reference/layer-window.md` (`PopupWindow`), `tre:docs/guide/menus-from-a-bar.md`, `tre:crates/engine-py/src/popup_window.rs` | meets by documented behaviour; `geometry` since 0.6.3 and `input_region` since 0.6.5; settings fixed after creation; a keyboard-exclusive panel cannot be a popup (no grab without a serial) |
+| tre | `tre:docs/reference/layer-window.md` (`PopupWindow`), `tre:docs/guide/menus-from-a-bar.md`, `tre:crates/engine-py/src/popup_window.rs` | meets by documented behaviour; `geometry` since 0.6.3 and `input_region` since 0.6.5; settings fixed after creation; a keyboard-exclusive panel cannot be a popup (no grab without a serial); the output edge margin is not settable (the compositor flips and slides to the edge, margin 0), an engine request |
 
 ## Deviations from Material Design 3
 

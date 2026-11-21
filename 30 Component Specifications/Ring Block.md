@@ -49,6 +49,26 @@ Not applicable: no states of its own; `Border_Color` and `Opacity` change by `Tr
 
 Not applicable: `Diameter` set by the owner, independent of density. A 2 dp stroke is below the 24 dp target rule only as paint; the pointer target is the owner's.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| ring | height | - | N/A: `Diameter` is required and has no default; the owner sets it | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Diameter); tre: yes (width, height) |
+| ring | padding | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no children and no Padding key; tre: n/a: the path has no children to inset |
+| ring | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: yes (margin) |
+| ring | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the path has no children |
+| ring | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| ring | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: yes (min_height) |
+| outline | border width | - | 2 | 2 | 2 | [[Ring Block]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (stroke_width of the path) |
+| heavy | border width | - | 4 | 4 | 4 | [[Ring Block]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (stroke_width of the path) |
+| ring | border color | - | N/A: the owner supplies the role; the block has no default stroke colour | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/tables.py | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: yes (stroke_color of the path) |
+| ring | corner radius | `shape.full` | 9999 | 9999 | 9999 | [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the roundness is the Diameter path, there is no radius key; tre: n/a: a path has no box and ignores corner_radius |
+| ring | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no text; tre: n/a: the path draws no text |
+| ring | icon size | - | N/A: the block draws no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no icon; tre: n/a: the path draws no icon |
+| ring | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook (the Ring has no Elevation or Shadows key); tre: yes (shadows) |
+
+Stroke thickness does not change with density. The 24 dp minimum is the owner's hit area (48 in touch contexts), not the painted size.
+
 ## Layout and overflow
 
 - Box is `Diameter` square; the stroke is centred on the outline, so half of it lies outside the nominal diameter in the engine path; the owner adds `Margin` of half the thickness when the outer size must equal the diameter #needs-verification.

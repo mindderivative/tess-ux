@@ -62,6 +62,31 @@ Background of the body: roles `surface` or `surface_container` ([[Colour Roles]]
 - A content-sized axis is the root's outer size with padding, whole logical pixels rounded up, clamped by `min_size` and `max_size`; content past the maximum is clipped, so it goes in a [[ScrollBox]].
 - Exclusive zone: positive only for one anchored edge, or one edge plus both across; a corner-anchored surface sets `exclusive_edge`.
 
+## Dimensions and defaults
+
+A layer window has no look of its own: the root is transparent. Rows below give the values for the surface and the bodies drawn in it. The panel body padding follows [[Panel and Surface]] (a design choice there, #needs-verification-as-design-choice); the elevation of a floating panel is a Tesserae design choice #needs-verification.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| surface | height | - | N/A: a project sets size per surface; a bar sets thickness, a content-sized panel measures its content | N/A: same as the Default column | N/A: same as the Default column | [[Layer Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height of a Panel, Thickness of a Frame); tre: yes (size) |
+| bar | min height | `density.control_height` plus 2 x `space.2` | 48 | 40 | 36 | control height from [[Spacing and Density]] plus the 4 dp minimum padding of this note | tess-ui: n/a: element absent in tess-ui; tess-shell: via Frame Thickness; tre: yes (min_size) |
+| surface | min width | - | N/A: the surface width is set by anchors or content, no floor is specified | N/A: same as the Default column | N/A: same as the Default column | [[Layer Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (min_size) |
+| root node | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Layer Window#Defaults]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding on the body); tre: yes (padding on the root) |
+| floating panel body | padding | `space.4`, `space.3`, `space.2` | 12 12 12 12 | 8 8 8 8 | 4 4 4 4 | design choice, [[Panel and Surface]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: yes (padding) |
+| surface | margin | - | 0 | 0 | 0 | [[Layer Window#Defaults]] (layer `margin`, screen edge to surface) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Inset on a Panel, Margin on a Frame); tre: yes (margin) |
+| floating panel shadow margin | margin | `elevation.level2` | 10 | 10 | 10 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (margin) |
+| dialog panel shadow margin | margin | `elevation.level3` | 15 | 15 | 15 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (margin) |
+| root node | gap | `space.0` | 0 | 0 | 0 | [[Layer Window#Defaults]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: yes (gap) |
+| bar and panel body | border width | - | 0 | 0 | 0 | [[Panel and Surface]] (no border by default) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (border_width) |
+| bar and panel body | border color | - | N/A: no border is drawn | N/A: same as the Default column | N/A: same as the Default column | [[Panel and Surface]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: yes (border_color) |
+| floating panel body | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], [[Panel and Surface]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| bar | corner radius | - | N/A: the Bar has no look of its own; the Frame or project style sets corners | N/A: same as the Default column | N/A: same as the Default column | [[Panel and Surface]] (AC-PNL-10) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| surface | font | - | N/A: the layer surface draws no text; its content nodes carry type roles | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| surface | icon size | - | N/A: the layer surface draws no icon; content nodes carry icon sizes | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| bar | elevation | - | N/A: the Bar has no look of its own and no shadow | N/A: same as the Default column | N/A: same as the Default column | [[Panel and Surface]] (AC-PNL-10) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| floating panel body | elevation | `elevation.level2` | 2 | 2 | 2 | design choice, proposed ADR floating panel elevation, [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| launcher or dialog panel body | elevation | `elevation.level3` | 3 | 3 | 3 | [[Panel and Surface]] (AC-PNL-5, dialog level 3) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Layout in logical pixels at the surface scale; fractional scale allowed.
@@ -117,7 +142,7 @@ Follows the scheme; the transparent root shows the desktop; text on bars keeps 4
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/surfaces/manager.py` (`_make_window`: namespace, layer, anchor, size, margin, `exclusive_zone`, `exclusive_edge`, `keyboard`, `input_region`; window node named from the surface; `dialog` role for exclusive panels), `tess-shell:src/tess_shell/surfaces/frame.py` | meets AC-LYW-1, 3, 4, 6 by construction; Movable Panel uses `drag_margin` (AC-LYW-7 not verified); no keyboard way to move a panel (fails AC-LYW-8) |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/manager.py` (`_make_window`: namespace, layer, anchor, size, margin, `exclusive_zone`, `exclusive_edge`, `keyboard`, `input_region`; window node named from the surface; `dialog` role for exclusive panels), `tess-shell:src/tess_shell/surfaces/frame.py` | meets AC-LYW-1, 3, 4, 6 by construction; Movable Panel uses `drag_margin` (AC-LYW-7 not verified); no keyboard way to move a panel (fails AC-LYW-8); the surface min width has no key (tre `min_size` is not exposed), a project request |
 | tess-ui | none | not applicable |
 | tre | `tre:docs/reference/layer-window.md`, `tre:docs/guide/bars-and-panels.md`, `tre:crates/engine-platform/src/layer.rs` | meets by documented behaviour; content size is unreleased (TRE-REQ-022 at the time of reading) #needs-verification; screen position not given under Wayland |
 

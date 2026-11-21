@@ -53,6 +53,27 @@ Fill and border roles ([[Colour Roles]]); no radius (a circle). Diameter from a 
 
 Not applicable: the diameter is set by the owner and does not scale with density. A Circle that is a pointer target has a hit area of 24 dp at least (48 dp in touch contexts), larger than a dot painted at 8 dp: the owner adds a transparent [[Box]] hit area.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| dot | height | - | 8 | 8 | 8 | [[Circle]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Diameter); tre: yes (width, height) |
+| badge | height | - | 16 | 16 | 16 | [[Circle]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Diameter); tre: yes (width, height) |
+| large | height | - | 40 | 40 | 40 | [[Circle]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Diameter); tre: yes (width, height) |
+| disc | padding | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no children and no Padding key; tre: n/a: the path has no children to inset |
+| disc | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: yes (margin) |
+| disc | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the path has no children |
+| disc | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| disc | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: yes (min_height) |
+| disc | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (stroke_width of the path) |
+| disc | border color | - | N/A: no border by default; `Border_Color` takes a role | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/tables.py | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: yes (stroke_color of the path) |
+| disc | corner radius | `shape.full` | 9999 | 9999 | 9999 | [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the roundness is the Diameter path, there is no radius key; tre: n/a: a path has no box and ignores corner_radius |
+| disc | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no text; tre: n/a: the path draws no text |
+| disc | icon size | - | N/A: the block draws no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the block draws no icon; tre: n/a: the path draws no icon |
+| disc | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook (the Circle has no Elevation or Shadows key); tre: yes (shadows) |
+
+`Diameter` is set by the owner and does not change with density; the three sizes are Tesserae choices (#needs-verification-as-design-choice). The 24 dp minimum is the hit area the owner adds around a smaller disc (48 in touch contexts), not the painted size.
+
 ## Layout and overflow
 
 - A square box of `Diameter`; in a flex container `Flex_Shrink` 0 keeps it round.

@@ -55,6 +55,23 @@ Fill: a role of [[Colour Roles]]; radius: [[Shape]]; shadow: [[Elevation]]; padd
 
 Not applicable: a Box has no size of its own and no density-dependent value. Size comes from content, `Width`, `Height`, `Min_*`, `Max_*` or flex growth. Padding uses a spacing step chosen by the owning element and its density level ([[07 Spacing and Density Rules]]).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: content-sized: the height comes from the largest child, `Height` or `Min_Height` | N/A: content-sized, same as default | N/A: content-sized, same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | - | N/A: all children share cell (1, 1), so no gap exists between them | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: a Box has no Spacing key, its one grid cell holds every child; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | - | N/A: no border by default; a bordered Box takes a colour role from its owner | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/schema/blocks.py | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container | font | - | N/A: a Box draws no text; text belongs to its children | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: a Container draws no text; tess-shell: n/a: a Box draws no text and has no font key; tre: n/a: a box draws no text |
+| container | icon size | - | N/A: a Box draws no icon; icons are children | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: a Container draws no icon; tess-shell: n/a: a Box draws no icon and has no icon key; tre: n/a: a box draws no icon |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
+Box values do not change with density; the owning element chooses padding from the nine spacing steps and its density level. A surface Box takes `shape.medium` (12) or another step from [[Shape]]; that choice belongs to [[Panel and Surface]].
+
 ## Layout and overflow
 
 - Overflow per axis: clip only when `Clip_Children` is true; otherwise children paint past the Box (an overlay badge needs this). A Box that holds text or controls that may exceed it must either clip, wrap, ellipsise or sit in a [[ScrollBox]] ([[10 Layout Overflow and Scrolling]], overflow rule 1).

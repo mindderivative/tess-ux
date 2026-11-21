@@ -58,6 +58,26 @@ The engine paints the highlight in the text colour at 30 percent. The specificat
 
 Not applicable: selection has no size. Hit area is the text box; a text smaller than 24 dp high still has a selectable box (inline text exception of WCAG 2.2 SC 2.5.8).
 
+## Dimensions and defaults
+
+Selection paints a highlight behind glyphs and a caret in text inputs. It has no box, so most box properties do not apply. Colour roles are the Tesserae choice of the Tokens section, #needs-verification: the table has no fill-colour property, so the two roles sit in `border color` rows named as highlight colours (the highlight has no border). The values are the same at every density.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| highlight | height | - | N/A: the highlight spans the line box of the selected text, whose height is its type role line height | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: via type role line height; tess-shell: yes (Line_Height); tre: yes (line_height) |
+| caret (text inputs) | min width | - | 1.5 | 1.5 | 1.5 | `tre:docs/reference/paint.md` (default 1.5 px bar), [[Existing Tokens]] | tess-ui: no hook; tess-shell: no hook; tre: yes (caret_width) |
+| highlight | padding | - | N/A: the highlight is painted behind the glyphs with no padding | N/A: same as the Default column | N/A: same as the Default column | [[Text Selection#Anatomy]] | tess-ui: n/a: the highlight has no box; tess-shell: n/a: the highlight has no box; tre: n/a: the highlight has no box |
+| highlight | margin | - | N/A: the highlight takes no space; it never changes layout | N/A: same as the Default column | N/A: same as the Default column | [[Text Selection#Layout and overflow]] | tess-ui: n/a: the highlight has no box; tess-shell: n/a: the highlight has no box; tre: n/a: the highlight has no box |
+| highlight | gap | - | N/A: a selection across texts is separate highlights, joined by the text layout, not by a gap | N/A: same as the Default column | N/A: same as the Default column | [[Text Selection#Behaviour]] | tess-ui: n/a: the highlight has no box; tess-shell: n/a: the highlight has no box; tre: n/a: the highlight has no box |
+| highlight | border width | - | 0 | 0 | 0 | [[Text Selection#Anatomy]] (fill only) | tess-ui: n/a: the highlight draws no border; tess-shell: n/a: the highlight draws no border; tre: n/a: the highlight draws no border |
+| highlight fill colour role (no border drawn) | border color | `secondary_container` | `secondary_container` | `secondary_container` | `secondary_container` | design choice, [[ADR-0001 MD3 role names are the specification vocabulary]], [[Colour Roles]] | tess-ui: no hook; tess-shell: no hook; tre: yes (selection_fill) |
+| highlighted text colour role (no border drawn) | border color | `on_secondary_container` | `on_secondary_container` | `on_secondary_container` | `on_secondary_container` | design choice, [[ADR-0001 MD3 role names are the specification vocabulary]], [[Colour Roles]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (selected text keeps its own colour, no selection text colour) |
+| highlight fill, engine default until the engine exposes a role | border color | - | `on_surface` at 30% | `on_surface` at 30% | `on_surface` at 30% | `tre:docs/guide/text.md`, [[Existing Tokens]] | tess-ui: no hook; tess-shell: no hook; tre: yes (selection_fill, None gives the text colour at 30 percent) |
+| highlight | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (rectangle behind glyphs; engine value #needs-verification) | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (square highlight rectangle, no radius property) |
+| highlight | font | - | N/A: selection uses the font of the selected text and never sets one | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: selection never sets a font; tess-shell: n/a: selection never sets a font; tre: n/a: selection never sets a font |
+| highlight | icon size | - | N/A: selection applies to text only; icons are not selectable | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: icons are not selectable; tess-shell: n/a: icons are not selectable; tre: n/a: icons are not selectable |
+| highlight | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: the highlight has no depth; tess-shell: n/a: the highlight has no depth; tre: n/a: the highlight has no depth |
+
 ## Layout and overflow
 
 - Selection never changes layout. Truncated text (ellipsis) is selected in full: the selection covers the hidden text, and Copy yields the whole string.
@@ -109,9 +129,9 @@ Highlight and text per scheme; the contrast check runs in both.
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/schema/tess-ui-widget-schema.json` (`selectable` key on text widgets), `tess-ui:docs/components/text.md` | partly meets: key exists; AC-SEL-7, 8, 10 not verified; engine highlight colour fixed |
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`Text` `Selectable`, default false) | partly meets: key built; no copy command; AC-SEL-10 not verified |
-| tre | `tre:docs/guide/text.md` (Rich text and selectable text), `tre:crates/engine-py/src/text_interaction.rs`, `tre:docs/guide/accessibility.md` (Text, selection and links) | meets AC-SEL-1 to 6, 9 by documented behaviour; highlight is the text colour at 30 percent and has no setting; no keyboard start (WCAG gap) |
+| tess-ui | `tess-ui:src/tess_ui/schema/tess-ui-widget-schema.json` (`selectable` key on text widgets), `tess-ui:docs/components/text.md` | partly meets: key exists; AC-SEL-7, 8, 10 not verified; engine highlight colour fixed; the project layer exposes no `selection_fill` or `caret_width` (only `selectable` is set), a project request |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`Text` `Selectable`, default false) | partly meets: key built; no copy command; AC-SEL-10 not verified; no key for the selection colour or the caret width, a project request |
+| tre | `tre:docs/guide/text.md` (Rich text and selectable text), `tre:crates/engine-py/src/text_interaction.rs`, `tre:docs/guide/accessibility.md` (Text, selection and links) | meets AC-SEL-1 to 6, 9 by documented behaviour; highlight is the text colour at 30 percent unless `selection_fill` is set; no keyboard start (WCAG gap). Dimension difference: highlight fill is the text colour at 30% in tre against `secondary_container` in the spec (AC-SEL-8 not verified); the selected text colour and the highlight radius are fixed in the engine, an engine request |
 
 ## Deviations from Material Design 3
 
