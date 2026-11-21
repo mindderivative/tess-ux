@@ -46,6 +46,10 @@ No keyboard trap was found in the code read: the modal layers keep Tab inside by
 | F5 for the config tree label | `Main_Stylesheet.tdl` line 14: label `Flex: expand_horizontal`, `Min_Width: 0` | the toolkit default remains open: TUI-023 |
 | Warning for `dark=True` with no seed | `tess-ui:src/tess_ui/app.py` `_warn_dark_needs_a_seed` (pull request 331) | a warning, not a scheme: TUI-001 |
 
+## Declared deviation: toolkit default density
+
+Declared by the tess-ui bot and recorded by bot:Orchestrator, 2026-11-21 ([[17 Conformance]], deviations by a project). When an `App` asks for no density, the tess-ui toolkit keeps today's legacy Material sizes (for example 56 px tree rows). An app asks for a level: the config app asks `compact`. The specification level `default` (40 px rows) applies only when an app asks `density='default'`. Reason: migration without a visual change. Path: make `default` the toolkit default in a later major version once the apps are migrated; review at that release. Recorded in the register as a row of [[Spacing and Density]] (Deviations). Affects TUI-002, TUI-003, TUI-004, TUI-005 and TUI-006: each is met when the app asks for a level and the toolkit honours it; none is met by the toolkit default alone, so they stay open until the toolkit exposes the density setting and the default changes. The audit result for the density criteria of a tess-ui claim is therefore `fail` with this deviation as the cited exception.
+
 ## Summary by severity
 
 | Severity | Rows |
