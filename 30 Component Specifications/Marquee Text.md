@@ -65,6 +65,23 @@ Text colour `on_surface`, type `body_medium` or the role of the parent; no conta
 
 The Marquee is not interactive; the tooltip hover area is the box and is at least 24 dp high (`target.min`).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| text | height | `body_medium` | 20 | 20 | 20 | [[Marquee Text]] (Sizing, line height of the role); type does not scale with density | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| box | min height | `target.min` | 24 | 24 | 24 | [[Marquee Text]] (Sizing, tooltip hover area at least 24 dp high), WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| box | min width | - | 160 | 160 | 160 | [[Marquee Text]] (Sizing, param `Width`, default 160 dp) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| box | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| box | margin | - | N/A: the parent container sets the outer space | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| box | gap | - | N/A: the box holds one text, there is nothing to space | N/A: same as the default column | N/A: as in Default | [[Marquee Text]] (Anatomy) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| box | border width | - | 0 | 0 | 0 | [[Marquee Text]] (Tokens used: no container, no shape) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| box | border color | - | N/A: the box draws no border | N/A: same as the default column | N/A: as in Default | [[Marquee Text]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| box | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; the clip box is rectangular | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; the role of the parent when it sets one | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| text | icon size | - | N/A: the Marquee draws text only | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| box | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Marquee Text]] (no elevation) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 One line, clipped at the box. The text is measured once the layout is known; it scrolls only when wider than the box (a 0.5 dp tolerance counts as fitting). Vertical centring in the row. Not scrolling and cut: ends with `…` ([[10 Layout Overflow and Scrolling]]).
@@ -123,6 +140,7 @@ Text takes `on_surface` through the Default stylesheet (`Text` rule) in light, d
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Marquee_Text/Marquee_Text_Module.tdl`, `Marquee_Text_Module.py`, `tess-shell:src/tess_shell/binder/marquee.py` | partly meets: engine-driven scroll, no frames at idle, reduced motion, disabled and tooltip gate, name = text (meets AC-MOD-MQT-1, -2, -3, -4, -5, -6, -9 by reading); no hover pause (fails AC-MOD-MQT-7); always-on tooltip nests inside tooltip-bearing controls (fails AC-MOD-MQT-8) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Marquee_Text/Marquee_Text_Module.tdl` (dimensions) | meets: width 160, body type, no padding or border; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Marquee text) | exists |
 | tess-ui | none | not applicable: no marquee |
 | tre | engine animation of `translate_x` | not applicable: the shell composes the module |

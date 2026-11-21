@@ -59,9 +59,34 @@ Roles: `on_surface` icon, `surface_raised` fill, `warning` border. Tooltip: rich
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Hit area (square) | 40 | 32 | 28 | [[Icon Button]] container; code: the icon size, 18 (below the 24 dp floor) |
+| Hit area (square) | 40 | 32 | 28 | [[Icon Button]] container; code: 24 by 24 (meets the 24 dp floor; the icon is 18) |
 | Icon | 24 | 20 | 20 | `density.icon_button_icon`; code 18 |
 | Gap between items | 4 | 4 | 4 | code: `spacing` 6 |
+
+## Dimensions and defaults
+
+The item is the icon-button geometry of [[Icon Button]] by density; the attention dot is a design choice #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| root | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| root | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| root | padding | `space.*` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | container minus icon, halved, from [[Spacing and Density]] (icon button rows); code 3 3 3 3 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| root | margin | - | N/A: the Tray Module sets the space between items | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| root | gap | `space.2` | 4 | 4 | 4 | gap between items, [[Spacing and Density]]; code 6 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| root | border width | - | 0 | 0 | 0 | MD3 icon button https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-icon-button.scss | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| root (attention) | border width | - | 2 | 2 | 2 | code `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Module.tdl` (2 px) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| root | border color | - | N/A: no border at rest | N/A: same as the default column | N/A: as in Default | MD3 icon button https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-icon-button.scss | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| root (attention) | border color | `warning` | `warning` | `warning` | `warning` | [[Colour Roles]], [[Tray Item]] (States) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| root | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]]; half the container; code 6 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| attention dot | height | - | 6 | 6 | 6 | design choice, proposed ADR: tray attention cue not by colour alone; [[Tray Item#States]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| icon | font | - | N/A: the icon draws no text | N/A: same as the default column | N/A: as in Default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| tooltip title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Tooltip]] (rich, geometry does not scale with density) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| tooltip text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]]; code 18 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+| tooltip | elevation | `elevation.level2` | 2 | 2 | 2 | [[Tooltip]], [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 
 ## Layout and overflow
 
@@ -117,7 +142,8 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Module.tdl`, `Tray_Item_Style.tdl` | partly meets: role, name, description, one tooltip on the root, attention look (meets AC-MOD-TRI-1, -3 by reading, -5, -6); hit area is the 18 dp icon (fails AC-MOD-TRI-2); Menu key absent (fails AC-MOD-TRI-4); tooltip literal (fails AC-MOD-TRI-8); attention is colour plus border only (AC-MOD-TRI-7 unverified) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Module.tdl`, `Tray_Item_Style.tdl` | partly meets: role, name, description, one tooltip on the root, attention look (meets AC-MOD-TRI-1, -3 by reading, -5, -6); hit area is 24 by 24 dp, the icon is 18 (meets the 24 dp floor, fails the 40, 32, 28 dp sizes of AC-MOD-TRI-2); Menu key absent (fails AC-MOD-TRI-4); tooltip literal (fails AC-MOD-TRI-8); attention is colour plus border only (AC-MOD-TRI-7 unverified) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Style.tdl` (dimensions) | differs: padding 3 (spec 8, 6, 4), corner 6 (spec 20, 16, 14), icon 18 (spec 24, 20, 20), gap 6 (spec 4); fails AC-MOD-TRI-2; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:40 Specifications/Modules/Tray Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

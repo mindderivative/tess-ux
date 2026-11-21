@@ -58,6 +58,23 @@ Colour role `on_surface` (default stylesheet `Text` rule); type: the shell `body
 | Line box height | 20 | 20 | 20 | `body_medium`; type does not scale with density |
 | Minimum hit area | Not applicable: not a target |  |  | a standalone Label with a tooltip needs a 24 dp high box |
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| text | height | `body_medium` | 20 | 20 | 20 | [[Label]] (Sizing, line box); type does not scale with density | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| text | min height | - | N/A: a Label is not a target; a Label with a tooltip needs a 24 dp high box from its parent | N/A: same as the default column | N/A: as in Default | [[Label]] (Sizing), WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| text | min width | - | 0 | 0 | 0 | [[Label]] (Layout: `Min_Width 0` in a flex row so it can shrink) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| text | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| text | margin | - | N/A: the parent row sets the outer space | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| text | gap | - | N/A: one line of text, nothing to space | N/A: same as the default column | N/A: as in Default | [[Label]] (Anatomy) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| text | border width | - | 0 | 0 | 0 | [[Label]] (Tokens used: no shape) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| text | border color | - | N/A: the Label draws no border | N/A: same as the default column | N/A: as in Default | [[Label]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| text | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; no container | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; code shell `body` 14/400/20 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| text | icon size | - | N/A: the Label draws text only | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| text | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Label]] (no elevation) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 One line, never wraps. Overflow: spec `ELLIPSIS` (the Label silently clipping is the F5 defect in [[Owner Feedback 2026-11-20]]); code default is `CLIP`, so the author must set `Overflow: ELLIPSIS` in a stylesheet. Give the Label a `Width` to make it narrower than its text. Vertical centring by the parent row ([[10 Layout Overflow and Scrolling]]). In a flex row the Label has `Min_Width 0` so it can shrink.
@@ -111,6 +128,7 @@ Text takes `on_surface` through the Default stylesheet and follows the theme mod
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl` | partly meets: name = text, no wrap, `Label:disabled` (meets AC-MOD-LBL-1, -4 by reading); default overflow is `CLIP` (fails AC-MOD-LBL-2, -3 unless the stylesheet sets `ELLIPSIS`) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl` (dimensions) | meets: body 14/400/20 equals `body_medium` apart from tracking; no padding or border; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Label) | exists |
 | tess-ui | `tess-ui:src/tess_ui/views/` text views | not applicable: tess-ui uses [[Text]] |
 | tre | `text` node | not applicable |

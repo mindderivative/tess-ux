@@ -61,6 +61,30 @@ As [[Menu]] and [[Menu Item]]. Container `surface_container` (code `surface_rais
 | Maximum height | 60% of the output | 60% | 60% | scrolls beyond ([[Scrollbar and Scroll Container]]) |
 | Maximum depth | 3 levels | 3 | 3 | fixed |
 
+## Dimensions and defaults
+
+Current shell values, read from `tess-shell:src/tess_shell/schema/default_popups.py` and `Tray_Menu_Module.tdl`: popup `Attach: BOTTOM`, `Gap: 4` (level 1), `Max_Height: 60%`, `Corner_Radius: 8`, background `surface_raised`, no padding, no border, no elevation literal; rows are [[Menu Item]] (28 high, icon 16, padding 10). The table gives the spec value per density.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| popup | height | - | N/A: content height, at most 60% of the output height (code `Max_Height: 60%`) | N/A: same as the default column | N/A: as in Default | `tess-shell:src/tess_shell/schema/default_popups.py` | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| row | height | `density.menu_item_height` | 40 | 32 | 28 | [[Spacing and Density]]; code 28 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| popup | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| row | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| popup | padding | `space.*` | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | [[Menu]] container vertical padding; code 0 0 0 0 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]]; code 0 10 0 10 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| popup | margin | - | N/A: the popup sits at the attach gap, not at a margin | N/A: same as the default column | N/A: as in Default | [[Popup]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| popup (level 1) | gap | `space.2` | 4 | 4 | 4 | gap between the tray item and the popup, `tess-shell:src/tess_shell/schema/default_popups.py` (`Gap: 4`) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]]; code 8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| popup | border width | - | 0 | 0 | 0 | MD3 menu https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| popup | border color | - | N/A: no border is drawn | N/A: same as the default column | N/A: as in Default | MD3 menu https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| popup | corner radius | `shape.small` | 8 | 8 | 8 | [[Tray Menu]] (Deviations: popup corner 8 dp, code `Corner_Radius: 8`); [[Menu]] states 4 dp | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| row | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Menu Item]]; code `$shape.small` | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| row | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Menu Item]], [[Typography]]; code body 14/20/400 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| row | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Menu Item]]; code 16 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| popup | elevation | `elevation.level2` | 2 | 2 | 2 | [[Menu]], [[Elevation]]; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+| row | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 Rows are single line; a long label ends with an ellipsis and the full text is the accessible name. A menu taller than the popup's maximum height scrolls with the wheel and a scrollbar ([[ADR-0003 Scrollbar rule]]). Vertical centring in the row.
@@ -114,6 +138,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Tray_Menu/Tray_Menu_Module.tdl`, `Tray_Menu_Module.py`, `tess-shell:src/tess_shell/schema/default_popups.py` | partly meets: three levels, 60 percent maximum height, click sends the event and closes, submenu timings of [[Menu Item]] (meets AC-MOD-TRM-1, -2, -4 by reading); row sizes are the [[Menu Item]] literals (fails AC-MOD-TRM-5); pressed-row contrast fails (AC-MOD-TRM-8); keyboard path in the Menu per M6, not verified (AC-MOD-TRM-3) |
+| tess-shell | `tess-shell:src/tess_shell/schema/default_popups.py` (dimensions) | differs: row height 28 (spec 40, 32, 28), icon 16 (spec 24, 20, 20), row padding 10 (spec 12, 8, 4), popup padding 0 (spec 8, 4, 4 vertical), elevation none (spec 2); fails AC-MOD-TRM-5; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:40 Specifications/Modules/Tray Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

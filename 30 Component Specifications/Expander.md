@@ -59,6 +59,25 @@ No colour or shape of its own. Duration: the theme's medium duration 200 ms (`$m
 | Own size | content size | content size | content size | the Expander adds no padding; the content uses [[Spacing and Density]] steps |
 | Animation duration | 200 ms | 200 ms | 200 ms | [[Motion]]; a desktop control change is at most 200 ms |
 
+## Dimensions and defaults
+
+The Expander is a structural clipping box; current shell values read from `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl`: size AUTO when expanded and 0 on the animated axis when collapsed, no padding, no gap, no border, no fill, `Clip_Children: true`. The spec keeps these as the defaults at every density.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | - | N/A: content height (AUTO); 0 while collapsed on the DOWN and UP axis | N/A: same as the default column | N/A: as in Default | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| root | min width | - | 0 | 0 | 0 | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` (width 0 when collapsed on the LEFT and RIGHT axis) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| root | min height | - | 0 | 0 | 0 | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` (height 0 when collapsed on the DOWN and UP axis) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| root | margin | - | N/A: the parent container sets the outer space | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| body | gap | `space.0` | 0 | 0 | 0 | [[Spacing and Density]]; the Body holds one Content, the content sets its own gaps | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| root | border width | - | 0 | 0 | 0 | [[Expander]] (no colour or shape of its own); code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| root | border color | - | N/A: the Expander draws no border; border is the content's | N/A: same as the default column | N/A: as in Default | [[Expander]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| root | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; the clip box is rectangular | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| body | font | - | N/A: the Expander draws no text; the content sets the font | N/A: same as the default column | N/A: as in Default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| body | icon size | - | N/A: the Expander draws no icon; the controller button does | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 The root clips its children, so content never paints outside while it grows. Overflow of the content follows its own rules ([[10 Layout Overflow and Scrolling]]); a tall content inside a bounded region scrolls in a scroll container. Collapsing does not move the controller button.
@@ -114,6 +133,7 @@ No colours of its own; content follows the scheme.
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl`, `Expander_Module.py` | partly meets: clip, size and fade together, interrupt turns round, hidden when collapsed, reduced motion, end event, no frames at rest (meets AC-MOD-EXP-1, -2, -3, -4, -6, -7 by reading); focus move from collapsing content not built (AC-MOD-EXP-5 unverified) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` (dimensions) | meets: no padding, gap, border or radius, as in the table |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Expander) | exists |
 | tess-ui | `tess-ui:src/tess_ui/views/` accordion views | not applicable: see [[Accordion]] |
 | tre | `reveals` and transition support used by the shell | not applicable |

@@ -66,6 +66,27 @@ Roles and shape as [[Menu]]: row corner `small` 4 dp (code), text `label_large` 
 | Icon-to-label gap | 8 | 8 | 4 | [[Menu]]; code: 8 |
 | Separator | 9 | 9 | 9 | 1 dp rule with 4 dp above and below |
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | `density.menu_item_height` | 40 | 32 | 28 | [[Spacing and Density]]; code 28 | tess-ui: yes (style height); tess-shell: yes (Height); tre: n/a: element absent in tre |
+| rule | height | - | 9 | 9 | 9 | [[Menu Item]] (Sizing, separator: 1 dp rule with 4 dp above and below); code 9 | tess-ui: yes (style height); tess-shell: yes (Height); tre: n/a: element absent in tre |
+| root | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| root | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]]; code 0 10 0 10 | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| rule | padding | `space.2` | 4 0 4 0 | 4 0 4 0 | 4 0 4 0 | [[Menu Item]] (Sizing, separator); code 4 0 4 0 | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| root | margin | - | N/A: the Menu container sets the outer space | N/A: same as the default column | N/A: as in Default | [[Menu]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| root | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]]; code 8 | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| root | border width | - | 0 | 0 | 0 | MD3 menu item https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu-item.scss; code sets none | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| root | border color | - | N/A: a row has no border; the state is a fill | N/A: same as the default column | N/A: as in Default | MD3 menu item https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu-item.scss | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| rule | border width | - | 1 | 1 | 1 | [[Menu Item]] (Anatomy 6, 1 dp rule), [[Divider]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| rule | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]]; code `MenuItem::rule` fill `outline` | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| root | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Menu Item]] (Tokens used, 4 dp); code `$shape.small` | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], [[Menu Item]] (Tokens used); code body 14/20/400 | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| shortcut | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], same type as the label; colour `on_surface_muted` | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| icon, arrow | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Menu]], [[Spacing and Density]]; code 16 | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; the Menu container carries the elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 One line. The label has `Flex_Grow` and ends with an ellipsis when the row is narrower than the text; the hint never truncates before the label. Vertical centring of all parts in the row ([[10 Layout Overflow and Scrolling]]).
@@ -120,6 +141,7 @@ Colours follow the scheme ([[Theme Following the System]]); the hover and presse
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/MenuItem/MenuItem_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl` | partly meets: roles, `expanded`, submenu delays, separator, disabled, no tooltip (meets AC-MOD-MIT-1, -2, -3, -6, -7 by reading); row 28, icon 16, padding 10 literals (fails AC-MOD-MIT-4 at default and compact); pressed fill `primary` with `on_surface` text fails contrast (fails AC-MOD-MIT-5) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/MenuItem/MenuItem_Module.tdl` (dimensions) | differs: height 28 (spec 40, 32, 28), icon and arrow 16 (spec 24, 20, 20), padding 10 (spec 12, 8, 4), label weight 400 (spec 500); fails AC-MOD-MIT-4; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Menu and MenuItem) | exists |
 | tess-ui | `tess-ui:src/tess_ui/views/` menu views | see [[Menu]] |
 | tre | none | not applicable |

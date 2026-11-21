@@ -65,6 +65,27 @@ Roles: `on_surface`, `primary` (current border), `surface_raised` (fill; nearest
 | Horizontal padding | 12 | 8 | 4 | `density.row_padding_x`; code: 10 |
 | Gap between buttons | 4 | 4 | 4 | `space.2`; hit areas must not overlap |
 
+## Dimensions and defaults
+
+The desktop button follows the [[Button]] heights by density; the module is a row of those buttons. The current mark uses the border form of [[Workspaces Module]] (States).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| desktop button | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]]; code: text plus padding, not a density value | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| desktop button | min width | `density.control_height` | 40 | 32 | 28 | [[Workspaces Module]] (Sizing); code `Min_Width: 28` | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| desktop button | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| desktop button | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Workspaces Module]] (Sizing, horizontal padding), [[Spacing and Density]]; height is fixed so vertical padding is 0; code 4 10 4 10 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| root | margin | - | N/A: the Bar sets the space around the module | N/A: same as the default column | N/A: as in Default | [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| root | gap | `space.2` | 4 | 4 | 4 | [[Workspaces Module]] (Sizing), `tess-shell:src/tess_shell/shipped/Workspaces/Workspaces_Module.tdl` (`Spacing: 4`) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| desktop button | border width | - | 0 | 0 | 0 | [[Workspaces Module]] (States: rest has no fill or border) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| desktop button (current) | border width | - | 2 | 2 | 2 | [[Workspaces Module]] (Anatomy 4, 2 px `primary` border) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| desktop button | border color | - | N/A: no border at rest | N/A: same as the default column | N/A: as in Default | [[Workspaces Module]] (States) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| desktop button (current) | border color | `primary` | `primary` | `primary` | `primary` | [[Colour Roles]], [[Workspaces Module]] (States) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| desktop button | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]], [[Workspaces Module]] (Tokens used, 8 dp); code 6 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| face | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], [[Workspaces Module]] (Anatomy 3) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| desktop button | icon size | - | N/A: the face is text only, there is no icon | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| desktop button | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 A button is one line with an ellipsis beyond 160 dp; the full text is the tooltip. Vertical centring of the Face. The row is as wide as its buttons; the Bar decides scrolling or hiding when it runs out of room (the Bar does not scroll modules). With 20 desktops the row is 20 buttons wide: spec: the module does not wrap.
@@ -122,6 +143,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Workspaces/Workspaces_Module.tdl`, `Workspaces_Style.tdl`, `Workspaces_Module.py` | partly meets: hides without KWin, names, `selected` state, border plus fill (meets AC-MOD-WSP-1, -2, -3, -7); no tooltips (fails AC-MOD-WSP-4); height is text plus padding, not a density value, padding 10 literal (fails AC-MOD-WSP-6 at default and compact); keyboard focus ring not built (AC-MOD-WSP-5 unverified) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Workspaces/Workspaces_Style.tdl` (dimensions) | differs: padding 4 10 4 10 (spec 0 12 0 12, 0 8 0 8, 0 4 0 4), corner 6 (spec 8), min width 28 (spec 40, 32, 28); fails AC-MOD-WSP-6; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:40 Specifications/Modules/Workspaces Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |
