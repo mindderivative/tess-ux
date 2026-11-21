@@ -32,7 +32,7 @@ Tre must never block a design change. Every visual element and parameter of tre 
 
 - Adoption notes say 'needs a tre hook' with a UXREQ number instead of 'blocked on tre', and list the hooks needed ([[Adoption tre]], section Engine hooks needed).
 - A criterion that fails because of an engine limit stays `fail` with the UXREQ id as its issue link ([[17 Conformance]], AC-CON-15); a project does not write a deviation ADR for it.
-- Each default in the Defaults Matrix records whether it is settable from Python in tess-ui, tess-shell and tre.
+- Each default in the [[Defaults Matrix]] records whether it is settable from Python in tess-ui, tess-shell and tre.
 - tess-re audits the hardcoded visuals of tre and proposes properties; the requests carry them.
 
 ## Affected notes
@@ -40,4 +40,5 @@ Tre must never block a design change. Every visual element and parameter of tre 
 - [[01 Principles and Scope]]
 - [[17 Conformance]]
 - [[Adoption tre]]
-- Defaults Matrix
+- [[Defaults Matrix]]
+- [[Hooks Needed]]

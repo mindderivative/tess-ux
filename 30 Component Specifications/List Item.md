@@ -85,7 +85,7 @@ The line-height rows give 24 + 20 = 44 for two lines at `default`; with 16 dp pa
 
 ## Dimensions and defaults
 
-Heights are the binding density table for one line and the derived rule of [[List Item#Sizing and density]] for two and three lines. The icon sizes below follow this note's Sizing table (dense 20); [[Iconography]] gives 16 for a list row at dense, and the two notes disagree until the owner decides #needs-verification-as-design-choice (proposed ADR: list row icon size at dense).
+Heights are the binding density table for one line and the derived rule of [[List Item#Sizing and density]] for two and three lines. The icon sizes follow [[Iconography]] (24, 20, 20).
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|

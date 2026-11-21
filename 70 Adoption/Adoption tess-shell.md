@@ -181,7 +181,7 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 The tre hooks that tess-shell rows need; the table of what each unlocks is in [[Adoption tre]]. Under [[ADR-0020 The engine never blocks the design]] the shell owns the look and the engine offers the hook.
 
 - [[UXREQ-001 Two-axis scroll view with the specified scrollbar]]: TSH-080
-- [[UXREQ-008 Outline property for focus rings]] (held): TSH-021
+- [[UXREQ-008 Outline property for focus rings]] (approved): TSH-021
 
 ## AC coverage by note (approximate)
 

@@ -45,7 +45,7 @@ Under [[ADR-0020 The engine never blocks the design]] the engine offers a hook f
 - [[UXREQ-005 Vertical alignment of text and text input, tracking and line height on text input]] (approved)
 - [[UXREQ-006 Terminal escape chord and history scrollbar]] (approved)
 - [[UXREQ-007 Drag cancel by Escape and edge auto-scroll]] (proposed, held)
-- [[UXREQ-008 Outline property for focus rings]] (proposed, held)
+- [[UXREQ-008 Outline property for focus rings]] (approved)
 - [[UXREQ-009 First frame hold]] (proposed, held)
 
 ## Findings outside the worklists

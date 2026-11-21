@@ -16,6 +16,7 @@ Sources, Material Design 3 extracts and evidence with links. Unverified claims c
 
 ## Notes
 
+- [[Hooks Needed]]
 - [[Gaps and Contradictions]]
 - [[Inventory Source Shell Vault]]
 - [[Inventory Source tess-shell]]

@@ -190,7 +190,7 @@ The tre hooks that tess-ui rows need, by request; the table of what each unlocks
 - [[UXREQ-004 Accessibility roles]]: TUI-036, TUI-044, TUI-054, TUI-056, TUI-058
 - [[UXREQ-005 Vertical alignment of text and text input, tracking and line height on text input]]: TUI-024, TUI-065 (tracking on inputs)
 - [[UXREQ-007 Drag cancel by Escape and edge auto-scroll]] (held): TUI-080
-- [[UXREQ-008 Outline property for focus rings]] (held): TUI-057
+- [[UXREQ-008 Outline property for focus rings]] (approved): TUI-057
 - [[UXREQ-009 First frame hold]] (held): TUI-060
 - [[UXREQ-006 Terminal escape chord and history scrollbar]]: TUI-095 (the Terminal block, if tess-ui ships it)
 - No request yet: animatable height (TUI-072)
