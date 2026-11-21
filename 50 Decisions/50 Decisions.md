@@ -12,7 +12,7 @@ depends_on: []
 
 # 50 Decisions
 
-Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0010 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
+Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0013 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
 
 ## Notes
 
@@ -26,5 +26,8 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0008 Publishing flow]]
 - [[ADR-0009 State layer percentages]]
 - [[ADR-0010 Document structure of the specifications]]
+- [[ADR-0011 Tooltip hover grace for all tooltips]]
+- [[ADR-0012 Scrollbar thumb opacity and hit area exception]]
+- [[ADR-0013 Focus and pressed state layer 10 percent]]
 
 Back to [[Index]].

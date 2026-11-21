@@ -60,7 +60,7 @@ Covers what the first slice (tooltip, popup, menu, dialog, panel, scrollbar, tre
 
 - A tooltip only repeats or adds to what a visible label, the accessible name or the accessible description gives; information needed to use the control is never only in a tooltip ([[Tooltip]], [[ADR-0004 Tooltip rule]]).
 - Tooltip text is exposed as description or, for an icon-only control, as the name.
-- Open conflict recorded for the owner: WCAG 2.2 SC [1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) asks that hover content is dismissible (met by Escape), hoverable (the pointer can move over it without it vanishing) and persistent. The tooltip rule keeps a grace period of 150 ms only for rich tooltips and dismisses plain tooltips on pointer leave of the trigger. The hoverable condition therefore is not met for plain tooltips #needs-verification (whether the vault takes the exception that the tooltip is only supplemental).
+- WCAG 2.2 SC [1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG22/#content-on-hover-or-focus) asks that hover content is dismissible, hoverable and persistent. All tooltips, plain and rich, meet it ([[ADR-0011 Tooltip hover grace for all tooltips]]): Escape dismisses without moving the pointer, the pointer can move from the trigger onto the tooltip within a 150 ms grace and the tooltip then stays open, and the tooltip stays until the pointer leaves both, focus leaves, or Escape.
 
 ## Announcements and live regions
 

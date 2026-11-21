@@ -85,7 +85,7 @@ A tooltip of a control inside a dialog therefore shows above the dialog and its 
 | Press outside | not applicable (a press on the trigger dismisses) | dismisses and is consumed | press on the scrim dismisses when dismissible, consumed |
 | Press on another surface of the application | not applicable | closes a focused popup, consumed | blocked by the scrim |
 | Scroll of an ancestor of the anchor | dismisses | follows the anchor, or closes when the project says so | not applicable |
-| Pointer leaves | dismisses (rich: after 150 ms grace) | no effect | no effect |
+| Pointer leaves | dismisses after the 150 ms grace; the pointer may move onto the tooltip meanwhile ([[ADR-0011 Tooltip hover grace for all tooltips]]) | no effect | no effect |
 | Activation of the trigger or opener | dismisses | toggles (closes, does not reopen) | not applicable |
 | Anchor removed or hidden | dismisses | closes | not applicable |
 | Window loses focus | dismisses | closes (explicit grab ends) | stays open |

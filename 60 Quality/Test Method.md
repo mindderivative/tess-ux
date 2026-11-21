@@ -20,7 +20,7 @@ depends_on: ["[[01 Principles and Scope]]"]
 - Every acceptance criterion `AC-<prefix>-<n>` names exactly one primary test type and states the pass condition in numbers. A criterion may add a second type (for example a token test plus a pixel check).
 - Units: dp equals px at scale factor 1.0. Geometry checks run at scale 1.0, 1.25 and 2.0 and compare in dp (measured px divided by scale) with the tolerance the criterion states.
 - Tests run headless wherever possible. Tests that need a real compositor (KWin popups, input grabs, screen readers) are hand checks with a recorded script, and the audit says "hand check, not automated".
-- A project's audit never reports a criterion as passing that it did not run; the three allowed results are pass, fail with defect, and not run with reason.
+- A project's audit never reports a criterion as passing that it did not run; the allowed results are pass, fail with defect, not run with reason, not testable (with reason) and not applicable (with reason).
 
 ## The seven test types
 
@@ -93,13 +93,13 @@ depends_on: ["[[Text Field]]"]
 
 | Criterion | Type | Result | Evidence | Defect or note |
 |---|---|---|---|---|
-| AC-TXF-1 | geometry check | pass, fail or not run | test name and commit, or screenshot path | link to the issue or request note |
+| AC-TXF-1 | geometry check | pass, fail, not run, not testable or not applicable | test name and commit, or screenshot path | link to the issue or request note |
 
 Rules for the audit:
 
 - One row per criterion of the audited notes; no row is omitted.
 - Evidence is a test name with commit hash, a recorded hand-check id, or a screenshot path in the project's repo; "looks right" is not evidence.
-- The audit states the project commit it ran against and the date; it ends with a count: pass, fail, not run.
+- The audit states the project commit it ran against and the date; it ends with a count: pass, fail, not run, not testable, not applicable.
 - A failing criterion gets a defect link; the audit does not fix code. Audits are routed through `bot:Orchestrator` ([[Plan]]).
 - The `Status in code` table of the component note is updated from the audit by the vault, with the audit linked.
 
@@ -107,7 +107,7 @@ Rules for the audit:
 
 - [ ] AC-TM-1: Review. Every `AC-*` item in every note names one of the seven test types in its first sentence. Pass: a script that parses acceptance-criteria lists finds zero items without a type name.
 - [ ] AC-TM-2: Contrast script. The script exists in a project, runs on light and dark, and exits non-zero when a pair is below its limit (negative test with a deliberately low-contrast pair). Pass: exit codes equal 0 and non-zero respectively.
-- [ ] AC-TM-3: Review. Each audit in `70 Adoption` has a row for every criterion of its notes and a pass, fail and not run count that sums to the number of rows. Pass: arithmetic holds.
+- [ ] AC-TM-3: Review. Each audit in `70 Adoption` has a row for every criterion of its notes and a count per result value (pass, fail, not run, not testable, not applicable) that sums to the number of rows. Pass: arithmetic holds.
 
 ## Sources
 

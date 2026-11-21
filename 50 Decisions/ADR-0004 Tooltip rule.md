@@ -15,6 +15,9 @@ depends_on: []
 > [!important] Status
 > `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-21. The owner can overturn it. Question: OQ-06 in [[Open Questions]].
 
+> [!note] Amended
+> The hover grace applies to all tooltips by [[ADR-0011 Tooltip hover grace for all tooltips]], 2026-11-21.
+
 ## Context
 
 tess-ui shows a tooltip after 500 ms and on keyboard focus; the engine has no tooltip primitive or timers; the config app put tooltips on whole rows. Owner feedback F2, F8, F9.

@@ -15,6 +15,9 @@ depends_on: []
 > [!important] Status
 > `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-21. The owner can overturn it. Question: OQ-05 in [[Open Questions]].
 
+> [!note] Amended
+> The 10 percent focus and pressed values are confirmed by [[ADR-0013 Focus and pressed state layer 10 percent]], 2026-11-21.
+
 ## Context
 
 tess-ui implements MD3 state layers; the shell uses opacity literals (hover 0.85, pressed 0.7, disabled 0.5); tre draws none.

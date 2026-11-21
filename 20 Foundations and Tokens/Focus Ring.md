@@ -15,7 +15,7 @@ depends_on: ["[[ADR-0009 State layer percentages]]", "[[Colour Roles]]"]
 > [!info] Summary
 > The visible indicator of keyboard focus: a 3 dp ring in the role `secondary`, offset 2 dp from the control, shown for keyboard focus, and for pointer focus in text inputs. It is never clipped by a scroll container. MD3 counterpart: the focus indicator of Material Web (`md-focus-ring`).
 
-Decision: [[ADR-0009 State layer percentages]]. The 10 percent focus state layer is in [[State Layers]].
+Decision: [[ADR-0009 State layer percentages]], confirmed for the 10 percent value by [[ADR-0013 Focus and pressed state layer 10 percent]]. The 10 percent focus state layer is in [[State Layers]].
 
 ## Geometry and colour
 

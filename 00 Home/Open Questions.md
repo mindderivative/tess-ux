@@ -46,11 +46,11 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 
 | ID | Question | Recommendation | Evidence |
 |---|---|---|---|
-| OQ-19 | WCAG 1.4.13 asks that hover content stays hoverable and dismissible; ADR-0004 dismisses a plain tooltip on pointer leave of the trigger. Grant the 150 ms grace to all tooltips? | Yes: pointer moving from trigger onto the tooltip keeps any tooltip open for 150 ms; this is a change to ADR-0004 and needs the owner | [[14 Accessibility Basics]], [[Tooltip]] |
-| OQ-20 | The scrollbar thumb rest opacity of 38 percent fails the 3 to 1 non-text contrast rule; the notes require at least 60 percent. Accept? | Accept 60 percent rest, 80 percent hover, 100 percent drag | [[Scrollbar and Scroll Container]] |
-| OQ-21 | The 12 dp scrollbar hit area is below the 24 dp target of WCAG 2.5.8; does the equivalent-control exception apply (keyboard scrolling exists)? | Accept with the keyboard path as the equivalent | [[Scrollbar and Scroll Container]] |
-| OQ-22 | Focus and pressed state layers are 12 percent in older Material Web tokens, 10 percent in the latest; ADR-0009 uses 10 | Keep 10 (latest token set) | [[State Layers]] |
+| OQ-19 | Closed 2026-11-21 by [[ADR-0011 Tooltip hover grace for all tooltips]]: all tooltips, plain and rich, get the 150 ms grace (hoverable, dismissible, persistent per WCAG 1.4.13); amends ADR-0004 | closed | [[14 Accessibility Basics]], [[Tooltip]] |
+| OQ-20 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: thumb opacity 60 percent rest, 80 percent hover, 100 percent drag | closed | [[Scrollbar and Scroll Container]] |
+| OQ-21 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: the 12 dp hit area is accepted with the keyboard path as the equivalent control | closed | [[Scrollbar and Scroll Container]] |
+| OQ-22 | Closed 2026-11-21 by [[ADR-0013 Focus and pressed state layer 10 percent]]: focus and pressed state layers stay 10 percent | closed | [[State Layers]] |
 | OQ-23 | Shell state layers (ADR-0009): adoption not decided; the shell audit will record the gap | Orchestrator asks the owner at the shell audit | [[State Layers]] |
-| OQ-24 | Requests to tre: virtual list keys and scroll-into-view, two-axis scrolling | Raise as UXREQ notes through the Orchestrator | [[Scrollbar and Scroll Container]] |
+| OQ-24 | Closed 2026-11-21: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] and [[UXREQ-002 Virtual list keys and scroll to index]] are filed and approved in [[80 Requests]] | closed | [[Scrollbar and Scroll Container]] |
 
 Back to [[Index]].
