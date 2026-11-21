@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 59 open findings (P0 3, P1 31, P2 25) and 1 fixed (TSH-016). Six open rows are held on an owner or engine decision (see Held findings). One owner decision is open: OQ-23 (state layers). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 58 open findings (P0 3, P1 31, P2 24) and 2 fixed (TSH-016, TSH-062). Six open rows are held on an owner or engine decision (see Held findings). One owner decision is open: OQ-23 (state layers). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -23,7 +23,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 | Project commit read | `42cdfb5` on origin/main (2026-11-20) |
 | Vault state | Phase 3, 2026-11-21 |
 | Basis | the `Status in code` rows of the component, foundation, pattern and chapter notes; each key finding re-read in the code at the commit above |
-| Dropped | findings the code no longer shows: TSH-016 (Tab leaves the Text Editor since tre 0.6.8), listed under Fixed since the audit |
+| Dropped | findings the code no longer shows: TSH-016 (Tab leaves the Text Editor since tre 0.6.8) and TSH-062 (the fallback shadow is `#00000066`), listed under Fixed since the audit |
 | Severity | P0 blocks use; P1 breaks a rule of the specification; P2 polish |
 | Not done | no test run, no screenshot, no screen reader; items marked unverified stay `not run` per [[17 Conformance]] |
 
@@ -133,7 +133,6 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 |---|---|---|---|---|---|---|
 | TSH-060 | P1 | Reduced motion lives in code; the theme `Reduced_Motion { }` block is empty; `EMPHASIZED` easing differs from the table | AC-MOT-2, AC-MOT-5 | `tess-shell:src/tess_shell/binder/motion.py`, `Themes/Default_Theme.tdl:67-70` | Put the behaviour in the theme and correct the curve | [[Motion]] |
 | TSH-061 | P1 | No persistent user override of the scheme; first-frame behaviour with a slow portal not tested | AC-TH-4, AC-TH-5, AC-TH-7 | `tess-shell:src/tess_shell/services/portal.py`, `appearance.py` | Add a settings key for the override | [[Theme Following the System]] |
-| TSH-062 | P2 | Theme without `Elevation.Max` draws `#00000040`, theme value is `#00000066` | AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py` | Align the fallback with the theme | [[Elevation]] |
 | TSH-063 | P2 | Shape scale has 5 of 7 steps; dialog and rich tooltip steps cannot be expressed | AC-SHP-2, AC-C04-1 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:38-42` | Add 12 and 28 or declare the deviation | [[Shape]] |
 | TSH-064 | P2 | The tooltip cards use tokens (`$color.surface_raised`), not hex fallbacks; `Corner_Radius: 8` and `Elevation: 20%` are repeated literals outside the theme | AC-TIP-13 | the six tooltip files | Resolved by TSH-004 | [[Colour Roles]] |
 
@@ -162,6 +161,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Finding | Fix | Failing ACs it cleared | Spec note |
 |---|---|---|---|---|
 | TSH-016 | Text Editor took Tab and could not leave the field | Tab leaves the Text Editor since tre 0.6.8 | AC-MOD-TED-4 | [[Text Editor]] |
+| TSH-062 | A theme without `Elevation.Max` drew `#00000040` while the shipped theme says `#00000066` (the audit note was stale) | `DEFAULT_MAX` in `tess-shell:src/tess_shell/binder/shadow.py` is `#00000066` on main, equal to the theme; no deviation | AC-ELV-3 | [[Elevation]] |
 
 ## Held findings
 
