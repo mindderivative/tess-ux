@@ -137,6 +137,8 @@ A deviation is a project's decision not to meet a criterion, or to meet it anoth
 
 A departure from Material Design 3 by the vault itself (desktop density, keyboard-first use, accessibility) is recorded in the note's Deviations table and in the register [[Deviations from MD3]], not in a project ADR.
 
+A specification value is always reachable from the project layer ([[ADR-0020 The engine never blocks the design]]). Where the engine (tre) hardcodes a value or lacks a hook that a criterion needs, that is an engine request in `80 Requests`, never a deviation: the criterion stays `fail` with the UXREQ id as the issue link until the hook exists, and the project does not write a deviation ADR for an engine limit.
+
 ## Audit workflow routed through the Orchestrator
 
 Audits are assigned and routed by `bot:Orchestrator`; the vault bot reads code read-only and never fixes it, never pushes to a project and never opens an issue without instruction (vault guide rules 5 and 8).
@@ -200,6 +202,7 @@ No audit exists in [[70 Adoption]] yet (this note and [[Audit Template]] are the
 - [ ] AC-CON-12 (token test): the project has a contrast script that runs on light and dark and exits non-zero when a pair is below its limit (AC-TM-2), and its test names or markers include AC ids for the tests cited as evidence. Pass: exit codes 0 and non-zero respectively; a script maps cited ids to tests with zero misses.
 - [ ] AC-CON-13 (review): hand checks cited as evidence follow the format of [[Test Method]] and name the compositor, scale factor, scheme, tester and date. Pass: zero missing fields.
 - [ ] AC-CON-14 (review): a claim older than the last MAJOR change of a note in its scope carries the label "stale" until a delta audit covers the changed criteria. Pass: reviewer finds zero unlabelled stale claims.
+- [ ] AC-CON-15 (review): an audit row that fails because of an engine limit cites a UXREQ id and no project deviation ADR. Pass: reviewer finds zero rows with an engine cause and no UXREQ id.
 
 ## Sources
 

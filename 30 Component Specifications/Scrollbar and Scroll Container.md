@@ -4,9 +4,9 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [component, scrolling, overflow, owner-feedback]
-related: ["[[ADR-0003 Scrollbar rule]]", "[[10 Layout Overflow and Scrolling]]", "[[Owner Feedback 2026-11-20]]", "[[Tree]]", "[[List]]", "[[Form Row]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[State Layers]]", "[[Shape]]", "[[Motion]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[ADR-0003 Scrollbar rule]]", "[[10 Layout Overflow and Scrolling]]", "[[Owner Feedback 2026-11-20]]", "[[Tree]]", "[[List]]", "[[Form Row]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[State Layers]]", "[[Shape]]", "[[Motion]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]", "[[ADR-0020 The engine never blocks the design]]", "[[UXREQ-001 Two-axis scroll view with the specified scrollbar]]", "[[UXREQ-002 Virtual list keys and scroll to index]]", "[[UXREQ-008 Outline property for focus rings]]"]
 depends_on: ["[[ADR-0003 Scrollbar rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]"]
 ---
 
@@ -89,6 +89,50 @@ Colour from [[Colour Roles]], radius from [[Shape]], density and targets from [[
 
 The values do not change with density: the bar is a pointer target of its own and the 8 dp thumb with 12 dp hit area is the same at `default`, `compact` and `dense` ([[Spacing and Density]]). Touch contexts (ADR-0002, 48 dp targets) set `scrollbar.hit.thickness` to 48 dp.
 
+## Properties a project can set
+
+Normative. [[ADR-0020 The engine never blocks the design]] applies: every row is settable from the project layer (Python property or declarative hook such as a stylesheet rule), never by per-frame Python and never by editing engine code. The default is the specification value; a project that sets nothing gets the defaults. Any property can be set for the whole project and overridden on a single scroll container (the last row). Names equal the tokens of the table above; the tre property in the Name column is the engine side of the hook, and one marked "new" does not exist in tre today (see [[UXREQ-001 Two-axis scroll view with the specified scrollbar]]).
+
+| Property | Name | Default | Unit | Meaning |
+|---|---|---|---|---|
+| Thumb shape | `scrollbar.thumb.shape` (tre `scrollbar_shape`, new) | `pill` | `pill`, `rounded`, `rect` | outline of the thumb; `pill` has full radius |
+| Thumb radius | `scrollbar.thumb.radius` (tre `scrollbar_radius`, new) | `full` (4 dp at 8 dp) | dp or `full` | corner radius when the shape is `rounded` |
+| Thumb thickness | `scrollbar.thumb.thickness` (tre `scrollbar_width`) | 8 | dp | painted size across the axis |
+| Minimum thumb length | `scrollbar.thumb.min_length` (tre `scrollbar_min_length`, new) | 32 | dp | lower bound of the thumb length along the axis |
+| Hit area | `scrollbar.hit.thickness` (tre `scrollbar_hit_slop`, new; slop = (hit - thumb) / 2) | 12 | dp | pointer-sensitive size across the axis, centred on the thumb |
+| Margin or inset | `scrollbar.margin` (tre `scrollbar_margin`, new) | 2 | dp | space between thumb and container edge and between thumb end and lane end |
+| Thumb colour, rest | `scrollbar.thumb.color` (tre `scrollbar_fill`) | role `on_surface_variant` | colour role or colour | colour of the thumb at rest |
+| Thumb colour, hover | `scrollbar.thumb.color.hover` (tre `scrollbar_fill_hover`, new) | same role as rest | colour role or colour | colour under the pointer |
+| Thumb colour, pressed or drag | `scrollbar.thumb.color.drag` (tre `scrollbar_fill_drag`, new) | same role as rest | colour role or colour | colour while dragged |
+| Track colour | `scrollbar.track.color` (tre `scrollbar_track`, new) | none (transparent) | colour role or none | colour of the lane |
+| Track visibility | `scrollbar.track.visible` (tre `scrollbar_track`, new) | off | boolean | paints the lane when on |
+| Opacity, rest | `scrollbar.thumb.opacity.rest` | 0.70 | 0 to 1 | alpha of the rest state |
+| Opacity, hover | `scrollbar.thumb.opacity.hover` | 0.80 | 0 to 1 | alpha under the pointer |
+| Opacity, drag | `scrollbar.thumb.opacity.drag` | 1.00 | 0 to 1 | alpha while dragged |
+| Wheel notch | `scroll.wheel.notch` (tre `wheel_step`, new) | 40 | dp | distance per wheel notch |
+| Key line step | `scroll.key.line` (tre `key_scroll_step`, new) | 40 | dp | Up, Down, Left, Right |
+| Key page step | `scroll.key.page` (tre `key_page_overlap`, new) | viewport extent minus 10 percent | percent overlap | Page Up, Page Down, lane click |
+| Smooth-scroll speed | `scroll.smooth.duration` (tre `scroll_smooth_duration`, new) | 0 (jump) | ms | duration of an eased wheel or key scroll; 0 jumps |
+| Smooth-scroll curve | `scroll.smooth.easing` (tre `scroll_smooth_easing`, new) | `easing-standard` | cubic-bezier | curve of the eased scroll when the duration is above 0 |
+| Snap timing | `scroll.snap.settle` / `.duration` (tre `scroll_snap_settle`, `scroll_snap_duration`, new) | 120 / 200 | ms | settle delay and animation of snap |
+| Thumb state fade | `scrollbar.fade.duration` (tre `scrollbar_fade_duration`, new) | 100 | ms | opacity change between states, and fade in or out when the policy is `auto-hide` |
+| Auto-hide delay | `scrollbar.autohide.delay` (tre `scrollbar_autohide_delay`, new) | 1000 (used only by `auto-hide`) | ms | idle time before the bar fades out |
+| Hover delay | `scrollbar.hover.delay` (tre `scrollbar_hover_delay`, new) | 0 | ms | time the pointer rests in the hit area before the hover state |
+| Lane repeat | `scrollbar.lane.repeat.delay` / `.interval` (new) | 400 / 100 | ms | first delay and repeat of a pressed lane click |
+| Gutter reserved | `scrollbar.gutter.reserve` (tre `scrollbar_gutter_reserve`, new) | on | boolean | reserves the gutter on an overflowing axis; off lets the thumb overlay content |
+| Gutter width | `scrollbar.gutter` (tre `scrollbar_gutter`, new) | 12 | dp | reserved space, equal to the hit thickness unless set |
+| Corner | `scrollbar.corner` (tre `scrollbar_corner`, new) | 12 | dp (square) | empty square where both axes overflow |
+| Vertical bar side | `scrollbar.side.vertical` (tre `scrollbar_side_vertical`, new) | `end` (right in left-to-right) | `start`, `end` | `end` follows the writing direction |
+| Horizontal bar side | `scrollbar.side.horizontal` (tre `scrollbar_side_horizontal`, new) | `bottom` | `top`, `bottom` | edge of the horizontal bar |
+| Right-to-left | `scrollbar.side.rtl` (tre `scrollbar_rtl`, new) | `follow` | `follow`, `ltr`, `rtl` | `follow` mirrors the vertical bar and the origin of the horizontal offset with the layout direction |
+| Show policy | `scrollbar.visibility` (tre `scrollbar_visibility`, new) | `overflow` | `always`, `overflow`, `auto-hide`, `never` | `always` draws a disabled bar without overflow; `overflow` follows F6; `never` hides the bar but keeps the wheel and keys |
+| Arrow buttons | `scrollbar.arrows` (tre `scrollbar_arrows`, new) | off | boolean | a button at each end of the lane that scrolls one key line step |
+| Arrow button size | `scrollbar.arrow.size` (tre `scrollbar_arrow_size`, new) | 12 | dp | length of an arrow button along the axis |
+| Lane click | `scrollbar.lane.click` (tre `scrollbar_lane_click`, new) | `page` | `page`, `jump` | `page` scrolls one page toward the press; `jump` moves the thumb centre to the press point |
+| Per-element override | style key or node property of the same name on one scroll container | none | any row above | the value on the container replaces the project default for that container only |
+
+Raising `scrollbar.hit.thickness` or switching the policy never removes the keyboard and wheel route of AC-SCB-21.
+
 ## Sizing and density
 
 - Thumb 8 dp across the axis, hit strip 12 dp, minimum thumb length 32 dp (a 24 dp minimum target length is met on the long side).
@@ -125,7 +169,7 @@ The values do not change with density: the bar is a pointer target of its own an
 - Virtualised lists and trees: the same keys, and moving the focus to a row scrolls it into view by the least distance that shows it; Home and End move focus and offset to the first and last row. The thumb is draggable. A virtualised container whose rows are not scrollable by key violates [[ADR-0003 Scrollbar rule]].
 - Focus: moving focus into a child scrolls it into view by the least distance that shows it, with `scrollbar.gutter` and the [[Focus Ring]] outset (3 dp ring plus 2 dp offset) inside the viewport.
 - Touch: drag pans the content with fling; the bar is shown while content overflows and is not the touch handle.
-- Snap (`scroll_snap` start, center or end): after the last input the offset settles on the nearest snap point within `scroll.snap.settle` and animates `scroll.snap.duration`; programmatic offsets are not snapped; the default is no snap.
+- Snap (`scroll_snap` start, center or end): after the last input the offset settles on the nearest snap point within `scroll.snap.settle` and animates `scroll.snap.duration`; programmatic offsets are not snapped; the default is no snap. Snap acts along one axis: tre settles a view on the items along its one orientation (the tre audit records it as vertical-only) and has no snap on a two-axis container; a container that needs snap on both axes needs a tre hook (see Status in code).
 
 ## Tooltip and overlay behaviour
 
@@ -175,14 +219,26 @@ Both axes enabled, thumb visible whenever overflow exists, no auto-hide, no trac
 - [ ] AC-SCB-19: AT tree assertion. A scroll request from assistive technology for an off-screen node brings it inside the viewport, and an overflowing container with no focusable descendant is reachable by Tab.
 - [ ] AC-SCB-20: Pixel check. Content is clipped to the container bounds and its corner radius; no pixel of the content lies outside the frame.
 - [ ] AC-SCB-21: Scripted input and token test. The equivalent-control exception holds: every scroll container with `scrollbar.hit.thickness` below 24 dp responds to Up, Down, Page Up, Page Down, Home and End when focused and to the wheel when hovered (AC-SCB-10, AC-SCB-11). Pass: a container that fails either test uses `scrollbar.hit.thickness` of at least 24 dp.
+- [ ] AC-SCB-22: Scripted input and static check (shape and size). Through the project's public API (no engine edit) set `scrollbar.thumb.shape` to `rect`, `scrollbar.thumb.thickness` to 12, `scrollbar.thumb.min_length` to 48, `scrollbar.hit.thickness` to 20 and `scrollbar.margin` to 4 on a container. Passes when the rendered thumb is 12 dp thick with square corners and 4 dp margin, the thumb never gets shorter than 48 dp (ratio 1000), a press 9 dp from the thumb centre grabs it and a press at 11 dp does not.
+- [ ] AC-SCB-23: Pixel check (colours and opacities). Set `scrollbar.thumb.color`, `.hover` and `.drag` to three different roles, `scrollbar.thumb.opacity.rest/.hover/.drag` to 0.50, 0.60, 0.90, and `scrollbar.track.visible` on with a track colour. Passes when the sampled thumb pixels at rest, under the pointer and while dragged equal the set colours at the set alpha, and the lane is painted in the track colour.
+- [ ] AC-SCB-24: Scripted input (speed). Set `scroll.wheel.notch` 100, `scroll.key.line` 60, `scroll.key.page` overlap 20 percent, `scroll.smooth.duration` 300 ms and `scrollbar.fade.duration` 200 ms. Passes when a notch moves 100 dp, Down moves 60 dp, Page Down moves 80 percent of the viewport, a wheel scroll reaches its target after 300 ms and not before 250 ms, and the state fade takes 200 ms.
+- [ ] AC-SCB-25: Geometry check (gutter and corner). Set `scrollbar.gutter` to 20, `scrollbar.corner` to 20 and then `scrollbar.gutter.reserve` off. Passes when content end padding on an overflowing axis is at least 20 dp and the empty corner is 20 by 20 dp, and with the reservation off content reaches the container edge and the thumb overlays it.
+- [ ] AC-SCB-26: Geometry check (side and RTL). Set `scrollbar.side.vertical` to `start` and `scrollbar.side.horizontal` to `top`; then set the layout direction to right-to-left with `scrollbar.side.rtl` `follow`. Passes when the vertical thumb sits at the left edge and the horizontal one at the top edge, and in right-to-left the default vertical bar is at the left edge, the horizontal offset origin is at the right and Home goes to the right end.
+- [ ] AC-SCB-27: Scripted input (show policy). Set `scrollbar.visibility` to `always`, `auto-hide` and `never` on a container. Passes when `always` paints a bar on a non-overflowing axis, `auto-hide` fades the bar after `scrollbar.autohide.delay` and shows it again on wheel input, and `never` paints no bar while wheel and keys still scroll.
+- [ ] AC-SCB-28: Scripted input (arrows and lane click). Set `scrollbar.arrows` on with `scrollbar.arrow.size` 16 and `scrollbar.lane.click` to `jump`. Passes when an arrow button of 16 dp appears at each end and a press on it moves the offset by `scroll.key.line`, and a press on the lane 100 dp past the thumb centres the thumb on the press point; with `page` AC-SCB-13 holds.
+- [ ] AC-SCB-29: Scripted input (per-element override). With a project default of thumb thickness 8 and wheel notch 40, set thickness 14 and wheel notch 80 on one container. Passes when that container renders a 14 dp thumb and moves 80 dp per notch while a second container without the override keeps 8 dp and 40 dp.
+- [ ] AC-SCB-30: Token test (defaults). With no property set, every row of Properties a project can set equals its default: thumb 8, hit 12, margin 2, minimum length 32, shape `pill`, opacities 0.70, 0.80, 1.00, wheel 40, keys 40, page viewport minus 10 percent, gutter 12 reserved, corner 12, visibility `overflow`, arrows off, lane click `page`, side `end` and `bottom`. Passes when every value equals the table.
 
 ## Status in code
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/scrolling.py`, `tess-ui:docs/guide/layout.md` (Scrolling), `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | partly meets: `ScrollView` scrolls one axis (`Orientation`, vertical default), the keys and wheel come from the engine; two-way scrolling is planned on branch `feat/scrollview-two-way` (status of the branch not verified); bar colour is `outline` and not `on_surface_variant`; size is engine-owned. Fails AC-SCB-01, 03 (config app uses vertical scroll views only), 04, 08, 09, 11, 13, 16, 18; AC-SCB-07 is not verified |
+| tess-ui | `tess-ui:src/tess_ui/scrolling.py`, `tess-ui:docs/guide/layout.md` (Scrolling), `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | partly meets: `ScrollView` scrolls one axis (`Orientation`, vertical default), the keys and wheel come from the engine; two-way scrolling is planned on branch `feat/scrollview-two-way` (status of the branch not verified); bar colour is `outline` and not `on_surface_variant`; size is fixed in the engine and needs a tre hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]). Fails AC-SCB-01, 03 (config app uses vertical scroll views only), 04, 08, 09, 11, 13, 16, 18; AC-SCB-07 is not verified |
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | partly meets: wheel and the List keys only; no scrollbar of either axis (absent: AC-SCB-02 to 09, 12, 13) |
-| tre | `tre:crates/engine-core/src/tree/scroll.rs`, `tre:crates/engine-core/src/node.rs` (lines near 510 to 530), `tre:docs/guide/nodes-and-layout.md` | partly meets: `scroll_view` is one axis (nest a horizontal view in a vertical one for two axes); thumb 4 px (spec 8), margin 2 (meets), min length 32 (meets), grab slop 6 px, radius 2, fill `#CAC4D0` at 55 percent, no track, no auto-hide (meets); arrow line 40 (meets), Page Up and Page Down a full viewport (spec viewport minus 10 percent: fails AC-SCB-10), Home and End (meets); wheel notch 20 px (spec 40: fails AC-SCB-11); no click on the lane (fails AC-SCB-13); `virtual_list` has a draggable vertical thumb and no key handling and `scroll_into_view` skips it (fails AC-SCB-14); snap 120 ms plus 200 ms (meets) |
+| tre | `tre:crates/engine-core/src/tree/scroll.rs`, `tre:crates/engine-core/src/node.rs` (lines near 510 to 530), `tre:docs/guide/nodes-and-layout.md` | partly meets: `scroll_view` is one axis (nest a horizontal view in a vertical one for two axes); thumb 4 px (spec 8), margin 2 (meets), min length 32 (meets), radius 2, fill `#CAC4D0` at 55 percent (tre PR 326 built a rest opacity of 0.60 and will be changed to 0.70), no track, no auto-hide (meets); the engine hit area is the thumb plus a 6 px grab slop on every side, so a legacy 4 px thumb is grabbed 8 px from its centre (2 px half thumb plus 6 px slop) and AC-SCB-06 fails (8 dp must not grab); arrow line 40 (meets), Page Up and Page Down a full viewport (spec viewport minus 10 percent: fails AC-SCB-10), Home and End (meets); wheel notch 20 px (spec 40: fails AC-SCB-11); no click on the lane (fails AC-SCB-13); `virtual_list` has a draggable vertical thumb and no key handling and `scroll_into_view` skips it (fails AC-SCB-14); snap 120 ms plus 200 ms (meets) but single-axis: `scroll_snap` follows the view's one orientation, the tre audit records it as vertical-only, and a two-axis container has no snap; AC-SCB-15 (focus ring versus gutter) is not built: no gutter and no ring allowance exist. Each failing row needs a tre hook: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] (axes, tokens, gutter, wheel, page, lane), [[UXREQ-002 Virtual list keys and scroll to index]] (virtual list keys), [[UXREQ-008 Outline property for focus rings]] (ring outside the border box, held) |
+| tess-ui (settable today) | `tess-ui:src/tess_ui/spec/build.py` (`_scroll_props`) | thumb colour only: `scrollbar_fill` is set from role `outline` (the spec role is `on_surface_variant`); `scroll_snap` and `snap_align` are settable. Every other row of Properties a project can set has no hook in tess-ui: thickness is not passed although tre accepts `scrollbar_width`; fails AC-SCB-22 to 29 except the colour part of AC-SCB-23 and the snap part of AC-SCB-24 |
+| tess-shell (settable today) | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | none: no scrollbar property of any row (fails AC-SCB-22 to 29); `Scroll_Snap` is not built |
+| tre (settable today) | `tre:crates/engine-core/src/node.rs`, `tre:crates/engine-render/src/lib.rs`, `tre:docs/reference/paint.md` | settable: thumb thickness (`scrollbar_width`), thumb colour and its alpha (`scrollbar_fill`), `scroll_snap`, `snap_align`. Hardcoded: shape and radius (2 px), minimum length (32), hit slop (6 px), margin (2), wheel step (20 px), key line (40), snap settle and duration (120 and 200 ms). Absent: hover and drag colour, track, opacity states, page step, smooth scroll, fade, hover delay, gutter, corner, side and RTL, show policy, arrows, lane click, per-element override of the new keys. Every hardcoded or absent row is a new tre property in [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] (wheel in [[UXREQ-002 Virtual list keys and scroll to index]]). Fails AC-SCB-22 to 30 except the settable rows |
 
 Evidence: F6 in [[Owner Feedback 2026-11-20]]; the engine thumb of 4 px is the likely cause of the thin bar the owner saw.
 

@@ -45,6 +45,7 @@ Each principle is a rule with a test; the tests live in the notes named.
 5. Density by choice. Three levels, `default`, `compact`, `dense`, chosen per project or per container; sizes come from the level, not from literals per widget. Test: token test and geometry check ([[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]]).
 6. Every control has a name. Each interactive node has a role and an accessible name, and an icon-only control also has a tooltip. Test: AT tree assertion ([[Accessibility Rules]]).
 7. Rules are testable. A rule states a number, a key sequence or a measurable relation; a sentence that no test, measurement or review can pass or fail is not a rule and does not enter the spec ([[Test Method]]).
+8. The engine never blocks the design. A value the specification needs is always reachable from the project layer (tess-ui, tess-shell) through a property, a token or a declarative hook, with no per-frame Python. Where tre hardcodes it, that is an engine request (a note in `80 Requests`), never an exception to the specification ([[ADR-0020 The engine never blocks the design]]). Test: AC-PRI-4.
 
 Derived rules used across chapters:
 
@@ -93,6 +94,7 @@ The structure of the vault, the order of the chapters and the slice order are fi
 - [ ] AC-PRI-1: Review. Each component note in `30 Component Specifications` contains the sections of `_templates/Component.md`, a numbered acceptance-criteria list in which every item names a check method from [[Test Method]], a Status in code table, and a Deviations table. Pass: a script that reads the headings finds all sections in every note.
 - [ ] AC-PRI-2: Token test. No component stylesheet in a conformant project contains a literal colour, size or duration that [[Colour Roles]], [[Spacing and Density]] or [[Motion]] defines. Pass: a scan of the stylesheets finds zero literals outside the token files.
 - [ ] AC-PRI-3: Review. Every rule in a chapter has an acceptance criterion or a reference to one; a chapter paragraph with MUST and no criterion is a defect. Pass: reviewer list empty.
+- [ ] AC-PRI-4 (review): every finding in an adoption note that needs engine work is recorded as a request to tre (a UXREQ note), none is recorded as a specification exception. Pass: a search of `70 Adoption` for exception wording tied to the engine finds zero rows, and every row that cites tre as the cause cites a UXREQ id.
 
 ## Sources
 

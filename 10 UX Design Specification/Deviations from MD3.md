@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 521 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 520 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
 
 ## [[03 Typography and Text Rules]]
 
@@ -292,7 +292,6 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Thickness 48, 40, 36 dp (MD3 Navigation bar 80 dp) | desktop density, one-line modules | [[ADR-0002 Desktop density levels and target sizes]] |
 | Text is not rotated on a vertical Bar | readability; rotation is opt-in and not built | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Keyboard default is none; access by Shortcut Mode | a layer surface that grabs the keyboard unasked steals it from windows | none (shell design of 2026-10-27) |
-| Open conflict, not a deviation yet: auto-hidden Bar with no key that reveals it (owner decision 2026-10-27) against AR-9 (every hidden element keyboard reachable) | `open, owner decides`, OQ-25; recommendation: Shortcut Mode reveals the Bar | none (owner decision pending, see [[Auto Hide]]) |
 
 ## [[Battery Module]]
 
