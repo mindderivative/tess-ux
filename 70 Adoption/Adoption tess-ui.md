@@ -52,8 +52,8 @@ No keyboard trap was found in the code read: the modal layers keep Tab inside by
 |---|---|
 | P0 | 8 |
 | P1 | 39 |
-| P2 | 22 |
-| Total | 69 |
+| P2 | 23 |
+| Total | 70 |
 
 ## Worklist
 
@@ -179,6 +179,7 @@ No app or example in `tess-ui:apps` and `tess-ui:examples` uses these components
 | TUI-093 | P2 | Node graph: no Escape, no keyboard zoom or pan, edges not exposed | AC-NGR-5, AC-NGR-6, AC-NGR-7, AC-NGR-8 | `tess-ui:src/tess_ui/widgets/media.py` (`node_graph`) | Add the key set | [[Node Graph]] |
 | TUI-094 | P2 | Link, token button, list editor, date and time pickers, colour picker, icon picker: density and overflow fail by one rule each | AC-LNK-7, AC-TKB-1, AC-LED-1, AC-DTP-1, AC-TMP-1, AC-CLP-8, AC-ICP-1 | `tess-ui:src/tess_ui/views/*_Stylesheet.tdl` | Resolve with TUI-004 | [[Link]] |
 | TUI-095 | P2 | Absent as blocks: Circle, Ring Block, Grid, Spacer, Terminal, Banner, Choice Picker | AC-BLK-CIR-1, AC-BLK-RNG-1, AC-BLK-GRD-1 | `tess-ui:src/tess_ui/views/` (none) | Decide per block whether tess-ui ships it ([[Open Questions]]) | [[Grid]] |
+| TUI-096 | P2 | Text Field label placement ([[ADR-0023 Text Field label placement by density]]): the `TextField` view floats the label at every density; compact and dense need the external label above the container (4 and 2 dp gap) and a 40, 32, 28 dp container that excludes it; the floating variant is 56 dp at default only [unverified in code: read from the component docs] | AC-TXF-3, AC-TXF-17, AC-TXF-18, AC-TXF-19 | `tess-ui:src/tess_ui/views/TextField_View.tdl`, `TextField_Stylesheet.tdl` | Add an external label variant and make the container height follow the density level; keep the accessible name on the `Label` property | [[Text Field]] |
 
 ## Engine hooks needed
 

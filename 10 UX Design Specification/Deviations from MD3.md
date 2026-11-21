@@ -991,7 +991,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Container height 40, 32, 28 dp instead of 56 dp (MD3 height from Material Web `textfield/demo` min-height 56 px and the label plus padding stack #needs-verification) | desktop density, config panels hold many fields | [[ADR-0002 Desktop density levels and target sizes]] |
 | Body text `body_medium` at compact and dense | 20 dp line box fits 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
-| Label may be external (above the field) | forms with aligned label column ([[Form Row]]) | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Label may be external (above the field), and is the only placement at compact and dense | a floating label does not fit a 32 or 28 dp container; forms with aligned label column ([[Form Row]]) | [[ADR-0023 Text Field label placement by density]] |
 | Keyboard focus indicator is the 2 dp indicator or outline, no extra ring | MD3 text fields draw no separate ring | [[ADR-0009 State layer percentages]] |
 | Escape clears only in search fields | keyboard-first rule | [[ADR-0010 Document structure of the specifications]] (convention only) |
 
