@@ -16,6 +16,7 @@ Request notes `UXREQ-###` for things a project lacks, routed through the Orchest
 
 ## Notes
 
-No notes yet.
+- [[UXREQ-001 Two-axis scroll view with the specified scrollbar]]: tre, approved
+- [[UXREQ-002 Virtual list keys and scroll to index]]: tre, approved
 
 Back to [[Index]].
