@@ -62,6 +62,25 @@ No tokens of its own; the row is transparent and the items carry the tokens ([[T
 | Item maximum width | 180 | 180 | 180 | `max_width` |
 | Icon size | see [[Task Item]] |  |  | `icon_size` param, code 18 |
 
+## Dimensions and defaults
+
+The row is transparent and owns only the gap between items; every size of an item is in [[Task Item]]. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note (item height), [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Tasks/Tasks_Module.tdl` (no padding set) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| root | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| root | gap | `space.2` | 4 | 4 | 4 | Sizing table of this note (gap between items), design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| root | border width | - | 0 | 0 | 0 | [[Task Item]], this note Tokens section: no tokens of its own, the row is transparent | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| root | border color | - | N/A: the row draws no border; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| root | corner radius | - | N/A: the row draws no surface; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]], [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| root | font | - | N/A: the row draws no text; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| root | icon size | - | N/A: the row holds no icon; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| item | height | `density.control_height` | 40 | 32 | 28 | [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+
 ## Layout and overflow
 
 A horizontal row, no wrapping. When the windows do not fit the Bar slot the items shrink to their minimum (icon only) and then the row overflows; spec: the Tasks row clips at the slot edge and the active item is kept in view; no scrollbar (the Bar has no scroll). Vertical centring of the row. Code: the row is not clipped or scrolled (candidate request).
@@ -120,7 +139,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Tasks/Tasks_Module.tdl`, `Tasks_Module.py` | partly meets: hides without KWin or windows, keyed diff, wheel cycling, optional polite announcement (meets AC-MOD-TSK-1, -2, -3, -4, -8); row overflow rule absent (fails AC-MOD-TSK-9); items fail the size and tooltip criteria of [[Task Item]] |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Tasks/Tasks_Module.tdl`, `Tasks_Module.py` | partly meets: hides without KWin or windows, keyed diff, wheel cycling, optional polite announcement (meets AC-MOD-TSK-1, -2, -3, -4, -8); row overflow rule absent (fails AC-MOD-TSK-9); items fail the size and tooltip criteria of [[Task Item]]. Dimensions: the row height is the item height, 24 (spec 40/32/28, fails AC-MOD-TSK-7); gap 4 and padding 0 meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Tasks Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

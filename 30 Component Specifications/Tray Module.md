@@ -59,6 +59,27 @@ No tokens of its own; the items carry them ([[Tray Item]]). Gap between items `s
 | Gap between items | 4 | 4 | 4 | param `spacing` (code default 6) |
 | Icon | 24 | 20 | 20 | param `icon_size` (code default 18) |
 
+## Dimensions and defaults
+
+The row is transparent and owns only the gap between items; every other size of an item is in [[Tray Item]]. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | `density.icon_button_container` | 40 | 32 | 28 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl` (no padding set) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| root | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| root | gap | `space.2` | 4 | 4 | 4 | Sizing table of this note (param `spacing`), design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| root | border width | - | 0 | 0 | 0 | [[Tray Item]], this note Tokens section: no tokens of its own | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| root | border color | - | N/A: the row draws no border; the items do | N/A: as in Default | N/A: as in Default | [[Tray Item]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| root | corner radius | - | N/A: the row draws no surface; the items do | N/A: as in Default | N/A: as in Default | [[Tray Item]], [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| root | font | - | N/A: the row draws no text; the items show icons only | N/A: as in Default | N/A: as in Default | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| root | icon size | - | N/A: the row holds no icon; the items do | N/A: as in Default | N/A: as in Default | [[Tray Item]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| item | height | `density.icon_button_container` | 40 | 32 | 28 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| item | min width | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | Sizing table of this note (param `icon_size`), [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+
 ## Layout and overflow
 
 A horizontal row, no wrapping. When the items do not fit the Bar slot the row clips at the slot edge; spec: overflow items move into a Tray overflow popup (not in v1; candidate request). The menu popup is at most 60 percent of the output height and scrolls ([[Scrollbar and Scroll Container]]). Vertical centring.
@@ -112,7 +133,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl`, `Tray_Module.py`, `tess-shell:src/tess_shell/services/tray.py`, `tess-shell:src/tess_shell/schema/default_popups.py` | partly meets: group name, hidden without watcher or items, passive rule, the three menu popups at max 60 percent (meets AC-MOD-TRY-1, -2, -3, -8 by reading); no key path to the menu (fails AC-MOD-TRY-4); sizes literal 18 and 6 (fails AC-MOD-TRY-7); no overflow rule |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl`, `Tray_Module.py`, `tess-shell:src/tess_shell/services/tray.py`, `tess-shell:src/tess_shell/schema/default_popups.py` | partly meets: group name, hidden without watcher or items, passive rule, the three menu popups at max 60 percent (meets AC-MOD-TRY-1, -2, -3, -8 by reading); no key path to the menu (fails AC-MOD-TRY-4); sizes literal 18 and 6 (fails AC-MOD-TRY-7); no overflow rule. Dimensions: icon 18 (spec 24/20/20), gap 6 (spec 4), item hit area 24 (18 icon plus 3 padding each side; spec 40/32/28); padding 0 and no border or elevation meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Tray Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

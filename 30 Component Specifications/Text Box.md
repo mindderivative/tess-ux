@@ -61,6 +61,23 @@ Colour `on_surface`; type `body_medium` (shell body 14/20); optional `on_surface
 | Minimum width | 120 | 120 | 120 | [[Text]]: a wrapping block is at least 120 dp wide |
 | Maximum measure | 840 | 840 | 840 | [[Text]] |
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| text | height | `body_medium` | N/A: grows with the text, 20 per line (`Max_Lines` limits it) | N/A: same as the default column | N/A: as in Default | [[Text Box]] (Sizing, Layout) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| text | min width | - | 120 | 120 | 120 | [[Text Box]] (Sizing), [[Text]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| text | min height | - | 20 | 20 | 20 | [[Text Box]] (Sizing: line height 20 for one line) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| text | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; no container, so no padding; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| text | margin | - | N/A: the parent column sets the outer space | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| text | gap | - | N/A: lines are spaced by the 20 dp line height, no extra gap | N/A: same as the default column | N/A: as in Default | [[Text Box]] (Sizing), [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| text | border width | - | 0 | 0 | 0 | [[Text Box]] (Tokens used: no container) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| text | border color | - | N/A: the Text Box draws no border | N/A: same as the default column | N/A: as in Default | [[Text Box]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| text | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; no container | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; code shell `body` 14/400/20 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| text | icon size | - | N/A: the Text Box draws text only | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| text | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Text Box]] (no container) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 Wraps by word at the width; the caller gives a `Width` or places it in a column that sets one. Height grows with the text unless `Max_Lines` limits it. `Max_Lines` cuts with an ellipsis on the last line. Vertical alignment: top of the text box. A very long text belongs in a scroll container ([[10 Layout Overflow and Scrolling]]); the Text Box does not scroll itself.
@@ -113,6 +130,7 @@ Text and selection roles follow the theme mode ([[Theme Following the System]]).
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/TextBox/TextBox_Module.tdl`, `TextBox_Module.py` | partly meets: word wrap, `Max_Lines`, `Selectable`, name = text, disabled look (meets AC-MOD-TBX-1, -2, -3, -4 by reading); sideways scroll of `Wrap: NONE` waits for the ScrollBox; no minimum width |
+| tess-shell | `tess-shell:src/tess_shell/shipped/TextBox/TextBox_Module.tdl` (dimensions) | differs: no minimum width (spec 120); letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (TextBox) | exists |
 | tess-ui | none | not applicable: tess-ui uses [[Text]] |
 | tre | `text` node | not applicable |

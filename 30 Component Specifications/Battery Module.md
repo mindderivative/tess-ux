@@ -65,6 +65,25 @@ Roles: `on_surface` (normal), `warning` and `error` (the shell's extended roles,
 | Gap glyph to percentage | 4 | 4 | 4 | `space.2` |
 | Hover box minimum height | 24 | 24 | 24 | `target.min` |
 
+## Dimensions and defaults
+
+The module has no action, so the sizes are fixed at every density; type and status icons do not scale with density. The hover box is the root: it holds the shown level box and is at least 24 dp high so the pointer finds it. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root (hover box) | height | `target.min` | 24 | 24 | 24 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root (hover box) | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| root (hover box) | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl` (no padding), the Bar sets the gap between modules | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| root (hover box) | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| root (hover box) | gap | `space.2` | 4 | 4 | 4 | Sizing table of this note (glyph to percentage), design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| root (hover box) | border width | - | 0 | 0 | 0 | [[Bar]], the module draws no border | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| root (hover box) | border color | - | N/A: the module draws no border | N/A: as in Default | N/A: as in Default | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| root (hover box) | corner radius | - | N/A: the module draws no surface | N/A: as in Default | N/A: as in Default | [[Shape]], this note Tokens section: no shape | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| root (hover box) | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section: no elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| glyph | icon size | - | 16 | 16 | 16 | [[Iconography]] (inline status icon), `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl` `Glyph` | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| alert glyph (with dot) | icon size | - | 24 by 16 | 24 by 16 | 24 by 16 | Sizing table of this note, `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl` `Glyph_Low` | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| percentage | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], `tess-shell:src/tess_shell/shipped/Battery/Battery_Style.tdl` `battery_text` (14, 500) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 One line. Vertical centring of the glyph and the text in the row ([[10 Layout Overflow and Scrolling]]). The Root keeps its size from the shown level box so the hover area does not depend on the glyph. No truncation: the text is at most 4 characters (`100 %`). The three level boxes exist from the start and only `Visible` changes (a created box with a coloured icon was left undrawn on KWin, M5b).
@@ -126,7 +145,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl`, `Battery_Style.tdl`, `Battery_Module.py` | partly meets: hides without UPower (meets AC-MOD-BAT-2), colour plus shape (meets AC-MOD-BAT-6), one polite announcement at critical (meets AC-MOD-BAT-8), name and description set; root role is `GROUP` and carries the tooltip (fails AC-MOD-BAT-1 and AC-MOD-BAT-5); tooltip card literal (fails AC-MOD-BAT-9); alert glyph width is 24 literal |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl`, `Battery_Style.tdl`, `Battery_Module.py` | partly meets: hides without UPower (meets AC-MOD-BAT-2), colour plus shape (meets AC-MOD-BAT-6), one polite announcement at critical (meets AC-MOD-BAT-8), name and description set; root role is `GROUP` and carries the tooltip (fails AC-MOD-BAT-1 and AC-MOD-BAT-5); tooltip card literal (fails AC-MOD-BAT-9); alert glyph width is 24 literal. Dimensions: hover box height is the content height (20, the percentage line box), spec 24 minimum (fails AC-MOD-BAT-10); glyph 16, alert glyph 24 by 16, gap 4 and font 14/500 meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Battery Module.md` | exists, status draft |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

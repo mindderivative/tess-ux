@@ -44,7 +44,7 @@ Applies one binary setting at once, for example the config app's options.
 | Off | Track fill `surface_raised` with a 2 dp `outline` border; thumb `on_surface_muted` at the track start | [[Switch]] |
 | On | Track fill and border `primary`; thumb `on_primary` slid to the end | [[Switch]] |
 | Hover | Code: root opacity 0.85. Spec: state layer 8 percent | [[State Layers]] |
-| Focus (keyboard) | Focus ring 3 dp, 2 dp offset; not built | [[Focus Ring]] |
+| Focus (keyboard) | Focus ring 3 dp, 2 dp offset; the shell draws a generic ring (2 px, `color.primary`) that the Toggle gets; width and offset differ from the spec | [[Focus Ring]] |
 | Pressed | Code: root opacity 0.7. Spec: state layer 10 percent and the larger thumb | [[Switch]] |
 | Disabled | Opacity 0.5; no focus, no key, no pointer ([[State Layers#Disabled scheme|Disabled State]]) | [[State Layers#Disabled scheme|Disabled State]] |
 
@@ -59,6 +59,30 @@ As [[Switch]]: track `primary` on, `surface_variant` off with `outline` border; 
 | Track | 52 by 32 | 52 by 32 | 46 by 28 | [[Switch]]; code: 40 by 22 at all densities |
 | Handle off, on, pressed | 16, 24, 28 | 16, 24, 28 | 14, 21, 24 | [[Switch]]; code: 16 fixed |
 | Hit area | at least 40 by 32 and 24 by 24 floor |  |  | code 40 by 22: 22 is below the 24 dp floor |
+
+## Dimensions and defaults
+
+Values follow [[Switch]] (MD3 track 52 by 32 scaled by density).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[Switch]]; code 22 | tess-ui: yes (switch height=); tess-shell: yes (Height); tre: n/a: element absent in tre |
+| track | height | - | 32 | 32 | 28 | [[Switch]] sizing rule; code 22 | tess-ui: no hook; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| track | min width | - | 52 | 52 | 46 | [[Switch]], MD3 switch https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss; code 40 | tess-ui: no hook; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
+| root | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: no hook; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
+| thumb (off) | height | - | 16 | 16 | 14 | [[Switch]]; code 16 | tess-ui: no hook; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| thumb (on) | height | - | 24 | 24 | 21 | [[Switch]]; code 16 | tess-ui: no hook; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| thumb (pressed) | height | - | 28 | 28 | 24 | [[Switch]]; code 16 | tess-ui: no hook; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; the track fills the root | tess-ui: n/a: the track is centred in the target, no padding; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| thumb | margin | - | N/A: the thumb is inset by half the track-handle difference (8 off, 4 on at default), placed by track state | N/A: same as the default column | N/A: as in Default | [[Switch]]; code `Margin [3, 3, 0, 0]` off, `[21, 3, 0, 0]` on | tess-ui: no hook; tess-shell: yes (Margin); tre: n/a: element absent in tre |
+| root | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Switch]] (label gap to track); the label is a separate control, [[Form Row]] | tess-ui: n/a: the switch has no label; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
+| track | border width | - | 2 | 2 | 2 | MD3 switch https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss; code 2 | tess-ui: no hook; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
+| track (off) | border color | `outline` | `outline` | `outline` | `outline` | [[Switch]], [[Colour Roles]]; code `outline` | tess-ui: no hook; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| track (on) | border color | `primary` | `primary` | `primary` | `primary` | [[Switch]], [[Colour Roles]]; code `primary` | tess-ui: yes (color=); tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
+| track | corner radius | `shape.full` | 16 | 16 | 14 | [[Shape]]; half the track height | tess-ui: no hook; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
+| root | font | - | N/A: the Toggle draws no text; the label is a separate control | N/A: same as the default column | N/A: as in Default | [[Typography]] | tess-ui: n/a: the switch draws no text; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| thumb | icon size | - | N/A: the Toggle draws no handle icon; the thumb position and size show the state | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: no hook; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| track | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], MD3 switch https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss | tess-ui: n/a: the switch has no elevation; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 
 ## Layout and overflow
 
@@ -114,8 +138,9 @@ Track and thumb roles follow the scheme ([[Theme Following the System]]); `Defau
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl` | partly meets: role, `checked`, Space, disabled, thumb moves (meets AC-MOD-TGL-1, -2, -3, -5 by reading); 40 by 22 track and 16 handle at all densities (fails AC-MOD-TGL-4); hover and pressed are opacity, not state layers; no focus ring |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl` (dimensions) | differs: root and track 40 by 22 (spec 52 by 32, 52 by 32, 46 by 28), thumb 16 fixed (spec 16, 24, 28 / 14, 21, 24); fails AC-MOD-TGL-4 |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Toggle) | exists |
-| tess-ui | `tess-ui:src/tess_ui/controls.py`, `src/tess_ui/widgets/selection.py` | see [[Switch]] |
+| tess-ui | `tess-ui:src/tess_ui/controls.py`, `src/tess_ui/widgets/selection.py` | see [[Switch]]; the track, handle and border sizes are class constants of `controls.Switch` with no hook |
 | tre | none | not applicable |
 
 ## Deviations from Material Design 3

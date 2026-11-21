@@ -67,6 +67,31 @@ Roles: `on_surface`, `primary`, `warning`, `surface_raised`; shape: corner 6 (co
 | Gap icon to title | 8 | 8 | 4 | `density.icon_label_gap`; code: 6 |
 | Width with title | 180 maximum | 180 | 180 | `max_width` param |
 
+## Dimensions and defaults
+
+Heights, horizontal padding, gap and icon sizes follow the Sizing table above. Vertical padding is `(height - content height) / 2`: the title line box is 20 dp, the icon-only icon is 24, 20 and 20 dp, so the content is centred by construction and an icon-only item is square at the density height. The corner radius of 4 dp is the Tesserae choice between the 4 dp and 8 dp that the Tokens section left open (it matches the list row, [[List Item]]) #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container (with title) | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container (icon only) | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note (square at the density height), [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container (with title) | padding | `density.row_padding_x` | 10 12 10 12 | 6 8 6 8 | 4 4 4 4 | Sizing table of this note (horizontal), vertical = (height - 20) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container (icon only) | padding | `space.3`, `space.2` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | vertical and horizontal = (height - icon) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the Tasks row gap spaces the items | N/A: as in Default | N/A: as in Default | [[Tasks Module]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | `density.icon_label_gap` | 8 | 8 | 4 | Sizing table of this note (icon to title), [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| container (rest) | border width | - | 0 | 0 | 0 | [[Button]], this note States table: only the active item has a border | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container (active) | border width | - | 2 | 2 | 2 | this note States table, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` `.task_item:selected` | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container (active) | border color | `primary` | `primary` | `primary` | `primary` | this note States table (border plus fill, not colour alone), [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], design choice, proposed ADR: Task Item corner radius | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| title | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], this note Tokens section | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| icon (with title) | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a label), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| icon (icon only) | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]] (icon button icon), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| attention mark | height | - | 6 | 6 | 6 | this note Anatomy (6 by 6 dp dot), `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Module.tdl` `Attention` | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| attention mark | corner radius | `shape.full` | 3 | 3 | 3 | [[Shape]] (half the 6 dp dot) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+
 ## Layout and overflow
 
 One line. The title is a Marquee: it scrolls when wider than its box and, with reduced motion or when disabled, ends in an ellipsis ([[Marquee Text]]). Vertical centring of icon and title. Icon-only items are square at the density height.
@@ -121,7 +146,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Module.tdl`, `Task_Item_Style.tdl` | partly meets: role, name with state words, active border plus fill, attention dot (meets AC-MOD-TIT-1, -2, -7 partly); no tooltip on the item and a Marquee tooltip inside (fails AC-MOD-TIT-4, -5); minimised is opacity 0.5 only, the disabled look (fails AC-MOD-TIT-7); sizes are 24 high, padding 6, gap 6 literals (fails AC-MOD-TIT-6); Delete key absent (fails AC-MOD-TIT-3) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Module.tdl`, `Task_Item_Style.tdl` | partly meets: role, name with state words, active border plus fill, attention dot (meets AC-MOD-TIT-1, -2, -7 partly); no tooltip on the item and a Marquee tooltip inside (fails AC-MOD-TIT-4, -5); minimised is opacity 0.5 only, the disabled look (fails AC-MOD-TIT-7); sizes are 24 high, padding 6, gap 6 literals (fails AC-MOD-TIT-6); Delete key absent (fails AC-MOD-TIT-3). Dimensions: height 24 (spec 40/32/28), padding 3 vertical and 6 horizontal (spec 10 12 / 6 8 / 4 4), gap 6 (spec 8/8/4), corner 6 (spec 4), icon 18 at all (spec with title 18/18/16, icon only 24/20/20), title sets no weight so Body 14/400 (spec `label_large` 500); border 2 `primary` when active, attention dot 6 with radius 3 meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Tasks Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

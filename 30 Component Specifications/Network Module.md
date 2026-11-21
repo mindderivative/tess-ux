@@ -64,6 +64,25 @@ Roles: `on_surface`, `warning`, `on_surface_muted`; `label_large` for the name. 
 | Hover box minimum height | 24 | 24 | 24 | `target.min` |
 | Name text maximum width | 160 | 160 | 160 | ellipsis beyond; a Tesserae choice, not in code (code does not truncate) #needs-verification |
 
+## Dimensions and defaults
+
+The module has no action, so the sizes are fixed at every density; status icons and type do not scale with density. The hover box is the root: it holds the shown level box and is at least 24 dp high. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root (hover box) | height | `target.min` | 24 | 24 | 24 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root (hover box) | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| root (hover box) | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Network/Network_Module.tdl` (no padding set) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| root (hover box) | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| root (hover box) | gap | `space.2` | 4 | 4 | 4 | Sizing table of this note (glyphs to text), design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| root (hover box) | border width | - | 0 | 0 | 0 | [[Bar]], the module draws no border | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| root (hover box) | border color | - | N/A: the module draws no border | N/A: as in Default | N/A: as in Default | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| root (hover box) | corner radius | - | N/A: the module draws no surface | N/A: as in Default | N/A: as in Default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| root (hover box) | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| glyph | icon size | - | 16 | 16 | 16 | [[Iconography]] (inline status icon), `tess-shell:src/tess_shell/shipped/Network/Network_Module.tdl` `Glyph` | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| VPN glyph | icon size | - | 16 | 16 | 16 | [[Iconography]] (inline status icon), `tess-shell:src/tess_shell/shipped/Network/Network_Module.tdl` `Vpn` | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| name | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], `tess-shell:src/tess_shell/shipped/Network/Network_Style.tdl` `network_text` (14, 500) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 One line. Vertical centring in the Bar row. The Root keeps its size from the shown level box. The connection name uses `Overflow: ELLIPSIS` at 160 dp and the tooltip carries the full name ([[10 Layout Overflow and Scrolling]]); today the name is not truncated.
@@ -122,7 +141,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Network/Network_Module.tdl`, `Network_Style.tdl`, `Network_Module.py` | partly meets: hides without NetworkManager, three boxes with `Visible`, state glyphs, polite announcement (meets AC-MOD-NET-2, -5, -7); root role `GROUP` with tooltip (fails AC-MOD-NET-1, -4); tooltip literal (fails AC-MOD-NET-8); name is not truncated (the ellipsis rule is not built) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Network/Network_Module.tdl`, `Network_Style.tdl`, `Network_Module.py` | partly meets: hides without NetworkManager, three boxes with `Visible`, state glyphs, polite announcement (meets AC-MOD-NET-2, -5, -7); root role `GROUP` with tooltip (fails AC-MOD-NET-1, -4); tooltip literal (fails AC-MOD-NET-8); name is not truncated (the ellipsis rule is not built). Dimensions: hover box height is the content height (20, the name line box when shown; 16 for an icon-only module), spec 24 minimum (fails AC-MOD-NET-9); glyph 16, gap 4, font 14/500 and padding 0 meet the table; name width is unbounded (spec 160) |
 | shell-vault | `shell-vault:40 Specifications/Modules/Network Module.md` | exists, status accepted |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

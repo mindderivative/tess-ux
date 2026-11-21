@@ -59,6 +59,36 @@ All parts use [[Menu]] and [[Menu Item]] tokens: container `surface_container` (
 | Row horizontal padding | 12 | 8 | 4 | [[Menu]] |
 | Popup width | 112 minimum, 280 maximum | same | same | [[Menu]] #needs-verification |
 
+## Dimensions and defaults
+
+Every row of this table is the [[Menu]] and [[Menu Item]] value at the density level; the Audio Outputs popup adds no dimension of its own. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| popup | height | - | N/A: the height is the sum of the rows, at most 60 percent of the output | N/A: as in Default | N/A: as in Default | [[Menu]], [[Popup]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| popup | min width | - | 112 | 112 | 112 | [[Menu]] (Material Web `menu.scss`), #needs-verification, design choice, proposed ADR: menu width bounds | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| popup | padding | `space.3`, `space.2` | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | [[Menu]] (container vertical padding), design choice, proposed ADR: menu container padding | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| popup | margin | `space.2` | 4 0 0 0 | 4 0 0 0 | 4 0 0 0 | the 4 dp gap to the Audio module (`Attach: BOTTOM`, `Gap: 4`), [[Popup]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| popup | gap | `space.0` | 0 | 0 | 0 | [[Menu]], rows touch | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| popup | border width | - | 0 | 0 | 0 | [Material Web menu tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-menu.scss), the menu has no outline | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| popup | border color | - | N/A: the menu container has no border | N/A: as in Default | N/A: as in Default | [[Menu]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| popup | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [Material Web menu tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-menu.scss) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| popup | font | - | N/A: the popup draws no text; the rows do | N/A: as in Default | N/A: as in Default | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| popup | icon size | - | N/A: the popup holds no icon; the rows do | N/A: as in Default | N/A: as in Default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| popup | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] (menu is level 2) | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| row | height | `density.menu_item_height` | 40 | 32 | 28 | [[Spacing and Density]], [[Menu Item]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| row | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]], vertical centring by the row height | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| row | margin | - | N/A: the popup lays rows edge to edge | N/A: as in Default | N/A: as in Default | [[Menu]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (icon to name) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| row | border width | - | 0 | 0 | 0 | [[Menu Item]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| row | border color | - | N/A: the row has no border; the focus ring is a separate part | N/A: as in Default | N/A: as in Default | [[Focus Ring]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| row | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Menu Item]], `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` `MenuItem` | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| row | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], [[Menu Item]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| row | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Menu Item]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| row | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], the popup carries the level | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| current marker | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], the bullet sits in the end text slot | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 Rows are single line. A long device name ends with an ellipsis and the row keeps its height; the full name is in the accessible name. A list taller than 60 percent of the output height scrolls ([[Scrollbar and Scroll Container]]). Vertical centring in the row.
@@ -110,7 +140,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Audio_Outputs/Audio_Outputs_Module.tdl`, `Audio_Outputs_Module.py` | partly meets: menu roles and the current marker with the word `, current` (meets AC-MOD-AOU-1, -5); rows use [[Menu Item]] literals (28 high, 16 dp icon: fails AC-MOD-AOU-6 at default and compact); the empty case is not handled (AC-MOD-AOU-4 absent) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Audio_Outputs/Audio_Outputs_Module.tdl`, `Audio_Outputs_Module.py`, `tess-shell:src/tess_shell/schema/default_popups.py` | partly meets: menu roles and the current marker with the word `, current` (meets AC-MOD-AOU-1, -5); rows use [[Menu Item]] literals (28 high, 16 dp icon: fails AC-MOD-AOU-6 at default and compact); the empty case is not handled (AC-MOD-AOU-4 absent). Dimensions: row 28 (spec 40/32/28), icon 16 (spec 24/20/20), row padding 10 (spec 12/8/4), popup corner 8 (spec 4), popup elevation 0 with a `surface_raised` fill (spec level 2), minimum width 160 (spec 112); gap 8 and popup gap 4 meet the table at default and compact |
 | shell-vault | `shell-vault:40 Specifications/Modules/Audio Module.md` | exists |
 | tess-ui | none | not applicable |
 | tre | none | not applicable |

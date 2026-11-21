@@ -55,6 +55,25 @@ Container, label, placeholder, caret and selection tokens: see [[Text Field]]. T
 | Default width | 320 | 320 | 320 | param `Width` |
 | Minimum width | 48 | 48 | 48 | [[Text Field]] minimum so the field never collapses |
 
+## Dimensions and defaults
+
+The container is the outlined variant of [[Text Field]] #needs-verification-as-design-choice. Heights are for `Lines` 4.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | 112 | 92 | 88 | [[Text Editor]] (Sizing: lines x 24 + 16, lines x 20 + 12, lines x 20 + 8, for `Lines` 4) | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | - | 48 | 48 | 48 | [[Text Editor]] (Sizing), [[Text Field]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Text Field]] (horizontal 12, 8, 8; vertical 8, 6, 4), [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the parent form row sets the outer space | N/A: same as the default column | N/A: as in Default | [[Form Row]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | - | N/A: one text area; the placeholder overlays it | N/A: same as the default column | N/A: as in Default | [[Text Editor]] (Anatomy) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| container | border width | - | 1 | 1 | 1 | [[Text Field]] outlined variant (outline 1 dp, 2 dp when focused) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | `outline` | `outline` | `outline` | `outline` | [[Text Field]] (focus `primary`, error `error`), [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Text Field]] outlined variant; design choice, proposed ADR: text editor uses the outlined variant | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| text | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], [[Text Field]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| container | icon size | - | N/A: the editor has no icon | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; a field is flat | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 Wraps by word at the width (`Wrap: WORD`) or scrolls sideways (`NONE`); scrolls vertically when the text is taller than `Lines`; the caret stays in view. A scrollbar follows [[ADR-0003 Scrollbar rule]] ([[Scrollbar and Scroll Container]]). Vertical alignment: first line at the top padding.
@@ -111,6 +130,7 @@ Colours follow the scheme through [[Text Field]] tokens ([[Theme Following the S
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/shipped/TextEditor/TextEditor_Module.tdl`, `TextEditor_Module.py` | partly meets: role, name from `Label` or `Placeholder`, `Read_Only`, `Max_Length`, `Wrap`, `Lines`, events (meets AC-MOD-TED-1, -2, -3, -6, -7 by reading); Tab inserts a tab and cannot leave the field (fails AC-MOD-TED-4); no density, `Lines` height from the engine (AC-MOD-TED-5 unverified) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/TextEditor/TextEditor_Module.tdl` (dimensions) | not verified: the module sets only `Lines` and `Width`; padding, border, radius and font come from the engine `text_input` defaults, not read #needs-verification; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (TextEditor) | exists |
 | tess-ui | `tess-ui:src/tess_ui/views/TextField_View.tdl` | see [[Text Field]] (multi-line variant) |
 | tre | `text_input` with `multiline` | partly meets: Tab inserts a tab unless `tab_navigates` is set (available since tre 0.6.8) |

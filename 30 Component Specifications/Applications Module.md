@@ -68,6 +68,48 @@ Roles: `on_surface` (name), `on_surface_muted` (comment, message); type `body_me
 | Content width | 456 | 456 | 456 | fixed by the Panel; code: literal 456 |
 | Panel padding | 12 | 8 | 4 | [[Panel and Surface]]; code: 12 |
 
+## Dimensions and defaults
+
+Values follow the Sizing table above and [[Text Field]], [[List]] and [[List Item]]; the row vertical padding is `(row height - line boxes) / 2` (one line 20 dp; two lines 20 + 16 dp), so the content is centred by construction. Rows marked design choice carry #needs-verification-as-design-choice. Shape names are MD3 names: `shape.extra_small` is 4 dp, which the shell stylesheet calls `$shape.small`.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| root | height | - | N/A: the height is the sum of the field, list and message line | N/A: as in Default | N/A: as in Default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root | padding | `space.4`, `space.3`, `space.2` | 12 12 12 12 | 8 8 8 8 | 4 4 4 4 | [[Panel and Surface]], design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| root | margin | - | N/A: the Panel sets the outer space | N/A: as in Default | N/A: as in Default | [[Panel and Surface]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| root | gap | `space.3` | 8 | 8 | 8 | design choice, proposed ADR: launcher vertical gap; `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` `Spacing: 8` | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| root | border width | - | 0 | 0 | 0 | [[Panel and Surface]], the Panel draws the surface | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| root | border color | - | N/A: the root draws no border | N/A: as in Default | N/A: as in Default | [[Panel and Surface]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| root | corner radius | - | N/A: the Panel draws the surface and its corners | N/A: as in Default | N/A: as in Default | [[Panel and Surface]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| root | font | - | N/A: the root draws no text; the parts below set type | N/A: as in Default | N/A: as in Default | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| root | icon size | - | N/A: the root holds no icon; the rows do | N/A: as in Default | N/A: as in Default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], the Panel owns the elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| query field | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[Text Field]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| query field | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], 24 dp pointer minimum met | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| query field | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Text Field]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| query field | margin | - | N/A: the root gap spaces the field | N/A: as in Default | N/A: as in Default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| query field | border width | - | 1 | 1 | 1 | [[Text Field]] (outlined field, 2 when focused) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| query field | border color | `outline` | `outline` | `outline` | `outline` | [[Text Field]] (`primary` when focused) | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| query field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Text Field]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| query field | font | `body_large`, `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], [[Text Field]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| results list | gap | - | 0 | 0 | 0 | [[List]], rows touch; the selected border and the row height separate them | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| row, one line | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]], [[List Item]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| row, one line | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| row, one line | padding | `density.row_padding_x` | 10 12 10 12 | 6 8 6 8 | 2 4 2 4 | [[Spacing and Density]] (horizontal), vertical = (height - 20) / 2 | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| row, two lines | height | `density.row_height` | 60 | 48 | 40 | [[List Item]] (two-line rule), design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| row, two lines | padding | `density.row_padding_x` | 12 12 12 12 | 6 8 6 8 | 2 4 2 4 | [[Spacing and Density]] (horizontal), vertical = (height - 36) / 2 | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| row | margin | - | N/A: the list places rows edge to edge | N/A: as in Default | N/A: as in Default | [[List]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (icon to text) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| row (rest) | border width | - | 0 | 0 | 0 | [[List Item]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| row (selected) | border width | - | 2 | 2 | 2 | this note States table; `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` `.list_item:selected` | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| row (selected) | border color | `primary` | `primary` | `primary` | `primary` | this note States table (shape plus fill, not colour alone); [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| row | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` `.list_item` | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| row | icon size | - | 24 | 20 | 16 | [[Iconography]] (leading icon in a list row), [[List Item]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| row | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], the module Tokens section: no elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| name | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], this note Tokens section | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| comment | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], this note Tokens section | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| message line | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], `tess-shell:src/tess_shell/shipped/Applications/Applications_Style.tdl` (default text role) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 Name and comment are single lines with an ellipsis (`Overflow: ELLIPSIS`, `Wrap: NONE`); a cut name or comment shows the full text in a tooltip on that text node only when it is cut (a label-level tooltip, allowed by ADR-0004). Vertical centring of icon and text block in the row. At most `max_results` rows: no scrollbar is needed in the default; a larger `max_results` scrolls the list ([[Scrollbar and Scroll Container]]).
@@ -123,7 +165,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl`, `Applications_Style.tdl`, `Applications_Module.py` | partly meets: field, list, keys, messages, selected row with border and fill, announcements (meets AC-MOD-APP-1 by reading, -2, -3, -4, -9); two-line rows are 40 dp, padding 10, widths 456 literal (fails AC-MOD-APP-5, -6); no tooltip for cut text (fails AC-MOD-APP-8); no density setting |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl`, `Applications_Style.tdl`, `Applications_Module.py` | partly meets: field, list, keys, messages, selected row with border and fill, announcements (meets AC-MOD-APP-1 by reading, -2, -3, -4, -9); two-line rows are 40 dp, padding 10, widths 456 literal (fails AC-MOD-APP-5, -6); no tooltip for cut text (fails AC-MOD-APP-8); no density setting. Dimensions: row height 40 (spec 40/32/24 and two-line 60/48/40), row padding x 10 (spec 12/8/4), icon-to-text gap 10 (spec 8/8/4), row padding y 6 (spec 10/6/2 one line), Panel padding 12 at all densities (spec 12/8/4), row icon 24 at all (spec 24/20/16); root gap 8, row radius 4, selected border 2 `primary`, name 14 and comment 12 meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Applications Module.md`, `shell-vault:40 Specifications/Surfaces/Panel.md` | exists |
 | tess-ui | none | not applicable: no launcher |
 | tre | none | not applicable |

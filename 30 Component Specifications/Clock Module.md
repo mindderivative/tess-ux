@@ -65,6 +65,25 @@ Role `on_surface` for the face; `label_large` ([[Typography]]); no shape, no ele
 
 The Clock does not scale with density except through the [[Bar]] height; it has no pointer action, so the 24 dp hit area rule applies only to the tooltip hover box.
 
+## Dimensions and defaults
+
+The Clock does not scale with density (see Sizing above); the three columns hold the same value. The hover box is the box around the Face. Rows marked design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| hover box | height | `target.min` | 24 | 24 | 24 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| hover box | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| hover box | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | Sizing table of this note (horizontal padding 0), [[Spacing and Density]]; the Face line box is centred vertically | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| hover box | margin | - | N/A: the Bar sets the gap between modules (`space.3`, 8 dp) | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| hover box | gap | - | N/A: the box holds one child, the Face | N/A: as in Default | N/A: as in Default | `tess-shell:src/tess_shell/shipped/Clock/Clock_Module.tdl` | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| hover box | border width | - | 0 | 0 | 0 | [[Bar]], the module draws no border | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| hover box | border color | - | N/A: the module draws no border | N/A: as in Default | N/A: as in Default | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| hover box | corner radius | - | N/A: the module draws no surface | N/A: as in Default | N/A: as in Default | [[Shape]], this note Tokens section: no shape | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| hover box | icon size | - | N/A: the Clock shows text only, no icon | N/A: as in Default | N/A: as in Default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| hover box | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section: no elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| face | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], `tess-shell:src/tess_shell/shipped/Clock/Clock_Style.tdl` `clock_text` (14, 500) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| face | height | `label_large` | 20 | 20 | 20 | Sizing table of this note (Face line box), [[Typography]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+
 ## Layout and overflow
 
 The Face is one line and never wraps (`Wrap` is not set; the text is short). Vertical centring: the line box is centred in the Bar row ([[10 Layout Overflow and Scrolling]]). A format that produces a text wider than the Bar slot clips; the module does not ellipsise. The width follows the text: a 24-hour time at `label_large` is about 5 characters; the module does not reserve width for a changing digit (a proportional font may move neighbours by 1 dp; a tabular-figure font is a later request).
@@ -127,7 +146,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Clock/Clock_Module.tdl`, `Clock_Style.tdl`, `Clock_Module.py` | partly meets: tooltip on the box with the date and description (meets AC-MOD-CLK-1, AC-MOD-CLK-4 by reading); tooltip card is a literal that differs from the plain card (fails AC-MOD-CLK-5); style file sets Foreground to `#ffffff` (fails AC-MOD-CLK-6 in Light mode); Face has no role and `Label` is set (meets AC-MOD-CLK-1) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Clock/Clock_Module.tdl`, `Clock_Style.tdl`, `Clock_Module.py` | partly meets: tooltip on the box with the date and description (meets AC-MOD-CLK-1, AC-MOD-CLK-4 by reading); tooltip card is a literal that differs from the plain card (fails AC-MOD-CLK-5); style file sets Foreground to `#ffffff` (fails AC-MOD-CLK-6 in Light mode); Face has no role and `Label` is set (meets AC-MOD-CLK-1). Dimensions: the hover box has no minimum height, so it is the Face line box, 20 (spec 24, fails AC-MOD-CLK-7); font 14/500 and padding 0 meet the table |
 | shell-vault | `shell-vault:40 Specifications/Modules/Clock Module.md` | exists, status review; names the Label and a tooltip date |
 | tess-ui | none | not applicable: no clock widget |
 | tre | none | not applicable: no tooltip or timer primitive (see [[Tooltip]]) |
