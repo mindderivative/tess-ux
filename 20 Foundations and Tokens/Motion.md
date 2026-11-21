@@ -90,7 +90,7 @@ Conversion of these values to the bounce parameter of an engine spring (tre: def
 | `$motion.duration.medium` | 200 ms | `short4` |
 | `$motion.duration.long` | 400 ms | `medium4` |
 | `$motion.easing.standard` | cubic-bezier(0.2, 0, 0, 1) | `standard` (equal) |
-| `$motion.easing.emphasized` | cubic-bezier(0.05, 0.7, 0.1, 1) | `emphasized_decelerate`, not `emphasized` |
+| `$motion.easing.emphasized` | cubic-bezier(0.2, 0, 0, 1) since the shell's easing change (earlier (0.05, 0.7, 0.1, 1)) | the single-curve form of the spec `emphasized` (numerically equal to `standard`); the full two-segment path waits for named easings in tre (audit item P7) |
 
 ## Rules
 

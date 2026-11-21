@@ -159,7 +159,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Expressive steps 20, 32 and 48 dp excluded from the baseline | Baseline is the 2022 shape scale; Expressive adopted by name only | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
-| tess-shell scale has 5 steps with names shifted by one | The shell has its own flat token set | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| tess-shell scale has names shifted by one below `large` (`small` 4, `medium` 8) and two added steps `medium_large` (12) and `extra_large` (28) | The shell has its own flat token set; renaming would change the meaning of existing themes; the MD3 name `medium` would collide with the shell `medium` | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Popup container radius `extra_small` | MD3 has no popup; the menu value is used | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 
 ## [[Spacing and Density]]

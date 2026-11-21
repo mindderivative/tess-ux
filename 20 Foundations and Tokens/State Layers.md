@@ -87,7 +87,7 @@ Rules:
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/interaction.py` (HOVERED 0.08, FOCUSED 0.10, PRESSED 0.10, DRAGGED 0.16), `tess-ui:src/tess_ui/controls.py` (DISABLED_CONTENT 0.38, DISABLED_CONTAINER 0.12) | meets AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5 by constants. AC-STL-4 (single layer precedence) meets for plain nodes, not verified for the MD3 controls. The layer and ripple apply to `Rect` and `Container` among plain nodes; other controls draw their own (`tess-ui:docs/guide/interaction.md`, "Not yet covered") |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | absent. States change Background, Border_Color or Opacity: Toggle and Checkbox hovered 0.85 and pressed 0.7, disabled 0.5 on all widgets, Button hover changes Border_Color. Fails AC-STL-1 to AC-STL-3 and AC-STL-5. Adoption is a gap, not a promise ([[ADR-0009 State layer percentages]]) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | absent. States change Background, Border_Color or Opacity: Toggle and Checkbox hovered 0.85 and pressed 0.7, disabled 0.5 on all widgets, Button hover changes Border_Color. Fails AC-STL-1 to AC-STL-3 and AC-STL-5. Adoption is a gap, not a promise ([[ADR-0009 State layer percentages]]) Disabled controls at 0.38 (the spec value) are fainter than the earlier 0.5; intended. |
 | tre | `tre:docs/guide/painting.md` | not applicable: the engine paints no state layers; it supplies a ripple recipe (`tre:examples/ripple.py`) and `focus_visible` |
 
 ## Deviations from Material Design 3
