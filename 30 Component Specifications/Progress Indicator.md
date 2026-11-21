@@ -84,6 +84,28 @@ The indicator itself is not a control, so its thickness is fixed. Its length (ba
 - The shell `ProgressBar` is 160 by 8 dp by default (a pill). MD3 has 4 dp; the shell keeps 8 dp because a 4 dp bar on a 1080p bar surface is hard to read #needs-verification-as-design-choice.
 - The indicator has no hit area of its own; it is never a pointer target.
 
+## Dimensions and defaults
+
+The bar thickness is fixed; the ring size and stroke follow the density level (Sizing and density). Bar default width 240 at default and compact, 160 at dense. Ring stroke 4, 3 and 2 at default, compact and dense (design choice #needs-verification-as-design-choice; MD3 `md.comp.circular-progress-indicator.active-indicator-width` is 4).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| linear bar | height | `md.comp.linear-progress-indicator.active-indicator-height` | 4 | 4 | 4 | [Material Web latest linear progress tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-linear-progress-indicator.scss) | tess-ui: yes (thickness); tess-shell: yes (Height); tre: yes (height) |
+| linear bar | min width | - | 48 | 48 | 48 | [[Progress Indicator]], Layout and overflow | tess-ui: no hook; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| ring | height | `md.comp.circular-progress-indicator.size` | 40 | 24 | 16 | [Material Web latest circular tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-circular-progress-indicator.scss); compact and dense are a design choice #needs-verification-as-design-choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style width, the ring is square); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| ring | min height | - | 16 | 16 | 16 | [[Progress Indicator]], Sizing and density (smallest ring) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| indicator | padding | - | N/A: the indicator is a drawn shape with no content inside | N/A: a drawn shape with no content | N/A: a drawn shape with no content | [[Progress Indicator]], Anatomy | tess-ui: n/a: the indicator holds no content; tess-shell: n/a: the indicator holds no content; tre: n/a: the indicator holds no content |
+| indicator | margin | - | N/A: the owner container places the indicator | N/A: the owner container places it | N/A: the owner container places it | [[Spacing and Density]] | tess-ui: no hook; tess-shell: yes (Margin); tre: yes (margin) |
+| track and active indicator | gap | `md.comp.progress-indicator.track-active-indicator-space` | 4 | 4 | 4 | [Material Web latest progress indicator linear tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-progress-indicator-linear.scss) | tess-ui: no hook; tess-shell: n/a: the fill sits on the track with no gap; tre: yes (gap) |
+| stop indicator | height | `md.comp.progress-indicator.stop-indicator-size` | 4 | 4 | 4 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-linear-progress-indicator.scss) linear token file | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| indicator | border width | - | 0 | 0 | 0 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-linear-progress-indicator.scss) linear token file (no outline); high contrast draws a 1 dp `outline` stroke, see Dark and light | tess-ui: no hook; tess-shell: yes (Border_Width); tre: yes (border_width) |
+| indicator | border color | - | N/A: no border outside high contrast, where the role is `outline` | N/A: no border outside high contrast | N/A: no border outside high contrast | [[Progress Indicator]], Dark and light | tess-ui: no hook; tess-shell: yes (Border_Color); tre: yes (border_color) |
+| linear bar | corner radius | `shape.full` | 2 (half the 4 dp thickness) | 2 | 2 | [[Shape]] | tess-ui: via thickness (the radius is half of it); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| ring | corner radius | `shape.full` | 20 (round caps on a 40 dp ring) | 12 | 8 | [[Shape]] | tess-ui: via thickness (round caps follow the stroke); tess-shell: n/a: element absent in tess-shell; tre: hardcoded in tre (round caps and joins of a path stroke, `tre:docs/reference/paint.md`) |
+| indicator | font | - | N/A: the indicator draws no text; a percentage label is the caller's text | N/A: the indicator draws no text | N/A: the indicator draws no text | [[Progress Indicator]], Anatomy part 5 | tess-ui: n/a: the indicator draws no text; tess-shell: n/a: the indicator draws no text; tre: n/a: the indicator draws no text |
+| indicator | icon size | - | N/A: the indicator contains no icon | N/A: the indicator contains no icon | N/A: the indicator contains no icon | [[Progress Indicator]], Anatomy | tess-ui: n/a: the indicator holds no icon; tess-shell: n/a: the indicator holds no icon; tre: n/a: the indicator holds no icon |
+| indicator | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook; tess-shell: yes (Elevation); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - A bar fills the width its container gives it, or the caller's width; it never wraps and it keeps its thickness when the width shrinks. Minimum useful width 48 dp; below it the caller shows the ring.
@@ -154,6 +176,8 @@ Roles only. The track `surface_container_highest` is lighter than the surface in
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/controls.py` (`Indicator`, `LinearProgress`, `CircularProgress`, `LoadingIndicator`), `tess-ui:src/tess_ui/widgets/progress.py`, `tess-ui:docs/components/progress-indicators.md` | partly meets: bar 4 dp with `surface_container_highest` track and `primary`, ring 4 dp stroke, determinate eases over `medium1`, role `progressbar` with `value_text` percent and `busy` for no value, reduced motion gives a still 40 percent bar and a still arc (AC-PRG-2, AC-PRG-4, AC-PRG-5 bar, AC-PRG-6 meet by reading, unrun); the ring box is 48 dp and has no density scaling (AC-PRG-1 fails); no delay-to-show rule (AC-PRG-10 fails); the reduced-motion ring arc length is not specified in code (AC-PRG-5 ring unmeasured); the wave and thickness amplitudes are written from memory of the spec per the code comment and `Wavy` is not graded |
 | tess-shell | `tess-shell:src/tess_shell/shipped/ProgressBar/ProgressBar_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: determinate linear only, 160 by 8 pill, role PROGRESSBAR with `value`, `value_min`, `value_max`, fill eases with the medium duration and not under reduced motion (AC-PRG-4 meets by reading, AC-PRG-6 meets for determinate); the track is `$color.outline`, not `surface_container_highest` (AC-PRG-11 fails); no indeterminate, no ring (AC-PRG-5, AC-PRG-6 indeterminate, AC-PRG-1 ring: absent); no `value_text`; the label is the caller's |
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/controls.py` (`CircularProgress`) | ring box 48 at every level (spec 40, 24, 16): AC-PRG-1 |
+| tess-shell (dimensions) | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | bar 160 by 8 (spec thickness 4; the 8 is a recorded shell choice): AC-PRG-1 |
 | tre | `tre:docs/reference/node.md` (`busy`), `tre:crates/engine-core` path trim animation (`tre:docs/guide/animation.md`) | not applicable: the engine has no progress node; it provides `progressbar` role, `value`, `busy`, path trim and animation |
 
 Evidence: [[Gaps and Contradictions]] (no indeterminate or circular progress in the shell; ProgressBar indeterminate not in v1).
@@ -162,7 +186,7 @@ Evidence: [[Gaps and Contradictions]] (no indeterminate or circular progress in 
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/controls.py` (`LinearProgress`, `CircularProgress`) | exists |
+| tess-ui | `tess-ui:src/tess_ui/controls.py` (`LinearProgress`, `CircularProgress`) | exists; the control builder reads only width, height and `thickness` from the style, so min size, margin, border, elevation, the stop indicator size and the ring gap (`STOP`, `GAP` constants) have no hook |
 | tess-ui | `tess-ui:src/tess_ui/controls.py` (`LoadingIndicator`) | exists; Expressive, not graded |
 | tess-shell | `tess-shell:src/tess_shell/shipped/ProgressBar/ProgressBar_Module.tdl` | partial: linear determinate only |
 | tre | path node with `trim_start` and `trim_end`, `tre:docs/guide/animation.md` | mechanism only |

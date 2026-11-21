@@ -87,6 +87,37 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]]; the b
 - The hit area is the whole tab (full bar height by tab width), at least 24 dp by 24 dp; 48 dp high in a touch context ([[Spacing and Density]], WCAG 2.2 SC 2.5.8).
 - The label line box (20 dp) is centred vertically by construction: 14, 10 and 6 dp above and below at 48, 40 and 32 dp (derived, not tokens). With an icon beside the label both are centred on the bar's middle line.
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above; bar heights and compact and dense paddings are Tesserae choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| bar | height | `density.control_height` plus 8 | 48 | 40 | 32 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss (48), design choice, proposed ADR: tab bar height per density, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| bar, primary with icon above label | height | - | 64 | N/A: not offered, the icon sits beside the label (40) | N/A: not offered, the icon sits beside the label (32) | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| bar | padding | - | N/A: the tab carries the horizontal padding, the bar none | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Sizing and density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| bar | margin | - | N/A: the region sets the outer space; the panel sits directly under the divider | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Layout and overflow | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| bar | gap | - | 0 | 0 | 0 | [[Tabs]] Anatomy (tabs touch, each carries its own padding) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| bar | border width | - | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| bar | border color | - | N/A: the bar draws no border; the divider is its own part | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Anatomy | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| bar | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| bar | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| tab | min width | - | 72 | 72 | 72 | https://github.com/material-components/material-components-android/blob/master/docs/components/Tabs.md (`tabMinWidth`) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| tab | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| tab | padding | `space.4`, `space.3` | 0 12 0 12 | 0 12 0 12 | 0 8 0 8 | design choice, proposed ADR: tab bar height per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| tab | margin | - | N/A: tabs touch; spacing is the tab padding | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Sizing and density | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| tab | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Tabs]] Sizing and density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| tab | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| tab | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| tab | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| tab | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| active indicator, primary | height | - | 3 | 3 | 3 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| active indicator, primary | corner radius | - | 3 3 0 0 | 3 3 0 0 | 3 3 0 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss (top corners) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| active indicator, secondary | height | - | 2 | 2 | 2 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-secondary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| active indicator, secondary | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (square) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| divider | height | - | 1 | 1 | 1 | [[Divider]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Divider]], [[Colour Roles]] | tess-ui: yes (style background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
+
 ## Layout and overflow
 
 - The label is one line. A label wider than the tab's maximum width (264 dp) or its share of a fixed bar ends with an ellipsis; the icon and padding stay ([[10 Layout Overflow and Scrolling]]). The full label is the accessible name and the tooltip of the tab (ADR-0004).

@@ -117,6 +117,39 @@ Rules:
 3. A rail and a standard drawer are never shown together; a window that switches from one to the other keeps the selected destination and moves focus only if focus was inside the region that left (to the same destination in the other region).
 4. The collapse of a standard drawer to a rail is the caller's setting; tess-ui does not switch by itself (see Status in code).
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above; compact and dense values are Tesserae choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: a full-height column, the height is the region height | N/A: same as the default level | N/A: same as the default level | [[Navigation Drawer]] Anatomy | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | 256 | 256 | 256 | tess-ui:src/tess_ui/views/NavigationDrawer_Stylesheet.tdl (range 256 to 360); container width 360 default, 280 compact, 256 dense, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | padding | - | N/A: the pill inset is the destination margin; the column adds no padding of its own | N/A: same as the default level | N/A: same as the default level | [[Navigation Drawer]] Sizing and density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the content region sets the outer space | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | - | N/A: destinations stack edge to edge; each pill carries its own height | N/A: same as the default level | N/A: same as the default level | [[Navigation Drawer]] Sizing and density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-navigation-drawer.scss | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the container draws no border; the standard drawer meets the content at a change of colour | N/A: same as the default level | N/A: same as the default level | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-navigation-drawer.scss | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container, standard | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container, modal | corner radius | `shape.large` | 16 | 16 | 16 | [[Shape]], end corners only | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container, standard | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container, modal | elevation | `elevation.level1` | 1 | 1 | 1 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| destination | height | - | 56 | 40 | 32 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-navigation-drawer.scss, design choice, proposed ADR: navigation region sizes per density | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| destination | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| destination | padding | - | 0 24 0 16 | 0 16 0 12 | 0 8 0 8 | tess-ui:src/tess_ui/views/NavigationDrawerItem_Stylesheet.tdl, design choice, proposed ADR: navigation region sizes per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| destination | margin | `space.4`, `space.3`, `space.2` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | tess-ui:src/tess_ui/views/NavigationDrawerPanel_Stylesheet.tdl (12), design choice, proposed ADR: navigation region sizes per density | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| destination | gap | `density.icon_label_gap` | 12 | 8 | 4 | tess-ui (12), [[Spacing and Density]] (8, 8, 4 for lists), design choice, proposed ADR: navigation region sizes per density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| destination | corner radius | `shape.full` | 28 | 20 | 16 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| destination | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| destination | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| destination | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| section heading | height | - | 56 | 40 | 32 | tess-ui (18 plus 20 plus 18), design choice, proposed ADR: navigation region sizes per density, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| section heading | padding | - | 0 0 0 16 | 0 0 0 12 | 0 0 0 8 | tess-ui (16), design choice, proposed ADR: navigation region sizes per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| section heading | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| divider | height | - | 1 | 1 | 1 | [[Divider]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| divider | margin | `space.3`, `space.2` | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | design choice, proposed ADR: navigation region sizes per density, [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| divider | border color | `outline` | `outline` | `outline` | `outline` | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-navigation-drawer.scss | tess-ui: yes (style background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
+
 ## Layout and overflow
 
 - The destination column scrolls vertically when destinations do not fit, with a visible scrollbar thumb ([[ADR-0003 Scrollbar rule]]); the header and the footer slot stay fixed. A focused destination scrolls into view with its ring visible (AC-LAY-14).

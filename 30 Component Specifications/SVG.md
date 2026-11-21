@@ -70,6 +70,25 @@ The box is set by the owner. For an icon the size follows the icon sizes of [[Ic
 - An interactive SVG has a hit area of at least 24 by 24 dp (48 in a touch context); a plain one has none.
 - Stroke widths inside the document scale with the box, so a 24 dp icon at 20 dp has strokes 20/24 as wide; a project that needs a constant stroke supplies a path with non-scaling stroke #needs-verification.
 
+## Dimensions and defaults
+
+The box is set by the owner; the icon box follows [[Iconography]].
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| box (icon) | height | `density.icon_button_icon` | 24 | 20 | 20 | [[SVG]], Sizing and density; [[Iconography]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| box (icon) | min width | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]] (square icon box) | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| interactive box | min height | - | 24 | 24 | 24 | [[ADR-0002 Desktop density levels and target sizes]] (24 dp pointer minimum; 48 in touch) | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| box | padding | - | N/A: the viewBox fit leaves the empty bands; the box has no inset | N/A: the viewBox fit sets the bands | N/A: the viewBox fit sets the bands | [[SVG]], Layout and overflow | tess-ui: yes (style padding); tess-shell: no hook; tre: yes (padding) |
+| box | margin | - | N/A: the parent container sets the outer space | N/A: the parent sets outer space | N/A: the parent sets outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| box | gap | - | N/A: one document per box; no parts to separate | N/A: one document per box | N/A: one document per box | [[SVG]], Anatomy | tess-ui: n/a: an svg node has no children; tess-shell: n/a: an SVG block has no children; tre: n/a: an svg node has no children |
+| box | border width | - | 0 | 0 | 0 | [[SVG]], Tokens used (the box draws none) | tess-ui: yes (style border_width); tess-shell: no hook; tre: yes (border_width) |
+| box | border color | - | N/A: the box draws no border; strokes belong to the document | N/A: the box draws no border | N/A: the box draws no border | [[SVG]], Tokens used | tess-ui: yes (style border_color); tess-shell: no hook; tre: yes (border_color) |
+| box | corner radius | `shape.none` | 0 | 0 | 0 | [[SVG]], Layout and overflow (the box clips to a rectangle) | tess-ui: yes (style corner_radius); tess-shell: no hook; tre: yes (corner_radius) |
+| document | font | - | N/A: text in a document is the document's own, not a role | N/A: text is the document's own | N/A: text is the document's own | [[SVG]], Anatomy part 2 | tess-ui: n/a: the document's text is its own; tess-shell: n/a: the document's text is its own; tre: n/a: the document's text is its own |
+| document | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]] (24 dp view box scaled to the box) | tess-ui: yes (style width, height); tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| box | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: no hook; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The document is fitted uniformly into the box (`xMidYMid meet`): no distortion; a box with a different ratio leaves empty bands, centred. There is no `Fit` option (tess-shell); a different crop needs a different viewBox.
@@ -139,7 +158,7 @@ Evidence: [[Gaps and Contradictions]] (SVG node drops all filters except one blu
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py`, `tess-ui:src/tess_ui/spec/svg.py` | exists, partial |
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` | exists as the SVG block |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` | exists as the SVG block; its style takes only `Foreground` and `Opacity`, so padding, border, corner radius and elevation have no hook (wrap it in a Box) |
 | tre | the [[SVG|SVG Node]] | mechanism |
 
 ## Deviations from Material Design 3

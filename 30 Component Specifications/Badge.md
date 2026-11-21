@@ -76,6 +76,27 @@ A badge marks a host; it is not a control row, so its size does not scale with t
 - A badge is decoration, so it has no pointer target of its own and no 24 dp minimum ([WCAG 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum) applies to controls); it never covers more than the host's corner so the host's hit area stays usable.
 - Large width formula: label width plus 8 dp (4 each side), at least 16 dp, so a single digit is a circle. tess-ui approximates the label width as 6 dp per character plus 8.
 
+## Dimensions and defaults
+
+A badge keeps one size at every density level ([[ADR-0002 Desktop density levels and target sizes]]). Offsets to the host are in Layout and overflow.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| small badge | height | `md.comp.badge.size` | 6 | 6 | 6 | [Material Web latest badge tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss) | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| small badge | min width | `md.comp.badge.size` | 6 | 6 | 6 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss)  | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| large badge | height | `md.comp.badge.large.size` | 16 | 16 | 16 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss)  | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| large badge | min width | `md.comp.badge.large.size` | 16 | 16 | 16 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss)  | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| large badge | padding | `space.2` | 0 4 0 4 | 0 4 0 4 | 0 4 0 4 | [[Badge]], Sizing and density (label width plus 8) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| small badge | padding | - | N/A: the dot has no label, so nothing sits inside it | N/A: the dot has no content inside it | N/A: the dot has no content inside it | [[Badge]], Anatomy | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| badge | margin | - | N/A: placed over the host corner by anchored offsets, not by margin | N/A: placed by anchored offsets, not margin | N/A: placed by anchored offsets, not margin | [[Anchored Placement]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| badge | gap | - | N/A: one label per badge, no two parts to separate | N/A: one label per badge, no two parts | N/A: one label per badge, no two parts | [[Badge]], Anatomy | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| badge | border width | - | 0 | 0 | 0 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss) MD3 badge token file (no outline token) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| badge | border color | - | N/A: the badge draws no border | N/A: the badge draws no border | N/A: the badge draws no border | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-badge.scss) MD3 badge token file | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| badge | corner radius | `shape.full` | 9999 (clamped to half the shorter side: 3 small, 8 large) | 9999 (3 small, 8 large) | 9999 (3 small, 8 large) | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| label | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| badge | icon size | - | N/A: a badge holds a count or text, never an icon | N/A: a badge holds a count or text | N/A: a badge holds a count or text | [[Badge]], Anatomy | tess-ui: n/a: a badge holds no icon; tess-shell: n/a: a badge holds no icon; tre: n/a: a badge holds no icon |
+| badge | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Placement is a corner of the host, set by anchored placement and not by flow: the badge takes no room in the host's layout ([[Anchored Placement]]).
@@ -133,6 +154,8 @@ No value means small; `max` 99; zero hidden; not anchored unless the caller anch
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Badge_View.tdl`, `tess-ui:src/tess_ui/views/Badge_Stylesheet.tdl`, `tess-ui:docs/components/badges.md` | partly meets: 6 dp dot and 16 dp pill in `error` with `on_error` in `label_small`, hidden from the screen reader, anchored offsets as in AC-BDG-3 (AC-BDG-1, AC-BDG-3, AC-BDG-5 meet by reading the sheet, unrun); the default `Limit` is 999 and the pill width is 8 + 6 per character, so AC-BDG-4 and AC-BDG-2 fail; no disabled look (AC-BDG-9 fails); literal corner radii 3 and 8 not the `full` token (AC-BDG-1 partly) |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Badge/Badge_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: hidden from assistive technology, `Max` default 99 and `99+` (AC-BDG-4 meets by reading), zero hidden; dot is 8 by 8 and the pill 18 high with 11 px weight 600 text, not 6 and 16 (AC-BDG-1 and AC-BDG-2 fail); the label colour is `on_primary` on an `error` fill, not `on_error` (AC-BDG-6 fails or is unmeasured for the dark scheme); disabled look is opacity 0.5, not 0.38 (AC-BDG-9 fails) |
+| tess-shell (dimensions) | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | dot 8 (spec 6), pill height 18 (spec 16), label 11/600 (spec 11/500): AC-BDG-1 |
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/views/Badge_Stylesheet.tdl` | corner radii 3 and 8 as literals (spec `full`, same pixels at 6 and 16): AC-BDG-1 |
 | tre | none: composed from box and text nodes with absolute placement (`tre:docs/guide/nodes-and-layout.md`, Absolute positioning) | not applicable |
 
 Evidence: [[Gaps and Contradictions]] (shell modules use pixel literals; Badge corner radius a token).

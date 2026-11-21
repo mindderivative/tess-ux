@@ -84,6 +84,31 @@ The values for control height, row padding, icon button container and text-field
 
 Row height with one control line equals the control height. The label column width is the same for every row of one form, so that all controls start at the same x.
 
+## Dimensions and defaults
+
+Control height, row padding, icon button container and text-field padding are the binding table of [[ADR-0002 Desktop density levels and target sizes]]; the label column width and the gaps are Tesserae choices #needs-verification-as-design-choice (proposed ADR: form row dimensions by density level). The row has no fill or border of its own.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| row (one control line) | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| control | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| reset button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| label column | min width | - | 160 | 120 | 96 | design choice, proposed ADR (form row dimensions by density); [[Form Row#Sizing and density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| text field | padding | `density.field_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| row | margin | - | N/A: the form sets the space between rows (see the gap rows) | N/A: same as default | N/A: same as default | [[Form Row#Sizing and density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| rows in a form | gap | `space.3`, `space.2`, `space.1` | 8 | 4 | 2 | design choice, proposed ADR (form row dimensions by density); [[Form Row#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| label column to control column | gap | `space.4`, `space.3`, `space.3` | 12 | 8 | 8 | design choice, proposed ADR (form row dimensions by density); [[Form Row#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| cells in one control column | gap | `space.1` | 2 | 2 | 2 | design choice, proposed ADR (form row dimensions by density); [[Form Row#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| row | border width | - | N/A: the row draws no border; each control draws its own ([[Text Field]]) | N/A: same as default | N/A: same as default | [[Form Row#Anatomy]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| control (invalid) | border color | `error` | `error` | `error` | `error` | [[Form Row#States]] (the control outline turns `error`) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| row | corner radius | - | N/A: the row has no fill or outline; corners belong to the controls ([[Text Field]], [[Button]]) | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| marker lines, column caption | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| help line, error line | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| reset button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| row | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Alignment grid: label column at x = row padding; control column at x = label column width + gap; the reset button is at the right end of the control column and its width is reserved in both clean and modified states, so a control never moves when the state changes.

@@ -76,6 +76,26 @@ The picture size is content, set by the owner; density does not change it. Defau
 - An interactive image has a hit area of at least 24 dp by 24 dp at every level, 48 dp in a touch context ([[ADR-0002 Desktop density levels and target sizes]]); a plain image has none.
 - Limits: a side above 4096 pixels is refused with one warning in the shell; the engine accepts a side up to 8192 pixels (`tre:docs/reference/properties.md`, image). The spec takes 4096 as the toolkit limit.
 
+## Dimensions and defaults
+
+The picture size is content set by the owner; only the row avatar and the glyph follow density.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| box (row avatar or thumbnail) | height | `density.control_height` | 40 | 32 | 24 | [[Image]], Sizing and density | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| box (no size given) | height | - | 96 | 96 | 96 | [[Image]], Sizing and density (the shell default, 96 by 96) | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| box | min width | - | N/A: the owner sets the size; a plain image has no minimum | N/A: the owner sets the size | N/A: the owner sets the size | [[Image]], Sizing and density | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| interactive box | min height | - | 24 | 24 | 24 | [[ADR-0002 Desktop density levels and target sizes]] (24 dp pointer minimum; 48 in touch) | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| box | padding | - | N/A: the picture fills the box with no inset | N/A: the picture fills the box | N/A: the picture fills the box | [[Image]], Layout and overflow | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| box | margin | - | N/A: the parent container sets the outer space | N/A: the parent sets outer space | N/A: the parent sets outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| box | gap | - | N/A: one picture per box; no parts to separate | N/A: one picture per box | N/A: one picture per box | [[Image]], Anatomy | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| box | border width | - | 0 | 0 | 0 | [[Image]], Tokens used (no outline role) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| box | border color | - | N/A: the image draws no border | N/A: the image draws no border | N/A: the image draws no border | [[Image]], Tokens used | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| box | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (variants raise it: `extra_small` 4, `small` 8, `medium` 12, `full` for an avatar) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| placeholder and error | font | - | N/A: the states draw a glyph, never text | N/A: the states draw a glyph, no text | N/A: the states draw a glyph, no text | [[Image]], States | tess-ui: n/a: the states draw no text; tess-shell: n/a: the states draw no text; tre: n/a: the states draw no text |
+| placeholder and error glyph | icon size | - | 48 (50 percent of the box, at most 48) | 32 (at most 32) | 20 (at most 20) | [[Image]], Sizing and density | tess-ui: no hook; tess-shell: no hook; tre: yes (width, height of the svg node) |
+| box | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The box size is fixed before loading: loading and the error state never change the layout size (a layout-stability rule: the content around it does not shift).
@@ -155,8 +175,8 @@ Evidence: [[Gaps and Contradictions]] (Image clip to any shape except circle thr
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/widgets/media.py` | exists, partial |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Image/Image_Module.tdl` | exists, partial |
+| tess-ui | `tess-ui:src/tess_ui/widgets/media.py` | exists, partial; no placeholder or error glyph is drawn, so its size has no hook |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Image/Image_Module.tdl` | exists, partial; the module fixes the placeholder glyph at 50 percent of the box and the error image is a raster, so the glyph size has no hook |
 | shell vault | `shell-vault:50 Design System/Standard Modules.md`, `shell-vault:40 Specifications/Modules/Media Module.md` | design intent |
 | tre | the [[Image|Image Node]] | mechanism |
 

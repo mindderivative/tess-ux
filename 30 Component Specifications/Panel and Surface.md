@@ -80,6 +80,27 @@ MD3 tokens also define a surface tint layer colour (`container-surface-tint-laye
 - Pane corner radius 12 dp (`medium`) for floating panes; 0 dp on the sides that touch the window edge.
 - Shadow margin (shell): at least blur plus spread plus the larger offset of the shadow, so the shadow is never cut by the surface window.
 
+## Dimensions and defaults
+
+A surface has no intrinsic size; the rows give the container defaults for a pane. The pane paddings and the shadow margin are Tesserae choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: a surface has no intrinsic size; the layout sets it | N/A: same as the default level | N/A: same as the default level | [[Panel and Surface]] Sizing and density | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | padding | `space.4`, `space.3`, `space.2` | 12 12 12 12 | 8 8 8 8 | 4 4 4 4 | design choice, proposed ADR: panel and flyout padding per density, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: via Padding on the content block (Panel Padding is not built); tre: yes (padding) |
+| container | margin | - | N/A: the parent layout sets the space around the pane; a shell surface window has a shadow margin instead | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: via Inset on the Panel (Margin is not built); tre: yes (margin) |
+| container | gap | - | N/A: a surface holds one content area; the content layout sets gaps | N/A: same as the default level | N/A: same as the default level | [[Panel and Surface]] Anatomy | tess-ui: yes (style gap); tess-shell: via Spacing on the content block; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-card.scss (surface without outline) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width in the Panel Style); tre: yes (border_width) |
+| container | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Colour Roles]] (colour of the optional border; `outline` for a strong one) | tess-ui: yes (style border_color); tess-shell: yes (Border_Color in the Panel Style); tre: yes (border_color) |
+| pane | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius in the Panel Style); tre: yes (corner_radius) |
+| window background | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius in the Panel Style); tre: yes (corner_radius) |
+| container | font | - | N/A: the surface draws no text; the content sets the font | N/A: same as the default level | N/A: same as the default level | [[Panel and Surface]] Anatomy | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| container | icon size | - | N/A: the surface draws no icon; the content sets the size | N/A: same as the default level | N/A: same as the default level | [[Panel and Surface]] Anatomy | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| pane | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| overlay body | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| dialog | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| shadow margin (shell) | margin | - | 10 | 10 | 10 | [[Elevation]] (margin rule, level 2: 10; level 3: 15) | tess-ui: yes (style margin); tess-shell: via Inset on the Panel (Margin is not built); tre: yes (margin) |
+
 ## Layout and overflow
 
 - Content that exceeds a pane scrolls inside the pane on both axes with visible scrollbars ([[ADR-0003 Scrollbar rule]], [[Scrollbar and Scroll Container]]); a surface never lets content paint beyond its container box (clip to the rounded container).

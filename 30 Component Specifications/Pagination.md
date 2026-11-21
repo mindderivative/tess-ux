@@ -79,6 +79,35 @@ The current page differs from the others by container (filled) and by `current`,
 - The label is vertically centred in the button by construction ([[Button]], AC-BTN-2).
 - Gaps are 4 dp (default, compact) and 2 dp (dense); hit areas do not overlap ([[Spacing and Density]], AC-DEN-8).
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above. Button paddings follow [[Button]] and [[Icon Button]]; the dot values and gaps are Tesserae choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `density.control_height` | 40 | 32 | 28 | [[Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | padding | - | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Pagination]] Anatomy (the controls touch the container edge) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the parent places the control | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `space.2`, `space.1` | 4 | 4 | 2 | [[Pagination]] Sizing and density, design choice, proposed ADR: pagination gaps and dots per density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [[Pagination]] Tokens used (no border drawn) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the container and the filled current page draw no border | N/A: same as the default level | N/A: same as the default level | [[Pagination]] States | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| number button | height | `density.control_height` | 40 | 32 | 28 | [[Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| number button | min width | - | 40 | 32 | 28 | [[Pagination]] Sizing and density | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| number button | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| number button | padding | `space.3` | 0 8 0 8 | 0 8 0 8 | 0 8 0 8 | [[Button]] (text variant padding 12, 8, 8; the pagination button grows with its digits), design choice, proposed ADR: pagination gaps and dots per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| number button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| number button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| arrow button | height | `density.control_height` | 40 | 32 | 28 | [[Icon Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| arrow button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| ellipsis | min width | - | 40 | 32 | 28 | [[Pagination]] Sizing and density | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| dot | min width | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[ADR-0002 Desktop density levels and target sizes]] (hit area) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| dot | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[ADR-0002 Desktop density levels and target sizes]] (hit area) | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| dot | height | - | 8 | 8 | 6 | [[Pagination]] Sizing and density (mark), design choice, proposed ADR: pagination gaps and dots per density | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| dot | corner radius | `shape.full` | 4 | 4 | 3 | [[Shape]] (circle) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| dot, other | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]], [[Pagination]] States (the mark is a fill; the role is the mark colour) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+
 ## Layout and overflow
 
 - The control is as wide as its controls and never wraps. A place narrower than the full number form (up to 10 controls) switches to the compact form; narrower than previous plus summary plus next, the summary shrinks with an ellipsis and the arrows stay ([[10 Layout Overflow and Scrolling]]).

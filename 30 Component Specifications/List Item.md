@@ -83,6 +83,35 @@ Heights follow the binding density table for the single-line case ([[ADR-0002 De
 
 The line-height rows give 24 + 20 = 44 for two lines at `default`; with 16 dp padding the height is 60 dp. The three-line height is fixed by the table whether the third line is an overline or a second supporting line (the content is centred in the row). A trailing control or icon button (container 40, 32, 28 dp) fits inside the row at its density; an avatar or image larger than the row content height is not allowed (the row grows to the next line count). The pointer target is the whole row, at least 24 dp tall at every density ([[ADR-0002 Desktop density levels and target sizes]]).
 
+## Dimensions and defaults
+
+Heights are the binding density table for one line and the derived rule of [[List Item#Sizing and density]] for two and three lines. The icon sizes below follow this note's Sizing table (dense 20); [[Iconography]] gives 16 for a list row at dense, and the two notes disagree until the owner decides #needs-verification-as-design-choice (proposed ADR: list row icon size at dense).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container (one line) | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container (two lines) | height | - | 60 | 48 | 40 | design choice, proposed ADR (list row height for two and three lines); [[List Item#Sizing and density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container (three lines) | height | - | 80 | 64 | 56 | design choice, proposed ADR (list row height for two and three lines); [[List Item#Sizing and density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | padding | `density.row_padding_x` | 8 12 8 12 | 6 8 6 8 | 2 4 2 4 | [[Spacing and Density]] (horizontal); vertical is half of the total 16, 12, 4 of [[List Item#Sizing and density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: a row fills the list width; the list sets any outer space | N/A: same as default | N/A: same as default | [[List Item#Layout and overflow]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| leading avatar | height | - | 40 | 32 | 24 | [[List Item#Sizing and density]], MD3 avatar 40 | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| leading image | height | - | 56 | 48 | 40 | [[List Item#Sizing and density]], MD3 image 56 | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | border width | - | 0 | 0 | 0 | MD3 [list item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu-item.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | - | N/A: the row draws no border; selection is a container fill | N/A: same as default | N/A: same as default | [[List Item#States]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | [[List Item#Layout and overflow]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[List Item#Layout and overflow]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] ([[List Item#Tokens used]]) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| container (in a card list) | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]] ([[List Item#Tokens used]]) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| headline | font | `body_large`, `body_medium`, `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_medium`, `body_small`, `body_small` | 14/20/400/0.25 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| overline, trailing text | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| leading icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Item#Sizing and density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| trailing icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Item#Sizing and density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| container (dragged) | elevation | `elevation.level_4` | 4 | 4 | 4 | [[Elevation]] (planned; MD3 `dragged-container-elevation`) | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Leading and trailing parts do not shrink. The text column takes the remaining width with a minimum width of 0.

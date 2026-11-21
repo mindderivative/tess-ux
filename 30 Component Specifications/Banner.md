@@ -79,6 +79,29 @@ Source: [Material Web banner tokens, latest](https://github.com/material-compone
 - Icon 24 dp at default and 20 dp at compact and dense ([[Icon Button]] icon rule).
 - The banner is as wide as the area it heads. Hit areas: actions and dismiss at least 24 dp by 24 dp at every level (the button heights satisfy it); 48 dp hit area in touch contexts.
 
+## Dimensions and defaults
+
+Applies to the three variants alike; only the container colour differs.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `md.comp.banner.desktop-with-single-line-container-height` | 52 | 44 | 36 | [[Banner]], Sizing and density (single-line minimum); [Material Web latest banner tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-banner.scss); compact and dense are a design choice #needs-verification-as-design-choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | 480 | 480 | 480 | [[Banner]], Layout and overflow (below it the stacked layout is used) | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | padding | `space.*` | 6 16 6 16 | 6 12 6 12 | 4 8 4 8 | [[Banner]], Sizing and density | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the banner is in the flow and the parent sets outer space | N/A: the parent sets outer space | N/A: the parent sets outer space | [[Spacing and Density]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `space.3` | 8 | 8 | 4 | [[Banner]], Sizing and density | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-banner.scss) (the divider is the only line) | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the container draws no border | N/A: the container draws no border | N/A: the container draws no border | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-banner.scss)  | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| divider | border width | `md.comp.banner.divider-height` | 1 | 1 | 1 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-banner.scss)  | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Divider]] (Material Web: `surface_variant`) | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; Material Web banner shape `none` | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| supporting text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| action | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| action | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| leading icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Banner]], Sizing and density; [[Iconography]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| dismiss control | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | elevation | `elevation.level1` | 1 | 1 | 1 | [[Elevation]]; Material Web banner `container.elevation` (info variant) | tess-ui: n/a: element absent in the tess-ui toolkit; tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The banner is in the layout flow, not an overlay: it pushes the content below it down and the content region shrinks; scroll position of the content below does not change ([[10 Layout Overflow and Scrolling]]). It is not scrolled with the content: it stays at the top of its area.
@@ -144,6 +167,7 @@ Info variant, full width, at the top of the window area it concerns, 24 dp icon,
 
 | Project | Path | Status per spec |
 |---|---|---|
+| tess-ui (dimensions) | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | padding 8 (spec 6 16 6 16), icon 18 (spec 24): AC-BNR-2 |
 | tess-ui | none as a shipped view; the config app builds one by hand: `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (`disk_banner`, `disk_reload_button`, `disk_keep_button`), styled inline | absent as a component; the hand-built banner partly meets: in flow, `tertiary_container` with `on_tertiary_container`, role `group` named "File changed on disk", assertive live on the text, a filled "Reload" and an outlined "Keep mine" button, 8 dp padding, 18 dp icon (AC-BNR-3, AC-BNR-5 partly meet by reading); no density-level height (AC-BNR-2 fails: padding 8 and extra-small buttons), icon 18 dp is not 24 or 20, no dismiss, no queue and no identity (AC-BNR-4 fails), no Escape or chord (AC-BNR-7, AC-BNR-9 fail), no height animation (AC-BNR-11 fails), actions are filled and outlined buttons, not text buttons, a deviation from the token |
 | tess-shell | none | absent: no banner; modules show a hidden state and the Launcher announces results; a persistent notice is not specified in v1 |
 | tre | `tre:docs/guide/accessibility.md` (`live`, `announce`) | not applicable: the engine gives the live region; the banner is toolkit work |

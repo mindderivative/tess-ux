@@ -87,6 +87,28 @@ The snackbar is a transient message surface, so it follows the control heights o
 - The two-line default height is 64 dp, not the MD3 68 dp: the text padding is 12 dp (on the 4 dp grid, [[Spacing and Density]]) instead of the 14 dp that gives 68 dp.
 - Hit areas: the action and the close button are at least 24 dp by 24 dp at every level; the close button is 40 dp at default (equal to an icon button), 32 at compact and 28 at dense; in a touch context 48 dp ([[ADR-0002 Desktop density levels and target sizes]]).
 
+## Dimensions and defaults
+
+Heights follow Sizing and density (two lines 64, not the MD3 68). Gap values follow [[Spacing and Density]]. Maximum width 560 at every level.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | `with-single-line.container.height` | 48 | 40 | 32 | [[Snackbar]], Sizing and density (minimum, single line); [Material Web latest snackbar tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-snackbar.scss) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container, two lines | min height | `with-two-lines.container.height` | 64 | 56 | 48 | [[Snackbar]], Sizing and density (MD3 68 not used) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container | min width | - | 344 | 344 | 344 | [[Snackbar]], Sizing and density | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | padding | `space.4`, `space.3`, `space.2` | 12 8 12 16 | 8 8 8 16 | 4 8 4 16 | [[Snackbar]], Sizing and density (text vertical padding, 16 at the start, 8 after the last button) | tess-ui: via stylesheet rule (Widget: Snackbar, Part: bar, Padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | 16 | 8 | 8 | [[Snackbar]], Sizing and density (margin to window edge) | tess-ui: yes (Margin param); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (text to action and close control) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-snackbar.scss) (no outline token) | tess-ui: via stylesheet rule (Widget: Snackbar, Border_Width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the snackbar draws no border | N/A: the snackbar draws no border | N/A: the snackbar draws no border | [Material Web token file](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-snackbar.scss)  | tess-ui: via stylesheet rule (Widget: Snackbar, Border_Color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: via stylesheet rule (Widget: Snackbar, Corner_Radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| supporting text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| action | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| action | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: via stylesheet rule (Part: action, Padding); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| close control | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: via stylesheet rule (Part: close, Height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| close control | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]]; default equals `md.comp.snackbar.icon.size` | tess-ui: via stylesheet rule (Part: close_icon, Width, Height); tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]] | tess-ui: via stylesheet rule (Widget: Snackbar, Elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Position: inside the window, above the content, at the bottom edge, `margin` from the edge, at the start side (left in left-to-right locales) or centred. It sits in an in-window layer ([[12 Overlays#Layers and routes|Layer]]); it is clipped to the window, never a separate window ([[12 Overlays]]).
@@ -158,6 +180,7 @@ Single or two lines per text; bottom, start-aligned; margin 16 dp; width 344 dp;
 
 | Project | Path | Status per spec |
 |---|---|---|
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/views/Snackbar_Stylesheet.tdl` | text padding 14 (spec 12); no density levels (spec 48, 40, 32): AC-SNK-2 |
 | tess-ui | `tess-ui:src/tess_ui/views/Snackbar_View.tdl`, `tess-ui:src/tess_ui/views/SnackbarHost_View.tdl`, `tess-ui:src/tess_ui/views/Snackbar_Stylesheet.tdl`, `tess-ui:src/tess_ui/overlays.py`, `tess-ui:docs/components/snackbars.md` | partly meets: `inverse_surface`, 4 dp radius, elevation 3, 344 to 560 dp wide, 48 dp minimum height, non-modal, takes no focus, `Duration` default 4000 with 0 as untimed and pointer hold, one at a time through `SnackbarHost` with a queue (AC-SNK-1, AC-SNK-6 partly, AC-SNK-14 meet by reading, unrun); fails AC-SNK-2 (no density levels, text padding 14), AC-SNK-3 (role `alert` with live polite), AC-SNK-4 (action default is 4000, not 10000; untimed without a close control allowed), AC-SNK-5 (focus does not pause: no focus enters), AC-SNK-7, AC-SNK-9 (no keyboard path to the action while it takes no focus), AC-SNK-10, AC-SNK-13 (no enter or exit animation specified in the view); swipe to dismiss and lift above a FAB are not built; action hit area is 8 dp padding around the label, so AC-DEN-7 is unmeasured |
 | tess-shell | none (no snackbar or toast; notification server is outside v1, `tess-shell:docs/design/10 Vision/V1 Scope.md`) | absent |
 | tre | `tre:docs/guide/layers.md` (Tooltips and snackbars), `tre:docs/reference/layers.md` | not applicable as a component: the engine provides a non-dismissible layer, `live` and `window.announce`; the toolkit owns the timer |
@@ -168,7 +191,7 @@ Evidence: [[Gaps and Contradictions]] (snackbar: swipe to dismiss, lift above FA
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/views/Snackbar_View.tdl`, `SnackbarHost_View.tdl` | exists |
+| tess-ui | `tess-ui:src/tess_ui/views/Snackbar_View.tdl`, `SnackbarHost_View.tdl` | exists; the view fixes the minimum height 48, the 344 to 560 width clamp, the gap 8 and the bottom offset in its expressions, so height, min height, min width and gap have no hook and density levels cannot reach them |
 | tre | `tre:docs/guide/layers.md` | mechanism only |
 | tess-shell | none | absent; OSD is [[Volume OSD|On-Screen Display]] |
 

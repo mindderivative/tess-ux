@@ -82,6 +82,32 @@ The stage size is the picture size set by the owner (480 by 270 dp default, 16:9
 - Minimum player width where the full controls row fits: 280 dp (two 40 dp buttons, two 44 dp labels, 80 dp slider, four 8 dp gaps and padding). Below it the time labels hide and only play, slider and mute remain.
 - Hit areas at least 24 dp by 24 dp at every level; the seek slider's thumb hit area is at least 24 dp high even when its track is thinner; 48 dp in a touch context.
 
+## Dimensions and defaults
+
+Stage size is the owner's; the controls row follows the density level.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| stage | height | - | 270 | 270 | 270 | [[Video Player]], Sizing and density (480 by 270 default) | tess-ui: yes (Height param); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| stage | min width | - | 280 | 280 | 280 | [[Video Player]], Sizing and density (full controls row) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| stage | padding | - | N/A: the picture fills the stage with no inset | N/A: the picture fills the stage | N/A: the picture fills the stage | [[Video Player]], Anatomy | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: stage, Padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| player | margin | - | N/A: the parent container sets the outer space | N/A: the parent sets outer space | N/A: the parent sets outer space | [[Spacing and Density]] | tess-ui: via stylesheet rule (Widget: VideoPlayer, Margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| player | gap | `space.3` | 8 | 8 | 8 | [[Video Player]], Tokens used (stage to controls, and between controls) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| stage | border width | - | 0 | 0 | 0 | [[Video Player]], Tokens used (no outline role) | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: stage, Border_Width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| stage | border color | - | N/A: the stage draws no border | N/A: the stage draws no border | N/A: the stage draws no border | [[Video Player]], Tokens used | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: stage, Border_Color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| stage | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| controls row | height | `density.icon_button_container` | 40 | 32 | 28 | [[Video Player]], Sizing and density | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: controls, Height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| controls row | padding | - | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Video Player]], Sizing and density (row as wide as the stage, no inset stated) #needs-verification | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: controls, Padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| play and mute buttons | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Video Player]], Sizing and density | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| elapsed and total label | font | `label_medium` | 12/16/500/0.5 | 12/16/500/0.5 | 12/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| elapsed and total label | min width | - | 44 | 44 | 40 | [[Video Player]], Sizing and density | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| seek slider | min width | - | 80 | 80 | 80 | [[Video Player]], Sizing and density | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| seek slider | min height | - | 24 | 24 | 24 | [[ADR-0002 Desktop density levels and target sizes]] (thumb hit area) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| caption band | height | - | 40 | 40 | 40 | [[Video Player]], Tokens used | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| caption band | padding | `space.5` | 0 16 0 16 | 0 16 0 16 | 0 16 0 16 | [[Video Player]], Layout and overflow (text ends 32 dp short of the stage width) | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: caption, Padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| caption text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| stage | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: via stylesheet rule (Widget: VideoPlayer, Part: stage, Elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Vertical stack: stage, then controls row, gap 8 dp. The player's height is stage height plus row height plus gap.
@@ -158,7 +184,7 @@ Evidence: [[Gaps and Contradictions]] (Video: decoder, fullscreen, speed, volume
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/views/VideoPlayer_View.tdl` | exists, partial; not used by any app or example |
+| tess-ui | `tess-ui:src/tess_ui/views/VideoPlayer_View.tdl` | exists, partial; not used by any app or example; the view sets the stage radius, the gaps, the label and slider widths and the caption height inline, and an inline `Style` beats every stylesheet rule, so those have no hook |
 | tre | the [[Image|Image Node]] with repeated `set(rgba=...)` | mechanism |
 | tess-shell | none | absent |
 
