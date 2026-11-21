@@ -13,7 +13,7 @@ Sources read:
   - every other note: lines of the form `A` on|over|against `B` with a stated
     ratio (N:1 or N to 1, optionally tagged light or dark) or a limit
     ("at least N:1"), checked against the standard light and dark schemes;
-  - computed extras: scrollbar thumb at 0.60 over the surface roles, the scrim
+  - computed extras: scrollbar thumb at 0.70 over the surface roles, the scrim
     band at 0.60 with on_scrim, the focus ring over the surface roles.
 """
 from __future__ import annotations
@@ -28,6 +28,8 @@ SCHEMES = ["light_std", "dark_std", "light_med", "dark_med", "light_high", "dark
 TOLERANCE = 0.05
 SURFACES = ["surface", "surface_dim", "surface_bright", "surface_container_lowest", "surface_container_low",
             "surface_container", "surface_container_high", "surface_container_highest"]
+THUMB_REST = 0.70  # ADR-0012 as amended by OQ-32
+KNOWN_VIOLATIONS_FILE = "tools/known_violations.json"
 SKIP_DIRS = {".git", ".obsidian", ".claude", ".copilot", "tools", "graphify-out", "_templates"}
 
 
@@ -303,20 +305,20 @@ def scan_notes(root: Path, roles, rep: Report, shell):
 
 
 def computed_extras(root: Path, roles, rep: Report):
-    # scrollbar thumb at 0.60
+    # scrollbar thumb at the rest opacity
     stated = {}
     sb = root / "30 Component Specifications" / "Scrollbar and Scroll Container.md"
     if sb.exists():
-        m = re.search(r"at 0\.60 it is (\d+\.\d+) and (\d+\.\d+)", sb.read_text(encoding="utf-8"))
+        m = re.search(r"at 0\.70 it is (\d+\.\d+) and (\d+\.\d+)", sb.read_text(encoding="utf-8"))
         if m:
             stated = {"dark_std": float(m.group(1)), "light_std": float(m.group(2))}
     for s in ("light_std", "dark_std", "light_high", "dark_high"):
         fg = roles[s]["on_surface_variant"]
         for surf in SURFACES:
             bg = roles[s][surf]
-            got = ratio(composite(fg, 0.60, bg), bg)
+            got = ratio(composite(fg, THUMB_REST, bg), bg)
             sev = "info"
-            msg = f"thumb on_surface_variant at 0.60 over {surf} [{s}]: {got:.2f}"
+            msg = f"thumb on_surface_variant at {THUMB_REST:.2f} over {surf} [{s}]: {got:.2f}"
             if got < 3.0:
                 sev, msg = "error", msg + " (below 3.0)"
             if surf == "surface" and s in stated and abs(got - stated[s]) > TOLERANCE:
@@ -352,6 +354,29 @@ def computed_extras(root: Path, roles, rep: Report):
                     f"stated about {claim} for secondary over surface [{s}], computed {got:.2f}")
 
 
+def apply_known_violations(root: Path, rep: Report) -> None:
+    """Downgrade errors that a project is known to violate (spec stays strict, project debt is listed).
+
+    tools/known_violations.json is a list of objects: project, ac, section, match
+    (the message must start with it), tracked (worklist id), reason. A matched
+    error becomes a warning naming the project and the worklist id. An entry that
+    no longer matches anything is reported as a warning so the table stays honest.
+    """
+    path = root / KNOWN_VIOLATIONS_FILE
+    if not path.exists():
+        return
+    entries = json.loads(path.read_text(encoding="utf-8"))
+    for e in entries:
+        hit = False
+        for r in rep.rows:
+            if r["severity"] == "error" and r["section"] == e["section"] and r["message"].startswith(e["match"]):
+                r["severity"] = "warn"
+                r["message"] += f" [known violation by {e['project']}: {e['tracked']}, {e['ac']}]"
+                hit = True
+        if not hit:
+            rep.add("known", "warn", KNOWN_VIOLATIONS_FILE, f"entry no longer matches an error, remove it: {e['match']} ({e['project']} {e['tracked']})")
+
+
 def main(argv: list[str]) -> int:
     args = [a for a in argv if not a.startswith("--")]
     as_json = "--json" in argv
@@ -361,6 +386,7 @@ def main(argv: list[str]) -> int:
     if roles is not None and roles["light_std"]:
         scan_notes(root, roles, rep, shell)
         computed_extras(root, roles, rep)
+    apply_known_violations(root, rep)
     errors = sum(1 for r in rep.rows if r["severity"] == "error")
     if as_json:
         json.dump({"root": str(root), "errors": errors, "rows": rep.rows}, sys.stdout, indent=1)

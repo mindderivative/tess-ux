@@ -37,7 +37,7 @@ Severity: P0 blocks use (an owner-feedback item still failing, a keyboard trap, 
 ## Findings outside the worklists
 
 - The shell `accent` colour on `surface` measures 4.38 to 1 in the dark scheme, below the 4.5 limit for text ([[Colour Roles]]); it passes for non-text use. Audit item for the shell: do not use `accent` for text.
-- The scrollbar thumb at the accepted 0.60 rest opacity measures 3.11 to 1 over `surface` in the light scheme but 2.76 to 2.93 over `surface_dim`, `surface_container_high` and `surface_container_highest` ([[Open Questions]] OQ-32).
+- The scrollbar thumb rest opacity was raised to 0.70 (OQ-32, [[ADR-0012 Scrollbar thumb opacity and hit area exception]]): at 0.60 it measured 2.76 to 1 over `surface_dim` in the light scheme; at 0.70 the minimum over every surface role is 3.40 to 1. UXREQ-001 carries the value.
 
 ## How an audit is run
 

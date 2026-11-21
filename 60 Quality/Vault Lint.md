@@ -68,13 +68,17 @@ python3 tools/contrast_check.py [vault root] --json
 | shell | The measured shell pairs (Dark, Light, High_Contrast) from the shell role table. A value written as inherits takes the Dark value and downgrades the finding to a warning. | same limits (4.5 text, 3 non-text) |
 | notes-stated | Lines with a pair written as role `on`, `over` or `against` role and a stated ratio (`N:1` or `N to 1`, tagged light or dark). A shell role pair is accepted when the shell hex values reproduce the number. | the stated ratio differs by more than 0.05 |
 | notes-limit | The same pairs with a limit (at least N to 1), compared with the light and dark standard values. | the computed ratio is below the limit |
-| thumb | The scrollbar thumb, `on_surface_variant` at 0.60 over each surface role, in light and dark at the standard and high levels; compared with the 4.61 and 3.11 stated in the Scrollbar note. | below 3.0 or differs from the stated values |
+| thumb | The scrollbar thumb, `on_surface_variant` at the rest opacity 0.70 (ADR-0012) over each surface role, in light and dark at the standard and high levels; compared with the 5.85 and 3.96 stated in the Scrollbar note. | below 3.0 or differs from the stated values |
 | scrim | The caption band, `scrim` at 0.60, with the caption text colour taken as white (the role name ADR-0016 uses for it is not defined in Colour Roles), over a white, mid-grey and black picture; stated 5.7 over white. | below 4.5 |
 | focus-ring | `secondary` over each surface role in all six schemes; stated about 6 (light) and 10.9 (dark) over `surface`. | below 3.0 |
 
 - Alpha colours are composited over their background in sRGB before the ratio is computed, as the contrast script of [[Test Method]] specifies.
 - The ratio is the WCAG 2.2 formula (L1 + 0.05) divided by (L2 + 0.05) with sRGB relative luminance.
 - Pairs written in prose without code-span role names are not read; the script reports how many pairs and stated ratios it compared.
+
+## Known violations
+
+`tools/known_violations.json` lists spec-documented violations by a project (fields: project, ac, section, match, tracked, reason). The contrast check reports a matching error as a warning that names the project and its worklist id, so the tool is green on the specification and still lists the project debt. An entry that no longer matches any error is itself reported as a warning and is removed. The current entry is the tess-shell `accent` colour on `surface` in the dark scheme (TSH-043, AC-COL-3).
 
 ## Use
 
