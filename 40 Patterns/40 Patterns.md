@@ -4,7 +4,7 @@ type: index
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [index]
 related: []
 depends_on: []
@@ -16,6 +16,14 @@ Cross-element patterns: empty, loading and error states, validation, notificatio
 
 ## Notes
 
-No notes yet.
+- [[Drag and Drop Pattern]]
+- [[Empty States]]
+- [[Error States]]
+- [[Forms and Settings]]
+- [[Keyboard Navigation]]
+- [[Loading States]]
+- [[Notifications]]
+- [[Selection]]
+- [[Validation]]
 
 Back to [[Index]].

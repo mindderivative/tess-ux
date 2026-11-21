@@ -127,7 +127,7 @@ All colours are roles ([[Theme Following the System]]). The scrim is `scrim` at 
 
 Scripted input follows [[Test Method]] (toolkit key and pointer simulation, frame clock).
 
-- [ ] AC-DLG-1 (pixel and token check, container): basic dialog container pixel equals `surface_container_high` of the active scheme (alpha 255), radius 28 dp, elevation level 3; full-screen: `surface`, radius 0, level 0, size equals the window size.
+- [ ] AC-DLG-1 (pixel check and token test, pixel and token check, container): basic dialog container pixel equals `surface_container_high` of the active scheme (alpha 255), radius 28 dp, elevation level 3; full-screen: `surface`, radius 0, level 0, size equals the window size.
 - [ ] AC-DLG-2 (pixel check, scrim): a window pixel under the scrim equals the underlying pixel blended with `scrim` at 32 percent (±1 per channel) at the four window corners and the centre; after resizing the window by 100 dp both ways, the scrim still covers the whole window.
 - [ ] AC-DLG-3 (geometry check, size): requested widths 100, 312, 900 give container widths 280, 312, 560 dp; a window 300 dp wide gives the full-screen form; container edges are at least 24 dp from the window edges and the maximum height is min(560, window height − 48) dp.
 - [ ] AC-DLG-4 (geometry check, padding): headline top padding 24 dp, side padding 24 dp, icon 24 dp square in `secondary`, actions row padding 16 dp top and 24 dp bottom and sides, gap between actions 8 dp (±0.5 dp).
@@ -143,7 +143,7 @@ Scripted input follows [[Test Method]] (toolkit key and pointer simulation, fram
 - [ ] AC-DLG-14 (AT tree assertion): the container has role `dialog` (or `alertdialog`), an accessible name equal to the headline, and the supporting text as description; with a dialog open, content beneath is not focusable.
 - [ ] AC-DLG-15 (contrast script): the three pairs of Accessibility each at least 4.5:1 in both schemes.
 - [ ] AC-DLG-16 (scripted input, focus return and exclusivity): closing returns focus to the opener; opening a dialog while another is open is refused by default, following [[Scrim]] rule 7 (one scrim under the topmost modal; a project spec may allow stacking); a visible tooltip and an open popup are gone within one frame after the dialog opens.
-- [ ] AC-DLG-17 (scripted state, motion): with animation on, scrim opacity reaches 0.32 between 500 ms and 533 ms after open and 0 between 150 ms and 183 ms after close ([[Scrim]] AC-SCR-9); with reduced motion on, the first frame after open draws the dialog and scrim at full opacity.
+- [ ] AC-DLG-17 (scripted input, motion): with animation on, scrim opacity reaches 0.32 between 500 ms and 533 ms after open and 0 between 150 ms and 183 ms after close ([[Scrim]] AC-SCR-9); with reduced motion on, the first frame after open draws the dialog and scrim at full opacity.
 
 ## Status in code
 

@@ -132,7 +132,7 @@ Handle position follows the pointer in the same frame (no easing while dragged).
 ## Accessibility
 
 - Role: `slider` with `value`, `value_min`, `value_max`, `value_step` ([WAI-ARIA slider](https://www.w3.org/TR/wai-aria-1.2/#slider)); orientation vertical for a vertical slider.
-- Name: the visible label; a range slider's handles are named "<label>, minimum" and "<label>, maximum" (tess-ui).
+- Name: the visible label; a range slider's handles are named "{label}, minimum" and "{label}, maximum" (tess-ui).
 - Value text: when the number needs units or words ("45 percent", "1:23 of 3:45"), the slider sets the value text; without it the number is read.
 - Actions: increment, decrement and set-value are offered (the engine derives them from role and value range, `tre:docs/reference/node.md`).
 - Disabled: exposed as disabled; no focus, no key.
@@ -160,7 +160,7 @@ Continuous, horizontal, 0 to 1 in tess-ui and 0 to 100 in tess-shell, length 200
 - [ ] AC-SLD-9 (scripted input): the value label is visible while the handle is pressed, while it has keyboard focus and 500 ms after hover on the handle; it is not visible after hover on the track for 1000 ms or hover on the row label; it hides on blur and on Escape; exactly one slider tooltip is visible at a time. Pass: visible label count and owner equal at each time.
 - [ ] AC-SLD-10 (pixel check): the value label is opaque (container pixels, no transparent pixels under its text), `primary` container with `on_primary` text, 28 dp high at default, and fully inside the window (flips below the handle at the top edge); the focused slider's ring is not clipped. Pass: pixels equal within 1 per 8-bit channel; ring pixels 100 percent visible.
 - [ ] AC-SLD-11 (contrast script): light and dark, handle and active track against the surface at least 3 to 1, stop indicator against the surface at least 3 to 1, value label text against the label container at least 4.5 to 1. Pass: ratios at or above the limits.
-- [ ] AC-SLD-12 (AT tree assertion): the node has role `slider`, a non-empty name, `value`, `value_min`, `value_max`, `value_step` equal to the state, `disabled` equal to the state; a slider with a value text exposes it; each range handle has its own node named "<label>, minimum" and "<label>, maximum". Pass: all equal.
+- [ ] AC-SLD-12 (AT tree assertion): the node has role `slider`, a non-empty name, `value`, `value_min`, `value_max`, `value_step` equal to the state, `disabled` equal to the state; a slider with a value text exposes it; each range handle has its own node named "{label}, minimum" and "{label}, maximum". Pass: all equal.
 - [ ] AC-SLD-13 (scripted input): the assistive actions increment, decrement and set-value change the value by the key step or to the given value and fire the same events as keys. Pass: values and counts equal.
 - [ ] AC-SLD-14 (token test): state layer opacities 0.08, 0.10, 0.10 and 0.16 (dragged); disabled active track and handle 0.38, inactive track 0.12. Pass: values equal.
 - [ ] AC-SLD-15 (scripted input): with reduced motion on, a key step moves the handle and colour in the first frame. Pass: handle at the final position in that frame.

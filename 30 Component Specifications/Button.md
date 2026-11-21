@@ -145,7 +145,7 @@ Variant filled in tess-ui; tess-shell ships one bordered surface-raised look. De
 
 Evidence: F8 (reset button showed the row tooltip), the shell Launcher hand check, and S1 in [[Owner Feedback 2026-11-20]].
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

@@ -24,7 +24,7 @@ Applies to every project that draws visual elements and claims to follow the UX 
 - The unit is the acceptance criterion `AC-<prefix>-<n>` in a chapter, foundation or component note. A claim, an audit row, a defect and a deviation each cite an AC id.
 - An id is unique across the vault, never renumbered and never reused. A criterion that stops applying is marked `withdrawn` in its note with the date and the reason and stays in the list (vault rule 7: never delete notes).
 - An AC without a marker is a MUST. A criterion that is a SHOULD carries `(SHOULD)` right after the id. MAY behaviour has no criterion unless it is present, and then it follows the stated form ([[01 Principles and Scope]], Conformance language).
-- Each AC names one of the seven test types of [[Test Method]] and a pass condition in numbers. A criterion without a type is a defect of the vault (AC-TM-1).
+- Each AC names one of the eight test types of [[Test Method]] and a pass condition in numbers. A criterion without a type is a defect of the vault (AC-TM-1).
 - Rules in chapters that carry MUST in capitals and no AC are defects of the vault (AC-PRI-3); a project is audited only against criteria.
 
 ## Conformance levels
@@ -203,7 +203,7 @@ No audit exists in [[70 Adoption]] yet (this note and [[Audit Template]] are the
 
 ## Sources
 
-- [[Test Method]] (seven test types, harness per project, audit format, AC-TM-1 to AC-TM-3), [[01 Principles and Scope]] (MUST and SHOULD, principle 7, how to read the specification), vault `AGENTS.md` (hard rules 5, 8, 9; audits routed through `bot:Orchestrator`), [[ADR-0008 Publishing flow]], [[ADR-0010 Document structure of the specifications]].
+- [[Test Method]] (eight test types, harness per project, audit format, AC-TM-1 to AC-TM-3), [[01 Principles and Scope]] (MUST and SHOULD, principle 7, how to read the specification), vault `AGENTS.md` (hard rules 5, 8, 9; audits routed through `bot:Orchestrator`), [[ADR-0008 Publishing flow]], [[ADR-0010 Document structure of the specifications]].
 - Harness facts: `tess-ui:tests/real_session.py`, `tess-ui:tests/test_effects_visual.py`, `tess-shell:tests/` and `tess-shell:docs/design/00 Home/Hand Checks.md`, `tre:AGENTS.md` and `tre:tools/tests_for.py` (as read in [[Test Method]]).
 - [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174) for MUST and SHOULD.
 - [Semantic Versioning 2.0.0](https://semver.org/) as the model for MAJOR.MINOR.PATCH; the mapping of what counts as major for criteria is a Tesserae design choice #needs-verification-as-design-choice.

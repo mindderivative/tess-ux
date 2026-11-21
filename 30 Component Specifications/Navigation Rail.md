@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, navigation, rail, landmark]
-related: ["[[Navigation Drawer]]", "[[Side Sheet]]", "[[Icon Button]]", "[[Floating Action Button]]", "[[Badge]]", "[[Tooltip]]", "[[Routed View]]", "[[Top App Bar]]", "[[Dock]]", "[[Vertical Bar]]", "[[Workspaces Module]]", "[[Frame Strip]]", "[[Scrollbar and Scroll Container]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
+related: ["[[Navigation Drawer]]", "[[Side Sheet]]", "[[Icon Button]]", "[[Floating Action Button]]", "[[Badge]]", "[[Tooltip]]", "[[Routed View]]", "[[Top App Bar]]", "[[Dock]]", "[[Bar#Variants|Vertical Bar]]", "[[Workspaces Module]]", "[[Frame#Anatomy|Frame Strip]]", "[[Scrollbar and Scroll Container]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 ---
 
@@ -23,7 +23,7 @@ Switch between the few top-level destinations of an application with one press, 
 
 - Use when: the app has three to seven top-level destinations of equal importance; the window is medium or wider (see Window size class behaviour); a vertical column beside the content suits the layout.
 - Do not use when: there are more than seven destinations or they need section headings ([[Navigation Drawer]]); the window is compact (a modal drawer opens from the [[Top App Bar]]); the items are commands ([[Menu]]); the items switch content inside one view (tabs); the control is a toolbar of tools ([[Icon Button]] in a toolbar).
-- The shell's [[Dock]], [[Vertical Bar]] and [[Frame Strip]] are shell surfaces with their own specifications; they are not instances of this element. [[Workspaces Module]] is a shell module that lists workspaces.
+- The shell's [[Dock]], [[Bar#Variants|Vertical Bar]] and [[Frame#Anatomy|Frame Strip]] are shell surfaces with their own specifications; they are not instances of this element. [[Workspaces Module]] is a shell module that lists workspaces.
 
 ## Anatomy
 
@@ -177,19 +177,19 @@ All colours are roles ([[Theme Following the System]]). The container is `surfac
 - [ ] AC-NRL-2 (token test): label `label_medium` (collapsed) or `label_large` (expanded); inactive icon and label `on_surface_variant`; active icon `on_secondary_container` and active label `on_surface` (collapsed); badge `error` with `on_error`.
 - [ ] AC-NRL-3 (geometry check): at default, compact and dense, the collapsed rail is 80, 72, 64 dp wide, the pill 56 by 32, 48 by 28, 40 by 24, the first destination starts 44, 24, 12 dp from the top, destinations are 12, 8, 4 dp apart, the icon-to-label gap is 4, 4, 2 dp (scale factors 1.0 and 2.0).
 - [ ] AC-NRL-4 (geometry check): the expanded rail is 220 dp wide (width requests 100, 300, 900 give 220, 300, 360), the pill is 56, 40, 32 dp high at the three levels, side padding 20, 12, 8 dp, icon-to-label gap 8, 8, 4 dp.
-- [ ] AC-NRL-5 (layout test): at window widths 599, 600, 839, 840, 1199, 1200 dp the rail is absent at 599, collapsed at 600 and 839, and follows the project policy from 840; an expanded rail at 840 dp with a 220 dp width leaves the content pane at least 320 dp or collapses.
-- [ ] AC-NRL-6 (layout test): resizing across 600 dp with the rail showing removes it at 599 and shows the modal drawer's opener; every destination stays reachable; resizing across the expanded boundary keeps the selection and the focused destination.
+- [ ] AC-NRL-5 (geometry check): at window widths 599, 600, 839, 840, 1199, 1200 dp the rail is absent at 599, collapsed at 600 and 839, and follows the project policy from 840; an expanded rail at 840 dp with a 220 dp width leaves the content pane at least 320 dp or collapses.
+- [ ] AC-NRL-6 (geometry check): resizing across 600 dp with the rail showing removes it at 599 and shows the modal drawer's opener; every destination stays reachable; resizing across the expanded boundary keeps the selection and the focused destination.
 - [ ] AC-NRL-7 (scripted input): focus enters the destination list on the selected destination; Down x3 moves focus three enabled destinations, skipping disabled ones; Home and End reach the first and last; no wrap; the selection does not change while focus moves; Enter and Space each choose the focused destination once.
 - [ ] AC-NRL-8 (scripted input): Tab order is header controls, then the list once, then footer controls; Shift+Tab reverses; a disabled destination takes no focus, no press and no key.
 - [ ] AC-NRL-9 (AT tree assertion): the container has role `navigation` (or `group` where the engine lacks it) with a non-empty name; each destination is a `link` named by its label; `current` is page on exactly the selected one; a badge count is part of the name.
-- [ ] AC-NRL-10 (layout test): a collapsed label of 20 characters ends in `…` within the rail width minus 8 dp each side; the accessible name and the tooltip text are the full label; hovering 500 ms shows a tooltip whose trigger is the destination; a short label shows none.
+- [ ] AC-NRL-10 (geometry check): a collapsed label of 20 characters ends in `…` within the rail width minus 8 dp each side; the accessible name and the tooltip text are the full label; hovering 500 ms shows a tooltip whose trigger is the destination; a short label shows none.
 - [ ] AC-NRL-11 (token test): state layers on a destination: hover 0.08, focus 0.10, pressed 0.10 of `on_surface`; a disabled destination shows none.
 - [ ] AC-NRL-12 (review): a rail holds three to seven destinations; a build with fewer than three or more than seven is reported (lint).
 - [ ] AC-NRL-13 (scripted input): in a window of 400 dp height with 7 destinations the column scrolls with a visible thumb; the header and footer stay fixed; focusing the last destination by keyboard scrolls it fully into view with its 5 dp ring.
-- [ ] AC-NRL-14 (scripted state): with a screens rail, navigating to a screen by any route makes its destination the only one with `current` page within one frame; choosing a destination navigates once.
-- [ ] AC-NRL-15 (scripted frame capture): the pill colour change completes 150 ms to 183 ms after the choice at 60 Hz; expand and collapse completes 250 ms to 283 ms; with reduced motion both complete on the next frame.
+- [ ] AC-NRL-14 (scripted input): with a screens rail, navigating to a screen by any route makes its destination the only one with `current` page within one frame; choosing a destination navigates once.
+- [ ] AC-NRL-15 (pixel check): the pill colour change completes 150 ms to 183 ms after the choice at 60 Hz; expand and collapse completes 250 ms to 283 ms; with reduced motion both complete on the next frame.
 - [ ] AC-NRL-16 (contrast script): the pairs listed under Accessibility measure at least 4.5:1 in light and dark; the ring at least 3:1 against `surface` and `secondary_container`.
-- [ ] AC-NRL-17 (scripted state): a rail and a standard drawer are never both laid out at any width in 320 to 2000 dp.
+- [ ] AC-NRL-17 (scripted input): a rail and a standard drawer are never both laid out at any width in 320 to 2000 dp.
 
 ## Status in code
 

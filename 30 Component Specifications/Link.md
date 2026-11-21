@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, navigation, text, tesserae-specific]
-related: ["[[Text]]", "[[Rich Text]]", "[[Rich Text Span]]", "[[Button]]", "[[Text Selection]]", "[[Text Truncation]]", "[[Tooltip]]", "[[Form Row]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
+related: ["[[Text]]", "[[Text|Rich Text]]", "[[Text|Rich Text Span]]", "[[Button]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[Tooltip]]", "[[Form Row]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text]]", "[[Colour Roles]]", "[[Focus Ring]]", "[[Spacing and Density]]"]
 ---
 
@@ -22,7 +22,7 @@ A link takes the user to a different place: a documentation page, a mail compose
 ## When to use and not
 
 - Use when: the action is navigation (open a URL, go to a related page, open a section elsewhere) and the label is a phrase that names the destination.
-- Do not use when: the action changes data or state in place (use [[Button]]), a toggle (use [[Switch]]), or the target is inside a longer sentence (use a `link` run of [[Rich Text]]; the standalone Link is for a whole line).
+- Do not use when: the action changes data or state in place (use [[Button]]), a toggle (use [[Switch]]), or the target is inside a longer sentence (use a `link` run of [[Text|Rich Text]]; the standalone Link is for a whole line).
 - Link text names the destination ("Read the docs", not "click here"); the same destination uses the same text everywhere.
 
 ## Anatomy
@@ -37,7 +37,7 @@ A link takes the user to a different place: a documentation page, a mail compose
 | Variant | Use | Differences |
 |---|---|---|
 | Standalone link | a line of its own (help line, footer) | `Link` element; underline on hover and focus by default |
-| Inline link | inside a sentence | a `link` run of [[Rich Text]]; underlined always so that colour is not the only cue ([WCAG 1.4.1](https://www.w3.org/TR/WCAG22/#use-of-color)) |
+| Inline link | inside a sentence | a `link` run of [[Text|Rich Text]]; underlined always so that colour is not the only cue ([WCAG 1.4.1](https://www.w3.org/TR/WCAG22/#use-of-color)) |
 | Visited | a link that was followed | `secondary` colour; set by opening its `Href` |
 | External | opens the browser or the mail program | `Href` with `http`, `https`, `mailto` or `tel` |
 | Internal | goes elsewhere in the app | no `Href`, only a handler |
@@ -150,7 +150,7 @@ The colours are roles; the scheme recomputes them ([[Theme Following the System]
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`On_Link` on `Text`), `shell-vault:41 TDL Reference/Block Reference.md` | partly meets: link spans inside `Text` with `On_Link`; no standalone Link block (AC-LNK-2, AC-LNK-5, AC-LNK-6 absent for a standalone link) |
 | tre | `tre:docs/guide/text.md` (links), `tre:docs/guide/accessibility.md` | meets as the primitive: a span with a `link` fires a `link` event with `href`, hand cursor, accessible `link` node with its URL and a `click` action; the engine opens nothing and draws no underline or colour by itself |
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

@@ -137,7 +137,7 @@ No value means small; `max` 99; zero hidden; not anchored unless the caller anch
 
 Evidence: [[Gaps and Contradictions]] (shell modules use pixel literals; Badge corner radius a token).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

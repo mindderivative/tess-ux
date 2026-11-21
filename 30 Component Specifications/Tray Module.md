@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, tray]
-related: ["[[Tray Item]]", "[[Tray Menu]]", "[[Bar]]", "[[Popup]]", "[[Menu]]", "[[12 Overlays]]", "[[Scrollbar and Scroll Container]]", "[[Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Tray Item]]", "[[Tray Menu]]", "[[Bar]]", "[[Popup]]", "[[Menu]]", "[[12 Overlays]]", "[[Scrollbar and Scroll Container]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -103,12 +103,12 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TRY-2 (scripted input): no watcher or no item: root `Visible` false, width 0, absent from the accessibility tree, Bar spacing unchanged; a watcher appearing shows the module.
 - [ ] AC-MOD-TRY-3 (scripted input): an item with status Passive is hidden unless `show_passive`; `NewIcon`, `NewToolTip`, `NewTitle` and `NewStatus` each update the matching value after one fresh read.
 - [ ] AC-MOD-TRY-4 (scripted input): Tab visits each item once and leaves; the Menu key on an item opens its menu below the item and Escape returns focus to the item.
-- [ ] AC-MOD-TRY-5 (scripted pointer): hover two different items in turn: at most one tooltip layer at any time.
+- [ ] AC-MOD-TRY-5 (scripted input): hover two different items in turn: at most one tooltip layer at any time.
 - [ ] AC-MOD-TRY-6 (static check): the Root carries no `Tooltip`.
 - [ ] AC-MOD-TRY-7 (geometry check): item hit areas are 40, 32, 28 dp at default, compact, dense and at least 24 dp; gaps are 4 dp; hit areas do not overlap.
 - [ ] AC-MOD-TRY-8 (scripted input): opening a menu of 100 entries shows the popup within 100 ms (budget of the vault note) and the popup height is at most 60 percent of the output height.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

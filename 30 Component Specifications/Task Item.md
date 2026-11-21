@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, tasks]
-related: ["[[Tasks Module]]", "[[Marquee Text]]", "[[Icon]]", "[[Icon Button]]", "[[Button]]", "[[Selection]]", "[[Disabled State]]", "[[Focus Ring]]", "[[State Layers]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Tasks Module]]", "[[Marquee Text]]", "[[Iconography#Icon sizes|Icon]]", "[[Icon Button]]", "[[Button]]", "[[Selection]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[Focus Ring]]", "[[State Layers]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -43,12 +43,12 @@ Represents one open window, shows whether it is active, minimised or wants atten
 
 | State | Visual change | Token values |
 |---|---|---|
-| Rest | Icon and title in `on_surface` | [[Icon]] |
+| Rest | Icon and title in `on_surface` | [[Iconography#Icon sizes|Icon]] |
 | Hover | Fill `surface_raised` (code); spec: state layer 8 percent | [[State Layers]] |
 | Focus (keyboard) | Focus ring 3 dp, 2 dp offset | [[Focus Ring]] |
 | Pressed | State layer 10 percent | [[State Layers]] |
 | Active window | `:selected`: `surface_raised` fill and 2 px `primary` border; state `selected` | primary on surface 5.76:1 dark, 5.29:1 light |
-| Minimised | Opacity 0.5 (code). The same look as disabled: spec requires a second cue that is not the disabled look (for example a 2 dp underline bar); the name says `minimised` | [[Disabled State]] |
+| Minimised | Opacity 0.5 (code). The same look as disabled: spec requires a second cue that is not the disabled look (for example a 2 dp underline bar); the name says `minimised` | [[State Layers#Disabled scheme|Disabled State]] |
 | Wants attention | 6 dp `warning` dot beside the title (shape appears, not only colour) | `warning` 10.02:1 dark, 5.51:1 light |
 | Disabled | Not applicable: an item is never disabled | not applicable |
 
@@ -83,7 +83,7 @@ One tooltip, on the item (the control), with the window title and the applicatio
 
 ## Motion
 
-The Marquee scrolls the title; the opacity of a minimised item changes in one frame. Reduced motion: the Marquee stops and ellipsises ([[Reduced Motion]]).
+The Marquee scrolls the title; the opacity of a minimised item changes in one frame. Reduced motion: the Marquee stops and ellipsises ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]).
 
 ## Accessibility
 
@@ -111,13 +111,13 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TIT-1 (AT tree assertion): the item has role `BUTTON` and a name that contains the window title and the application name, and the word `active`, `minimised` or `wants attention` when it applies; `selected` is set only while the window is active.
 - [ ] AC-MOD-TIT-2 (scripted input): click an inactive item: the window activates once; click the active item: it minimises once; middle click: the window closes once.
 - [ ] AC-MOD-TIT-3 (scripted input): Enter and Space on a focused item act as a click; Delete closes the window.
-- [ ] AC-MOD-TIT-4 (scripted pointer): hover an icon-only item for 500 ms: exactly 1 tooltip layer with the title and application; hover an item whose title is cut: exactly 1 layer, never 2.
+- [ ] AC-MOD-TIT-4 (scripted input): hover an icon-only item for 500 ms: exactly 1 tooltip layer with the title and application; hover an item whose title is cut: exactly 1 layer, never 2.
 - [ ] AC-MOD-TIT-5 (static check): no node under the item other than the item itself carries a `Tooltip`.
 - [ ] AC-MOD-TIT-6 (geometry check): item height is 40, 32 and 28 dp, with-title icon 18, 18 and 16 dp, icon-only icon 24, 20 and 20 dp at default, compact and dense; hit area at least 24 dp.
 - [ ] AC-MOD-TIT-7 (pixel check): active, minimised and attention each differ from rest in a greyscale render (fill and border; underline or equivalent; dot shape).
 - [ ] AC-MOD-TIT-8 (contrast script): title text against the Bar surface and the 2 px border at least 4.5:1 and 3:1 respectively in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

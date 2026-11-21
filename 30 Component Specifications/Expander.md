@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, reveal, motion]
-related: ["[[Accordion]]", "[[Button]]", "[[Popup]]", "[[Dialog]]", "[[Content Fade]]", "[[Reduced Motion]]", "[[Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Accordion]]", "[[Button]]", "[[Popup]]", "[[Dialog]]", "[[Auto Hide|Content Fade]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[Motion]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -76,7 +76,7 @@ The Expander has no tooltip; a tooltip belongs to the controller button if it is
 
 ## Motion
 
-200 ms, `standard` easing, size and opacity together; the fade is the surface content fade ([[Content Fade]]). Reduced motion: the state switches in one frame and the end event fires at once ([[Reduced Motion]]). At rest the Expander draws no frames.
+200 ms, `standard` easing, size and opacity together; the fade is the surface content fade ([[Auto Hide|Content Fade]]). Reduced motion: the state switches in one frame and the end event fires at once ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]). At rest the Expander draws no frames.
 
 ## Accessibility
 
@@ -109,7 +109,7 @@ No colours of its own; content follows the scheme.
 - [ ] AC-MOD-EXP-6 (pixel check): during the animation no pixel of the content paints outside the root box.
 - [ ] AC-MOD-EXP-7 (scripted input): at rest the window draws 0 frames over 1 second.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

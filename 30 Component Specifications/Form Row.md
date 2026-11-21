@@ -106,7 +106,7 @@ Row height with one control line equals the control height. The label column wid
 Per [[ADR-0004 Tooltip rule]] and F8:
 
 - The tooltip belongs to the label element (the label text together with its marker lines). It shows the description of the setting after a 500 ms hover. The label is not focusable, so keyboard users get the same description from the help line that appears on focus within the row and from the control's accessible description.
-- The reset button carries its own tooltip with its accessible name "Reset <label> to its default".
+- The reset button carries its own tooltip with its accessible name "Reset {label} to its default".
 - The row container, the control column, a cell, a group container and the form carry no tooltip. A switch or field has no tooltip of its own; its description is its accessible description.
 - Only one tooltip is visible at a time; leaving the label dismisses it; a tooltip is never the only way to read the description (the help line shows on focus).
 
@@ -117,7 +117,7 @@ The help and error lines appear without animation (0 ms) so the focused control 
 ## Accessibility
 
 - The control's accessible name is the label text; its description is the help text. The label is not a separate focus stop.
-- The reset button name is "Reset <label> to its default".
+- The reset button name is "Reset {label} to its default".
 - The error line is a live region (polite): the message is announced once when it appears; the control has `invalid` set and the description references the error.
 - Required and modified are exposed as properties (`required`, a "modified" token in the description) and not by colour alone: markers are text.
 - Contrast: label and controls 4.5 to 1; the error text 4.5 to 1 on the surface in light and dark ([[14 Accessibility Basics]]).
@@ -138,9 +138,9 @@ Label column per density, help line on focus within, reset button always present
 - [ ] AC-FRM-04: Scripted input (F8). Hovering the label for 500 ms shows one tooltip with the description; hovering the switch, the control, the gap between them and the row background for 2 s shows none; hovering the reset button shows only its own tooltip; two tooltips are never visible at once.
 - [ ] AC-FRM-05: AT tree assertion and static check. No node of role group, row, cell or form carries a tooltip; the only tooltip-bearing nodes of a row are the label and the reset button.
 - [ ] AC-FRM-06: Scripted input. The reset button is enabled if and only if the value differs from the default; its x position and width are identical in both states; activating it restores the default and moves focus to the first control of the row.
-- [ ] AC-FRM-07: AT tree assertion. The reset button name is "Reset <label> to its default"; a disabled reset is not in the Tab order.
+- [ ] AC-FRM-07: AT tree assertion. The reset button name is "Reset {label} to its default"; a disabled reset is not in the Tab order.
 - [ ] AC-FRM-08: Scripted input. Tab order of a two-row form is: row 1 control, row 1 reset (if enabled), row 2 control; Shift plus Tab reverses it; the label is never focused.
-- [ ] AC-FRM-09: Pixel and AT check. An invalid value shows an error line in `error` role with an icon below the control column, the control outline in `error`, `invalid` true on the control, and a polite live announcement of the message once.
+- [ ] AC-FRM-09 (pixel check and AT tree assertion): Pixel and AT check. An invalid value shows an error line in `error` role with an icon below the control column, the control outline in `error`, `invalid` true on the control, and a polite live announcement of the message once.
 - [ ] AC-FRM-10: Pixel check. A required and missing row shows the text "required" under the label in `label_small`, `error` role.
 - [ ] AC-FRM-11: Geometry check (F7). In a single-line field at all densities the text line box centre is within 0.5 dp of the field centre and the text left edge is the horizontal padding (12, 8, 8 dp) from the field edge.
 - [ ] AC-FRM-12: Geometry check. When the help line appears on focus, the y position of the focused control does not change and the help line lies below the control column.

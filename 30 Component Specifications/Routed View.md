@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, pattern, navigation, routing, keyboard, accessibility]
-related: ["[[Window]]", "[[Navigation Rail]]", "[[Navigation Drawer]]", "[[Top App Bar]]", "[[Screen Transitions]]", "[[Dock]]", "[[Tabs]]", "[[Icon Button]]", "[[Tooltip]]", "[[Dialog]]", "[[Focus Ring]]", "[[Motion]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Accessibility Announcements]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Window]]", "[[Navigation Rail]]", "[[Navigation Drawer]]", "[[Top App Bar]]", "[[Routed View|Screen Transitions]]", "[[Dock]]", "[[Tabs]]", "[[Icon Button]]", "[[Tooltip]]", "[[Dialog]]", "[[Focus Ring]]", "[[Motion]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[Window]]"]
 ---
 
@@ -31,7 +31,7 @@ An application with more than one main area (Notes, Settings, an editor per docu
 2. Route: the screen's path (`""` for home, `settings`, `notes/{id:int}`), optionally a mapping with `Path`, `Guard`, `Redirect` and `Lazy`.
 3. History: the ordered entries of screens and params; the current entry; `can_go_back`, `can_go_forward`.
 4. Navigation control: [[Navigation Rail]] (`NavigationRailScreens`), a back button, links, handlers `navigate.<Screen>`, `navigate.back`, `navigate.forward`, `navigate_to(...)`.
-5. Transition: the animation between two screens ([[Screen Transitions]]).
+5. Transition: the animation between two screens ([[Routed View|Screen Transitions]]).
 6. Content region: where the current screen is laid out, filling what the navigation control leaves.
 
 ## Variants
@@ -87,7 +87,7 @@ Not applicable: a routed view has no size of its own; the screen fills the conte
 
 ## Motion
 
-- The transition between screens is the app's `transition` (`none`, `fade_through`, `shared_axis_x`, `shared_axis_y`, `shared_axis_z`, `container_transform`): the outgoing screen leaves in 90 ms and the incoming arrives in the next 210 ms (container transform: one 300 ms move); a shared axis slides 30 px; going back reverses the direction ([[Screen Transitions]], [[Motion]]).
+- The transition between screens is the app's `transition` (`none`, `fade_through`, `shared_axis_x`, `shared_axis_y`, `shared_axis_z`, `container_transform`): the outgoing screen leaves in 90 ms and the incoming arrives in the next 210 ms (container transform: one 300 ms move); a shared axis slides 30 px; going back reverses the direction ([[Routed View|Screen Transitions]], [[Motion]]).
 - A new navigation while one plays finishes the first at once. With reduced motion on, the swap is instant (one frame).
 - The default transition is `fade_through` for destinations of equal rank (rail destinations) and `none` for the first screen shown #needs-verification (a Tesserae choice; the code default for `app.transition` is not stated in the docs read).
 

@@ -102,8 +102,8 @@ Layer appears with `short3` 150 ms fade and no movement; chevron turn 100 ms; sc
 
 ## Accessibility
 
-- Field: role `button`, `haspopup` list (the layer is a list popup, not a menu), `expanded` while open, name "<label>: <ref>" (for example "Accent: $color.primary"), or the label alone when empty. Matches the [WAI-ARIA APG menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) keys with the combobox-style search field.
-- Layer: role `group` named with the label; the search field has the name "Search tokens"; the list has role `list` named "<label> tokens" with `listitem` rows, each named "<name>: <value>" and `selected` when it is the held token; an empty result is announced by an `alert` with polite live region.
+- Field: role `button`, `haspopup` list (the layer is a list popup, not a menu), `expanded` while open, name "{label}: {ref}" (for example "Accent: $color.primary"), or the label alone when empty. Matches the [WAI-ARIA APG menu button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) keys with the combobox-style search field.
+- Layer: role `group` named with the label; the search field has the name "Search tokens"; the list has role `list` named "{label} tokens" with `listitem` rows, each named "{name}: {value}" and `selected` when it is the held token; an empty result is announced by an `alert` with polite live region.
 - The count of matches is available to assistive technology (`Count`, tess-ui) #needs-verification (not announced today).
 - Contrast: value text on the field surface at least 4.5 to 1; swatch border and field outline at least 3 to 1 (WCAG 1.4.3, 1.4.11). The swatch is decoration: the value text carries the information.
 
@@ -124,7 +124,7 @@ Rows 7, width 360, close on pick true, placeholder "Choose a token", label "Toke
 - [ ] AC-TKB-5 (scripted input): in the search field Down, Up, Page Down, Page Up move the cursor by 1 and by the visible row count; Enter picks the token under the cursor; `Value` equals its ref, the pick handler ran once and the layer closed. Pass: values and counts equal.
 - [ ] AC-TKB-6 (scripted input): the search "prim col" (any order, any case) keeps exactly the tokens whose name, ref, group or doc contain both words; the layer reopens with an empty search and the held token scrolled into view with the cursor on it. Pass: result list equal to the expected list.
 - [ ] AC-TKB-7 (scripted input): with 5000 tokens the number of built rows is at most visible rows plus 6 and opening takes at most 100 ms on the reference machine. Pass: row count and time within limits #needs-verification (time limit is a proposal).
-- [ ] AC-TKB-8 (AT tree assertion): field role `button`, `expanded` equal to the open state, name "<label>: <ref>"; layer `group`; list `list` with `listitem` rows named "<name>: <value>", `selected` on the held token; an empty search exposes an `alert`. Pass: all equal.
+- [ ] AC-TKB-8 (AT tree assertion): field role `button`, `expanded` equal to the open state, name "{label}: {ref}"; layer `group`; list `list` with `listitem` rows named "{name}: {value}", `selected` on the held token; an empty search exposes an `alert`. Pass: all equal.
 - [ ] AC-TKB-9 (geometry check): a ref longer than the field shows an ellipsis with no text pixel outside the field; a row with long name, detail or value shows ellipses with no pixel outside the row; the layer lies fully inside the window (flips above when below does not fit). Pass: zero pixels outside, bounds inside.
 - [ ] AC-TKB-10 (contrast script): light and dark, value text on the field at least 4.5 to 1, row value text on row at least 4.5 to 1 (held and unheld), outline and swatch border on the surface at least 3 to 1. Pass: ratios at or above limits.
 - [ ] AC-TKB-11 (scripted input): a press outside closes the layer; hovering a truncated field for the tooltip delay shows a tooltip with the full ref; opening the layer hides it; no row shows a tooltip. Pass: events equal.

@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, content, video, tesserae-only]
-related: ["[[Image]]", "[[Image Node]]", "[[Progress Indicator]]", "[[Icon Button]]", "[[Button]]", "[[Slider]]", "[[Tooltip]]", "[[Scrim]]", "[[Colour Roles]]", "[[Shape]]", "[[Typography]]", "[[Motion]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]"]
+related: ["[[Image]]", "[[Image|Image Node]]", "[[Progress Indicator]]", "[[Icon Button]]", "[[Button]]", "[[Slider]]", "[[Tooltip]]", "[[Scrim]]", "[[Colour Roles]]", "[[Shape]]", "[[Typography]]", "[[Motion]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[Icon Button]]", "[[Progress Indicator]]", "[[Scrim]]"]
 ---
 
@@ -154,12 +154,12 @@ The stage is `scrim` black in both schemes; the controls row follows the scheme 
 
 Evidence: [[Gaps and Contradictions]] (Video: decoder, fullscreen, speed, volume, poster).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/VideoPlayer_View.tdl` | exists, partial; not used by any app or example |
-| tre | the [[Image Node]] with repeated `set(rgba=...)` | mechanism |
+| tre | the [[Image|Image Node]] with repeated `set(rgba=...)` | mechanism |
 | tess-shell | none | absent |
 
 ## Deviations from Material Design 3

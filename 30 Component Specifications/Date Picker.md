@@ -113,7 +113,7 @@ Default width 328 dp equals the Material Web date input modal width. The compact
   - The Tab order in the modal picker is: mode button, previous month, next month, month-year selector, the grid (one stop: the focused day), Cancel, OK; Shift+Tab reverses; Tab from OK goes to the mode button (the dialog traps focus, [[Dialog]]).
   - Initial focus: the day of the current date; with no date, today; if that day is disabled, the nearest enabled day. Disabled days are skipped by the arrow keys (focus moves to the next enabled day in the direction; at the last enabled day the key does nothing).
   - Enter on Cancel or OK activates it. OK sets the date and closes; Cancel and Escape leave the date unchanged.
-  - Typed mode: the field takes `####-##-##`; a value that is not a real day or is outside `earliest` and `latest` shows the field error with the description "Enter a date as year-month-day between <earliest> and <latest>" and disables OK; a valid value sets the draft date. The mode button swaps the grid and the field and keeps the draft date.
+  - Typed mode: the field takes `####-##-##`; a value that is not a real day or is outside `earliest` and `latest` shows the field error with the description "Enter a date as year-month-day between {earliest} and {latest}" and disables OK; a valid value sets the draft date. The mode button swaps the grid and the field and keeps the draft date.
 - Touch: tap on the 48 dp day cell selects.
 - Events: `On_Ok` runs once after OK (modal) or once after a docked selection; Cancel and Escape raise a cancel event; the date value changes only on OK (modal) or on selection (docked); setting the date from code raises no event.
 

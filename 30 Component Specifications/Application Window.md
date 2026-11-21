@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, window, engine]
-related: ["[[Window]]", "[[Window Title Bar]]", "[[Window Root]]", "[[Window Size Classes]]", "[[Window Transparency]]", "[[Layer Window]]", "[[Popup Window]]", "[[Dialog]]", "[[Panel and Surface]]", "[[Accessibility Tree]]", "[[10 Layout Overflow and Scrolling]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Window]]", "[[Title Bar|Window Title Bar]]", "[[Window#Anatomy|Window Root]]", "[[Spacing and Density#Window size classes|Window Size Classes]]", "[[Application Window#Variants|Window Transparency]]", "[[Layer Window]]", "[[Popup Window]]", "[[Dialog]]", "[[Panel and Surface]]", "[[Accessibility Tree]]", "[[10 Layout Overflow and Scrolling]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[10 Layout Overflow and Scrolling]]", "[[ADR-0002 Desktop density levels and target sizes]]"]
 aliases: ["Application window"]
 ---
@@ -14,7 +14,7 @@ aliases: ["Application window"]
 # Application Window
 
 > [!info] Summary
-> The Application Window is the engine's top-level OS window: a node tree, a minimum size, optional framework-drawn title bar and borders, and events for size, scale, colour scheme and activity. This note states what the UX specification requires of it. MD3 describes content adapting to a window by window size classes, not the window itself ([Window size classes](https://m3.material.io/foundations/layout/applying-layout/window-size-classes)). The tess-ui `Window` view is the [[Window]] note; the title bar is [[Window Title Bar]].
+> The Application Window is the engine's top-level OS window: a node tree, a minimum size, optional framework-drawn title bar and borders, and events for size, scale, colour scheme and activity. This note states what the UX specification requires of it. MD3 describes content adapting to a window by window size classes, not the window itself ([Window size classes](https://m3.material.io/foundations/layout/applying-layout/window-size-classes)). The tess-ui `Window` view is the [[Window]] note; the title bar is [[Title Bar|Window Title Bar]].
 
 ## Purpose
 
@@ -27,8 +27,8 @@ Give applications a predictable frame: a size that adapts by class, a minimum th
 
 ## Anatomy
 
-1. OS frame (decorated) or framework chrome (`decorations=False`: [[Window Title Bar]], resize border).
-2. Root node: a flex row with 16 dp padding and 16 dp gaps by default; sized to the window ([[Window Root]]).
+1. OS frame (decorated) or framework chrome (`decorations=False`: [[Title Bar|Window Title Bar]], resize border).
+2. Root node: a flex row with 16 dp padding and 16 dp gaps by default; sized to the window ([[Window#Anatomy|Window Root]]).
 3. Content tree; overlays are layers inside the window ([[Popup]], [[Dialog]]).
 4. Optional dock zones.
 
@@ -38,7 +38,7 @@ Give applications a predictable frame: a size that adapts by class, a minimum th
 |---|---|---|
 | Decorated | default apps | the OS draws title bar and borders |
 | Undecorated | framework chrome | `decorations=False`, own title bar, `resize_border`, drag region |
-| Transparent | floating cards | `transparent=True`, root `fill` alpha below 255; see [[Window Transparency]] |
+| Transparent | floating cards | `transparent=True`, root `fill` alpha below 255; see [[Application Window#Variants|Window Transparency]] |
 | Fullscreen | media, presentations | borderless; drag and resize regions inactive |
 
 ## States
@@ -52,11 +52,11 @@ Give applications a predictable frame: a size that adapts by class, a minimum th
 
 ## Tokens used
 
-Window background `surface`; scheme per [[Theme Following the System]]; padding of the root 16 dp (`space.5`); corner radius of an undecorated window 12 dp `medium` when not maximized ([[Shape]]); no elevation, the OS or [[Window Transparency]] owns shadows.
+Window background `surface`; scheme per [[Theme Following the System]]; padding of the root 16 dp (`space.5`); corner radius of an undecorated window 12 dp `medium` when not maximized ([[Shape]]); no elevation, the OS or [[Application Window#Variants|Window Transparency]] owns shadows.
 
 ## Sizing and density
 
-- Window size classes: width compact below 600 dp, medium 600 to 839, expanded 840 to 1199, large 1200 to 1599, extra-large from 1600; height below 480, 480 to 899, 900 and above ([[Spacing and Density]], [[Window Size Classes]]). A boundary value belongs to the larger class.
+- Window size classes: width compact below 600 dp, medium 600 to 839, expanded 840 to 1199, large 1200 to 1599, extra-large from 1600; height below 480, 480 to 899, 900 and above ([[Spacing and Density]], [[Spacing and Density#Window size classes|Window Size Classes]]). A boundary value belongs to the larger class.
 - Minimum size: `min_width` and `min_height` are set so that every shown pane has its minimum width (320 dp) and no content is unreachable ([[10 Layout Overflow and Scrolling]]); a project sets a floor of 320 by 240 dp unless its panes need more (Tesserae design choice #needs-verification).
 - Density is independent of the window size class.
 - Not a per-density element otherwise.

@@ -13,7 +13,7 @@ depends_on: []
 # Component Name
 
 > [!info] Summary
-> One sentence: what the element is and the Material Design 3 counterpart (link). Source of truth in code: see the last section.
+> One sentence: what the element is and the Material Design 3 counterpart (link). Status in code: see the section near the end.
 
 ## Purpose
 
@@ -84,7 +84,9 @@ Each criterion passes or fails by a test, a measurement or a review.
 
 - [ ] AC-1: ...
 
-## Source of truth in code
+## Status in code
+
+Per project: the paths that implement the element and whether the code meets the criteria above (meets, partly meets with the failing criterion ids, absent, not applicable).
 
 | Project | Path | Status |
 |---|---|---|
@@ -93,3 +95,7 @@ Each criterion passes or fails by a test, a measurement or a review.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+
+## Sources
+
+Links to the sources of every verified value (Material Web tokens, WCAG, WAI-ARIA, project code).

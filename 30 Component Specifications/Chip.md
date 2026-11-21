@@ -112,7 +112,7 @@ The compact and dense rows are Tesserae design choices #needs-verification-as-de
 Per [[ADR-0004 Tooltip rule]] the tooltip belongs to the control, never to the group.
 
 - A chip may carry one tooltip, on the container; when its label is truncated the tooltip shows the full label.
-- The close button carries its own tooltip "Remove <label>" and hovering it shows that tooltip only.
+- The close button carries its own tooltip "Remove {label}" and hovering it shows that tooltip only.
 - A press dismisses the tooltip; none returns until the pointer leaves, re-enters and 500 ms pass. Keyboard focus shows it at once ([[Tooltip]]).
 - A chip opens no overlay; a filter chip with a menu (dropdown filter) is not specified here.
 
@@ -123,9 +123,9 @@ Colour and background fade `short3` 150 ms (tess-ui `Chip_Stylesheet.tdl`: `Tran
 ## Accessibility
 
 - Role: assist, suggestion and input chips are `button`; a filter chip is `checkbox` with `checked` in a `multiple` group and `radio` with `checked` in a `single` group; the group is `group` (multiple, none, input) or `radiogroup` (single) with a name ([[Accessibility Rules]]).
-- Name: the label; an avatar and icon are hidden from assistive technology unless they carry meaning; the close button is a `button` named "Remove <label>"; Material Web adds `aria-label` to chips whose label needs more context ([chip docs](https://github.com/material-components/material-web/blob/main/docs/components/chip.md)).
+- Name: the label; an avatar and icon are hidden from assistive technology unless they carry meaning; the close button is a `button` named "Remove {label}"; Material Web adds `aria-label` to chips whose label needs more context ([chip docs](https://github.com/material-components/material-web/blob/main/docs/components/chip.md)).
 - State: a selected filter chip exposes `checked` true; a disabled chip is exposed as disabled.
-- Announcement: removal of an input chip announces "<label> removed" through a polite live region ([[14 Accessibility Basics]]); adding announces "<label> added".
+- Announcement: removal of an input chip announces "{label} removed" through a polite live region ([[14 Accessibility Basics]]); adding announces "{label} added".
 - Contrast: label against the container at least 4.5 to 1; outline `outline_variant` is decorative (selection and focus carry the state); the focus ring at least 3 to 1.
 - Target sizes as in Sizing and density.
 
@@ -148,7 +148,7 @@ Assist variant; outlined (not elevated); density from the container; no icon, no
 - [ ] AC-CHP-7 (scripted input): in `single` mode, moving focus with the arrows chooses the focused chip and unchooses the previous; in `multiple` mode the arrows change focus only and Space toggles. Pass: selection list equals the expected list.
 - [ ] AC-CHP-8 (scripted input): input mode: typing "a" and Enter adds a chip once, clears the field; typing the same text again adds nothing; Delete on a focused chip removes it and moves focus to the next chip, else the previous, else the entry field; a press on the close button removes the chip and does not fire the chip's own press. Pass: chip list, focus owner and event counts equal.
 - [ ] AC-CHP-9 (contrast script): light and dark, label against container (`secondary_container` selected, surface unselected, `surface_container_low` elevated): at least 4.5 to 1 in every variant and state; focus ring against the group surface at least 3 to 1. Pass: ratios at or above the limits.
-- [ ] AC-CHP-10 (AT tree assertion): assist, suggestion and input chips have role `button` and the label as name; a filter chip has role `checkbox` (multiple) or `radio` (single), `checked` equal to the selection and `disabled` equal to the state; the group has role `group` or `radiogroup` and a name; the close button is a `button` named "Remove <label>". Pass: all equal.
+- [ ] AC-CHP-10 (AT tree assertion): assist, suggestion and input chips have role `button` and the label as name; a filter chip has role `checkbox` (multiple) or `radio` (single), `checked` equal to the selection and `disabled` equal to the state; the group has role `group` or `radiogroup` and a name; the close button is a `button` named "Remove {label}". Pass: all equal.
 - [ ] AC-CHP-11 (geometry check): a label wider than 256 dp truncates with an ellipsis and the chip is 256 dp wide; the icon and close button stay inside the container; a group wider than its parent wraps to new rows. Pass: widths and wrap rows equal.
 - [ ] AC-CHP-12 (scripted input): hover the chip 600 ms: exactly its own tooltip (full label when truncated) is visible, no group tooltip; hover the close button: only its tooltip; a press dismisses it. Pass: visible tooltip count and owner equal.
 - [ ] AC-CHP-13 (pixel check): a selected filter chip shows the check in place of the leading icon and has no outline pixels; an unselected one shows a 1 dp outline. Pass: check mask inside the 18 dp icon box; outline pixel counts equal.

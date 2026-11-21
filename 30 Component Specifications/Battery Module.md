@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, status, service]
-related: ["[[Bar]]", "[[Icon]]", "[[Text]]", "[[Icons]]", "[[Accessibility Announcements]]", "[[Accessibility Roles]]", "[[Empty and Error States]]", "[[Existing Tokens]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Iconography#Icon sizes|Icon]]", "[[Text]]", "[[Iconography#Icon set|Icons]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[14 Accessibility Basics#Roles and accessible names|Accessibility Roles]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Existing Tokens]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -23,13 +23,13 @@ Shows the charge level, the charging state and the time to empty or full from UP
 
 - Use when: the Bar runs on a machine that can have a battery.
 - Do not use when: the user needs per-device batteries, history or power profiles (not in v1).
-- Not a progress indicator: it states a level, it is not a task progress ([[Progress Bar]]).
+- Not a progress indicator: it states a level, it is not a task progress ([[Progress Indicator|Progress Bar]]).
 
 ## Anatomy
 
 1. Root: one box, role `IMG` recommended (see Accessibility), carries the tooltip.
 2. Level box: one of three boxes shown one at a time (normal, low, critical).
-3. Glyph: an [[Icon]] 16 dp tall, chosen from the charge step and state (`battery-10` to `battery-90`, `battery-charging-*`, `battery-alert`); at low and critical the glyph is the alert icon with a `+dot` beside it in one document, 24 by 16 dp.
+3. Glyph: an [[Iconography#Icon sizes|Icon]] 16 dp tall, chosen from the charge step and state (`battery-10` to `battery-90`, `battery-charging-*`, `battery-alert`); at low and critical the glyph is the alert icon with a `+dot` beside it in one document, 24 by 16 dp.
 4. Percentage: [[Text]] `label_large`, optional (`show_percent`, default true).
 5. Tooltip: plain, for example `82 %, discharging, 2 h 14 min left`.
 
@@ -93,7 +93,7 @@ No animation (the glyph changes in one frame). Reduced motion has no effect.
 - Role: `IMG` with `Label` (name) and `Description` (the tooltip text). Code today: `GROUP` with `Label` and `Description` (see Status in code).
 - Name: `Battery 82 percent, discharging` (`label` from the Python); description: the tooltip.
 - Keys: none.
-- Announcements: when the level becomes critical the module says once, politely, `Battery critical, 4 percent, discharging` through `ctx.announce` (`Battery_Module.py` `announcement_text`); no other change is announced; mute and repeat rules in [[Accessibility Announcements]].
+- Announcements: when the level becomes critical the module says once, politely, `Battery critical, 4 percent, discharging` through `ctx.announce` (`Battery_Module.py` `announcement_text`); no other change is announced; mute and repeat rules in [[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]].
 - Colour is not the only cue: shape of the glyph plus the word in the name.
 - Contrast: text 4.5:1 and glyph 3:1 against the Bar surface in all three schemes.
 
@@ -114,7 +114,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-BAT-1 (AT tree assertion): with a fake UPower reporting 82 percent discharging: the root has a non-empty name containing `82` and the word `discharging`, a description equal to the tooltip text, and role `IMG`.
 - [ ] AC-MOD-BAT-2 (scripted input): UPower absent: the root has `Visible` false, width 0, no accessibility node, and the Bar siblings keep their spacing (no gap left).
 - [ ] AC-MOD-BAT-3 (scripted input): UPower present with `IsPresent` false then true: the module hides then shows within one loop turn, no restart.
-- [ ] AC-MOD-BAT-4 (scripted pointer): hover for 500 ms shows one tooltip with the state text; leaving removes it within 150 ms plus one frame; Escape within one frame.
+- [ ] AC-MOD-BAT-4 (scripted input): hover for 500 ms shows one tooltip with the state text; leaving removes it within 150 ms plus one frame; Escape within one frame.
 - [ ] AC-MOD-BAT-5 (static check): exactly one node of the module has a `Tooltip`; none has role `group`; none has a tooltip-bearing descendant.
 - [ ] AC-MOD-BAT-6 (pixel check): low and critical differ from normal in glyph shape (the alert glyph with dot) as well as colour: a greyscale render distinguishes all three.
 - [ ] AC-MOD-BAT-7 (contrast script): percentage text in normal, low and critical against the Bar surface is at least 4.5:1 and the glyph at least 3:1 in Light, Dark and High_Contrast.
@@ -122,7 +122,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-BAT-9 (pixel check): the tooltip card equals the plain [[Tooltip]] card; the module's `.tdl` holds no tooltip card literals.
 - [ ] AC-MOD-BAT-10 (geometry check): the hover box is at least 24 dp high at every density; the glyph is 16 dp square, 24 by 16 for the alert glyph.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, containment, divider]
-related: ["[[Menu Separator]]", "[[List]]", "[[List Item]]", "[[Menu]]", "[[Panel and Surface]]", "[[Accordion]]", "[[Banner]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[Shape]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[Divider|Menu Separator]]", "[[List]]", "[[List Item]]", "[[Menu]]", "[[Panel and Surface]]", "[[Accordion]]", "[[Banner]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[Shape]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Colour Roles]]", "[[Spacing and Density]]"]
 ---
 
@@ -82,7 +82,7 @@ The line does not scale with density; the spacing around it does. A divider adds
 
 ## Behaviour
 
-- Pointer, keyboard, touch: none. The divider is hit-test transparent and not in the Tab order. In a menu, a menu separator is a divider that arrow keys skip ([[Menu Separator]], [[Menu]]).
+- Pointer, keyboard, touch: none. The divider is hit-test transparent and not in the Tab order. In a menu, a menu separator is a divider that arrow keys skip ([[Divider|Menu Separator]], [[Menu]]).
 
 ## Tooltip and overlay behaviour
 
@@ -122,10 +122,10 @@ Horizontal, full width, 1 dp, `outline_variant`, exposed as `separator`.
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Divider_View.tdl`, `tess-ui:src/tess_ui/views/Divider_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/structural.py`, `tess-ui:docs/components/dividers.md` | meets in design: 1 dp default `Thickness`, `outline_variant`, variants full, inset (16 start) and middle (16 both), orientation, role `separator` (AC-DIV-1, AC-DIV-2, AC-DIV-4 by reading, unrun); no emphasised variant (AC-DIV-6 not applicable until it exists); not used by any app or example, so the list rules (AC-DIV-3, AC-DIV-7) are unmeasured |
-| tess-shell | none as a module; the MenuItem has a `rule` part (menu separator, see [[Menu Separator]]); no divider module | absent as a component; `tess-shell:docs/guide/modules.md` has no Divider |
+| tess-shell | none as a module; the MenuItem has a `rule` part (menu separator, see [[Divider|Menu Separator]]); no divider module | absent as a component; `tess-shell:docs/guide/modules.md` has no Divider |
 | tre | none: a divider is a box of 1 px | not applicable |
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

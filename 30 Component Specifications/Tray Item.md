@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, tray]
-related: ["[[Tray Module]]", "[[Tray Menu]]", "[[Icon]]", "[[Icon Button]]", "[[Icons]]", "[[Focus Ring]]", "[[State Layers]]", "[[Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Tray Module]]", "[[Tray Menu]]", "[[Iconography#Icon sizes|Icon]]", "[[Icon Button]]", "[[Iconography#Icon set|Icons]]", "[[Focus Ring]]", "[[State Layers]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -27,7 +27,7 @@ Gives an application a status icon in the Bar with its title and text on hover, 
 ## Anatomy
 
 1. Root: box, class `tray_item`, role `BUTTON`, name from `label`, description from `description`.
-2. Icon: [[Icon]] (SVG document or pixels), `size` 18 dp default.
+2. Icon: [[Iconography#Icon sizes|Icon]] (SVG document or pixels), `size` 18 dp default.
 3. Attention look: the `:selected` look, a 2 px `warning` border.
 4. Tooltip: a rich tooltip with the title (weight 600) and the text.
 
@@ -43,13 +43,13 @@ Gives an application a status icon in the Bar with its title and text on hover, 
 
 | State | Visual change | Token values |
 |---|---|---|
-| Rest | Icon only | [[Icon]] |
+| Rest | Icon only | [[Iconography#Icon sizes|Icon]] |
 | Hover | Fill `surface_raised` (code); spec: state layer 8 percent | [[State Layers]] |
 | Focus (keyboard) | Focus ring 3 dp, 2 dp offset; not built | [[Focus Ring]] |
 | Pressed | State layer 10 percent | [[State Layers]] |
 | Attention | 2 px `warning` border (code); spec: the border plus a dot of 6 dp so the cue is not colour alone | `warning` 10.02:1 dark, 5.51:1 light |
 | Disabled | Not applicable | not applicable |
-| Icon missing | Broken-image icon, one warning ([[Empty and Error States]]) | [[Icons]] |
+| Icon missing | Broken-image icon, one warning ([[Iconography#Fallback icon|Empty and Error States]]) | [[Iconography#Icon set|Icons]] |
 
 ## Tokens used
 
@@ -108,12 +108,12 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TRI-2 (geometry check): the hit area is 40, 32 and 28 dp square and the icon 24, 20 and 20 dp at default, compact and dense; never below 24 dp.
 - [ ] AC-MOD-TRI-3 (scripted input): click, middle click, secondary click and wheel each send the matching action once.
 - [ ] AC-MOD-TRI-4 (scripted input): Enter and Space activate; the Menu key opens the item's menu and focus enters the menu.
-- [ ] AC-MOD-TRI-5 (scripted pointer): hover for 500 ms: exactly 1 tooltip layer with the title and the text; leave removes it within 150 ms plus one frame.
+- [ ] AC-MOD-TRI-5 (scripted input): hover for 500 ms: exactly 1 tooltip layer with the title and the text; leave removes it within 150 ms plus one frame.
 - [ ] AC-MOD-TRI-6 (static check): only the item root carries a `Tooltip`; the icon child carries none.
 - [ ] AC-MOD-TRI-7 (pixel check): the attention look differs from rest in a greyscale render.
 - [ ] AC-MOD-TRI-8 (pixel check): the tooltip card equals the rich [[Tooltip]] card; the module `.tdl` holds no card literal.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

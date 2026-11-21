@@ -13,7 +13,7 @@ depends_on: ["[[01 Principles and Scope]]"]
 # Test Method
 
 > [!info] Summary
-> The seven test types every acceptance criterion names, how each is run in tess-ui, tess-shell and tre, which parts need a real display or a human, and the audit format for `70 Adoption`. A criterion that no test type can pass or fail is not accepted into the specification ([[01 Principles and Scope]], principle 7).
+> The eight test types every acceptance criterion names, how each is run in tess-ui, tess-shell and tre, which parts need a real display or a human, and the audit format for `70 Adoption`. A criterion that no test type can pass or fail is not accepted into the specification ([[01 Principles and Scope]], principle 7).
 
 ## Ground rules
 
@@ -22,7 +22,7 @@ depends_on: ["[[01 Principles and Scope]]"]
 - Tests run headless wherever possible. Tests that need a real compositor (KWin popups, input grabs, screen readers) are hand checks with a recorded script, and the audit says "hand check, not automated".
 - A project's audit never reports a criterion as passing that it did not run; the allowed results are pass, fail with defect, not run with reason, not testable (with reason) and not applicable (with reason).
 
-## The seven test types
+## The eight test types
 
 | Type | What it checks | Pass condition form |
 |---|---|---|
@@ -33,6 +33,7 @@ depends_on: ["[[01 Principles and Scope]]"]
 | Scripted input | a sequence of key, pointer and time events, then state, event counts and visible overlays | observed state equals the expected list |
 | AT tree assertion | role, name, description and state flags of nodes in the accessibility tree | property equality |
 | Review | a human reads and answers yes or no from a checklist | checklist complete, reviewer named, date recorded |
+| Static check | an analysis of source, stylesheets or view trees without running the application (for example every node that carries a tooltip, listed from the view tree) | count of violations equals zero, or the list equals the expected list |
 
 ## How each type runs, per project
 
@@ -105,7 +106,7 @@ Rules for the audit:
 
 ## Acceptance criteria
 
-- [ ] AC-TM-1: Review. Every `AC-*` item in every note names one of the seven test types in its first sentence. Pass: a script that parses acceptance-criteria lists finds zero items without a type name.
+- [ ] AC-TM-1: Review. Every `AC-*` item in every note names one of the eight test types in its first sentence. Pass: a script that parses acceptance-criteria lists finds zero items without a type name.
 - [ ] AC-TM-2: Contrast script. The script exists in a project, runs on light and dark, and exits non-zero when a pair is below its limit (negative test with a deliberately low-contrast pair). Pass: exit codes equal 0 and non-zero respectively.
 - [ ] AC-TM-3: Review. Each audit in `70 Adoption` has a row for every criterion of its notes and a count per result value (pass, fail, not run, not testable, not applicable) that sums to the number of rows. Pass: arithmetic holds.
 

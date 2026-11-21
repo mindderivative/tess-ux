@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, frame, window, keyboard]
-related: ["[[Title Bar]]", "[[Application Window]]", "[[Window Root]]", "[[Window Title Bar]]", "[[Window Transparency]]", "[[Window Size Classes]]", "[[Scale Factor]]", "[[Dialog]]", "[[Scrim]]", "[[Panel and Surface]]", "[[Dock]]", "[[Routed View]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Title Bar]]", "[[Application Window]]", "[[Window#Anatomy|Window Root]]", "[[Title Bar|Window Title Bar]]", "[[Application Window#Variants|Window Transparency]]", "[[Spacing and Density#Window size classes|Window Size Classes]]", "[[Spacing and Density|Scale Factor]]", "[[Dialog]]", "[[Scrim]]", "[[Panel and Surface]]", "[[Dock]]", "[[Routed View]]", "[[Focus Ring]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0005 Theme follows the system]]", "[[Title Bar]]"]
 ---
 
@@ -43,7 +43,7 @@ A window frames one application surface: it gives the user a title to find it by
 | Borderless | The application draws its title bar | `Borderless: true`; the app draws [[Title Bar]], a 1 dp border and takes a 6 dp resize border; on macOS the OS keeps a transparent title bar with traffic lights |
 | Second window | Preferences, tools | Own view with its own `Window` root; no screens and no routes; closing it leaves the app running |
 | Modal second window | Blocks the parent until closed | Parent shows a dimming layer and takes no input |
-| Transparent | Rounded or shaped windows | `Transparent: true`, `Blur_Behind`, `Click_Through`: see [[Window Transparency]]; the view draws its own edge |
+| Transparent | Rounded or shaped windows | `Transparent: true`, `Blur_Behind`, `Click_Through`: see [[Application Window#Variants|Window Transparency]]; the view draws its own edge |
 | Fullscreen | Media and presentation | Borderless, fills the monitor; drag region and resize border are off |
 
 ## States
@@ -83,7 +83,7 @@ The window minimum is the same at every density: density changes control sizes, 
 
 ## Layout and overflow
 
-- The view lays out inside the window in dp; the engine reports the scale factor and the window resizes by device pixels ([[Scale Factor]]).
+- The view lays out inside the window in dp; the engine reports the scale factor and the window resizes by device pixels ([[Spacing and Density|Scale Factor]]).
 - The window never paints content outside its bounds; a view that does not fit at the minimum size is a defect of the view (AC-WIN-2), not of the window.
 - The width and height class are recomputed on every resize and exposed to the view (`app.width_class`, `app.height_class`); pane counts per class are in [[10 Layout Overflow and Scrolling]].
 - The window is the outer clip: overlays (tooltips, menus, dialogs) are clipped to it. An overlay that must leave the window uses a popup window ([[Popup]]).
@@ -91,7 +91,7 @@ The window minimum is the same at every density: density changes control sizes, 
 ## Behaviour
 
 - Pointer: a press on the drag region of the title bar moves the window (OS move); a double press within 500 ms and 4 px toggles maximise; a press within the resize border resizes the window from that edge or corner and shows the matching resize cursor. A press in the resize border never reaches a node. Details: [[Title Bar]].
-- Keyboard: Tab order follows the view order. The title bar is the first child of the window, so its own controls and then its three window buttons come before the content region in Tab order (see [[Title Bar]]). Alt+F4 or the platform close shortcut closes the window as the user's close does. The platform window menu opens with Alt+Space on Windows, and with a secondary press on the title bar where `system_menu` is true (see AC-WIN-10).
+- Keyboard: Tab order follows the view order. The title bar is the first child of the window, so its own controls and then its three window buttons come before the content region in Tab order (see [[Title Bar]]). Alt+F4 or the platform close shortcut closes the window as the user's close does. In a borderless window the system menu is on by default ([[ADR-0015 System menu default in borderless windows]]) and opens with Alt+Space, with a secondary press on the title bar, and from the title bar icon (see AC-WIN-10).
 - Focus on open: the first focusable control of the content region receives keyboard focus, in document order, unless the view names an initial control. The focus ring is not shown until the first key press ([[Focus Ring]]). Focus does not start on a window button.
 - Close: `close_requested` fires first; a listener may cancel it (a "save changes?" check). Closing the app's own window closes every second window; closing a second window leaves the app running.
 - Modal second window: the parent takes no pointer or key input until the child closes; Tab does not leave the child; on close, focus returns to the control that had focus in the parent when the child opened.
@@ -112,8 +112,8 @@ The window minimum is the same at every density: density changes control sizes, 
 ## Accessibility
 
 - The window's accessible name is its `Title`; it updates when the title changes (AC-WIN-11). A window name that is empty is a defect.
-- Window moves and resizes are done by the OS; a borderless window leaves the OS's keyboard route for moving and resizing reachable (Alt+Space on Windows and `system_menu` on, the compositor's own keys on Linux). Resizing by dragging the border has the OS route as its alternative, per WCAG 2.2 SC 2.5.7 Dragging Movements, which exempts functionality "determined by the user agent and not modified by the author" ([WCAG 2.2 SC 2.5.7](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)).
-- The 6 dp resize border is below the 24 dp desktop minimum target ([[ADR-0002 Desktop density levels and target sizes]]). It is the same size as the OS's own frame target and is an accepted exception recorded here until the owner decides otherwise #needs-verification (WCAG 2.2 SC 2.5.8 exceptions: [Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)).
+- Window moves and resizes are done by the OS; a borderless window leaves the OS's keyboard route for moving and resizing reachable: the system menu (Alt+Space, on by default per [[ADR-0015 System menu default in borderless windows]]) and the compositor's own keys on Linux. Resizing by dragging the border has the OS route as its alternative, per WCAG 2.2 SC 2.5.7 Dragging Movements, which exempts functionality "determined by the user agent and not modified by the author" ([WCAG 2.2 SC 2.5.7](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)).
+- The 6 dp resize border is below the 24 dp desktop minimum target ([[ADR-0002 Desktop density levels and target sizes]]). Per [[ADR-0014 Window resize border and splitter alternative]] it stays 6 dp and stays with the platform resize path: the window manager's keyboard resize and the title bar maximise and restore controls are the equivalent control for WCAG 2.2 SC 2.5.8 ([Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)).
 - Focus order and first focus follow WCAG 2.2 SC 2.4.3 Focus Order ([focus order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html)).
 - Announcements: `Window.announce` goes through the window that owns the screen reader connection; a screen change inside a window is announced by [[Routed View]].
 - Contrast: every pair in the window follows [[Colour Roles]]; the 1 dp border carries no information and is exempt from 3:1.
@@ -131,7 +131,7 @@ The window background is `surface`; it follows the theme of the application, whi
 | Resize border | 6 dp when borderless, 0 when bordered; off on macOS, maximised and fullscreen |
 | Window border | 1 dp, `outline_variant`, borderless only |
 | Remember | off |
-| System menu | on in borderless windows on Windows and on Wayland compositors that offer one (tess-ui: off) |
+| System menu | on in borderless windows ([[ADR-0015 System menu default in borderless windows]]); a project may turn it off in its own decision record (tess-ui: off, fails AC-WIN-10) |
 | Initial focus | first focusable control of the content |
 | Title bar height | 40 dp at `default` |
 | Second window size | 480 by 320 dp |
@@ -148,7 +148,7 @@ The window background is `surface`; it follows the theme of the application, whi
 - [ ] AC-WIN-7 (scripted input): on a simulated window `active` false the title bar title, icon and buttons read opacity 0.6 and the focus ring is hidden; on `active` true they read 1.0 and the ring shows again if the last input was a key, within one frame. Pass: values equal.
 - [ ] AC-WIN-8 (scripted input): a `close_requested` listener that cancels keeps the window open (window still open after one frame); without the cancel the window closes; closing a second window leaves the app running; closing the app's own window closes every second window. Pass: open-window list equals the expected list in each of three runs.
 - [ ] AC-WIN-9 (scripted input): with a modal second window open, a click and a key sent to the parent window reach no node of the parent; the parent shows the dimming layer (pixel at the parent centre differs from the unmodal frame by the scrim blend); Tab in the child cycles within the child; after the child closes focus is on the parent control that had it when the child opened. Pass: each of four conditions holds.
-- [ ] AC-WIN-10 (scripted input): in a borderless window on Windows and on Wayland compositors with a window menu, `system_menu` is true by default; a secondary press on the drag region opens the platform window menu (Restore, Move, Size, Minimise, Maximise, Close) and ends the press with `pointer_cancel`. Pass: the setting reads true and the menu request is raised; where the platform has no menu nothing opens. Hand check on a real compositor (not automated).
+- [ ] AC-WIN-10 (scripted input): in a borderless window the system menu is on by default ([[ADR-0015 System menu default in borderless windows]]): `system_menu` reads true when the window options set nothing; the title bar icon, a secondary press on the drag region and Alt+Space each open the platform window menu (Restore, Move, Size, Minimise, Maximise, Close), and the secondary press ends with `pointer_cancel`. Pass: the setting reads true and the menu request is raised from each of the three routes; where the platform has no menu nothing opens. A project that turns the menu off has a decision record. Hand check on a real compositor (not automated).
 - [ ] AC-WIN-11 (AT tree assertion): the window's accessible name equals its `Title`; after the title changes the name equals the new title within one frame. Pass: property equality #needs-verification (the engine exposes the OS window title through the platform; a tree assertion may need a platform-side check).
 - [ ] AC-WIN-12 (scripted input): a window with `Remember` set, closed and reopened with the same name, opens at the same size (and place where the platform allows, not on Wayland); a window closed maximised reopens maximised and restores to the size it had before maximising. Pass: sizes equal to the dp.
 - [ ] AC-WIN-13 (scripted input): `width_class` and `height_class` change on the frame after a resize crosses a breakpoint: widths 599 and 600 give compact and medium; 839 and 840 medium and expanded; 1199 and 1200 expanded and large; 1599 and 1600 large and extra-large; heights 479 and 480 compact and medium; 899 and 900 medium and expanded (also AC-DEN-10).
@@ -168,7 +168,7 @@ The window background is `surface`; it follows the theme of the application, whi
 |---|---|---|
 | A window element exists at all (MD3 has none; it covers window size classes only) | desktop applications own an OS window and need rules for it | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Window minimum size 320 by 240 dp at every density | no MD3 value; 320 dp is the pane minimum of [[10 Layout Overflow and Scrolling]] | [[ADR-0002 Desktop density levels and target sizes]] |
-| Resize border 6 dp, below the 24 dp target minimum | mirrors the OS frame; the OS route is the alternative | [[ADR-0002 Desktop density levels and target sizes]] |
+| Resize border 6 dp, below the 24 dp target minimum | the platform resize path (window manager keyboard resize, title bar maximise and restore) is the equivalent control for WCAG 2.5.8 | [[ADR-0014 Window resize border and splitter alternative]] |
 | Initial focus on the first content control | desktop keyboard-first use; MD3 gives no window focus rule | [[ADR-0002 Desktop density levels and target sizes]] |
 
 ## Sources

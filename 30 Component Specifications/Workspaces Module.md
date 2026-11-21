@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, navigation]
-related: ["[[Bar]]", "[[Button]]", "[[Text]]", "[[Selection]]", "[[Focus Ring]]", "[[State Layers]]", "[[Empty and Error States]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Button]]", "[[Text]]", "[[Selection]]", "[[Focus Ring]]", "[[State Layers]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -109,7 +109,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-WSP-1 (AT tree assertion): the row has role `GROUP` named `Workspaces`; each desktop button has role `BUTTON`, name `Desktop <n>, <name>`; exactly one has state `selected`.
 - [ ] AC-MOD-WSP-2 (scripted input): KWin absent: root `Visible` false, width 0, absent from the accessibility tree, Bar spacing unchanged.
 - [ ] AC-MOD-WSP-3 (scripted input): click button 3: KWin's current desktop becomes 3 and the mark moves within one loop turn; changing the desktop from outside moves the mark too.
-- [ ] AC-MOD-WSP-4 (scripted pointer): hover a button for 500 ms: exactly one tooltip layer with the accessible name; hover the gap between buttons: 0 layers.
+- [ ] AC-MOD-WSP-4 (scripted input): hover a button for 500 ms: exactly one tooltip layer with the accessible name; hover the gap between buttons: 0 layers.
 - [ ] AC-MOD-WSP-5 (scripted input): Tab visits each button once in visual order and leaves; Enter and Space each switch once.
 - [ ] AC-MOD-WSP-6 (geometry check): button height is 40, 32 and 28 dp and the minimum width at least 24 dp at default, compact and dense; adjacent hit areas do not overlap.
 - [ ] AC-MOD-WSP-7 (pixel check): the current button differs from others in fill and border in a greyscale render.
@@ -117,7 +117,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-WSP-9 (contrast script): Face text against the Bar surface at least 4.5:1 and the 2 px border at least 3:1 in Light, Dark and High_Contrast.
 - [ ] AC-MOD-WSP-10 (static check): no node with role `GROUP` carries a tooltip.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

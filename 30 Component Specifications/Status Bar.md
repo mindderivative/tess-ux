@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, navigation, status, owner-feedback]
-related: ["[[Toolbar]]", "[[Top App Bar]]", "[[Tabs]]", "[[Pagination]]", "[[Accessibility Announcements]]", "[[Snackbar]]", "[[Linear Progress Indicator]]", "[[Progress Bar]]", "[[Tooltip]]", "[[Dialog]]", "[[Keyboard Navigation]]", "[[Owner Feedback 2026-11-20]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Iconography]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
+related: ["[[Toolbar]]", "[[Top App Bar]]", "[[Tabs]]", "[[Pagination]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Snackbar]]", "[[Progress Indicator|Linear Progress Indicator]]", "[[Progress Indicator|Progress Bar]]", "[[Tooltip]]", "[[Dialog]]", "[[Keyboard Navigation]]", "[[Owner Feedback 2026-11-20]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Iconography]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 depends_on: ["[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]"]
 ---
 
@@ -31,7 +31,7 @@ Tells the user the result of the last action ("Saved", "Check found 2 problems")
 2. Three sections: start (message and notes), centre, end. The centre section is centred on the bar whatever the sides hold.
 3. Note: an icon (optional) and a text, not pressable.
 4. Item: a note with a value that can be pressed; a state layer, a tooltip.
-5. Progress edge: a 4 dp [[Linear Progress Indicator]] along the top edge, determinate (0 to 1) or indeterminate.
+5. Progress edge: a 4 dp [[Progress Indicator|Linear Progress Indicator]] along the top edge, determinate (0 to 1) or indeterminate.
 6. Error icon (optional) before a message that reports an error.
 
 ## Variants
@@ -97,12 +97,12 @@ A note or item that has a tooltip shows it on that note or item only: the contro
 
 ## Motion
 
-State layer `short3` (150 ms in the Specification; tess-ui 15 ms hover). Message text changes at once without animation. The progress edge animates by the [[Linear Progress Indicator]] rules; with reduced motion the indeterminate form shows as a static partial bar #needs-verification. Nothing slides.
+State layer `short3` (150 ms in the Specification; tess-ui 15 ms hover). Message text changes at once without animation. The progress edge animates by the [[Progress Indicator|Linear Progress Indicator]] rules; with reduced motion the indeterminate form shows as a static partial bar #needs-verification. Nothing slides.
 
 ## Accessibility
 
 - Role: `group` named "Status" (the engine has no `status` role, `tre:docs/reference/node.md`; a request to tre would add `status` for the live region), with a description of what it reports. Pressable items are role `button` named by their text.
-- Announcement rules (WCAG 2.2 SC 4.1.3 status messages; [[14 Accessibility Basics]], [[Accessibility Announcements]]):
+- Announcement rules (WCAG 2.2 SC 4.1.3 status messages; [[14 Accessibility Basics]], [[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]):
   1. The message text is a polite live region; a change of text is announced once, after the reader finishes the current speech. The bar is never assertive.
   2. Only the item whose text changed is announced, not the whole bar. The live attribute sits on the message and item text nodes, not on a group that would re-read every item.
   3. A text set to its current value is not announced again.

@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, selection, switch]
-related: ["[[Switch]]", "[[Form Row]]", "[[Focus Ring]]", "[[State Layers]]", "[[Disabled State]]", "[[Reduced Motion]]", "[[Existing Tokens]]", "[[Owner Feedback 2026-11-20]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Switch]]", "[[Form Row]]", "[[Focus Ring]]", "[[State Layers]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[Existing Tokens]]", "[[Owner Feedback 2026-11-20]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -46,7 +46,7 @@ Applies one binary setting at once, for example the config app's options.
 | Hover | Code: root opacity 0.85. Spec: state layer 8 percent | [[State Layers]] |
 | Focus (keyboard) | Focus ring 3 dp, 2 dp offset; not built | [[Focus Ring]] |
 | Pressed | Code: root opacity 0.7. Spec: state layer 10 percent and the larger thumb | [[Switch]] |
-| Disabled | Opacity 0.5; no focus, no key, no pointer ([[Disabled State]]) | [[Disabled State]] |
+| Disabled | Opacity 0.5; no focus, no key, no pointer ([[State Layers#Disabled scheme|Disabled State]]) | [[State Layers#Disabled scheme|Disabled State]] |
 
 ## Tokens used
 
@@ -77,7 +77,7 @@ A tooltip, if any, belongs to the Toggle only, never to its row; hovering the la
 
 ## Motion
 
-The thumb and the track ease over the theme's medium duration (200 ms, `$motion.duration.medium`, `short4`-equal, standard easing) and switch at once under reduced motion ([[Motion]], [[Reduced Motion]]).
+The thumb and the track ease over the theme's medium duration (200 ms, `$motion.duration.medium`, `short4`-equal, standard easing) and switch at once under reduced motion ([[Motion]], [[14 Accessibility Basics#Reduced motion|Reduced Motion]]).
 
 ## Accessibility
 
@@ -107,9 +107,9 @@ Track and thumb roles follow the scheme ([[Theme Following the System]]); `Defau
 - [ ] AC-MOD-TGL-5 (scripted input): with reduced motion on the thumb reaches its final position in the first frame after the event.
 - [ ] AC-MOD-TGL-6 (pixel check): a pointer click leaves no pixel changed outside the Toggle box plus state layer and focus ring (F9).
 - [ ] AC-MOD-TGL-7 (contrast script): thumb against track at least 3:1 and track against surface at least 3:1 in off and on, in Light, Dark and High_Contrast.
-- [ ] AC-MOD-TGL-8 (scripted pointer): hover the Toggle for 500 ms: only the Toggle's own tooltip, if it has one; hover the row label: only the label's.
+- [ ] AC-MOD-TGL-8 (scripted input): hover the Toggle for 500 ms: only the Toggle's own tooltip, if it has one; hover the row label: only the label's.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

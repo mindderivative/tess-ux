@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, input, colour, picker, slider, contrast]
-related: ["[[Colour Roles]]", "[[Popup]]", "[[Text Field]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[Contrast]]", "[[Form Row]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Colour Roles]]", "[[Popup]]", "[[Text Field]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[14 Accessibility Basics#Contrast|Contrast]]", "[[Form Row]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Colour Roles]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 ---
 
@@ -98,7 +98,7 @@ The square, strips and swatches keep their size at every level: they are drawing
 The contrast row is specified here and is not built. It shows the contrast ratio between the value (alpha composited over the reference) and a reference colour, so a person choosing a text or icon colour sees at once whether it passes.
 
 - Reference: the role `surface` by default; the app may set another role or a hex. A label names it ("on surface").
-- Formula: WCAG 2.2 relative luminance of sRGB; ratio = (L1 + 0.05) / (L2 + 0.05) with L1 the lighter ([[Contrast]], [[Colour Roles]] for the table of role pairs). The value is composited over the reference before measuring when its alpha is below 1.
+- Formula: WCAG 2.2 relative luminance of sRGB; ratio = (L1 + 0.05) / (L2 + 0.05) with L1 the lighter ([[14 Accessibility Basics#Contrast|Contrast]], [[Colour Roles]] for the table of role pairs). The value is composited over the reference before measuring when its alpha is below 1.
 - Display: `4.53:1`, two decimals, truncated toward zero, never rounded up, so 4.499 shows `4.49:1` and does not claim 4.5.
 - Marks: three text marks, each with words and an icon, not colour alone: "Text AA" at 4.5, "Large text and UI" at 3.0, "Text AAA" at 7.0, each "pass" or "fail".
 - Announcements: the row is a `status` region; the ratio is announced when a drag ends, a key step lands or a field is committed, not on every drag frame.

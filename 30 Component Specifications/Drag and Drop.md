@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, behaviour, drag, engine, shell]
-related: ["[[Drag and Drop Pattern]]", "[[Drag Interaction]]", "[[Panel and Surface]]", "[[Layer Window]]", "[[Application Window]]", "[[Node Graph]]", "[[Scrollbar and Scroll Container]]", "[[Focus Ring]]", "[[State Layers]]", "[[Accessibility Tree]]", "[[14 Accessibility Basics]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Drag and Drop Pattern]]", "[[Drag and Drop|Drag Interaction]]", "[[Panel and Surface]]", "[[Layer Window]]", "[[Application Window]]", "[[Node Graph]]", "[[Scrollbar and Scroll Container]]", "[[Focus Ring]]", "[[State Layers]]", "[[Accessibility Tree]]", "[[14 Accessibility Basics]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[14 Accessibility Basics]]", "[[State Layers]]"]
 aliases: ["Drag And Drop", "Pointer capture and drag", "OS file drag and drop", "Panel drag (docking)"]
 ---

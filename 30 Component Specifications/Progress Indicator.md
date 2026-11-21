@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, communication, progress]
-related: ["[[Linear Progress Indicator]]", "[[Circular Progress Indicator]]", "[[Loading Indicator]]", "[[Progress Bar]]", "[[Loading States]]", "[[Notifications]]", "[[Button]]", "[[Snackbar]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Tooltip]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[Progress Indicator|Linear Progress Indicator]]", "[[Progress Indicator|Circular Progress Indicator]]", "[[Progress Indicator|Loading Indicator]]", "[[Progress Indicator|Progress Bar]]", "[[Loading States]]", "[[Notifications]]", "[[Button]]", "[[Snackbar]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Tooltip]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]"]
 ---
 
@@ -158,7 +158,7 @@ Roles only. The track `surface_container_highest` is lighter than the surface in
 
 Evidence: [[Gaps and Contradictions]] (no indeterminate or circular progress in the shell; ProgressBar indeterminate not in v1).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

@@ -66,7 +66,7 @@ Android's modal navigation drawer scrim defaults to black at 60 percent ([Naviga
 - [ ] AC-SCR-6: Scripted input. With a dismissible dialog open, click a button located under the scrim. Pass: the dialog closes and the button's action is not invoked.
 - [ ] AC-SCR-7: Scripted input. With a non-dismissible dialog open, click the scrim and press Escape. Pass: the dialog stays open and the scrim stays.
 - [ ] AC-SCR-8: Scripted input. Press Tab 20 times with a modal open. Pass: focus never leaves the modal.
-- [ ] AC-SCR-9: Scripted frame capture. Open a dialog at 60 Hz. Pass: scrim opacity reaches 0.32 between 500 ms and 533 ms; on close it reaches 0 between 150 ms and 183 ms; under reduced motion it reaches the end value on the next frame.
+- [ ] AC-SCR-9 (pixel check): Scripted frame capture. Open a dialog at 60 Hz. Pass: scrim opacity reaches 0.32 between 500 ms and 533 ms; on close it reaches 0 between 150 ms and 183 ms; under reduced motion it reaches the end value on the next frame.
 - [ ] AC-SCR-10: Pixel check. In dark and light, the surface under the scrim and the modal surface on top both resolve from roles ([[Colour Roles]] AC-COL-6). Pass: luminance rules hold.
 
 ## Status in code

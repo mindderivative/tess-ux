@@ -62,8 +62,8 @@ Not applicable by density: the box follows `Columns`, `Rows` and the font; 80 by
 ## Behaviour
 
 - Pointer: press and drag selects cells; wheel scrolls history.
-- Keyboard: while focused every key goes to the shell, Ctrl plus a letter sends its control byte (Ctrl+C interrupts), Ctrl+Shift+C copies the selection. Tab belongs to the shell.
-- Keyboard trap: the engine terminal takes every key, so a keyboard user cannot leave it by Tab (WCAG 2.2 SC 2.1.2). The specification requires a documented escape sequence (a chord the terminal does not forward, for example Ctrl+Shift+Tab or Escape then Tab #needs-verification) and a visible hint; the engine does not provide one yet (candidate UXREQ).
+- Keyboard: while focused every key goes to the shell except the reserved escape chord (below); Ctrl plus a letter sends its control byte (Ctrl+C interrupts), Ctrl+Shift+C copies the selection. Tab belongs to the shell.
+- Keyboard trap and escape chord ([[ADR-0018 Terminal escape chord]]): the terminal takes every key, so without a way out a keyboard user cannot leave it by Tab (WCAG 2.2 SC 2.1.2). A terminal block reserves one chord, Ctrl+Shift+Escape, that moves focus to the next focusable element outside the terminal. The chord is reserved before the program receives keys, so it is never sent to the program, and it is shown in the block's description. A project may change the chord and must keep one. Ctrl+Shift+Escape is a proposed default: the shell's shortcut map needs a collision check (the chord is also the task-manager shortcut of Windows and of some desktops). The engine or framework must reserve the chord; the engine does not yet (candidate UXREQ).
 - Touch: not specified.
 
 ## Tooltip and overlay behaviour
@@ -90,20 +90,22 @@ Palette is two sets (dark and light) of the roles above; the terminal follows th
 
 - [ ] AC-BLK-TRM-1 (geometry check): `Columns` 80 and `Rows` 24 at font size 13 give a box whose width equals 80 cell widths and height 24 cell heights within 1 px.
 - [ ] AC-BLK-TRM-2 (scripted input): with focus in the terminal, Ctrl+C sends byte 0x03 and Ctrl+Shift+C copies the selection without sending a byte.
-- [ ] AC-BLK-TRM-3 (scripted input): the documented escape chord moves focus out of the terminal to the next focusable node and a plain Tab does not.
+- [ ] AC-BLK-TRM-3 (scripted input): with focus in the terminal, Ctrl+Shift+Escape (or the project's recorded replacement chord) moves focus to the next focusable node outside the terminal and a plain Tab does not ([[ADR-0018 Terminal escape chord]]). Pass: focused node id after each of the two inputs.
 - [ ] AC-BLK-TRM-4 (contrast script): each of the 16 ANSI colours against the palette `background` has at least 4.5 to 1 in the light and the dark palette, or the palette marks the colour as decorative-only.
 - [ ] AC-BLK-TRM-5 (token test): every palette entry resolves to a role of [[Colour Roles]].
 - [ ] AC-BLK-TRM-6 (AT tree assertion): the terminal exposes role `textbox` with a name; with focus it is the focused node.
 - [ ] AC-BLK-TRM-7 (pixel check): a focused terminal shows the focus ring with 3 dp thickness and 2 dp offset.
 - [ ] AC-BLK-TRM-8 (scripted input): a TDL file that places a Terminal block cannot start a process: no `Command` key is accepted.
+- [ ] AC-BLK-TRM-9 (scripted input): the escape chord is reserved before the program receives keys: with a recording program on the pty, pressing the chord delivers zero bytes to it, and every other key sequence (Escape, Ctrl+Shift+C, Ctrl+C, Tab) is delivered or handled as AC-BLK-TRM-2 states. Pass: byte count 0 for the chord and the expected bytes for the others.
+- [ ] AC-BLK-TRM-10 (AT tree assertion): the terminal's description (accessible description) names the escape chord, and a visible hint or the block's help text shows it; a project that changes the chord keeps the description in step. Pass: description text contains the chord string in each project.
 
 ## Status in code
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `shell-vault:41 TDL Reference/Block Reference.md` (Terminal, post-v1); no `Terminal` in `tess-shell:src/tess_shell/schema/blocks.py` | absent: fails AC-BLK-TRM-1 to 8 (AC-BLK-TRM-8 holds by absence) |
+| tess-shell | `shell-vault:41 TDL Reference/Block Reference.md` (Terminal, post-v1); no `Terminal` in `tess-shell:src/tess_shell/schema/blocks.py` | absent: fails AC-BLK-TRM-1 to 7, 9 and 10 (AC-BLK-TRM-8 holds by absence) |
 | tess-ui | none | absent |
-| tre | `tre:docs/guide/text.md` (Terminal), `tre:docs/reference/properties.md`, `tre:crates/engine-py/src/terminal.rs` | partly meets: PTY, grid, scrollback, palette, selection; no escape chord (fails AC-BLK-TRM-3); no scrollbar |
+| tre | `tre:docs/guide/text.md` (Terminal), `tre:docs/reference/properties.md`, `tre:crates/engine-py/src/terminal.rs` | partly meets: PTY, grid, scrollback, palette, selection; no escape chord (fails AC-BLK-TRM-3, AC-BLK-TRM-9, AC-BLK-TRM-10; [[ADR-0018 Terminal escape chord]] needs the engine to reserve the chord); no scrollbar |
 
 ## Deviations from Material Design 3
 

@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, menu]
-related: ["[[Menu]]", "[[Menu Separator]]", "[[Audio Outputs]]", "[[Tray Menu]]", "[[Popup]]", "[[12 Overlays]]", "[[List Item]]", "[[Disabled State]]", "[[State Layers]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Menu]]", "[[Divider|Menu Separator]]", "[[Audio Outputs]]", "[[Tray Menu]]", "[[Popup]]", "[[12 Overlays]]", "[[List Item]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[State Layers]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -22,7 +22,7 @@ Gives one command or choice in a menu a place, a name and an optional shortcut h
 ## When to use and not
 
 - Use when: a row inside a [[Menu]], [[Audio Outputs]] or [[Tray Menu]].
-- Do not use when: the control stands alone in a layout (use [[Button]]); a rule is all that is needed in a custom list ([[Menu Separator]]).
+- Do not use when: the control stands alone in a layout (use [[Button]]); a rule is all that is needed in a custom list ([[Divider|Menu Separator]]).
 
 ## Anatomy
 
@@ -49,7 +49,7 @@ Gives one command or choice in a menu a place, a name and an optional shortcut h
 | Hover or lit by keys | Fill `outline` (code); spec: state layer 8 percent in `on_surface` | `on_surface` on `outline`: 4.91:1 dark, 4.54:1 light |
 | Focus (keyboard) | The lit row is the focus indication (a row is no Tab stop; the Menu holds focus) | [[Menu]] |
 | Pressed | Fill `primary` (code); spec: state layer 10 percent | `on_surface` on `primary`: 2.58:1 dark, 2.89:1 light (fails 4.5:1) |
-| Disabled | Opacity 0.5; no click, no focus; no tooltip | [[Disabled State]] |
+| Disabled | Opacity 0.5; no click, no focus; no tooltip | [[State Layers#Disabled scheme|Disabled State]] |
 | Submenu open | `expanded` true on the row | [[Menu]] |
 
 ## Tokens used
@@ -108,14 +108,14 @@ Colours follow the scheme ([[Theme Following the System]]); the hover and presse
 
 - [ ] AC-MOD-MIT-1 (AT tree assertion): a command row has role `MENUITEM` and a non-empty name; a separator has role `SEPARATOR`; a submenu row has `expanded` false and true while open.
 - [ ] AC-MOD-MIT-2 (scripted input): click a command row: its action runs once and the whole menu closes; click a submenu row: the submenu opens and no action runs.
-- [ ] AC-MOD-MIT-3 (scripted pointer): a pointer rest of 250 ms on a submenu row opens the submenu; 300 ms on another row closes it; never two submenus of one menu open.
+- [ ] AC-MOD-MIT-3 (scripted input): a pointer rest of 250 ms on a submenu row opens the submenu; 300 ms on another row closes it; never two submenus of one menu open.
 - [ ] AC-MOD-MIT-4 (geometry check): a row is 40, 32, 28 dp high and its icon 24, 20, 20 dp at default, compact, dense; padding is 12, 8, 4 dp.
 - [ ] AC-MOD-MIT-5 (contrast script): row text against the row fill in rest, hover and pressed is at least 4.5:1 in Light, Dark and High_Contrast.
 - [ ] AC-MOD-MIT-6 (static check): no `MenuItem` carries a `Tooltip`.
 - [ ] AC-MOD-MIT-7 (scripted input): a disabled row takes no click and no key and is skipped by Up and Down.
 - [ ] AC-MOD-MIT-8 (pixel check): a label wider than its row ends with `…` and the shortcut hint stays visible.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

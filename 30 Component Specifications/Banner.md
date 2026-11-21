@@ -92,7 +92,7 @@ Source: [Material Web banner tokens, latest](https://github.com/material-compone
 - One at a time. At most one banner is visible per area (window, or pane). Further banners queue by severity (error, then warning, then info), then by age. A banner with an identity (`disk-change:file.tdl`) replaces a queued or visible banner with the same identity. When several conditions of the same kind exist, one banner states the count ("3 files changed on disk") and its action works on all. The queue length is not shown; the project may show "1 of 3" in the text.
 - Persistence: a banner stays until the user takes an action, dismisses it or the condition ends (the project removes it). It never times out. A banner for a recoverable condition is dismissible; one for a condition that blocks work (no dismissal) carries an action that resolves it.
 - Pointer: actions and dismiss follow [[Button]] behaviour. A press elsewhere does nothing to the banner.
-- Keyboard: a banner takes no focus when it appears. It sits in the Tab order at its place in the layout (top of its area, before the content) so a keyboard user reaches it with Shift+Tab from the content or with Tab from the top. The chord `Alt+Shift+B` moves focus to the first action #needs-verification-as-design-choice. Enter or Space runs an action; Escape on a focused banner dismisses it if dismissible and returns focus to where it came from.
+- Keyboard: a banner takes no focus when it appears. It sits in the Tab order at its place in the layout (top of its area, before the content) so a keyboard user reaches it with Shift+Tab from the content or with Tab from the top. The chord Alt+Shift+B moves focus to the current banner's first action ([[ADR-0019 Banner and snackbar focus chords]]). Alt+Shift+B is a proposed default: a collision check against the shell's shortcut map and the application's own map is required before a project adopts it, and the result is recorded. Enter or Space runs an action; Escape on a focused banner dismisses it if dismissible and returns focus to where it came from.
 - Touch: actions and dismiss have 48 dp hit areas.
 - After an action the banner closes (when the action resolves the condition) and focus returns to the control that had it before the banner was focused; if there was none, to the first focusable control of the content below.
 
@@ -113,7 +113,7 @@ Appear: height expands from 0 to its full height over 200 ms (`short4`) with `st
 - Role of the container: `region` named by the summary ("File changed on disk") so a user can find it with landmark navigation; tess-ui uses role `group` with a name. The text node carries the live setting.
 - Name: the message text. Actions are buttons named by their labels; dismiss is "Dismiss". Icon is decorative and hidden unless it is the only severity cue (then named "Warning" or "Error"): colour is not the only carrier of severity ([WCAG 1.4.1](https://www.w3.org/TR/WCAG22/#use-of-color)).
 - Contrast: text and icon on the container at least 4.5 to 1 and 3 to 1 for the icon; actions at least 4.5 to 1 on the container.
-- Keys: Tab order as above; Enter and Space activate; Escape dismisses a dismissible banner.
+- Keys: Tab order as above; Alt+Shift+B moves focus to the banner (proposed default, [[ADR-0019 Banner and snackbar focus chords]]); Enter and Space activate; Escape dismisses a dismissible banner.
 - A banner never moves focus on appearance.
 
 ## Dark and light
@@ -132,12 +132,13 @@ Info variant, full width, at the top of the window area it concerns, 24 dp icon,
 - [ ] AC-BNR-4 (scripted input): show three banners (info, error, warning): one is visible, the error first; dismissing it shows the warning, then the info; a banner with the same identity as the visible one replaces it without a second node. Pass: visible count at most 1 on every frame and order equal.
 - [ ] AC-BNR-5 (AT tree assertion): info: live `polite`, role `status` on the text node; a banner that asks for a decision (disk change): role `alert`, live `assertive`; the container has a role of `region` or `group` with the summary as its name; each action is a button with a name; the dismiss button is named "Dismiss". Pass: all equal.
 - [ ] AC-BNR-6 (scripted input): a banner appearing raises exactly one announcement with the politeness of its variant; changing its text raises at most one polite update and no assertive one; its disappearance raises none. Pass: counts and politeness equal.
-- [ ] AC-BNR-7 (scripted input): the banner takes no focus on appearance (the focus owner is unchanged); Tab from the top of the area reaches the first action; `Alt+Shift+B` moves focus to it; Enter runs it; focus then returns to the control that had it before. Pass: owners equal at each step (#needs-verification of the chord).
+- [ ] AC-BNR-7 (scripted input): the banner takes no focus on appearance (the focus owner is unchanged); Tab from the top of the area reaches the first action; the chord Alt+Shift+B (proposed default, [[ADR-0019 Banner and snackbar focus chords]]) moves focus to it; Enter runs it; focus then returns to the control that had it before. Pass: owners equal at each step.
 - [ ] AC-BNR-8 (contrast script): text on the container at least 4.5 to 1 and icon at least 3 to 1, for the three variants, light, dark and high contrast; the action label on the container at least 4.5 to 1. Pass: no ratio below the limit.
 - [ ] AC-BNR-9 (scripted input): a banner stays with no timeout for 60 s (frame sampling); a dismissible banner closes on the dismiss control and on Escape while it has focus; a non-dismissible banner has no dismiss control and ignores Escape. Pass: states equal.
 - [ ] AC-BNR-10 (geometry check): below 480 dp wide the actions are on their own row below the text, end-aligned; at 480 dp and above they are at the end of the text row; text never exceeds 3 lines. Pass: bounds equal.
 - [ ] AC-BNR-11 (scripted input): with reduced motion on, show and dismiss change the layout in one frame; with it off the height animation takes 200 ms in and 150 ms out (within 2 frames). Pass: frame counts equal.
 - [ ] AC-BNR-12 (review): the severity of every banner is also given by an icon or a word (greyscale render differs between info and error). Pass: reviewer finds none that differs by colour only.
+- [ ] AC-BNR-13 (review): a project that adopts Alt+Shift+B has run the collision check against the shell's shortcut map and each application's own map and records the result and any replacement chord ([[ADR-0019 Banner and snackbar focus chords]]). Pass: the record exists and lists no collision, or names the replacement.
 
 ## Status in code
 
@@ -149,7 +150,7 @@ Info variant, full width, at the top of the window area it concerns, 24 dp icon,
 
 Evidence: [[Gaps and Contradictions]] (hand-built disk-change banner, `Main_View.tdl` lines 974 to 1000; no banner in the toolkit).
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

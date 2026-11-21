@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, frame, title-bar, window, keyboard]
-related: ["[[Window]]", "[[Window Title Bar]]", "[[Application Window]]", "[[Top App Bar]]", "[[Icon Button]]", "[[Tooltip]]", "[[Dialog]]", "[[State Layers]]", "[[Focus Ring]]", "[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Window]]", "[[Title Bar|Window Title Bar]]", "[[Application Window]]", "[[Top App Bar]]", "[[Icon Button]]", "[[Tooltip]]", "[[Dialog]]", "[[State Layers]]", "[[Focus Ring]]", "[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[Window]]"]
 ---
 
@@ -97,8 +97,8 @@ A project sets the bar height with `Style { Height: ... }`; every part follows (
 
 ## Behaviour
 
-- Pointer: a primary press on the bar, its icon or its title moves the window (OS move). A press on a window button, a focusable control, a text field or a control with a click handler in the bar is an ordinary press, not a drag. `Window_Region: none` on a node (and its descendants) removes it from the drag region; `Window_Region: drag` on a node inside a button restores it. When the OS takes the press, the pressed node gets `pointer_cancel` and no click follows. A double press within 500 ms and 4 px on the drag region toggles maximise (on macOS the user's System Settings choice applies). A secondary press opens the OS window menu only when `system_menu` is true; otherwise it is an ordinary press for the application's own menu.
-- Keyboard: Tab order is the application's own children, then minimise, maximise, close. Enter and Space activate the focused button. Escape does nothing. The window shortcuts of the platform (Alt+F4, Alt+Space) are the OS's.
+- Pointer: a primary press on the bar, its icon or its title moves the window (OS move). A press on a window button, a focusable control, a text field or a control with a click handler in the bar is an ordinary press, not a drag. `Window_Region: none` on a node (and its descendants) removes it from the drag region; `Window_Region: drag` on a node inside a button restores it. When the OS takes the press, the pressed node gets `pointer_cancel` and no click follows. A double press within 500 ms and 4 px on the drag region toggles maximise (on macOS the user's System Settings choice applies). A secondary press opens the system menu, which is on by default in borderless windows ([[ADR-0015 System menu default in borderless windows]]); where a project has turned `system_menu` off in its own decision record, a secondary press is an ordinary press for the application's own menu. A press on the title bar icon opens the same menu.
+- Keyboard: Tab order is the application's own children, then minimise, maximise, close. Enter and Space activate the focused button. Escape does nothing. Alt+Space opens the system menu in a borderless window ([[ADR-0015 System menu default in borderless windows]]); the other window shortcuts of the platform (Alt+F4) are the OS's.
 - Touch: a long press on the bar behaves as the secondary press; the 46 by 28 dp minimum button hit area meets the 24 dp minimum; in a touch context hit areas are at least 48 dp ([[ADR-0002 Desktop density levels and target sizes]]), so the bar height is 48 dp in a touch context.
 - macOS: with a transparent OS title bar the bar leaves `titlebar_inset` room at its start and hides its own buttons while `native_controls` is true; in fullscreen the inset is 0 and the OS controls are hidden.
 
@@ -136,7 +136,7 @@ All colours are role references and follow the scheme. The unthemed app gets the
 | Glyph, icon | 16 dp, 20 dp |
 | Title role | `title_small` |
 | Inactive opacity | 0.6 |
-| Right-click opens OS menu | on in borderless windows where the platform has one (tess-ui: off) |
+| System menu (icon, secondary press on the bar, Alt+Space) | on in borderless windows ([[ADR-0015 System menu default in borderless windows]]); tess-ui: off, fails AC-TTB-18 |
 | Windows 11 snap layouts on maximise hover | not built |
 
 ## Acceptance criteria
@@ -158,6 +158,7 @@ All colours are role references and follow the scheme. The unthemed app gets the
 - [ ] AC-TTB-15 (scripted input): a bar with `Buttons: [dismiss]` has no drag region, no inset and a single 46 dp button; pressing it closes the nearest overlay up the tree (open state false) and does nothing in a bar that is in no overlay; naming `dismiss` together with window buttons is a build error. Pass: overlay open state and error list.
 - [ ] AC-TTB-16 (scripted input): the bar height read from the density token after a level change equals 40, 32 or 28 and every part follows (glyphs stay centred within 1 px). Pass: values at each level after `Style { Height }` is not set.
 - [ ] AC-TTB-17 (review): the bar's controls follow platform placement: window buttons at the end on Windows and Linux, OS traffic lights at the start on macOS; the application's own controls never duplicate a window button. Pass: reviewer sign-off per platform.
+- [ ] AC-TTB-18 (scripted input): in a borderless window with no `system_menu` setting the system menu is on ([[ADR-0015 System menu default in borderless windows]]); a press on the title bar icon, a secondary press on the drag region and Alt+Space each raise the platform window menu request; where a project has turned it off the secondary press reaches the application's own handler. Pass: the setting reads true and three menu requests are raised. Hand check on a real compositor.
 
 ## Status in code
 
@@ -165,7 +166,7 @@ All colours are role references and follow the scheme. The unthemed app gets the
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/spec/title_bar.py` (`HEIGHT` 40, `BUTTON_WIDTH` 46, `GLYPH` 16, `INACTIVE` 0.6, `STYLES`, `_button`, `_dismiss`), `tess-ui:docs/components/title-bar.md`, `tess-ui:docs/guide/custom-title-bars.md`, tests `tess-ui:tests/test_title_bar.py`, `test_title_bar_macos.py`, `test_title_bar_reload.py`, `test_title_bar_surface.py`, `test_title_bar_theme.py`, `test_title_bar_vocabulary.py`, `test_title_bar_widgets.py` | Partly meets. Meets: AC-TTB-2, AC-TTB-4 to AC-TTB-7 and AC-TTB-10 as designed (drag region, double-click maximise, window actions, glyph swap, role references, fade to 0.6, dismiss variant, macOS inset); not run against the numbers here. Fails AC-TTB-1 and AC-TTB-16 at compact and dense: the height is a constant 40, there is no density setting. Fails AC-TTB-11: the maximise button's label and tooltip are the fixed text Maximise (`_LABELS`, `_TIPS`) and do not become Restore while maximised. AC-TTB-8, AC-TTB-9, AC-TTB-12 (ring variant, state layer values, contrast of the 0.6 fade) are not run and not found in the tests. The start padding is 12 and gap 8 at all levels (AC-DEN-6 at compact and dense fails). Not built: Windows 11 snap layouts on the maximise button, a different glyph set for the buttons. A top app bar made in code on a borderless window acts as a title bar (`top_app_bar(..., window_controls=)`): the `TopAppBar` view is not a title bar |
 | tess-shell | not applicable | Not applicable: no application windows; shell surfaces are layer-shell windows. The shell has no title bar element |
-| tre | `tre:docs/reference/window.md` (Title bar and borders), `tre:docs/guide/custom-title-bars.md` (`window_region`, `titlebar_inset`, `native_controls`, `system_menu`, `minimize`, `maximize`, `restore`, `close`) | Exists as primitives: drag region with the interactive-node rule, `pointer_cancel` when the OS takes a press, double-click maximise (500 ms and 4 px on platforms without a system value), resize border, macOS inset and `native_controls`. The engine draws no title bar; see [[Window Title Bar]] |
+| tre | `tre:docs/reference/window.md` (Title bar and borders), `tre:docs/guide/custom-title-bars.md` (`window_region`, `titlebar_inset`, `native_controls`, `system_menu`, `minimize`, `maximize`, `restore`, `close`) | Exists as primitives: drag region with the interactive-node rule, `pointer_cancel` when the OS takes a press, double-click maximise (500 ms and 4 px on platforms without a system value), resize border, macOS inset and `native_controls`. The engine draws no title bar; see [[Title Bar|Window Title Bar]] |
 
 ## Deviations from Material Design 3
 

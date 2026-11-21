@@ -4,7 +4,7 @@ type: index
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [index]
 related: []
 depends_on: []
@@ -16,6 +16,11 @@ Audits of each Tesserae project against the specifications, routed through the O
 
 ## Notes
 
-No notes yet.
+- [[Adoption Libraries]]
+- [[Adoption Plan]]
+- [[Adoption tess-shell]]
+- [[Adoption tess-ui]]
+- [[Adoption tre]]
+- [[Audit Template]]
 
 Back to [[Index]].

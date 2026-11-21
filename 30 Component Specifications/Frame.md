@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, shell, frame, layer-shell, owner-feedback]
-related: ["[[Panel and Surface]]", "[[Bar]]", "[[Popup]]", "[[Peek]]", "[[Auto Hide]]", "[[Dock]]", "[[Frame Ring]]", "[[Frame Strip]]", "[[Frame Surface]]", "[[Frame Join]]", "[[Meld Join]]", "[[Frame Meld]]", "[[Frame Border]]", "[[Reserved Space]]", "[[Input Region]]", "[[Content Fade]]", "[[Layer Window]]", "[[Shortcut Mode]]", "[[12 Overlays]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Panel and Surface]]", "[[Bar]]", "[[Popup]]", "[[Peek]]", "[[Auto Hide]]", "[[Dock]]", "[[Frame#Anatomy|Frame Ring]]", "[[Frame#Anatomy|Frame Strip]]", "[[Frame|Frame Surface]]", "[[Frame#Frame join: rendering decisions|Frame Join]]", "[[Frame#Frame join: rendering decisions|Meld Join]]", "[[Frame#Anatomy|Frame Meld]]", "[[Frame#Tokens used|Frame Border]]", "[[Frame#Anatomy|Reserved Space]]", "[[Frame#Anatomy|Input Region]]", "[[Auto Hide|Content Fade]]", "[[Layer Window]]", "[[Keyboard Navigation|Shortcut Mode]]", "[[12 Overlays]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Spacing and Density]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0005 Theme follows the system]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 ---
 
@@ -15,7 +15,7 @@ depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[
 > [!info] Summary
 > A Frame is a ring of reserved space around one monitor, with square outer corners and rounded inner corners, that can hold strips (thick edges that act as bars) and melded Panels that grow out of it. Tesserae-only element with no Material Design 3 counterpart; the nearest patterns are the [Navigation rail](https://m3.material.io/components/navigation-rail/overview) and [Top app bar](https://m3.material.io/components/top-app-bar/overview) for a strip, and the [Shape](https://m3.material.io/styles/shape/overview) scale for the corner radii. Source of truth in code: see Status in code.
 
-A Frame is not an MD3 element. This note specifies the whole surface: reserved space, layers, input, monitors, keys, accessibility, and the decisions about how a join is drawn. The ring, a strip, a melded Panel, a join and a border each have a note of their own ([[Frame Ring]], [[Frame Strip]], [[Frame Meld]], [[Frame Join]], [[Meld Join]], [[Frame Border]]); this note holds the rules that cross them.
+A Frame is not an MD3 element. This note specifies the whole surface: reserved space, layers, input, monitors, keys, accessibility, and the decisions about how a join is drawn. The ring, a strip, a melded Panel, a join and a border each have a note of their own ([[Frame#Anatomy|Frame Ring]], [[Frame#Anatomy|Frame Strip]], [[Frame#Anatomy|Frame Meld]], [[Frame#Frame join: rendering decisions|Frame Join]], [[Frame#Frame join: rendering decisions|Meld Join]], [[Frame#Tokens used|Frame Border]]); this note holds the rules that cross them.
 
 ## Purpose
 
@@ -43,8 +43,8 @@ Frame the desktop: reserve a band on every side of the monitor so windows stay i
 | Variant | Keys | Use |
 |---|---|---|
 | Plain ring | `Thickness` only | Bezel with no content |
-| Ring with strips | `Edges { Top { Thickness, Children } }` | Edge bars hosted in the ring ([[Frame Strip]]) |
-| Ring with melded Panels | Panels with `Meld: true`, `Attach_To: <Frame>`, no `Margin` | Dock or drawer that grows out of the ring ([[Frame Meld]], [[Dock]]) |
+| Ring with strips | `Edges { Top { Thickness, Children } }` | Edge bars hosted in the ring ([[Frame#Anatomy|Frame Strip]]) |
+| Ring with melded Panels | Panels with `Meld: true`, `Attach_To: <Frame>`, no `Margin` | Dock or drawer that grows out of the ring ([[Frame#Anatomy|Frame Meld]], [[Dock]]) |
 | Ring with margin | `Margin` above 0 | Frame inset from the display edge |
 | Per-side thickness | `Thickness { Top: 8, Left: 24 }` or `[left, top, right, bottom]` | Unequal bands; a side of 0 reserves nothing |
 
@@ -54,7 +54,7 @@ Frame the desktop: reserve a band on every side of the monitor so windows stay i
 |---|---|---|
 | Shown | Ring, strips and melded Panels drawn; reservers hold their zones | fill `surface` |
 | Hidden (`Visible: false`, or `Hide` with `Target`) | Nothing drawn; reservers closed, zones released | not applicable |
-| Strip contracted / expanded / peek | Strip at base thickness / full thickness / pushed out over windows | see [[Peek]], [[Frame Strip]] |
+| Strip contracted / expanded / peek | Strip at base thickness / full thickness / pushed out over windows | see [[Peek]], [[Frame#Anatomy|Frame Strip]] |
 | Fullscreen window on the monitor | The Frame and its reservers hide until the window leaves fullscreen | not applicable |
 | Monitor removed | All of the Frame's windows close; created again when the monitor returns | not applicable |
 
@@ -95,7 +95,7 @@ Side total = `Thickness` + each border width + `Margin` on that side. Examples: 
 ## Behaviour
 
 - Pointer: a press on the ring or a strip is taken by the shell; a press in the opening, or in the notch of a concave corner, passes to the desktop. The ring's hit shape is `painted`; the compositor input region follows the same shape (`auto`). A shadow takes no clicks.
-- Keyboard: `Keyboard: NONE` is the default; the painter takes `ON_DEMAND` when any strip holds a text input (a warning if `NONE` was written). Keyboard-only access is through [[Shortcut Mode]]: `Enter_Shortcut_Mode` puts a Frame with `Shortcut_Mode: true` in focus and every peek of the Frame shows at once; `Next_Focus` and `Previous_Focus` cycle panels, peeks, bars and strips by `Tab_Index`. Mode keys arrive only if the compositor gives the surface the keyboard (`Debug { Mode_Keyboard }`, default `EXCLUSIVE`; not yet checked on KWin).
+- Keyboard: `Keyboard: NONE` is the default; the painter takes `ON_DEMAND` when any strip holds a text input (a warning if `NONE` was written). Keyboard-only access is through [[Keyboard Navigation|Shortcut Mode]]: `Enter_Shortcut_Mode` puts a Frame with `Shortcut_Mode: true` in focus and every peek of the Frame shows at once; `Next_Focus` and `Previous_Focus` cycle panels, peeks, bars and strips by `Tab_Index`. Mode keys arrive only if the compositor gives the surface the keyboard (`Debug { Mode_Keyboard }`, default `EXCLUSIVE`; not yet checked on KWin).
 - Show and hide: `Show`, `Hide` and `Toggle` with `Target: <name>` act on a Frame, a melded Panel and a strip with a `Name` and a `Peek`. A hidden Frame releases every reserved zone; a shown one restores them, each in one reflow.
 - Layer: `TOP` only. A different layer is a load error.
 - Fullscreen: a fullscreen window covers the Frame and releases its zones on that monitor.
@@ -110,7 +110,7 @@ The Frame itself carries no tooltip. A control in a strip puts its tooltip on th
 ## Motion
 
 - Strip expand and contract, peek slide, melded Panel show and hide: the visual extent is animated inside the painter, which is full-screen; reserved space changes in steps (set the zone first then animate out; animate in then set the zone).
-- Content fades with the slide by default (`Content_Fade`, accepted 2026-11-08), see [[Content Fade]]; a plain show and hide fades too.
+- Content fades with the slide by default (`Content_Fade`, accepted 2026-11-08), see [[Auto Hide|Content Fade]]; a plain show and hide fades too.
 - Reduced motion: every transition is instant (strips switch state, the chevron changes direction at once, no fade).
 - An idle Frame draws no frames.
 
@@ -120,7 +120,7 @@ The Frame itself carries no tooltip. A control in a strip puts its tooltip on th
 - Content in strips is reachable by keyboard like any module and carries roles, labels and states ([[Accessibility Rules]] AR-1 to AR-9).
 - The handle of a peek should be a focusable button named "Expand dock"; it is not today (see [[Peek]]).
 - Contrast: text on the ring fill at least 4.5 to 1; a border or handle that identifies a control at least 3 to 1 ([[Accessibility Rules]] AR-16, AR-17). High contrast takes the border colour and background from the high-contrast tokens.
-- Announcements go through one window of the shell (the Frame, else the Bar) by owner decision of 2026-11-19 ([[Accessibility Announcements]]).
+- Announcements go through one window of the shell (the Frame, else the Bar) by owner decision of 2026-11-19 ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 
 ## Dark and light
 
@@ -148,7 +148,7 @@ Decided by the owner on 2026-11-07 (record: `shell-vault:40 Specifications/Surfa
 - The join is one path contour: the ring and every hosted meld are drawn together, with a fillet at each join that uses the Frame's inner corner radius (decided 2026-11-06). The fillet grows with the slide; a join that shows a 90 degree angle and then a chamfer fails the owner's look test of 2026-11-06.
 - Cost of the five options (KWin, 1920 by 1080): mean `total_ms` 1.3 to 1.7 per frame while animating, 0 idle frames; SMIL keeps more video memory after a slide (10.6 to 19.0 MiB against 0 to 1.1 MiB); SHADER is the only one that redraws part of the frame.
 - Remaining look fault (owner, 2026-11-07): the border looks slightly thinner at the rounding than on straights. The code session measured a summed linear-light brightness of 1.70 on a curve against 2.00 on a straight at 1x (sRGB edge blending). The shell answers with `Frame_Blend: LINEAR` (default): the ring is drawn by one shader that blends in linear light; it falls back to paths, with one warning, for a translucent colour, an `Opacity` below 1, a `FADE` body, or more than eight melded bodies. The engine-side fix is the request `shell-vault:80 Requests/TRE-REQ-015 Linear-Light Edge Blending.md`. Not re-measured here.
-- Detail of the join shapes: [[Meld Join]], [[Frame Join]].
+- Detail of the join shapes: [[Frame#Frame join: rendering decisions|Meld Join]], [[Frame#Frame join: rendering decisions|Frame Join]].
 
 ## Acceptance criteria
 

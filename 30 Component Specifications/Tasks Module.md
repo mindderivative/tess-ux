@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, tasks]
-related: ["[[Task Item]]", "[[Bar]]", "[[Empty and Error States]]", "[[Accessibility Announcements]]", "[[Pointer Events]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Task Item]]", "[[Bar]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "Pointer Events", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -44,7 +44,7 @@ Shows which windows are open, which is active, and lets the user activate, minim
 | State | Visual change | Token values |
 |---|---|---|
 | Windows present | One item per window | [[Task Item]] |
-| Empty (no window) | The module is hidden and takes no space; with `show_empty` it keeps its space (an empty box, no text) | [[Empty and Error States]] |
+| Empty (no window) | The module is hidden and takes no space; with `show_empty` it keeps its space (an empty box, no text) | [[Iconography#Fallback icon|Empty and Error States]] |
 | Hover, focus, pressed, selected | Per item | [[Task Item]] |
 | Hidden (service absent) | No KWin, no script, no first list yet, or no window: hidden. Hidden means `Visible: false` on the root: the module takes no space in the [[Bar]], no spacing is left beside it, no placeholder is drawn and the root is absent from the accessibility tree. | root `Visible: <| available and ready and (has_windows or params.show_empty) |>` |
 | Error | A failed script load logs one warning and the module stays hidden | not applicable |
@@ -110,13 +110,13 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TSK-2 (scripted input): no KWin, or no windows: root `Visible` false, width 0, absent from the accessibility tree, Bar spacing unchanged; with `show_empty` the root keeps its space.
 - [ ] AC-MOD-TSK-3 (scripted input): opening a window adds one item in the keyed diff and does not rebuild the others; closing removes one.
 - [ ] AC-MOD-TSK-4 (scripted input): wheel +1 over the row activates the next window and -1 the previous, wrapping at the ends.
-- [ ] AC-MOD-TSK-5 (scripted pointer): hover an item for 500 ms: one tooltip; wheel over the row with the tooltip shown removes it within one frame.
+- [ ] AC-MOD-TSK-5 (scripted input): hover an item for 500 ms: one tooltip; wheel over the row with the tooltip shown removes it within one frame.
 - [ ] AC-MOD-TSK-6 (static check): the Root carries no `Tooltip`.
 - [ ] AC-MOD-TSK-7 (geometry check): items are 40, 32, 28 dp high at default, compact, dense; gaps 4 dp; no two hit areas overlap.
 - [ ] AC-MOD-TSK-8 (scripted input): with `announce` true a window opening queues exactly one polite announcement; with it false none.
 - [ ] AC-MOD-TSK-9 (scripted input): with more windows than fit, the active item is inside the slot and no item paints past the slot edge.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

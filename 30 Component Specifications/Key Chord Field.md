@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, input, keyboard, tesserae-specific]
-related: ["[[Text Field]]", "[[Button]]", "[[Icon Button]]", "[[Form Row]]", "[[Key Chord Recorder]]", "[[Global Shortcuts]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
+related: ["[[Text Field]]", "[[Button]]", "[[Icon Button]]", "[[Form Row]]", "[[Key Chord Field|Key Chord Recorder]]", "[[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Button]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
 ---
 
@@ -17,7 +17,7 @@ depends_on: ["[[Text Field]]", "[[Button]]", "[[Spacing and Density]]", "[[State
 
 ## Purpose
 
-People set their own shortcuts in the configuration app (`tess-ui:apps/shell_config/...`, `shell-vault:40 Specifications/Configuration Application.md`). Typing `Ctrl+Alt+Shift+Meta+Key` by hand is error-prone, and a recorded chord is exact. The field supports both: record, or type and have the text read and written in the canonical form. The recorder logic is [[Key Chord Recorder]]; this note specifies the field the person sees.
+People set their own shortcuts in the configuration app (`tess-ui:apps/shell_config/...`, `shell-vault:40 Specifications/Configuration Application.md`). Typing `Ctrl+Alt+Shift+Meta+Key` by hand is error-prone, and a recorded chord is exact. The field supports both: record, or type and have the text read and written in the canonical form. The recorder logic is [[Key Chord Field|Key Chord Recorder]]; this note specifies the field the person sees.
 
 ## When to use and not
 
@@ -38,7 +38,7 @@ People set their own shortcuts in the configuration app (`tess-ui:apps/shell_con
 | Variant | Use | Differences |
 |---|---|---|
 | Single chord | the shipped field | one `Modifier+...+Key` value; empty is no shortcut |
-| Two-step chord (`Ctrl+K Ctrl+S`) | not built; not part of the shell's shortcut value form ([[Global Shortcuts]] defines one chord) | specified only if [[Global Shortcuts]] adds sequences; until then a field refuses a value with a space |
+| Two-step chord (`Ctrl+K Ctrl+S`) | not built; not part of the shell's shortcut value form ([[11 Interaction#Shortcuts and conflicts|Global Shortcuts]] defines one chord) | specified only if [[11 Interaction#Shortcuts and conflicts|Global Shortcuts]] adds sequences; until then a field refuses a value with a space |
 | With conflict list | settings with many shortcuts | adds the conflict note and a link to the conflicting entry |
 
 ## States
@@ -120,7 +120,7 @@ None beyond the state changes of [[Text Field]] and [[Button]] (at most 150 ms).
 
 - The group has role `group` named by the label (tess-ui: `A11y { Role: group, Label: <| label |> }`).
 - The field is a `textbox` named by the label; the error is its description and a polite live region; `invalid` while refused.
-- The button has role `button` and the name "Record <label>", or while recording "Recording <label>: press the keys, Escape cancels, Backspace clears", and is `pressed` while recording (`tess-ui:src/tess_ui/views/KeyChordField_View.tdl`).
+- The button has role `button` and the name "Record {label}", or while recording "Recording {label}: press the keys, Escape cancels, Backspace clears", and is `pressed` while recording (`tess-ui:src/tess_ui/views/KeyChordField_View.tdl`).
 - Announcements: starting a recording announces the "Recording" name once; the finished chord is announced by the field's new value, in words the screen reader reads from the text ("Control plus Shift plus F1" is the platform's reading of the text); a refused key announces the reason as a polite live region.
 - Keys: the field and the button are both in the Tab order; recording never traps focus (Tab leaves and ends the recording; a chord that includes Tab needs a modifier).
 - Contrast: chord text 4.5 to 1; outline 3 to 1; button text on `primary_container` 4.5 to 1 ([WCAG 1.4.3, 1.4.11](https://www.w3.org/TR/WCAG22/)).
@@ -144,10 +144,10 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 - [ ] AC-KCF-3 (scripted input): while recording, Escape alone leaves `Value` unchanged and `Recording` false; Backspace alone sets `Value` to empty and calls `On_Change`; Ctrl+Escape records `Ctrl+Escape`. Pass: values equal.
 - [ ] AC-KCF-4 (scripted input): while recording, Shift alone, Ctrl alone and Caps Lock alone do not finish the recording; `print_screen` alone shows its message and recording continues. Pass: `Recording` true after each.
 - [ ] AC-KCF-5 (scripted input): type `control + return` and press Enter: `Value` equals `Ctrl+Enter`; type `Ctrl+Shift` and leave the field: `Value` unchanged and the field shows the error; type the empty text: `Value` is empty. Pass: values and `invalid` flag equal.
-- [ ] AC-KCF-6 (scripted input): a table of 30 names and aliases (`Esc`, `Del`, `arrow_left`, `PgUp`, `super+pgup`, `XF86AudioMute`, `ctrl+plus`) commits to the canonical form of [[Global Shortcuts]] and is read back by the shell parser to the same chord. Pass: all 30 equal.
+- [ ] AC-KCF-6 (scripted input): a table of 30 names and aliases (`Esc`, `Del`, `arrow_left`, `PgUp`, `super+pgup`, `XF86AudioMute`, `ctrl+plus`) commits to the canonical form of [[11 Interaction#Shortcuts and conflicts|Global Shortcuts]] and is read back by the shell parser to the same chord. Pass: all 30 equal.
 - [ ] AC-KCF-7 (scripted input): a value set by the app (`ctrl+shift+f1`) is displayed as given and `Value` is not rewritten until the person commits; a value that is not a chord is displayed in the error colours. Pass: text and `Value` equal.
 - [ ] AC-KCF-8 (scripted input): with a keyboard only, Tab reaches the field, then the button; Enter on the button starts a recording and the Enter does not record itself; the next key records; focus stays on the button. Pass: focus sequence and `Value` equal.
-- [ ] AC-KCF-9 (AT tree assertion): the group has role `group` and the label as name; the field is a `textbox` with the label as name and `invalid` plus the message as description when refused; the button has role `button`, the name "Record <label>" idle and "Recording <label>: ..." while recording, and `pressed` true while recording. Pass: all properties equal.
+- [ ] AC-KCF-9 (AT tree assertion): the group has role `group` and the label as name; the field is a `textbox` with the label as name and `invalid` plus the message as description when refused; the button has role `button`, the name "Record {label}" idle and "Recording {label}: ..." while recording, and `pressed` true while recording. Pass: all properties equal.
 - [ ] AC-KCF-10 (contrast script): in light and dark, chord text on the field container 4.5 to 1 or more, outline 3 to 1 or more, recording button text on `primary_container` 4.5 to 1 or more, error text 4.5 to 1. Pass: ratios at or above the limits.
 - [ ] AC-KCF-11 (token test): field and button heights equal 40, 32, 28 dp at default, compact, dense; the two heights are equal at each level; no literal colour in the stylesheet. Pass: values equal, every colour a role reference.
 - [ ] AC-KCF-12 (geometry check): the recording button's width is the same before and during recording at each density, and the row does not shift by more than 0.5 dp. Pass: widths equal within 0.5 dp.
@@ -167,7 +167,7 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 
 Evidence: `tess-ui:docs/components/key-chord-fields.md`.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

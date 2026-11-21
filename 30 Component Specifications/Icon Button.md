@@ -137,7 +137,7 @@ Variant standard; container and icon by the container's density; hit area equal 
 
 Evidence: F8 (the reset button showed the row tooltip) in [[Owner Feedback 2026-11-20]].
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

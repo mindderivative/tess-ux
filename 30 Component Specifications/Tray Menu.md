@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, menu, tray]
-related: ["[[Tray Module]]", "[[Tray Item]]", "[[Menu]]", "[[Menu Item]]", "[[Popup]]", "[[12 Overlays]]", "[[Scrollbar and Scroll Container]]", "[[ADR-0003 Scrollbar rule]]", "[[Menu Separator]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Tray Module]]", "[[Tray Item]]", "[[Menu]]", "[[Menu Item]]", "[[Popup]]", "[[12 Overlays]]", "[[Scrollbar and Scroll Container]]", "[[ADR-0003 Scrollbar rule]]", "[[Divider|Menu Separator]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -44,7 +44,7 @@ Shows an application's own menu in the shell's look and sends the click to the a
 | Row rest, hover, pressed, focus, disabled | As [[Menu Item]] | [[Menu Item]] |
 | Submenu open | The row shows `expanded`; the submenu opens to the right (to the left without room) after a 250 ms pointer rest or a click and closes after 300 ms on another row | [[Menu]] |
 | Toggle entry | A check mark or radio mark in the icon slot (shape, not colour) | [[Menu Item]] |
-| Empty tree | A menu with no entries does not open (spec; code opens an empty popup, unverified) | [[Empty and Error States]] |
+| Empty tree | A menu with no entries does not open (spec; code opens an empty popup, unverified) | [[Iconography#Fallback icon|Empty and Error States]] |
 | Error | A failed `Event` call logs one warning a minute per service; the menu still closes | not applicable |
 
 ## Tokens used
@@ -103,13 +103,13 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TRM-1 (AT tree assertion): the popup root has role `MENU` with a name equal to the item's title; every row has role `MENUITEM` or `SEPARATOR`; a row with a submenu has `expanded`.
 - [ ] AC-MOD-TRM-2 (scripted input): click a row: exactly one `Event(id, clicked)` call is sent and the whole menu closes; a click on a row with a submenu sends none and opens level 2.
 - [ ] AC-MOD-TRM-3 (scripted input): Right on a row with a submenu opens it and moves focus into it; Left closes it; Escape on level 1 closes the menu and focus returns to the tray item.
-- [ ] AC-MOD-TRM-4 (scripted pointer): a pointer rest of 250 ms on a submenu row opens the submenu; 300 ms on another row closes it; never two submenus open at once.
+- [ ] AC-MOD-TRM-4 (scripted input): a pointer rest of 250 ms on a submenu row opens the submenu; 300 ms on another row closes it; never two submenus open at once.
 - [ ] AC-MOD-TRM-5 (geometry check): rows are 40, 32, 28 dp and icons 24, 20, 20 dp at default, compact, dense; popup height at most 60 percent of the output height.
 - [ ] AC-MOD-TRM-6 (scripted input): a menu of 100 entries scrolls with the wheel and a drag on the scrollbar thumb; the popup shows within 100 ms.
 - [ ] AC-MOD-TRM-7 (static check): no node of the module carries a `Tooltip`.
 - [ ] AC-MOD-TRM-8 (contrast script): row text against the container, and against the pressed-row fill, at least 4.5:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

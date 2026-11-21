@@ -4,7 +4,7 @@ type: index
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-22
 tags: [index]
 related: []
 depends_on: []
@@ -17,16 +17,16 @@ Colour roles, type scale, shape, elevation, motion, spacing, density, iconograph
 ## Notes
 
 - [[Colour Roles]]
-- [[Theme Following the System]]
-- [[Typography]]
-- [[Shape]]
 - [[Elevation]]
-- [[Motion]]
-- [[Scrim]]
-- [[Spacing and Density]]
-- [[State Layers]]
+- [[Existing Tokens]]
 - [[Focus Ring]]
 - [[Iconography]]
-- [[Existing Tokens]]: the tokens in code today and the differences between tess-ui, the shell, tre and MD3.
+- [[Motion]]
+- [[Scrim]]
+- [[Shape]]
+- [[Spacing and Density]]
+- [[State Layers]]
+- [[Theme Following the System]]
+- [[Typography]]
 
 Back to [[Index]].

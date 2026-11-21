@@ -190,7 +190,7 @@ All colours are roles ([[Colour Roles]]); the field has no literal colour. Under
 
 Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

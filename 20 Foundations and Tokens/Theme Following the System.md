@@ -45,17 +45,17 @@ A user who sets the desktop to dark gets a dark application on the first frame, 
 
 ## Acceptance criteria
 
-- [ ] AC-TH-1: Scripted launch with a platform stub reporting dark and the setting `system`. Capture the first presented frame. Pass: every sampled surface in that frame has luminance below 0.05 and no frame with luminance above 0.6 for the window background appears before or after.
-- [ ] AC-TH-2: The same with the stub reporting light. Pass: the first presented frame has window-background luminance above 0.6 and no dark frame precedes it.
-- [ ] AC-TH-3: Scripted runtime switch. With setting `system`, change the stub from light to dark and back. Pass: within 200 ms of each signal every surface sampled by AC-COL-6 in [[Colour Roles]] shows the new scheme, and no restart is needed.
-- [ ] AC-TH-4: Persistence. Set the override to `dark` while the stub reports light, close, and start the application twice. Pass: both starts draw the dark scheme on the first frame (AC-TH-1 luminance rule) and the stored value reads `dark`.
-- [ ] AC-TH-5: Return to following. Set the override to `system` after AC-TH-4 and switch the stub to light. Pass: the application re-themes to light within 200 ms and the stored value reads `system`.
-- [ ] AC-TH-6: Corrupt store. Write the value `purple` to the store and start. Pass: the application starts, follows the platform, and does not raise.
-- [ ] AC-TH-7: Late platform answer. The stub answers dark after 500 ms. Pass: until the answer, either no window is mapped or each presented frame is a single uniform colour (pixel variance zero); after the answer the first content frame is dark.
-- [ ] AC-TH-8: Silent platform. The stub never answers. Pass: at 200 ms the project default scheme is drawn; when the stub then answers light at 2 s the application re-themes within 200 ms.
-- [ ] AC-TH-9: No-seed application. Start an application with no seed under the stub in dark, then light. Pass: the window background equals the baseline `surface` (`#141218` dark, `#FEF7FF` light, exact match) and role-coloured text equals the baseline `on_surface`.
-- [ ] AC-TH-10: Contrast preference. With the stub reporting high contrast, start and switch at runtime. Pass: the window background and `on_surface` equal the high-contrast table values of [[Colour Roles]] and the contrast script AC-COL-3 passes on the drawn frame colours.
-- [ ] AC-TH-11: Surface coverage. Under a forced dark override, run the luminance check of AC-COL-6 on every surface type the project defines, popups and tooltips included. Pass: none has a light-scheme colour.
+- [ ] AC-TH-1 (scripted input): Scripted launch with a platform stub reporting dark and the setting `system`. Capture the first presented frame. Pass: every sampled surface in that frame has luminance below 0.05 and no frame with luminance above 0.6 for the window background appears before or after.
+- [ ] AC-TH-2 (scripted input): The same with the stub reporting light. Pass: the first presented frame has window-background luminance above 0.6 and no dark frame precedes it.
+- [ ] AC-TH-3 (scripted input): Scripted runtime switch. With setting `system`, change the stub from light to dark and back. Pass: within 200 ms of each signal every surface sampled by AC-COL-6 in [[Colour Roles]] shows the new scheme, and no restart is needed.
+- [ ] AC-TH-4 (scripted input): Persistence. Set the override to `dark` while the stub reports light, close, and start the application twice. Pass: both starts draw the dark scheme on the first frame (AC-TH-1 luminance rule) and the stored value reads `dark`.
+- [ ] AC-TH-5 (scripted input): Return to following. Set the override to `system` after AC-TH-4 and switch the stub to light. Pass: the application re-themes to light within 200 ms and the stored value reads `system`.
+- [ ] AC-TH-6 (scripted input): Corrupt store. Write the value `purple` to the store and start. Pass: the application starts, follows the platform, and does not raise.
+- [ ] AC-TH-7 (scripted input): Late platform answer. The stub answers dark after 500 ms. Pass: until the answer, either no window is mapped or each presented frame is a single uniform colour (pixel variance zero); after the answer the first content frame is dark.
+- [ ] AC-TH-8 (scripted input): Silent platform. The stub never answers. Pass: at 200 ms the project default scheme is drawn; when the stub then answers light at 2 s the application re-themes within 200 ms.
+- [ ] AC-TH-9 (scripted input): No-seed application. Start an application with no seed under the stub in dark, then light. Pass: the window background equals the baseline `surface` (`#141218` dark, `#FEF7FF` light, exact match) and role-coloured text equals the baseline `on_surface`.
+- [ ] AC-TH-10 (scripted input): Contrast preference. With the stub reporting high contrast, start and switch at runtime. Pass: the window background and `on_surface` equal the high-contrast table values of [[Colour Roles]] and the contrast script AC-COL-3 passes on the drawn frame colours.
+- [ ] AC-TH-11 (scripted input): Surface coverage. Under a forced dark override, run the luminance check of AC-COL-6 on every surface type the project defines, popups and tooltips included. Pass: none has a light-scheme colour.
 - [ ] AC-TH-12: AT tree assertion. The settings control for the scheme exposes its role, its name and the current value (`system`, `light`, `dark`) in the accessibility tree. Pass: the assertion finds all three.
 
 ## Status in code

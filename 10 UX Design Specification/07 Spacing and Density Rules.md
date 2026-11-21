@@ -66,10 +66,10 @@ How a level is chosen:
 
 ## Acceptance criteria
 
-- [ ] AC-DEN-12 (review): the project ADR names its default density level, and the project's stylesheets contain no per-element height literal outside the three-value sets. Pass: a reviewer lists the level and finds zero literals.
-- [ ] AC-DEN-13 (geometry check): changing the level of a container from `compact` to `dense` at run time changes every height, padding, gap, indent and icon size inside it to the dense values in one layout pass, and changes nothing outside it.
-- [ ] AC-DEN-14 (geometry check): in a touch context every interactive element's hit area is at least 48 by 48 dp while its painted bounds equal the values of its level.
-- [ ] AC-DEN-15 (scripted input): a user setting that changes the density level applies without a restart and persists to the next start.
+- [ ] AC-C07-1 (review): the project ADR names its default density level, and the project's stylesheets contain no per-element height literal outside the three-value sets. Pass: a reviewer lists the level and finds zero literals.
+- [ ] AC-C07-2 (geometry check): changing the level of a container from `compact` to `dense` at run time changes every height, padding, gap, indent and icon size inside it to the dense values in one layout pass, and changes nothing outside it.
+- [ ] AC-C07-3 (geometry check): in a touch context every interactive element's hit area is at least 48 by 48 dp while its painted bounds equal the values of its level.
+- [ ] AC-C07-4 (scripted input): a user setting that changes the density level applies without a restart and persists to the next start.
 
 AC-DEN-1 to AC-DEN-11 are defined in [[Spacing and Density]].
 

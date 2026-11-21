@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, navigation, pagination]
-related: ["[[Toolbar]]", "[[Top App Bar]]", "[[Tabs]]", "[[Status Bar]]", "[[Carousel]]", "[[Button]]", "[[Icon Button]]", "[[List]]", "[[Scrollbar and Scroll Container]]", "[[Accessibility Announcements]]", "[[Tooltip]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
+related: ["[[Toolbar]]", "[[Top App Bar]]", "[[Tabs]]", "[[Status Bar]]", "[[Carousel]]", "[[Button]]", "[[Icon Button]]", "[[List]]", "[[Scrollbar and Scroll Container]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Button]]", "[[Icon Button]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]"]
 ---
 
@@ -105,7 +105,7 @@ The current-page fill changes with the layer fade (`short3`, 150 ms); a page cha
 
 - Role: `group` named "Pagination" (the engine has no `navigation` role, `tre:docs/reference/node.md`; WAI-ARIA recommends a `navigation` landmark with a label, candidate request); children are buttons.
 - Names: "Previous page", "Next page", "Page n" for each number and dot; the current one has `current` set to `page` ([WAI-ARIA `aria-current`](https://www.w3.org/TR/wai-aria-1.2/#aria-current)); the summary text "3 of 12" is the visible name of the position.
-- Announcements: when the page changes, one polite announcement "Page n of N" is made by the control (not by the focused button, whose name does not change); the compact summary is a polite live region; the ellipsis is hidden; repeating the same page announces nothing ([[Accessibility Announcements]], [[14 Accessibility Basics]]).
+- Announcements: when the page changes, one polite announcement "Page n of N" is made by the control (not by the focused button, whose name does not change); the compact summary is a polite live region; the ellipsis is hidden; repeating the same page announces nothing ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]], [[14 Accessibility Basics]]).
 - Keys: as in Behaviour. Disabled previous and next are announced as disabled and take no input.
 - Contrast: label on container and on surface at least 4.5 to 1; dots at least 3 to 1 against the surface (WCAG 2.2 SC 1.4.3, 1.4.11).
 - The focus ring is not clipped ([[Focus Ring]]).

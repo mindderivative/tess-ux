@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, audio]
-related: ["[[Bar]]", "[[Icon Button]]", "[[Slider]]", "[[Menu]]", "[[Audio Outputs]]", "[[Volume OSD]]", "[[Popup]]", "[[Accessibility Announcements]]", "[[Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Icon Button]]", "[[Slider]]", "[[Menu]]", "[[Audio Outputs]]", "[[Volume OSD]]", "[[Popup]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -46,7 +46,7 @@ Mute, unmute and change the volume of the default output without opening a setti
 
 | State | Visual change | Token values |
 |---|---|---|
-| Rest | Glyph for the output kind and level in `on_surface` | [[Icons]] |
+| Rest | Glyph for the output kind and level in `on_surface` | [[Iconography#Icon set|Icons]] |
 | Muted | Glyph shape changes and colour is `on_surface_muted`; the button name becomes `Unmute` | `on_surface_muted` 7.96:1 dark, 6.70:1 light on the surface |
 | Hover, focus, pressed (mute button) | State layer 8, 10, 10 percent in `on_surface` over the button; focus ring 3 dp, 2 dp offset ([[State Layers]], [[Focus Ring]]) | as [[Icon Button]] |
 | Disabled | Not applicable: the module is never disabled; with no sound server it is hidden | not applicable |
@@ -87,14 +87,14 @@ Overlay: the secondary click opens the Popup `Audio_Outputs` of the same monitor
 
 ## Motion
 
-The slider handle and the volume change have no module animation. Reduced motion has no effect on the module itself ([[Reduced Motion]]).
+The slider handle and the volume change have no module animation. Reduced motion has no effect on the module itself ([[14 Accessibility Basics#Reduced motion|Reduced Motion]]).
 
 ## Accessibility
 
 - Roles: root `GROUP` with `Label` (output name) and `Description` (the tooltip text) is accepted because the group holds several controls; mute button `BUTTON`; slider `SLIDER` with `value`, `value_text`, min, max; microphone mark `IMG` with `Label`.
 - Names: `Mute` / `Unmute`; `Volume`; `Microphone muted`.
 - Keys: see Behaviour.
-- Announcements: with `announce` true the module says mute, unmute and a settled volume, politely (`ctx.announce`); default false (the specification names none). Rules in [[Accessibility Announcements]]; a volume drag announces only the settled value.
+- Announcements: with `announce` true the module says mute, unmute and a settled volume, politely (`ctx.announce`); default false (the specification names none). Rules in [[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]; a volume drag announces only the settled value.
 - Muted is shown by glyph shape and colour (WCAG 2.2 SC 1.4.1).
 - Targets: 24 dp minimum at every density.
 
@@ -118,7 +118,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-AUD-2 (scripted input): no sound server: root `Visible` false, width 0, absent from the accessibility tree, Bar spacing unchanged.
 - [ ] AC-MOD-AUD-3 (scripted input): a scroll step of +1 raises the volume by `step` and -1 lowers it; the volume never leaves 0 to 100.
 - [ ] AC-MOD-AUD-4 (scripted input): with the mute button focused, Enter and Space toggle mute once each; Up and Down change the volume by `step`; the Menu key opens the outputs popup and Escape closes it with focus back on the mute button.
-- [ ] AC-MOD-AUD-5 (scripted pointer): hover the mute button for 500 ms: exactly 1 tooltip layer whose text names the output and the volume; hover the root gap between two parts: 0 layers.
+- [ ] AC-MOD-AUD-5 (scripted input): hover the mute button for 500 ms: exactly 1 tooltip layer whose text names the output and the volume; hover the root gap between two parts: 0 layers.
 - [ ] AC-MOD-AUD-6 (static check): no node with role `GROUP` carries a tooltip and no tooltip-bearing node has a tooltip-bearing descendant (AC-TIP-1 of [[Tooltip]]).
 - [ ] AC-MOD-AUD-7 (pixel check): muted differs from unmuted in glyph shape as well as colour in a greyscale render.
 - [ ] AC-MOD-AUD-8 (geometry check): the mute button container is 40, 32 and 28 dp square and its icon 24, 20 and 20 dp at default, compact and dense; its hit area is at least 24 dp.
@@ -126,7 +126,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-AUD-10 (pixel check): the tooltip card equals the plain [[Tooltip]] card; the module `.tdl` holds no card literal.
 - [ ] AC-MOD-AUD-11 (contrast script): glyph and text against the Bar surface: text 4.5:1, glyph 3:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

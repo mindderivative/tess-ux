@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, surface, shell, launcher, panel, owner-feedback]
-related: ["[[Panel and Surface]]", "[[Popup]]", "[[Dialog]]", "[[Applications Module]]", "[[Text Field]]", "[[List]]", "[[List Item]]", "[[Search]]", "[[Dismissal]]", "[[Global Shortcuts]]", "[[Keyboard Navigation]]", "[[Accessibility Announcements]]", "[[Bar]]", "[[Volume OSD]]", "[[Layer Window]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Spacing and Density]]", "[[Theme Following the System]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Panel and Surface]]", "[[Popup]]", "[[Dialog]]", "[[Applications Module]]", "[[Text Field]]", "[[List]]", "[[List Item]]", "[[Search]]", "[[12 Overlays#Dismissal|Dismissal]]", "[[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]", "[[Keyboard Navigation]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Bar]]", "[[Volume OSD]]", "[[Layer Window]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Owner Feedback 2026-11-20]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[Spacing and Density]]", "[[Theme Following the System]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0005 Theme follows the system]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 ---
 
@@ -33,7 +33,7 @@ Find an installed application by typing and start it, from the keyboard alone or
 2. Container: fill `surface_container` (shell `$color.surface_raised`), corner radius 12 dp, shadow, padding 12 dp.
 3. Text field: placeholder "Search applications", 456 dp wide.
 4. Result list: at most `max_results` rows (8), each a 40 dp row with a 24 dp icon, the application name, and the generic name or comment in a smaller muted line.
-5. Message line: "No results", "No applications found" or "Could not start <name>"; empty otherwise.
+5. Message line: "No results", "No applications found" or "Could not start {name}"; empty otherwise.
 6. Click-away layer: a transparent output-sized window on layer `TOP`, keyboard `none`, under the Panel, present while the Launcher is shown.
 
 ## Variants
@@ -109,7 +109,7 @@ The shell Launcher was unreadable on a throwaway config: black text on a dark ba
 
 ### Owner feedback S2: click-away and keyboard grab
 
-The first build of click-away closing used a popup grab (`PopupWindow(grab=True)`); on KWin that grab takes the keyboard from an exclusive layer surface, so nothing could be typed (hand check 2026-11-20, reverted). The accepted build is a transparent output-sized window on layer `TOP`, keyboard `none`, below the Panel, present while the Panel is shown. A press on it closes the Launcher and is swallowed (the user clicks again to use what lies below). The `active` event closes the Launcher only when another surface of the shell gains the keyboard after the Launcher had it; a keyboard that is only lost, with nothing gaining it, closes nothing (a seat's last keyboard device going away does that). Scope: a Panel with `Keyboard: EXCLUSIVE`, `Layer: OVERLAY` holding a use of the Applications module. Verified by the owner on real KWin on 2026-11-21 (via the Orchestrator): typing works, a click outside closes, a row click closes, Escape closes, a click on or around the field does not close it. The rules for dismissal in general are in [[Popup]] and [[Dismissal]].
+The first build of click-away closing used a popup grab (`PopupWindow(grab=True)`); on KWin that grab takes the keyboard from an exclusive layer surface, so nothing could be typed (hand check 2026-11-20, reverted). The accepted build is a transparent output-sized window on layer `TOP`, keyboard `none`, below the Panel, present while the Panel is shown. A press on it closes the Launcher and is swallowed (the user clicks again to use what lies below). The `active` event closes the Launcher only when another surface of the shell gains the keyboard after the Launcher had it; a keyboard that is only lost, with nothing gaining it, closes nothing (a seat's last keyboard device going away does that). Scope: a Panel with `Keyboard: EXCLUSIVE`, `Layer: OVERLAY` holding a use of the Applications module. Verified by the owner on real KWin on 2026-11-21 (via the Orchestrator): typing works, a click outside closes, a row click closes, Escape closes, a click on or around the field does not close it. The rules for dismissal in general are in [[Popup]] and [[12 Overlays#Dismissal|Dismissal]].
 
 ## Tooltip and overlay behaviour
 
@@ -117,13 +117,13 @@ The Launcher carries no tooltip; rows are the controls and the row's accessible 
 
 ## Motion
 
-- No animation by default: the Panel appears and hides at once. A custom Launcher may add `Animation { Type: SLIDE or FADE, Duration: 200 }` ([[Surface Animation]]); reduced motion makes that instant.
+- No animation by default: the Panel appears and hides at once. A custom Launcher may add `Animation { Type: SLIDE or FADE, Duration: 200 }` ([[12 Overlays#Motion and reduced motion|Surface Animation]]); reduced motion makes that instant.
 - The selection moves without animation.
 
 ## Accessibility
 
-- Names: the text field's name is its placeholder ("Search applications"); the list is named "Results"; each row is a list item named "<name>, <comment>" with the state `selected`; the root is a group named "Applications".
-- Announcements: the module says aloud, politely, the selected row, "No results" and "Could not start <name>" through one window of the shell ([[Accessibility Announcements]]). Whether Orca reads them is untested (Orca is not installed on the owner's machine). The text field exposes the selected row as its active descendant (shell ADR-0023, on origin/main) so a screen reader can follow it.
+- Names: the text field's name is its placeholder ("Search applications"); the list is named "Results"; each row is a list item named "{name}, {comment}" with the state `selected`; the root is a group named "Applications".
+- Announcements: the module says aloud, politely, the selected row, "No results" and "Could not start {name}" through one window of the shell ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]). Whether Orca reads them is untested (Orca is not installed on the owner's machine). The text field exposes the selected row as its active descendant (shell ADR-0023, on origin/main) so a screen reader can follow it.
 - Keys: Down, Up, Page Down, Page Up, Enter, Escape as above; the global key opens it ([[Keyboard Navigation]]). Every action is reachable by keyboard.
 - Focus: on open, focus is in the text field; on close, the compositor returns the keyboard to the window that had it.
 - Contrast: `on_surface` on the container 13.23 (dark), 16.46 (light); `on_surface_variant` 7.08 and 7.20; both at least 4.5 to 1. The selected row's border `primary` on the container is at least 3 to 1 in light and dark (the shell pairs against `surface` are 5.76 and 5.29).
@@ -168,8 +168,8 @@ Check types follow [[Test Method]]. Hand checks on KWin follow the shell's hand-
 - [ ] AC-LNC-16 (token test, no stylesheet, S1): a shell started with no `Appearance.Stylesheets` key resolves the stylesheet list to `[Default]`; with `Stylesheets: []` it is empty and `check` emits the note `appearance-no-stylesheet` when a text field or list is in use. Pass: list values as stated; note count 1.
 - [ ] AC-LNC-17 (contrast script, no stylesheet, S1): with no `Appearance.Stylesheets` key the Launcher's text field text, placeholder, row text and comment text each reach 4.5 to 1 against their background in dark and light. Pass: 8 of 8 pairs. This is the pixel-level form of owner feedback S1.
 - [ ] AC-LNC-18 (pixel check, hover, state layer): a hovered row differs from the container colour by a state layer of `on_surface` at 8 percent (a pixel check reads a colour distance of at least 3 in each channel from the container). Pass: distance at least 3. Fails today: the hover fill equals the container.
-- [ ] AC-LNC-19 (AT tree assertion): the root is a group named "Applications"; the field has a non-empty name and exposes the selected row as active descendant; the list is named "Results"; each row has role list item, state `selected` on exactly one row, and a name of the form "<name>, <comment>"; the icon is hidden. Pass: all properties equal.
-- [ ] AC-LNC-20 (scripted input, announcements): selecting a row sends one polite announcement with the row's name; an empty result list sends "No results"; a failed start sends "Could not start <name>". Pass: announcement count 1 each, politeness polite. Not yet heard with Orca.
+- [ ] AC-LNC-19 (AT tree assertion): the root is a group named "Applications"; the field has a non-empty name and exposes the selected row as active descendant; the list is named "Results"; each row has role list item, state `selected` on exactly one row, and a name of the form "{name}, {comment}"; the icon is hidden. Pass: all properties equal.
+- [ ] AC-LNC-20 (scripted input, announcements): selecting a row sends one polite announcement with the row's name; an empty result list sends "No results"; a failed start sends "Could not start {name}". Pass: announcement count 1 each, politeness polite. Not yet heard with Orca.
 - [ ] AC-LNC-21 (scripted input, reduced motion and animation): the shipped Launcher has no `Animation` and appears in one frame; a custom `Animation { Type: SLIDE }` is instant under reduced motion. Pass: end state on frame 1 in both cases.
 - [ ] AC-LNC-22 (review, not a popup): the Launcher is a Panel on the overlay layer with exclusive keyboard, takes no scrim, and is not a focused popup ([[Popup]] AC-POP-16). Pass: reviewer finds the surface type as stated.
 

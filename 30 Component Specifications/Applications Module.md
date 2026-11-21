@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, launcher, search, keyboard]
-related: ["[[Launcher]]", "[[Text Field]]", "[[List]]", "[[List Item]]", "[[Search]]", "[[Panel and Surface]]", "[[Selection]]", "[[Accessibility Announcements]]", "[[Empty and Error States]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Launcher]]", "[[Text Field]]", "[[List]]", "[[List Item]]", "[[Search]]", "[[Panel and Surface]]", "[[Selection]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -46,7 +46,7 @@ Start an application by typing a few letters and pressing Enter, without leaving
 | Typing | The list narrows; the first row is selected | [[Selection]] |
 | Row hover | Background `surface_raised` (code); spec: state layer 8 percent ([[State Layers]]) | [[List Item]] |
 | Row selected | `surface_raised` fill and a 2 px `primary` border (shape, not colour alone) | primary on surface: 5.76:1 dark, 5.29:1 light |
-| Loading | Before the application list is built (`ready` false) the field shows and the list is empty; the message line is empty (spec: show `Loading applications` as a `status` message, absent in code) | [[Empty and Error States]] |
+| Loading | Before the application list is built (`ready` false) the field shows and the list is empty; the message line is empty (spec: show `Loading applications` as a `status` message, absent in code) | [[Iconography#Fallback icon|Empty and Error States]] |
 | No results | The message line reads `No results`; the list is removed | `on_surface_muted` |
 | Error | `Could not start <name>` on the message line and announced | `on_surface_muted` |
 | Hidden | Not applicable: the module shows whenever its Panel shows | not applicable |
@@ -90,7 +90,7 @@ The list narrows in one frame. No animation. Reduced motion: none to remove.
 
 - Roles: query field `TEXTBOX` named by its placeholder (`Search applications`); list `LIST` named `Results`; row `LISTITEM` with state `selected`, named by the application name and the comment (`Firefox, Web Browser`).
 - Keys: as Behaviour; the list is one Tab stop in the pattern of [[List]], but selection moves from the field, so the field remains the only focus.
-- Announcements: through `ctx.announce`, politely: the selected row (name and comment), `No results`, `Could not start <name>`; selection moves are said after the key repeat settles ([[Accessibility Announcements]]).
+- Announcements: through `ctx.announce`, politely: the selected row (name and comment), `No results`, `Could not start <name>`; selection moves are said after the key repeat settles ([[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]).
 - An active descendant pattern would be the right route for the field-with-list; the engine has no `aria-activedescendant` and the module announces instead (candidate request).
 
 ## Dark and light
@@ -115,11 +115,11 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-APP-5 (geometry check): one-line rows are 40, 32, 24 dp and two-line rows 60, 48, 40 dp at default, compact and dense; icon 24, 20, 16 dp; query field 40, 32, 28 dp.
 - [ ] AC-MOD-APP-6 (geometry check): row horizontal padding is 12, 8, 4 dp and icon-to-text gap 8, 8, 4 dp.
 - [ ] AC-MOD-APP-7 (pixel check): a name wider than the row ends with an ellipsis and does not paint past the row; vertical centring within 1 px.
-- [ ] AC-MOD-APP-8 (scripted pointer): hover the cut name for 500 ms: one tooltip with the full name; hover a row where nothing is cut: 0 tooltips.
+- [ ] AC-MOD-APP-8 (scripted input): hover the cut name for 500 ms: one tooltip with the full name; hover a row where nothing is cut: 0 tooltips.
 - [ ] AC-MOD-APP-9 (pixel check): the selected row is distinguishable from an unselected row in a greyscale render (border plus fill).
 - [ ] AC-MOD-APP-10 (contrast script): name, comment, message text against the panel surface at least 4.5:1 in Light, Dark and High_Contrast.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

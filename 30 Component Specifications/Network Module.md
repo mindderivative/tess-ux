@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-21
 updated: 2026-11-21
 tags: [component, module, bar, status, service]
-related: ["[[Bar]]", "[[Icon]]", "[[Text]]", "[[Icons]]", "[[Accessibility Announcements]]", "[[Accessibility Roles]]", "[[Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
+related: ["[[Bar]]", "[[Iconography#Icon sizes|Icon]]", "[[Text]]", "[[Iconography#Icon set|Icons]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[14 Accessibility Basics#Roles and accessible names|Accessibility Roles]]", "[[Iconography#Fallback icon|Empty and Error States]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
 ---
 
@@ -28,7 +28,7 @@ Shows whether the machine is online, by which kind of connection and how strong 
 
 1. Root: one box, role `IMG` recommended, carries the tooltip.
 2. Level box: one of three boxes shown one at a time: connected or connecting, warning (limited, portal), muted (disconnected, disabled, unknown).
-3. Glyph: [[Icon]] 16 dp: `wifi-strength-1` to `-4`, `wifi-alert`, `wifi-sync`, `ethernet`, `lan-disconnect`, `lan-pending`, `cellphone-wireless`, `bluetooth`, `network`, `network-off`, `wifi-off`, `network-outline`.
+3. Glyph: [[Iconography#Icon sizes|Icon]] 16 dp: `wifi-strength-1` to `-4`, `wifi-alert`, `wifi-sync`, `ethernet`, `lan-disconnect`, `lan-pending`, `cellphone-wireless`, `bluetooth`, `network`, `network-off`, `wifi-off`, `network-outline`.
 4. VPN glyph: `mdi:vpn`, 16 dp, shown while any VPN is active (`show_vpn`).
 5. Name: [[Text]] `label_large`, optional (`show_name`).
 6. Tooltip: plain, for example `Home-WiFi, Wi-Fi 70 %, connected`.
@@ -109,7 +109,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 - [ ] AC-MOD-NET-1 (AT tree assertion): with a fake NetworkManager (Wi-Fi 70 percent, connected): the root has role `IMG`, a name containing `Wi-Fi` and `connected`, a description equal to the tooltip text.
 - [ ] AC-MOD-NET-2 (scripted input): NetworkManager absent: root `Visible` false, width 0, no accessibility node, no spacing left in the Bar; NetworkManager present with networking off: root visible with the `wifi-off` glyph.
-- [ ] AC-MOD-NET-3 (scripted pointer): hover 500 ms shows one tooltip, text equal to the description; leave removes it within 150 ms plus one frame.
+- [ ] AC-MOD-NET-3 (scripted input): hover 500 ms shows one tooltip, text equal to the description; leave removes it within 150 ms plus one frame.
 - [ ] AC-MOD-NET-4 (static check): one node with a `Tooltip`, role not `group`, no tooltip descendants.
 - [ ] AC-MOD-NET-5 (pixel check): a greyscale render distinguishes connected, limited and disconnected by glyph shape alone.
 - [ ] AC-MOD-NET-6 (contrast script): glyph and text colours (`on_surface`, `warning`, `on_surface_muted`) against the Bar surface: text at least 4.5:1, glyph at least 3:1 in Light, Dark and High_Contrast.
@@ -118,7 +118,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-NET-9 (geometry check): glyphs are 16 dp square; hover box at least 24 dp high.
 - [ ] AC-MOD-NET-10 (token test): the icon table of the shell vault note maps every (kind, state) pair to an existing `mdi` icon name; a missing name fails.
 
-## Source of truth in code
+## Status in code
 
 | Project | Path | Status |
 |---|---|---|

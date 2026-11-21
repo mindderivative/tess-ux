@@ -51,7 +51,7 @@ Rules:
 
 - A layer in a layer-surface host (bar, panel) is clipped to that surface. An overlay that does not fit inside the host uses the popup-window route or the overlay layer route.
 - A launcher or menu opened by shortcut or IPC has no user-action serial for a grab; it is a Panel on the overlay layer with exclusive keyboard, never a focused popup.
-- tre has no tooltip primitive, no timers for delays, no menu node and no scrim: the toolkit builds them (tess-ui) or the shell does (tess-shell).
+- tre has no tooltip primitive, no menu node and no scrim (it offers `window.after` and `window.every` timers, but no hover-delay service): the toolkit builds them (tess-ui) or the shell does (tess-shell).
 
 ## Z-order
 
@@ -144,19 +144,19 @@ Roles: tooltip layers are hidden from the tree and their text is the trigger's d
 
 Scenario tests follow [[Test Method]]: toolkit key and pointer simulation and the frame clock; items marked manual are hand checks on a real compositor.
 
-- [ ] AC-OVL-1 (scripted state, z-order): open a popup, then a dialog; open a tooltip for a control inside the dialog. Pass: the popup is closed, the layer stack order is dialog above content and tooltip above dialog, and a pixel sample inside the tooltip shows the tooltip container colour.
-- [ ] AC-OVL-2 (invariant test, one at a time): run a scripted scenario of 200 random pointer moves, key presses, scrolls and openings across triggers, menus and dialogs, sampling the layer stack every frame. Pass: at every frame at most 1 tooltip, at most one popup chain (one parent and one open child per level), at most 1 modal.
+- [ ] AC-OVL-1 (scripted input, z-order): open a popup, then a dialog; open a tooltip for a control inside the dialog. Pass: the popup is closed, the layer stack order is dialog above content and tooltip above dialog, and a pixel sample inside the tooltip shows the tooltip container colour.
+- [ ] AC-OVL-2 (scripted input, invariant test, one at a time): run a scripted scenario of 200 random pointer moves, key presses, scrolls and openings across triggers, menus and dialogs, sampling the layer stack every frame. Pass: at every frame at most 1 tooltip, at most one popup chain (one parent and one open child per level), at most 1 modal.
 - [ ] AC-OVL-3 (scripted input, Escape order): with a dialog open and a menu opened from it, Escape closes the menu only (dialog still open), the second Escape closes the dialog; with a tooltip also showing, the first Escape closes the tooltip only.
 - [ ] AC-OVL-4 (scripted input, consumed outside press): for a popup and a dismissible dialog, a press on a button beneath runs 0 handlers and dismisses the overlay.
 - [ ] AC-OVL-5 (scripted input, focus return): for each of tooltip (Escape), menu, popup and dialog, after closing the focused node is the opener and its focus-visible state equals its state before opening.
-- [ ] AC-OVL-6 (scripted state, modality): opening a dialog hides every tooltip and closes every popup within one frame; tooltips of controls beneath the scrim do not open (hover for 1 s: 0 layers).
+- [ ] AC-OVL-6 (scripted input, modality): opening a dialog hides every tooltip and closes every popup within one frame; tooltips of controls beneath the scrim do not open (hover for 1 s: 0 layers).
 - [ ] AC-OVL-7 (geometry check, inside the window): for each overlay type, with the anchor at each window edge and corner and after the window shrinks by 20 percent while open, the overlay rectangle is inside the window rectangle and the gap is as specified when no flip or shift occurred.
 - [ ] AC-OVL-8 (scripted input, anchor follows): move the anchor of an open menu by 50 dp through layout; the menu rectangle follows within one frame (±1 px); for a tooltip, scrolling an ancestor removes it within one frame.
-- [ ] AC-OVL-9 (event log, keyboard retention): showing an overlay that takes text input never produces a keyboard-lost event within 500 ms, and typed characters appear in the input; the click-away mechanism is active during the test (manual on KWin).
+- [ ] AC-OVL-9 (scripted input, event log, keyboard retention): showing an overlay that takes text input never produces a keyboard-lost event within 500 ms, and typed characters appear in the input; the click-away mechanism is active during the test (manual on KWin).
 - [ ] AC-OVL-10 (pixel check, no scrim for non-modal): opening a menu, a popup and a tooltip leaves the window background pixels unchanged outside the overlay and its shadow ([[Scrim]] AC-SCR-5); a dialog changes them to 0.68 of the original within 2 levels.
-- [ ] AC-OVL-11 (scripted state, window focus): with a tooltip and a popup open, window focus loss closes both within one frame; an open dialog stays open.
+- [ ] AC-OVL-11 (scripted input, window focus): with a tooltip and a popup open, window focus loss closes both within one frame; an open dialog stays open.
 - [ ] AC-OVL-12 (geometry check, route): a menu 200 dp tall opened from a 32 dp high layer-surface bar is fully visible (corner pixels read the container colour); a menu in an application window is inside the window.
-- [ ] AC-OVL-13 (scripted state, reduced motion): with reduced motion on, the first frame after opening draws each overlay type complete, and the frame after closing draws none.
+- [ ] AC-OVL-13 (scripted input, reduced motion): with reduced motion on, the first frame after opening draws each overlay type complete, and the frame after closing draws none.
 - [ ] AC-OVL-14 (AT tree assertion): each open overlay exposes the roles and names above; a tooltip layer is hidden and its text is the trigger's description; with a dialog open, no node beneath is focusable.
 - [ ] AC-OVL-15 (review): no overlay is the only place where required information appears; a reviewer checks every tooltip text against the control's label and helper text.
 
