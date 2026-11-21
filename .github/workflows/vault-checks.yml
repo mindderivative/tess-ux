@@ -25,3 +25,5 @@ jobs:
         run: python3 tools/lint_vault.py .
       - name: Check the contrast ratios
         run: python3 tools/contrast_check.py .
+      - name: Check that the defaults matrix is current
+        run: python3 tools/defaults_matrix.py . --check

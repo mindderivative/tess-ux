@@ -24,13 +24,13 @@ An icon is drawn in a square of the stated size; the view box is scaled to it.
 | Use | default | compact | dense | MD3 value |
 |---|---|---|---|---|
 | Icon button icon | 24 | 20 | 20 | 24 (`md.comp.icon-button.icon.size`) |
-| Leading and trailing icon in a list row, menu item or tree row | 24 | 20 | 16 | 24 (`md.comp.menu-item` list item leading icon size 24) |
+| Leading and trailing icon in a list row, menu item or tree row | 24 | 20 | 20 | 24 (`md.comp.menu-item` list item leading icon size 24) |
 | Icon next to a button label | 18 | 18 | 16 | 18 (`md.comp.filled-button.with-icon.icon.size`) |
 | Text field leading and trailing icon | 24 | 20 | 20 | 24 (`md.comp.filled-text-field.leading-icon.size`) |
 | Tree chevron glyph | equals the chevron box: 24 | 20 | 16 | no MD3 tree |
 | Inline icon in a status bar or badge row | 16 | 16 | 16 | not specified #needs-verification |
 
-The first row is binding from [[Spacing and Density]]. Rows two to four and six are Tesserae choices that follow the density rows so that an icon fits its row with at least 4 dp of margin (default 24 in 40 leaves 8; compact 20 in 32 leaves 6; dense 16 in 24 leaves 4). Standalone icons (empty states, dialog icons) are 24 dp unless a component note states another size. Icons have one size within a row; icon and label centre on the same horizontal axis (AC-ICO-6).
+The first row is binding from [[Spacing and Density]]. Rows two to four and six are Tesserae choices that follow the density rows so that an icon fits its row (default 24 in 40 leaves 8; compact 20 in 32 leaves 6; dense 20 in a 24 dp list or tree row leaves 2 and in a 28 dp menu item leaves 4, accepted: the icon box is the painted size and the row is the hit area). Standalone icons (empty states, dialog icons) are 24 dp unless a component note states another size. Icons have one size within a row; icon and label centre on the same horizontal axis (AC-ICO-6).
 
 Sizes are dp, equal to px at scale factor 1.0 ([[Spacing and Density]]).
 
@@ -89,12 +89,12 @@ A name that resolves to no icon shows `mdi:image-broken-variant` (24 by 24, tint
 | Deviation | Reason | ADR |
 |---|---|---|
 | Material Design Icons instead of Material Symbols; no weight, fill, grade, optical size axes | existing icon set in all projects, engine draws static paths | [[ADR-0007 Icon set and Material Symbols deviation]] |
-| 20 dp icon at compact and dense, 16 dp in dense rows | density levels | [[ADR-0002 Desktop density levels and target sizes]] |
+| 20 dp icon at compact and dense (also in the 24 dp dense list and tree row, which leaves 2 dp above and below), 16 dp only where nothing else fits | density levels | [[ADR-0002 Desktop density levels and target sizes]] |
 | Fallback icon is a broken-image glyph | MD3 states no fallback; a visible glyph exposes the missing name | [[ADR-0007 Icon set and Material Symbols deviation]] |
 
 ## Acceptance criteria
 
-- [ ] AC-ICO-1 (geometry check): at each density level the icon button icon is 24, 20 and 20 dp; the list, menu and tree leading icon 24, 20 and 16 dp; the button label icon 18, 18 and 16 dp. Pass: painted icon bounds equal the stated size.
+- [ ] AC-ICO-1 (geometry check): at each density level the icon button icon is 24, 20 and 20 dp; the list, menu and tree leading icon 24, 20 and 20 dp; the button label icon 18, 18 and 16 dp. Pass: painted icon bounds equal the stated size.
 - [ ] AC-ICO-2 (token test): every icon in the standard set has view box width 24 and height 24 (a script over the set JSON); a set with another view box is converted at import.
 - [ ] AC-ICO-3 (token test): no icon literal colour in a stylesheet; every icon fill resolves to a colour role; a theme switch from light to dark changes every icon colour (pixel check on a test sheet).
 - [ ] AC-ICO-4 (scripted input): resolving an unknown icon name draws the glyph of `mdi:image-broken-variant` at the requested size and logs one warning; a second resolution of the same name logs none.

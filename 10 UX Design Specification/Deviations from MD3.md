@@ -135,7 +135,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Material Design Icons instead of Material Symbols; no weight, fill, grade, optical size axes | existing icon set in all projects, engine draws static paths | [[ADR-0007 Icon set and Material Symbols deviation]] |
-| 20 dp icon at compact and dense, 16 dp in dense rows | density levels | [[ADR-0002 Desktop density levels and target sizes]] |
+| 20 dp icon at compact and dense (also in the 24 dp dense list and tree row, which leaves 2 dp above and below), 16 dp only where nothing else fits | density levels | [[ADR-0002 Desktop density levels and target sizes]] |
 | Fallback icon is a broken-image glyph | MD3 states no fallback; a visible glyph exposes the missing name | [[ADR-0007 Icon set and Material Symbols deviation]] |
 
 ## [[Motion]]

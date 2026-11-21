@@ -19,6 +19,7 @@ Colour roles, type scale, shape, elevation, motion, spacing, density, iconograph
 - [[Colour Roles]]
 - [[Elevation]]
 - [[Existing Tokens]]
+- [[Defaults Matrix]]: every component default by property and density, with whether it is settable from Python (generated)
 - [[Focus Ring]]
 - [[Iconography]]
 - [[Motion]]

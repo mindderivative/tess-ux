@@ -100,7 +100,7 @@ The label right edge never exceeds the row width minus `P`. A pointer target is 
 
 ## Dimensions and defaults
 
-These are the binding density values of [[Spacing and Density]] and [[ADR-0002 Desktop density levels and target sizes]]; the icon size and the label type are Tesserae choices #needs-verification-as-design-choice (proposed ADR: tree row icon size and label type by density). The icon size follows this note's Sizing table (dense 20); [[Iconography]] gives 16 for a tree row at dense, and the two notes disagree until the owner decides. The left padding of a row at depth `d` is the row padding plus the indent times `d`; the indent row gives the per-level step.
+These are the binding density values of [[Spacing and Density]] and [[ADR-0002 Desktop density levels and target sizes]]; the icon size and the label type are Tesserae choices #needs-verification-as-design-choice (proposed ADR: tree row label type by density). The icon size follows [[Iconography]] (24, 20, 20). The left padding of a row at depth `d` is the row padding plus the indent times `d`; the indent row gives the per-level step.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|

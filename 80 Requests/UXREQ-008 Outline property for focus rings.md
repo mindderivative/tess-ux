@@ -1,7 +1,7 @@
 ---
 title: UXREQ-008 Outline property for focus rings
 type: request
-status: proposed
+status: approved
 owner: phil
 created: 2026-11-22
 updated: 2026-11-22
@@ -13,7 +13,7 @@ depends_on: []
 # UXREQ-008 Outline property for focus rings
 
 > [!important] Status
-> `proposed`; held by the Orchestrator, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui and tess-shell. Finding: TRE-017 in [[Adoption tre]]. Not routed until the Orchestrator releases it.
+> `approved` by bot:Orchestrator under the owner's delegation, 2026-11-22 (tre audit item P14). Owner project: tess-re (tre). Consumer: tess-ui and tess-shell. Finding: TRE-017 in [[Adoption tre]].
 
 ## Principle
 

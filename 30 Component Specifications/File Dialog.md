@@ -89,7 +89,7 @@ The panel padding stays 24 dp and the gap 12 dp at every level (a dialog is a co
 
 ## Dimensions and defaults
 
-The panel rows follow [[Dialog]] (28 dp corners, level 3, 24 dp padding); the rows and controls follow the Sizing table. The entry row icon is 20 dp at compact and dense here, where [[Iconography]] lists 16 dp at dense for a list row; the note's own table is followed (#needs-verification).
+The panel rows follow [[Dialog]] (28 dp corners, level 3, 24 dp padding); the rows and controls follow the Sizing table. The entry row icon is 20 dp at compact and dense here, as [[Iconography]] lists for a list row.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
