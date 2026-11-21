@@ -27,7 +27,7 @@ Make a long list of settings scannable and safe to edit: the user finds a label 
 ## Anatomy
 
 1. Row container: horizontal, full form width.
-2. Label column: label text (`body_medium`, up to 2 lines) and marker lines (`label_small`: "required", "modified by file").
+2. Label column (the row label names the field it sits beside, so the field inside a Form Row has no label of its own; an external label above a field, [[ADR-0023 Text Field label placement by density]], is for a field outside a row): label text (`body_medium`, up to 2 lines) and marker lines (`label_small`: "required", "modified by file").
 3. Control column: one control per cell, stacked with a 2 dp gap when a setting has several cells (a colour has several channels, a size has width and height).
 4. Reset button: an [[Icon Button]] with an undo icon at the end of each control row.
 5. Help line (below the controls): the description of the setting.

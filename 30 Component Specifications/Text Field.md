@@ -33,7 +33,7 @@ The user types, pastes or edits one piece of text: a name, a path, a number with
 4. Input area: the typed text, placeholder, caret and selection.
 5. Suffix text (optional), such as a unit.
 6. Trailing icon or button (optional): clear, reveal password, error icon.
-7. Label: the field's name. It sits inside as a hint and rises, smaller, when the field has focus or text (MD3 floating label); an external label above the field is allowed (see Layout).
+7. Label: the field's name. Two placements ([[ADR-0023 Text Field label placement by density]]): a floating label inside the container that rises, smaller, when the field has focus or text (MD3, default density only, container 56 dp), or an external label above the container (any density; the only placement at compact and dense). The accessible name is always the `Label` property, in both placements.
 8. Active indicator (filled only): a line along the bottom edge of the container.
 9. Supporting text (optional): help or error message below the container.
 10. Character counter (optional): in the supporting row, trailing side.
@@ -44,6 +44,8 @@ The user types, pastes or edits one piece of text: a name, a path, a number with
 |---|---|---|
 | Filled | default for forms and dialogs | container role `surface_container_highest`, active indicator 1 dp, 2 dp when focused, top corners 4 dp, square bottom (token `corner-extra-small-top`) |
 | Outlined | dense forms, config panels, fields on a filled surface | outline 1 dp role `outline`, 2 dp role `primary` when focused, all corners 4 dp (`corner-extra-small`) |
+| Floating label | default density, forms and dialogs that follow MD3 | the label sits inside the container and rises when the field has focus or text; the container is 56 dp high and holds the label; not available at compact and dense |
+| External label | every density; the only label placement at compact and dense | the label sits above the container, outside its height; the container is 40, 32 or 28 dp; label and field form one block |
 | Single-line | one line of text | content never wraps; long content follows the overflow rule below |
 | Multi-line | notes, descriptions, log text | Enter inserts a newline; vertical scroll, optional resize |
 | Password | secrets | text replaced by bullets, no copy, no cut, reveal toggle |
@@ -89,7 +91,22 @@ Heights and padding from [[Spacing and Density]] under [[ADR-0002 Desktop densit
 - Vertical centring is by construction: the input area's content box is the line box, and the container centres it (flex centring or equal computed padding). Authors do not tune top and bottom padding by hand. Rule: space above the line box equals space below to within 0.5 dp, at every density and at scale factors 1.0, 1.25 and 2.0 (see AC-TXF-1).
 - Minimum pointer target: 24 dp high and wide ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)), met by 28 dp at dense; 48 dp hit area in touch contexts.
 - Leading and trailing icon containers use the icon button sizes of [[Icon Button]] when pressable (clear, reveal); a decorative icon is 24 dp (20 dp at compact and dense) and takes no pointer.
-- MD3 filled field height is 56 dp; the Tesserae heights above are a recorded deviation (see the Deviations table). The tess-ui `TextField` view is 280 px wide by default; a field in a flexible row has a minimum width of 48 dp so it never collapses to zero, per [[10 Layout Overflow and Scrolling]] #needs-verification-as-design-choice.
+- MD3 filled field height is 56 dp: it is the height of the floating label variant at default density (the label rises inside the container). The Tesserae heights above are the height of the field without a floating label, and a recorded deviation from MD3 (see the Deviations table). The tess-ui `TextField` view is 280 px wide by default; a field in a flexible row has a minimum width of 48 dp so it never collapses to zero, per [[10 Layout Overflow and Scrolling]] #needs-verification-as-design-choice.
+
+### Label placement by density
+
+Decision: [[ADR-0023 Text Field label placement by density]]. A floating label cannot sit inside a 32 or 28 dp container (it needs the 12 dp label line above the 24 dp or 20 dp input line), so:
+
+| Level | Floating label variant | External label variant | Container height | Label to container gap | Block height (label line 16 plus gap plus container) |
+|---|---|---|---|---|---|
+| default | allowed, container 56 dp, label inside | allowed | 56 floating; 40 external or no label | 4 dp (external) | 60 dp external |
+| compact | not available | the only placement | 32 dp | 4 dp | 52 dp |
+| dense | not available | the only placement | 28 dp | 2 dp | 46 dp |
+
+- The single-line container height (AC-TXF-3) never includes an external label; the label and the gap are outside it and the label does not change the container height or the vertical centring of the input text.
+- A field with a label at compact or dense density renders the external label even when the application asks for the floating variant; the application does not need two code paths.
+- A field without a label (a field in a [[Form Row]], whose row label names it) has the container alone.
+- The placeholder is a hint, not the label: it disappears on input, so the accessible name comes from the `Label` property whenever one is set (AC-TXF-18); a field with a placeholder and no label is allowed only where a nearby visible text names it (the Form Row label).
 
 ## Dimensions and defaults
 
@@ -111,6 +128,10 @@ Single-line outlined field unless the Part says filled. Vertical padding is `(he
 | active indicator | border color | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | MD3 filled text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | container (filled) | corner radius | `shape.extra_small_top` | 4 4 0 0 | 4 4 0 0 | 4 4 0 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| container (floating label variant) | height | - | 56 | N/A: the floating label variant is not available at compact | N/A: the floating label variant is not available at dense | MD3 filled text field container height (Material Web `textfield` min-height 56 px), [[ADR-0023 Text Field label placement by density]] | tess-ui: yes (style height); tess-shell: n/a: the TextField block draws no floating label; tre: yes (height) |
+| external label | height | - | 16 | 16 | 16 | [[Typography]] (`body_small` line height), design choice, [[ADR-0023 Text Field label placement by density]] | tess-ui: yes (style height); tess-shell: n/a: the TextField block draws no label; tre: yes (height) |
+| external label | margin | `space.2` | 0 0 4 0 | 0 0 4 0 | 0 0 2 0 | design choice, [[ADR-0023 Text Field label placement by density]] (gap between the label and the container) #needs-verification-as-design-choice | tess-ui: yes (style margin); tess-shell: n/a: the TextField block draws no label; tre: yes (margin) |
+| external label | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], design choice, [[ADR-0023 Text Field label placement by density]] | tess-ui: via type role in the theme; tess-shell: n/a: the TextField block draws no label; tre: yes (font_size, font_weight, line_height) |
 | label | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], floating label | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | supporting text | margin | `space.2` | 4 0 0 0 | 4 0 0 0 | 4 0 0 0 | MD3 filled text field `supporting-text-top-space` 4, https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-text-field.scss | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
@@ -130,7 +151,7 @@ Single-line outlined field unless the Part says filled. Vertical padding is `(he
 - Prefix and suffix never truncate before the input text; the input area has `min-width: 0` so it can shrink, the container never overflows its parent.
 - Multi-line: wrap `word` by default; `wrap none` allowed (then it scrolls both ways). Vertical overflow shows a vertical [[Scrollbar and Scroll Container|scrollbar]] when the content exceeds the box; horizontal overflow (wrap none) shows a horizontal one. The caret is scrolled into view on edit and on caret movement.
 - Multi-line minimum: 3 lines at the field's line height by default, configurable from 1; resize handle optional, vertical only, snaps to the line height, never below the minimum #needs-verification-as-design-choice.
-- Label: floating label truncates with an ellipsis and the tooltip rule applies to the label control only; an external label wraps. Supporting text wraps to a second line at most 2 lines, then ellipsis, and its full text is exposed as the accessible description.
+- Label: an external label sits above the container with a 4, 4 and 2 dp gap, wraps, and aligns its left edge with the container's left edge; the floating label truncates with an ellipsis and the tooltip rule applies to the label control only; an external label wraps. Supporting text wraps to a second line at most 2 lines, then ellipsis, and its full text is exposed as the accessible description.
 - Character counter: `n / max`, trailing in the supporting row, `body_small`.
 
 ## Behaviour
@@ -193,7 +214,7 @@ All colours are roles ([[Colour Roles]]); the field has no literal colour. Under
 
 - [ ] AC-TXF-1: Vertical centring, geometry check. For a single-line field at each density (default, compact, dense) and scale 1.0, 1.25, 2.0, the top of the text line box and the bottom of the text line box lie inside the container with a space above that differs from the space below by at most 0.5 dp. Pass: for 40/32/28 dp, space above equals space below ±0.5 dp (8/6/4 dp for the type roles in Sizing). Owner feedback F7.
 - [ ] AC-TXF-2: Pixel check. In a render of a single-line field with the text "Hg" at compact density, the vertical centre of the glyph bounding box (cap height top to descender bottom) is within 1 px of the vertical centre of the container. Pass: offset at most 1 px.
-- [ ] AC-TXF-3: Token test. The single-line container heights equal 40, 32 and 28 dp for default, compact, dense and the horizontal paddings equal 12, 8, 8 dp. Pass: values equal.
+- [ ] AC-TXF-3: Token test. The single-line container heights, without a floating label, equal 40, 32 and 28 dp for default, compact, dense and the horizontal paddings equal 12, 8, 8 dp; an external label never changes the container height. Pass: values equal with and without an external label.
 - [ ] AC-TXF-4: Geometry check. Horizontal text alignment: the left edge of the first glyph lies at container left edge plus horizontal padding plus leading icon plus gap if any (±1 px). Pass: within 1 px.
 - [ ] AC-TXF-5: Scripted input and geometry check. Set a single-line field to a string at least 3 times wider than the content box, blur: the rendered text ends with the ellipsis glyph and no pixel of text lies outside the container. Pass: ellipsis present, zero pixels of text beyond the container bounds. Owner feedback F5 class.
 - [ ] AC-TXF-6: Scripted input. Focus the same field and press End: the ellipsis is gone, the caret x lies inside the content box, and the end of the text is visible. Press Home: the start is visible. Pass: caret inside the content box at both keys.
@@ -207,6 +228,9 @@ All colours are roles ([[Colour Roles]]); the field has no literal colour. Under
 - [ ] AC-TXF-14: Scripted input. IME: an injected pre-edit string shows inline, the candidate rectangle reported to the platform lies inside the window, and a commit inserts the text once. Pass: value and rectangle as stated (engine support dependent: record `not testable` where the platform cannot be driven).
 - [ ] AC-TXF-15: Scripted input and review. With reduced motion set, the caret does not blink and the label does not glide. Pass: caret visible in all frames of a 2 s capture.
 - [ ] AC-TXF-16: Geometry check. No tooltip is bound to the field container, only to the label or to an icon button inside the field ([[ADR-0004 Tooltip rule]]); hover over the container shows none within 600 ms. Pass: zero tooltips.
+- [ ] AC-TXF-17 (geometry check): label placement by density. At compact and dense a field with a label shows the label above the container: label bottom edge to container top edge is 4 dp at compact and 2 dp at dense (plus or minus 0.5 dp), the container height is 32 and 28 dp, and no label pixel lies inside the container. Pass: gaps and heights as stated, also when the floating variant was requested.
+- [ ] AC-TXF-18 (AT tree assertion): the accessible name of a labelled field is the `Label` property in both placements and does not change when the placeholder is shown or hidden; a field with a placeholder and a label exposes the placeholder only as description or hint. Pass: name equals the label text in every state.
+- [ ] AC-TXF-19 (geometry check): at default density the floating label variant has a 56 dp container with the label inside (the label line within the top 16 dp), and the external variant has a 40 dp container with the label above; both keep the input text centred in the space below the label (AC-TXF-1 applies to the input area). Pass: heights 56 and 40; the vertical centring tolerance of AC-TXF-1.
 
 ## Status in code
 
@@ -234,7 +258,7 @@ Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 |---|---|---|
 | Container height 40, 32, 28 dp instead of 56 dp (MD3 height from Material Web `textfield/demo` min-height 56 px and the label plus padding stack #needs-verification) | desktop density, config panels hold many fields | [[ADR-0002 Desktop density levels and target sizes]] |
 | Body text `body_medium` at compact and dense | 20 dp line box fits 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
-| Label may be external (above the field) | forms with aligned label column ([[Form Row]]) | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Label may be external (above the field), and is the only placement at compact and dense | a floating label does not fit a 32 or 28 dp container; forms with aligned label column ([[Form Row]]) | [[ADR-0023 Text Field label placement by density]] |
 | Keyboard focus indicator is the 2 dp indicator or outline, no extra ring | MD3 text fields draw no separate ring | [[ADR-0009 State layer percentages]] |
 | Escape clears only in search fields | keyboard-first rule | [[ADR-0010 Document structure of the specifications]] (convention only) |
 
