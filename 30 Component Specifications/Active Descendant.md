@@ -55,6 +55,25 @@ Selection colours as [[List Item]] ([[Colour Roles]], [[State Layers]]); no new 
 
 Not applicable: rows are [[List Item]] rows at 40, 32, 24 dp ([[Spacing and Density]]).
 
+## Dimensions and defaults
+
+Active descendant is a relation, not a painted part. The field keeps its own dimensions ([[Text Field]]) and the current row is a [[List Item]] row, so its values are the density rows of [[Spacing and Density]]; the row's own corner radius, font and icon belong to [[List Item]].
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| field | height | - | N/A: the field keeps its own height; the relation sets none | N/A: same as the Default column | N/A: same as the Default column | [[Text Field]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| current row | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| current row | min height | `density.row_height` | 24 | 24 | 24 | [[Spacing and Density]] (24 dp pointer minimum; dense rows meet it exactly) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| current row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| current row | margin | - | N/A: the list sets the space between rows; the relation adds none | N/A: same as the Default column | N/A: same as the Default column | [[List]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| current row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| current row | border width | - | N/A: the current row has no focus ring; the ring stays on the field (AC-ADE-8) | N/A: same as the Default column | N/A: same as the Default column | [[Focus Ring]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| current row | border color | - | N/A: no ring or border is drawn on the row | N/A: same as the Default column | N/A: same as the Default column | [[Focus Ring]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| current row | corner radius | - | N/A: the selected row follows the shape set by List Item | N/A: same as the Default column | N/A: same as the Default column | [[List Item]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| current row | font | - | N/A: the row text uses the type role set by List Item | N/A: same as the Default column | N/A: same as the Default column | [[List Item]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| current row | icon size | - | N/A: the row icon size is set by List Item | N/A: same as the Default column | N/A: same as the Default column | [[List Item]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| current row | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] (a selected row is flat) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 The current row is scrolled into view by the least distance that shows it when it changes ([[Scrollbar and Scroll Container]]). The engine's automatic scroll follows focus only, and focus does not move, so the widget calls `scroll_into_view()` on the row (rule of the spec, not an engine promise).

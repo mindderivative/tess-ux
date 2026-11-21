@@ -52,6 +52,29 @@ Scrollbar tokens (thumb 8 dp, hit 12 dp, margin 2 dp, minimum thumb 32 dp, gutte
 
 Not applicable: scrollbar sizes do not vary with density ([[Scrollbar and Scroll Container]], Tokens used). The viewport size is set by the owner.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| viewport | height | - | N/A: the owner sets the viewport size; content beyond it scrolls | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| viewport | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]] | tess-ui: yes (style padding, applied to the content box); tess-shell: via Padding on the content child Box; tre: via padding on the content child (the scroll view ignores its own) |
+| content gutter | padding | `scrollbar.gutter` | 0 12 0 0 | 0 12 0 0 | 0 12 0 0 | [[Scrollbar and Scroll Container]] | tess-ui: yes (style padding, applied to the content box); tess-shell: via Padding on the content child Box; tre: via padding on the content child (the scroll view ignores its own) |
+| viewport | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| viewport | gap | - | N/A: the block has one content child; gaps belong to that child | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style gap, applied to the content box); tess-shell: n/a: one content child and no Spacing key on the ScrollBox; tre: n/a: the scroll view holds one content child |
+| thumb | margin | `scrollbar.margin` | 2 | 2 | 2 | [[Scrollbar and Scroll Container]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (SCROLLBAR_MARGIN 2.0 in engine-core/src/node.rs) |
+| thumb, across the axis | min width | `scrollbar.thumb.thickness` | 8 | 8 | 8 | [[Scrollbar and Scroll Container]] | tess-ui: no hook; tess-shell: no hook; tre: yes (scrollbar_width, default SCROLLBAR_THICKNESS 4.0) |
+| thumb, along the axis | min height | `scrollbar.thumb.min_length` | 32 | 32 | 32 | [[Scrollbar and Scroll Container]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (SCROLLBAR_MIN_LENGTH 32.0 in engine-core/src/node.rs) |
+| hit area | min width | `scrollbar.hit.thickness` | 12 | 12 | 12 | [[ADR-0012 Scrollbar thumb opacity and hit area exception]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (SCROLLBAR_GRAB_SLOP 6.0 in engine-core/src/node.rs) |
+| viewport | border width | - | N/A: the viewport draws no border; paint is the content's or a parent's | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style border_width); tess-shell: n/a: the ScrollBox has no border key, a parent Box draws it; tre: yes (stroke_width) |
+| viewport | border color | - | N/A: the viewport draws no border; paint is the content's or a parent's | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style border_color); tess-shell: n/a: the ScrollBox has no border key, a parent Box draws it; tre: yes (stroke_color) |
+| viewport | corner radius | - | N/A: the viewport clips to a rectangle; rounding belongs to a parent Box | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: the ScrollBox has no radius key, a parent Box rounds; tre: yes (corner_radius, the content clips to it) |
+| thumb | corner radius | `scrollbar.thumb.radius` | 9999 | 9999 | 9999 | [[Scrollbar and Scroll Container]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (SCROLLBAR_THUMB_RADIUS 2.0 in engine-render/src/lib.rs) |
+| viewport | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: a ScrollView draws no text; tess-shell: n/a: the block draws no text and has no font key; tre: n/a: the scroll view draws no text |
+| viewport | icon size | - | N/A: the block draws no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: a ScrollView draws no icon; tess-shell: n/a: the block draws no icon; tre: n/a: the scroll view draws no icon |
+| viewport | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
+Scrollbar values do not change with density; they are copied from [[Scrollbar and Scroll Container]], which owns them. The gutter row is for a vertical bar and applies only while the axis overflows (a horizontal bar reserves 12 at the bottom). A touch context sets the hit thickness to 48.
+
 ## Layout and overflow
 
 - Overflow: clip, with scroll on its own axis; the bar shows exactly when content exceeds the viewport on that axis (AC-SCB-02).
@@ -98,9 +121,9 @@ The criteria AC-SCB-01 to AC-SCB-21 of [[Scrollbar and Scroll Container]] apply 
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`: `Orientation`, `Scroll_Offset`; `Scroll_Snap` and `On_Scroll` not built), `tess-shell:src/tess_shell/binder/tables.py` | partly meets: wheel scrolling and engine keys; no scrollbar of either axis: fails AC-SCB-02 to 09, 12, 13 and AC-BLK-SBX-5; AC-BLK-SBX-2 not verified |
-| tess-ui | `tess-ui:src/tess_ui/scrolling.py` (`ScrollView`) | partly meets: see [[Scrollbar and Scroll Container]] |
-| tre | `tre:crates/engine-core/src/tree/scroll.rs`, `tre:docs/guide/nodes-and-layout.md` (Scrolling) | partly meets: see [[Scrollbar and Scroll Container]]: thumb 4 px, wheel 20 px, Page keys a full viewport |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`: `Orientation`, `Scroll_Offset`; `Scroll_Snap` and `On_Scroll` not built), `tess-shell:src/tess_shell/binder/tables.py` | partly meets: wheel scrolling and engine keys; no scrollbar of either axis: fails AC-SCB-02 to 09, 12, 13 and AC-BLK-SBX-5; AC-BLK-SBX-2 not verified. Settable: no key reaches the thumb margin, thickness, minimum length, hit area or radius (project request) |
+| tess-ui | `tess-ui:src/tess_ui/scrolling.py` (`ScrollView`) | partly meets: see [[Scrollbar and Scroll Container]]. Settable: `_scroll_props` sets only `scrollbar_fill` (role `outline`), so the thumb margin, thickness, minimum length, hit area and radius have no hook (project request) |
+| tre | `tre:crates/engine-core/src/tree/scroll.rs`, `tre:docs/guide/nodes-and-layout.md` (Scrolling) | partly meets: see [[Scrollbar and Scroll Container]]: thumb 4 px, wheel 20 px, Page keys a full viewport. Settable: only the thumb thickness (`scrollbar_width`) and colour (`scrollbar_fill`) are properties, the margin, minimum length, grab slop and radius are hardcoded (engine request) |
 
 ## Deviations from Material Design 3
 

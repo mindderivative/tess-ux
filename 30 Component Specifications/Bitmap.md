@@ -51,6 +51,24 @@ Corner radius from [[Shape]] on the clipping parent (cover art 8 dp, avatar `ful
 
 Not applicable: size is set by the owner; image pixels are decoded to at most 8192 by 8192 (engine limit). For a 2.0 scale factor the source should have at least twice the box pixels, otherwise it is upscaled (blurred).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| image | height | - | N/A: no natural size in the engine; the owner sets `Height`, or `Fit: NONE` uses the pixel size | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| image | padding | - | N/A: the pixels fill the whole box; there is no content inset | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/shapes.py | tess-ui: yes (style padding); tess-shell: n/a: the Bitmap has no Padding key and the pixels fill the box; tre: yes (padding) |
+| image | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| image | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: an Image has no children; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the image has no children |
+| image | border width | - | N/A: the block draws no border; a frame is a parent Box | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/shapes.py | tess-ui: yes (style border_width); tess-shell: n/a: the Bitmap has no border key, the frame is the parent Box; tre: yes (stroke_width) |
+| image | border color | - | N/A: the block draws no border; a frame is a parent Box | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/shapes.py | tess-ui: yes (style border_color); tess-shell: n/a: the Bitmap has no border key, the frame is the parent Box; tre: yes (stroke_color) |
+| clipping parent, cover art | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]] | tess-ui: yes (style corner_radius of the Image or its parent); tess-shell: yes (Corner_Radius of the parent Box with Clip_Children); tre: yes (corner_radius clips the image to the rounded box) |
+| clipping parent, avatar | corner radius | `shape.full` | 9999 | 9999 | 9999 | [[Shape]] | tess-ui: yes (style corner_radius of the Image or its parent); tess-shell: yes (Corner_Radius of the parent Box with Clip_Children); tre: yes (corner_radius clips the image to the rounded box) |
+| image | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: an Image draws no text; tess-shell: n/a: the block draws no text; tre: n/a: the image draws no text |
+| image | icon size | - | N/A: an image is not an icon; icons are Path blocks | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: an Image is not an icon; tess-shell: n/a: a Bitmap is not an icon; tre: n/a: an image is not an icon |
+| image | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: no hook (the Bitmap has no Elevation or Shadows key, a parent Box carries the shadow); tre: yes (shadows) |
+
+The radius rows belong to the clipping parent, which sets `Clip_Children`; a Bitmap has no radius of its own. Source images need at least twice the box pixels at scale 2.0.
+
 ## Layout and overflow
 
 - Fit decides overflow: `CONTAIN` never overflows, `COVER` crops to the box, `FILL` distorts, `NONE` may exceed the box and is clipped by the parent only if it clips.
@@ -96,7 +114,7 @@ No change; a bitmap is not recoloured. A transparent image sits on a role colour
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py`, `tess-shell:src/tess_shell/binder/shapes.py` (`bitmap`), `tess-shell:src/tess_shell/binder/images.py` | meets: `Source`, `Fit` (FILL, CONTAIN, COVER, NONE); decoding done by the shell; animated gif and tint not built |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py`, `tess-shell:src/tess_shell/binder/shapes.py` (`bitmap`), `tess-shell:src/tess_shell/binder/images.py` | meets: `Source`, `Fit` (FILL, CONTAIN, COVER, NONE); decoding done by the shell; animated gif and tint not built. Settable: the Bitmap has no `Elevation` or `Shadows` key, so the elevation default cannot be changed on the block (project request) |
 | tess-ui | `tess-ui:src/tess_ui/widgets/media.py` (`image`) | partly meets: image widget with fit, accessibility `Label` optional |
 | tre | `tre:docs/guide/painting.md` (Images) | meets: `image` kind, RGBA8 only, `fit` fill, contain, cover |
 

@@ -52,6 +52,27 @@ Fill and border: [[Colour Roles]]; radius: [[Shape]] (0, 4, 8, 12, 16, 28 dp, `f
 
 Not applicable: no intrinsic size; set `Width` and `Height`. A divider is 1 dp thick at every density level; a Rectangle that is a pointer target takes the hit area of its element (24 dp, 48 dp in touch contexts, [[Spacing and Density]]).
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| rectangle | height | - | N/A: no intrinsic size; the owner sets `Width` and `Height` (`AUTO` or `EXPAND`) | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| divider | height | - | 1 | 1 | 1 | [[Rectangle Block]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| rectangle | padding | - | N/A: the block has no children to inset | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: a Rect has no children to inset; tess-shell: n/a: the block has no children and no Padding key; tre: n/a: the box has no children to inset |
+| rectangle | margin | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| rectangle | gap | - | N/A: the block has no children | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: n/a: a Rect has no children; tess-shell: n/a: the block has no children and no Spacing key; tre: n/a: the box has no children |
+| rectangle | border width | - | 0 | 0 | 0 | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| rectangle | border color | - | N/A: no border by default; `Border_Color` takes a role | N/A: same as default | N/A: same as default | tess-shell:src/tess_shell/binder/tables.py | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| swatch | border width | - | 1 | 1 | 1 | [[Rectangle Block]] | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| swatch | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| rectangle | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| track | corner radius | `shape.full` | 9999 | 9999 | 9999 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| rectangle | font | - | N/A: the block draws no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: a Rect draws no text; tess-shell: n/a: the block draws no text and has no font key; tre: n/a: the box draws no text |
+| rectangle | icon size | - | N/A: the block draws no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: a Rect draws no icon; tess-shell: n/a: the block draws no icon and has no icon key; tre: n/a: the box draws no icon |
+| rectangle | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
+The divider is 1 dp at every density; its fill is `outline_variant` and a track fills with `surface_container_highest`.
+
 ## Layout and overflow
 
 - No children, no padding. Never clips anything; the shape itself is clipped to nothing.

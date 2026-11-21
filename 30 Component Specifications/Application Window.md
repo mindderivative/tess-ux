@@ -61,6 +61,27 @@ Window background `surface`; scheme per [[Theme Following the System]]; padding 
 - Density is independent of the window size class.
 - Not a per-density element otherwise.
 
+## Dimensions and defaults
+
+The window root is the only painted part the engine owns; title bar, window controls and dock zones have their own notes. Density does not change the window, so the three level columns repeat one value. The 320 by 240 dp floor is a Tesserae design choice #needs-verification.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| window | height | - | N/A: the project and the OS set the window height; the engine example 200 is not a default to keep | N/A: set per window by the project | N/A: same, set per window | `tre:docs/reference/window.md` | tess-ui: yes (window style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| window | min width | - | 320 | 320 | 320 | design choice, proposed ADR window minimum size, [[10 Layout Overflow and Scrolling]] | tess-ui: yes (window min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| window | min height | - | 240 | 240 | 240 | design choice, proposed ADR window minimum size, [[10 Layout Overflow and Scrolling]] | tess-ui: yes (window min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| window root | padding | `space.5` | 16 16 16 16 | 16 16 16 16 | 16 16 16 16 | `tre:docs/reference/window.md`, [[Spacing and Density]] | tess-ui: yes (root style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| window | margin | - | N/A: the OS or compositor places the window; it has no outer margin | N/A: same as the Default column | N/A: same as the Default column | [[Spacing and Density]] | tess-ui: n/a: the OS places the window, it has no margin; tess-shell: n/a: element absent in tess-shell; tre: n/a: the OS places the window, it has no margin |
+| window root | gap | `space.5` | 16 | 16 | 16 | `tre:docs/reference/window.md`, [[Spacing and Density]] | tess-ui: yes (root style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| window | border width | - | 0 | 0 | 0 | `tre:docs/reference/window.md` (no painted border; the OS frame or resize border is not drawn by the root) | tess-ui: yes (root style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| window | border color | - | N/A: the window root paints no border | N/A: same as the Default column | N/A: same as the Default column | `tre:docs/reference/window.md` | tess-ui: yes (root style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| undecorated window, not maximized | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: yes (root style corner_radius on a transparent window); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius with transparent) |
+| maximized or fullscreen window | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (root style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| window | font | - | N/A: the window root draws no text; the title belongs to the title bar | N/A: same as the Default column | N/A: same as the Default column | [[Window]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| window | icon size | - | N/A: the window root draws no icon; window controls own theirs | N/A: same as the Default column | N/A: same as the Default column | [[Title Bar]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| window | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] (the OS or the transparent variant owns shadows) | tess-ui: yes (root style elevation on a transparent window); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows on the root of a transparent window) |
+| resize border (grab zone, not painted) | min width | - | 6 | 6 | 6 | `tre:docs/reference/window.md`, [[ADR-0014 Window resize border and splitter alternative]] | tess-ui: yes (App resize_border); tess-shell: n/a: element absent in tess-shell; tre: yes (resize_border) |
+
 ## Layout and overflow
 
 - The class is recomputed on each `resize` event and layout changes at class boundaries, not by clipping ([[10 Layout Overflow and Scrolling]]).

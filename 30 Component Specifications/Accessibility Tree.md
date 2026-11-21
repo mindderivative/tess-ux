@@ -65,6 +65,25 @@ None: the tree carries no colour. Contrast and target tokens are in [[Colour Rol
 
 Not applicable: nodes report bounds in window pixels; target size rules are in [[14 Accessibility Basics]] and checked by geometry, not by the tree.
 
+## Dimensions and defaults
+
+The tree is data, not a painted part: it carries bounds, role, name and state and no sizes of its own. The only dimensions it must report are the target sizes of the nodes it exposes, which geometry tests check ([[14 Accessibility Basics]]). The three level columns repeat one value.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| tree | height | - | N/A: the tree has no geometry; each node reports the bounds of the node it describes | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Sizing and density]] | tess-ui: n/a: the tree is data with no geometry; tess-shell: n/a: the tree is data with no geometry; tre: n/a: the tree is data with no geometry |
+| interactive node bounds | min width | - | 24 | 24 | 24 | [[Spacing and Density]] (24 dp pointer minimum, WCAG 2.2 SC 2.5.8) | tess-ui: yes (style min_width on the node); tess-shell: yes (Min_Width on the block); tre: yes (min_width on the node) |
+| interactive node bounds | min height | - | 24 | 24 | 24 | [[Spacing and Density]] (24 dp pointer minimum, WCAG 2.2 SC 2.5.8) | tess-ui: yes (style min_height on the node); tess-shell: yes (Min_Height on the block); tre: yes (min_height on the node) |
+| tree | padding | - | N/A: the tree draws nothing, so it has no content box to pad | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Tokens used]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | margin | - | N/A: the tree is not laid out; bounds come from the node tree | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Layout and overflow]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | gap | - | N/A: the tree has no children laid out in a row or column | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Layout and overflow]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | border width | - | N/A: the tree draws no border; a focus indicator is the node's own | N/A: same as the Default column | N/A: same as the Default column | [[Focus Ring]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | border color | - | N/A: the tree carries no colour | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Tokens used]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | corner radius | - | N/A: the tree carries no shape | N/A: same as the Default column | N/A: same as the Default column | [[Accessibility Tree#Tokens used]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | font | - | N/A: the tree carries names as text, not type roles; the widget draws the text | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | icon size | - | N/A: an icon is exposed by name only, its size is the widget's | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+| tree | elevation | - | N/A: the tree has no depth or shadow | N/A: same as the Default column | N/A: same as the Default column | [[Elevation]] | tess-ui: n/a: the tree is data and draws nothing; tess-shell: n/a: the tree is data and draws nothing; tre: n/a: the tree is data and draws nothing |
+
 ## Layout and overflow
 
 Not applicable: the tree has no layout. Bounds include scroll shift; a node scrolled out of view keeps bounds outside the viewport; focus and assistive `scroll_into_view` scroll it in ([[Scrollbar and Scroll Container]]). Truncated text keeps the full text as its name ([[10 Layout Overflow and Scrolling]], AC-LAY-13).

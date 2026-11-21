@@ -64,6 +64,25 @@ State layer percentages from [[State Layers]]: dragged 16 percent.
 
 Not applicable by density. Drag handles are at least 24 dp by 24 dp (48 dp in touch contexts, [[Spacing and Density]]). A drag starts after the pointer moves at least 4 dp from the press (Tesserae choice #needs-verification) so a click never drags.
 
+## Dimensions and defaults
+
+Dragging has no box of its own: the engine draws nothing, and the framework draws a target highlight and the dragged state. Rows give the handle size, the start distance and the target highlight. The values are the same at every density; in a touch context the handle minimum is 48 dp ([[Spacing and Density]]). The start distance and the target highlight are Tesserae design choices #needs-verification.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| drag handle | height | - | N/A: the handle keeps the height of its control; only a floor is set here | N/A: same as the Default column | N/A: same as the Default column | [[Drag and Drop#Sizing and density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| drag handle | min width | - | 24 | 24 | 24 | [[Spacing and Density]] (24 dp pointer minimum; 48 in touch contexts) | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| drag handle | min height | - | 24 | 24 | 24 | [[Spacing and Density]] (24 dp pointer minimum; 48 in touch contexts) | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| drag handle | padding | - | N/A: the handle's padding belongs to the control that hosts it | N/A: same as the Default column | N/A: same as the Default column | [[Drag and Drop#Sizing and density]] | tess-ui: yes (style padding of the host); tess-shell: yes (Padding of the host); tre: yes (padding of the host) |
+| drop target | margin | - | N/A: a hovered target never changes its size or position, so no space is added | N/A: same as the Default column | N/A: same as the Default column | [[Drag and Drop#Layout and overflow]] | tess-ui: n/a: a hovered target adds no space; tess-shell: n/a: a hovered target adds no space; tre: n/a: a hovered target adds no space |
+| press to first drag move (start distance) | gap | - | 4 | 4 | 4 | design choice, proposed ADR drag start distance, [[Drag and Drop#Sizing and density]] (AC-DND-8) | tess-ui: no hook; tess-shell: no hook; tre: n/a: the engine has no pointer drag threshold, the app code decides |
+| valid drop target highlight | border width | - | 2 | 2 | 2 | design choice, proposed ADR drop target highlight, [[Drag and Drop#States]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no drop highlight |
+| valid drop target highlight | border color | `primary` | `primary` | `primary` | `primary` | design choice, proposed ADR drop target highlight, [[Colour Roles]] | tess-ui: via theme role primary; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no drop highlight |
+| drop target | corner radius | - | N/A: the highlight follows the shape of the target zone | N/A: same as the Default column | N/A: same as the Default column | [[Shape]] | tess-ui: n/a: the highlight follows the target zone; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no drop highlight |
+| drag source and target | font | - | N/A: dragging draws no text; the dragged control keeps its own type role | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: dragging draws no text; tess-shell: n/a: dragging draws no text; tre: n/a: dragging draws no text |
+| drag source and target | icon size | - | N/A: dragging draws no icon; the cursor is the OS cursor | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: dragging draws no icon; tess-shell: n/a: dragging draws no icon; tre: n/a: dragging draws no icon |
+| dragged source | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[State Layers]] (the dragged state is a 16% layer, no shadow) | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - A dragged preview, if any, is a layer above everything and is clipped to the window ([[12 Overlays]]).
@@ -116,8 +135,8 @@ No drag unless a node starts one; `file_drop` events go to the node under the po
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/docking.py` (`Dock`: zones, `dock_target`, `dock_drop`, `move`, halves), `tess-ui:src/tess_ui/app.py` (`on_file_drop`), `tess-ui:src/tess_ui/widgets/media.py` (node drag, arrow keys) | partly meets: panel drag with a `move` call as non-drag path; node graph drag with arrow keys (meets AC-DND-1); file drop handler exists, not on Wayland; no Escape cancel (fails AC-DND-7, not verified); no content drag and drop |
-| tess-shell | `tess-shell:src/tess_shell/surfaces/manager.py` (Movable Panel by `drag_margin`, saved positions), `tess-shell:src/tess_shell/binder/controls.py` (`Slides` drag) | partly meets: Panel Movable, Slider drag and Peek DRAG trigger only; no keyboard way to move a panel (fails AC-DND-5), no content drag and drop |
+| tess-ui | `tess-ui:src/tess_ui/docking.py` (`Dock`: zones, `dock_target`, `dock_drop`, `move`, halves), `tess-ui:src/tess_ui/app.py` (`on_file_drop`), `tess-ui:src/tess_ui/widgets/media.py` (node drag, arrow keys) | partly meets: panel drag with a `move` call as non-drag path; node graph drag with arrow keys (meets AC-DND-1); file drop handler exists, not on Wayland; no Escape cancel (fails AC-DND-7, not verified); no content drag and drop; the start distance (`DRAG_THRESHOLD` 4) and the drop highlight (`HIGHLIGHT_ALPHA`, `HIGHLIGHT_OUTLINE` 2) are module constants of `docking.py` with no theme or style hook (project request) |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/manager.py` (Movable Panel by `drag_margin`, saved positions), `tess-shell:src/tess_shell/binder/controls.py` (`Slides` drag) | partly meets: Panel Movable, Slider drag and Peek DRAG trigger only; no keyboard way to move a panel (fails AC-DND-5), no content drag and drop; the drag start distance has no key (project request) |
 | tre | `tre:docs/guide/events-and-input.md` (Pointer, Files dragged from the OS), `tre:docs/guide/docking.md`, `tre:docs/reference/layer-window.md` (drag by margin), `tre:docs/reference/window.md` | partly meets: capture, docking drag and drop events, file events (not Wayland), margin and window drags; in-app drag and drop is app code; no drag cancel by Escape; no auto-scroll |
 
 ## Deviations from Material Design 3
