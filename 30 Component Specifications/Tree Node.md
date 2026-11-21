@@ -98,6 +98,28 @@ Exact horizontal positions in dp from the left edge of the tree container (the r
 
 The label right edge never exceeds the row width minus `P`. A pointer target is the whole row (a click on the chevron box acts as a click on the row); the row height is at least 24 dp at every density, which meets WCAG 2.2 SC 2.5.8 ([[ADR-0002 Desktop density levels and target sizes]]); the 16 dp dense chevron box is not a separate target.
 
+## Dimensions and defaults
+
+These are the binding density values of [[Spacing and Density]] and [[ADR-0002 Desktop density levels and target sizes]]; the icon size and the label type are Tesserae choices #needs-verification-as-design-choice (proposed ADR: tree row icon size and label type by density). The icon size follows this note's Sizing table (dense 20); [[Iconography]] gives 16 for a tree row at dense, and the two notes disagree until the owner decides. The left padding of a row at depth `d` is the row padding plus the indent times `d`; the indent row gives the per-level step.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| row | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| row | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] (WCAG 2.2 SC 2.5.8) | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| chevron box | height | `density.chevron_box` | 24 | 20 | 16 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| chevron box | min width | `density.chevron_box` | 24 | 20 | 16 | [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| row (depth 0) | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| indent (per level) | padding | `density.tree_indent` | 0 0 0 20 | 0 0 0 16 | 0 0 0 12 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| row | margin | - | N/A: the row has no margin; the root chevron sits at the row padding from the container edge and nothing else (F4) | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| row | border width | - | 0 | 0 | 0 | design choice, proposed ADR (tree row appearance); [[Tree Node#States]] (the row has a fill state and a focus ring, no border) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| row | border color | - | N/A: the row draws no border; selection is a fill and focus is the inset ring | N/A: same as default | N/A: same as default | [[Tree Node#States]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| row | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the row is a one-line [[List Item]] indented by depth, container shape none) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| label | font | `body_large`, `body_medium`, `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; design choice, proposed ADR (tree row icon size and label type by density) | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Tree Node#Sizing and density]]; design choice, proposed ADR (tree row icon size and label type by density) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| chevron glyph | icon size | `density.chevron_box` | 24 | 20 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| row | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The label has a minimum width of 0, takes the remaining row width, shows one line and ends with an ellipsis when cut (F5). It never wraps and never widens the row, so a tree with long labels has no horizontal overflow from labels.

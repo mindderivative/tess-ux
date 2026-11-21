@@ -102,6 +102,35 @@ Card padding and gaps follow the density level ([[ADR-0002 Desktop density level
 - Hit area: an actionable card's hit area is the whole container (at least 24 by 24 dp at every level; 48 by 48 dp in a touch context).
 - Margin between cards in a collection: `space.4` (8 dp) at compact and dense, `space.5` (16 dp) at default. Android advises 8 dp margins on mobile ([Card guide](https://github.com/material-components/material-components-android/blob/master/docs/components/Card.md)).
 
+## Dimensions and defaults
+
+Every value in dp unless stated; the density columns follow [[Card#Sizing and density]] and [[ADR-0002 Desktop density levels and target sizes]]. Card padding and gaps are Tesserae choices because [[Spacing and Density]] has no card row #needs-verification-as-design-choice (proposed ADR: card spacing by density level).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: the content height decides; a card has no fixed height unless the caller sets one | N/A: same as default | N/A: same as default | [[Card#Sizing and density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | 120 | 120 | 120 | [[10 Layout Overflow and Scrolling]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] (hit area of an actionable card) | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container | padding | `space.5`, `space.4`, `space.3` | 16 16 16 16 | 12 12 12 12 | 8 8 8 8 | design choice, proposed ADR (card spacing by density); [[Card#Sizing and density]], tess-ui `Card_Stylesheet.tdl` | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the parent collection sets the space between cards (16 at default, 8 at compact and dense) | N/A: same, 8 | N/A: same, 8 | [[Card#Sizing and density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| headline, subhead, supporting text | gap | `space.2`, `space.2`, `space.1` | 4 | 4 | 2 | design choice, proposed ADR (card spacing by density); [[Card#Sizing and density]], tess-ui `Card_Stylesheet.tdl` | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| actions row | gap | `space.3`, `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR (card spacing by density); [[Card#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| actions row | padding | `space.3`, `space.3`, `space.2` | 8 0 0 0 | 8 0 0 0 | 4 0 0 0 | design choice, proposed ADR (card spacing by density); [[Card#Sizing and density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| action button | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| media | height | - | 160 | 120 | 96 | design choice, proposed ADR (card spacing by density); [[Card#Sizing and density]], tess-ui `Media_Height` | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (outlined) | border width | - | 1 | 1 | 1 | MD3 [outlined card tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-outlined-card.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container (elevated, filled) | border width | - | 0 | 0 | 0 | MD3 [elevated card tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-elevated-card.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container (outlined) | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | MD3 [outlined card tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-outlined-card.scss) (selected: `outline`) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container (elevated, filled) | border color | - | N/A: these variants draw no border | N/A: same as default | N/A: same as default | MD3 [filled card tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filled-card.scss) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| media | corner radius | `shape.medium` | 12 12 0 0 | 12 12 0 0 | 12 12 0 0 | [[Shape]] (the container clips the media to its top corners) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| headline | font | `title_large` | 22/28/400/0 | 22/28/400/0 | 22/28/400/0 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| subhead | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| icon (in content) | icon size | - | 24 | 24 | 24 | MD3 [elevated card tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-elevated-card.scss) (`icon-size`) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container (elevated) | elevation | `elevation.level_1` | 1 | 1 | 1 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container (filled, outlined) | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The container clips its children to the 12 dp corner, so media and the state layer follow the shape ([[Shape]]).

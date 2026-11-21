@@ -85,6 +85,34 @@ Item and spacing values per density level, from [[Spacing and Density]] (binding
 - The smallest pointer target is 24 dp (WCAG 2.2 SC 2.5.8); dense items (28 dp) meet it. In touch contexts the item height is 48 dp, which is also the MD3 value ([[ADR-0002 Desktop density levels and target sizes]]).
 - Container vertical padding 8 dp default, 4 dp at compact and dense #needs-verification-as-design-choice (MD3 token not read).
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above. Compact and dense paddings and the divider margin are Tesserae choices #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: content-sized, the sum of the items, clamped to the available height | N/A: same as the default level | N/A: same as the default level | [[Menu]] Layout and overflow | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | - | 112 | 112 | 112 | https://github.com/material-components/material-web/blob/main/menu/internal/_menu.scss | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| container | padding | `space.3`, `space.2` | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | design choice, proposed ADR: menu container padding per density, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the opener places the menu with the Popup gap; the menu has no margin of its own | N/A: same as the default level | N/A: same as the default level | [[Popup]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| container | gap | - | N/A: items stack with no gap; each item carries its own height | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss | tess-ui: yes (style border_width); tess-shell: yes (Border_Width in the Popup Style); tre: yes (border_width) |
+| container | border color | - | N/A: the container draws no border; the shadow separates it | N/A: same as the default level | N/A: same as the default level | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss | tess-ui: yes (style border_color); tess-shell: yes (Border_Color in the Popup Style); tre: yes (border_color) |
+| container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius in the Popup Style); tre: yes (corner_radius) |
+| container | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation in the Popup Style); tre: yes (shadows) |
+| item | height | `density.menu_item_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| item | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| item | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| item | margin | - | N/A: the item fills the container width; the container padding sets the outer space | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| item | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| item | corner radius | `shape.none` | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu-item.scss | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| item | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| item | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+| divider | height | - | 1 | 1 | 1 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| divider | margin | `space.3`, `space.2` | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | design choice, proposed ADR: menu container padding per density (MD3 divider margin 8: https://github.com/material-components/material-web/blob/main/menu/internal/_menu.scss) | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| divider | border color | `surface_variant` | `surface_variant` | `surface_variant` | `surface_variant` | [[Colour Roles]], md.comp.menu.divider.color | tess-ui: yes (style background); tess-shell: yes (Fill of the rule Rectangle); tre: yes (background) |
+
 ## Layout and overflow
 
 - Width follows the widest item, clamped to 112 to 280 dp. A label wider than the item area truncates with an ellipsis at the end; the accessible name keeps the full label. Menu items do not wrap.

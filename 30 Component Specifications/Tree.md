@@ -59,6 +59,25 @@ Row tokens are defined once in [[Tree Node]]; colour roles in [[Colour Roles]]; 
 
 The tree takes the density level of its container or project ([[ADR-0002 Desktop density levels and target sizes]]); every row has the same height. The tree is as wide as its parent and as tall as its rows; the scroll container around it sets the viewport. The default level for configuration tools is `compact` (set by the project, not here).
 
+## Dimensions and defaults
+
+The tree is a container: it has no fill, border or text of its own, and every row size lives in [[Tree Node#Dimensions and defaults]]. Container defaults are the ones that make the rows line up. Alignment: rows span the full tree width, stack top to bottom with no gap, and each row's content is start-aligned and vertically centred in the row height. The container values are Tesserae choices #needs-verification-as-design-choice (proposed ADR: tree container defaults).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: as tall as its rows (row count times the row height of [[Tree Node]]); the surrounding scroll container sets the viewport | N/A: same as default | N/A: same as default | [[Tree#Sizing and density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | N/A: the tree is 100 percent of the parent width; below depth times indent plus chevron box plus 16 dp of label the surrounding container scrolls | N/A: same as default | N/A: same as default | [[Tree#Layout and overflow]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | min height | - | N/A: the height is the row count times the row height, so the 24 dp target minimum is a row property | N/A: same as default | N/A: same as default | [[Tree Node#Dimensions and defaults]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | design choice, proposed ADR (tree container defaults); the row horizontal padding sits in [[Tree Node]] so that the root chevron has no extra margin (F4) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the parent or the scroll container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| rows | gap | `space.0` | 0 | 0 | 0 | design choice, proposed ADR (tree container defaults); [[Tree Node]] (rows touch and each has the single-line height) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | N/A: the tree draws no border; the surrounding panel or scroll container owns it | N/A: same as default | N/A: same as default | [[Tree#Anatomy]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the tree draws no border, so it has no border colour | N/A: same as default | N/A: same as default | [[Tree#Anatomy]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | - | N/A: the tree has no fill or outline, so it has no corner; rows are rectangular ([[Tree Node]]) | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| container | icon size | - | N/A: the tree draws no icon of its own; the chevron and the node icon belong to [[Tree Node]] | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Width: 100 percent of the parent. Labels truncate with an ellipsis; the tree does not create horizontal overflow from labels ([[Tree Node]]).

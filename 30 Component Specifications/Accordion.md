@@ -74,6 +74,26 @@ The header is a list-row sized button, so it uses the single-line row height of 
 
 The header is at least 24 dp tall at every density (WCAG 2.2 SC 2.5.8, [[ADR-0002 Desktop density levels and target sizes]]).
 
+## Dimensions and defaults
+
+The header is a list-row sized button, so its height, padding and gap are the density row values of [[Spacing and Density]]; the content padding, title type and chevron are Tesserae choices #needs-verification-as-design-choice (proposed ADR: accordion dimensions by density level). MD3 has no accordion.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| header | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| header | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] (WCAG 2.2 SC 2.5.8) | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| header | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| header | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| content region | padding | `space.4`, `space.3`, `space.2` | 0 12 16 12 | 0 8 12 8 | 0 4 8 4 | design choice, proposed ADR (accordion dimensions by density); [[Accordion#Sizing and density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| section | margin | - | N/A: the accordion is 100 percent of the parent width; the parent sets the outer space | N/A: same as default | N/A: same as default | [[Accordion#Layout and overflow]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Accordion#Anatomy]], MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| header | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the header is a list-row sized button, like the [[List Item]] container) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| title | font | `title_medium`, `title_small`, `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]]; design choice, proposed ADR (accordion dimensions by density) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| count | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| chevron box | icon size | `density.chevron_box` | 24 | 20 | 16 | [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| header | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Width 100 percent of the parent. The title takes the remaining header width with a minimum width of 0 and one line; it truncates with an ellipsis. The chevron and count do not shrink.

@@ -76,6 +76,36 @@ See [[Colour Roles]], [[Shape]], [[Elevation]], [[Typography]]. Values verified 
 - The action buttons follow the density level for height ([[Spacing and Density]]: 40 / 32 / 28 dp), at least 24 dp.
 - Full-screen header height 56 dp at every density.
 
+## Dimensions and defaults
+
+Dialog paddings and the 24 dp window inset are not density-scaled (dialogs are rare and spacious by design, [[Dialog#Sizing and density]]); only the action buttons follow the density level. Values for the basic form unless the Part names another form.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: the content height decides, between 140 and the smaller of 560 and the window height minus 48 | N/A: same as default | N/A: same as default | [[Dialog#Sizing and density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | 280 | 280 | 280 | [[Dialog#Sizing and density]] (maximum 560, default 312) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | min height | - | 140 | 140 | 140 | [[Dialog#Sizing and density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| action button | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| action button | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| full-screen header | height | - | 56 | 56 | 56 | [[Dialog#Sizing and density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | padding | `space.6` | 24 24 24 24 | 24 24 24 24 | 24 24 24 24 | MD3 [Android Dialog guide](https://github.com/material-components/material-components-android/blob/master/docs/components/Dialog.md); tess-ui `Dialog_Stylesheet.tdl` | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| actions row | padding | `space.5`, `space.6` | 16 24 24 24 | 16 24 24 24 | 16 24 24 24 | [[Dialog#Sizing and density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | `space.6` | 24 24 24 24 | 24 24 24 24 | 24 24 24 24 | [[Dialog#Sizing and density]] (the container stays 24 dp inside the window on every side) | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| actions | gap | `space.3` | 8 | 8 | 8 | [[Dialog#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | MD3 [Android Dialog guide](https://github.com/material-components/material-components-android/blob/master/docs/components/Dialog.md) (the container has no outline) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the dialog container draws no border; separation is the shadow and the scrim | N/A: same as default | N/A: same as default | [[Elevation]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | [[Dialog#Tokens used]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| divider | border color | `outline` | `outline` | `outline` | `outline` | [[Dialog#Tokens used]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container (basic, alert) | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container (full-screen) | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| headline | font | `headline_small` | 24/32/400/0 | 24/32/400/0 | 24/32/400/0 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| actions | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| full-screen title | font | `title_large` | 22/28/400/0 | 22/28/400/0 | 22/28/400/0 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| icon | icon size | - | 24 | 24 | 24 | [[Iconography]], [[Dialog#Tokens used]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container (basic, alert) | elevation | `elevation.level_3` | 3 | 3 | 3 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container (full-screen) | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The container is centred in the window. Content taller than the container scrolls inside the container (the headline and actions stay fixed) with a visible scrollbar thumb ([[ADR-0003 Scrollbar rule]]); a divider appears above the actions while content is scrolled, and under the headline when content is scrolled away from the top.

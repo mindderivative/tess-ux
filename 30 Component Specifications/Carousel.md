@@ -97,6 +97,34 @@ Layouts for a carousel of width W (tess-ui formulas, adopted as the spec at defa
 - Hit area: the whole item, at least 24 by 24 dp at every level (a small item is 40 dp wide at the narrowest, 56 dp wide at default).
 - Minimum carousel width: 120 dp; narrower, the parent uses a single [[Card]] or a vertical list ([[10 Layout Overflow and Scrolling]]).
 
+## Dimensions and defaults
+
+Values follow [[Carousel#Sizing and density]] and [[ADR-0002 Desktop density levels and target sizes]]; the density-scaled values are Tesserae choices #needs-verification-as-design-choice (proposed ADR: carousel dimensions by density level).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container (strip) | height | - | 200 | 160 | 128 | design choice, proposed ADR (carousel dimensions by density); [[Carousel#Sizing and density]], tess-ui `Carousel_Stylesheet.tdl` | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (strip) | min width | - | 120 | 120 | 120 | [[10 Layout Overflow and Scrolling]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| item | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] (hit area is the whole item) | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| small item | min width | - | 56 | 48 | 40 | design choice, proposed ADR (carousel dimensions by density); [[Carousel#Sizing and density]], tess-ui `Carousel_Stylesheet.tdl` | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| caption band | height | - | 64 | 56 | 48 | design choice, proposed ADR (carousel dimensions by density); [[Carousel#Sizing and density]], tess-ui `Carousel_Stylesheet.tdl` | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (strip) | padding | - | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Carousel#Sizing and density]] (uncontained, multi-browse and hero layouts) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (centre hero) | padding | - | 0 64 0 64 | 0 56 0 56 | 0 44 0 44 | [[Carousel#Sizing and density]] (small item width plus gap at both ends) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| caption band | padding | `space.5`, `space.4`, `space.3` | 0 16 0 16 | 0 12 0 12 | 0 8 0 8 | design choice, proposed ADR (carousel dimensions by density); [[Carousel#Sizing and density]], tess-ui `Carousel_Stylesheet.tdl` | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (strip) | margin | - | N/A: the parent sets the outer space around the strip | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| items | gap | `space.3`, `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR (carousel dimensions by density); [[Carousel#Sizing and density]], tess-ui `Carousel_Stylesheet.tdl` | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| item | border width | - | 0 | 0 | 0 | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| item (with outline) | border width | - | 1 | 1 | 1 | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) (`with-outline-outline-width`) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| item (with outline) | border color | `outline` | `outline` | `outline` | `outline` | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| item (no outline) | border color | - | N/A: the default item draws no border | N/A: same as default | N/A: same as default | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| item | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Shape]], MD3 `corner-extra-large` | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| caption band | corner radius | - | N/A: the band is clipped by the item's 28 dp corner and has no corner of its own | N/A: same as default | N/A: same as default | [[Carousel#Layout and overflow]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| title | font | `title_medium` | 16/24/500/0.15 | 16/24/500/0.15 | 16/24/500/0.15 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| carousel | icon size | - | N/A: the carousel draws no icon; pause and play controls are the caller's [[Icon Button]] | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| item (rest) | elevation | `elevation.level_0` | 0 | 0 | 0 | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| item (hover) | elevation | `elevation.level_1` | 1 | 1 | 1 | MD3 [carousel item tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-carousel-item.scss) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - A carousel is a scroll container on the horizontal axis: it shows a scrollbar thumb whenever the items overflow ([[ADR-0003 Scrollbar rule]], thumb opacity per [[ADR-0012 Scrollbar thumb opacity and hit area exception]]); no auto-hide. Vertical overflow does not occur: the height is set.

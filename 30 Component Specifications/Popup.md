@@ -68,6 +68,26 @@ See [[Colour Roles]], [[Shape]], [[Elevation]]. Values verified in Sources.
 
 Popup size is the content size (AUTO) clamped to a maximum width and height set per project (the shell defaults are 300 by 400 dp, Tray_Menu 60 percent of the output height). Content beyond the maximum scrolls with the scrollbar rule ([[ADR-0003 Scrollbar rule]], [[Scrollbar and Scroll Container]]). Row heights follow the density level ([[Menu]], [[Spacing and Density]]). The shadow margin is at least blur plus spread plus offset of the shadow, so the shadow is not cut.
 
+## Dimensions and defaults
+
+The popup draws a body and a shadow margin; the content owns the rest (menu rows in [[Menu]], a form in a flyout). The shadow margin is the largest of blur plus spread plus the offset over the two shadows of the level: level 2 gives max(2+0+1, 6+2+2) = 10 ([[Elevation]]). The flyout padding is a Tesserae choice #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| body | height | - | N/A: content-sized, clamped to a project maximum (shell default 400, tray menu 60 percent of the output height) | N/A: same as the default level | N/A: same as the default level | [[Popup]] Sizing and density | tess-ui: yes (style height); tess-shell: yes (Height, Max_Height); tre: yes (height) |
+| body | min width | - | N/A: the content sets it (a menu 112, see [[Menu]]) | N/A: same as the default level | N/A: same as the default level | [[Menu]] | tess-ui: yes (style min_width); tess-shell: via Min_Width on the content block (Popup has no Min_Width); tre: yes (min_width) |
+| body, menu | padding | - | N/A: the menu content sets its own container padding (8, 4, 4) | N/A: same as the default level | N/A: same as the default level | [[Menu]] | tess-ui: yes (style padding); tess-shell: via Padding on the content block (Popup Padding is not built); tre: yes (padding) |
+| body, flyout | padding | `space.4`, `space.3`, `space.2` | 12 12 12 12 | 8 8 8 8 | 4 4 4 4 | design choice, proposed ADR: panel and flyout padding per density, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: via Padding on the content block (Popup Padding is not built); tre: yes (padding) |
+| shadow margin | margin | - | 10 | 10 | 10 | [[Elevation]] (level 2 margin rule), tre:docs/reference/layer-window.md | tess-ui: n/a: overlay layers draw inside the window, no shadow margin; tess-shell: yes (Shadow_Bleed); tre: yes (margin) |
+| body | gap | - | 0 | 0 | 0 | [[Popup]] Layout and overflow (`Gap`; the shell uses 4 for tray menus: tess-shell:src/tess_shell/schema/default_popups.py) | tess-ui: yes (style gap); tess-shell: yes (Gap, the distance to the opener); tre: yes (gap) |
+| body | border width | - | 0 | 0 | 0 | [[Popup]] Tokens used (no border drawn) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width in the Popup Style); tre: yes (border_width) |
+| body | border color | - | N/A: the popup draws no border; the shadow separates it | N/A: same as the default level | N/A: same as the default level | [[Popup]] Tokens used | tess-ui: yes (style border_color); tess-shell: yes (Border_Color in the Popup Style); tre: yes (border_color) |
+| body, menu | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius in the Popup Style); tre: yes (corner_radius) |
+| body, flyout | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius in the Popup Style); tre: yes (corner_radius) |
+| body | font | - | N/A: the popup draws no text; the content sets the font | N/A: same as the default level | N/A: same as the default level | [[Popup]] Anatomy | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| body | icon size | - | N/A: the popup draws no icon; the content sets the size | N/A: same as the default level | N/A: same as the default level | [[Popup]] Anatomy | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| body | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation in the Popup Style); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Placement: the body edge meets the anchor edge at `Gap` dp (default 0; the shell uses 4 for tray menus), aligned by `Alignment` (`START`, `CENTER`, `END`). The shadow margin is ignored for placement.

@@ -72,6 +72,27 @@ The line does not scale with density; the spacing around it does. A divider adds
 - A divider is not a pointer target and has no 24 dp minimum.
 - Thickness at scale factor 1.25 and 1.5 is 1 dp, painted as at least 1 device pixel: the line never disappears and never paints at a fractional blur #needs-verification (engine snapping behaviour).
 
+## Dimensions and defaults
+
+The line has no density-dependent size; only the space around it in a list or menu does ([[Divider#Sizing and density]]). The divider draws no border: the line itself is the fill, so its colour is given under border color.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| line (horizontal) | height | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: via Divider param Thickness (Height rule); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| line (vertical) | min width | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| line | min height | - | N/A: a divider is not a pointer target and has no 24 dp minimum | N/A: same as default | N/A: same as default | [[Divider#Sizing and density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| line | padding | - | N/A: the line is a plain rectangle with no content; the insets are margins | N/A: same as default | N/A: same as default | [[Divider#Sizing and density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| line (full width) | margin | - | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Divider#Variants]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| line (inset) | margin | - | 0 0 0 16 | 0 0 0 16 | 0 0 0 16 | MD3 [Android Dividers](https://github.com/material-components/material-components-android/blob/master/docs/components/Divider.md) (16 dp inset); tess-ui `Divider_Stylesheet.tdl` | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| line (middle inset) | margin | - | 0 16 0 16 | 0 16 0 16 | 0 16 0 16 | MD3 [Android Dividers](https://github.com/material-components/material-components-android/blob/master/docs/components/Divider.md); tess-ui `Divider_Stylesheet.tdl` | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| space around the line in a list or menu | gap | `space.3`, `space.2`, `space.2` | 8 | 4 | 4 | design choice, proposed ADR (divider spacing by density); [[Divider#Sizing and density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| line | border width | - | N/A: the divider draws no border; the 1 dp thickness is its height | N/A: same as default | N/A: same as default | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: via Divider param Thickness (Background fill, no border); tess-shell: n/a: element absent in tess-shell; tre: via height or width of a 1 px box (no border) |
+| line (fill) | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) (emphasised variant: `outline`) | tess-ui: yes (style Background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
+| line | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (MD3 divider tokens define no shape; the line is a rectangle) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| line | font | - | N/A: a divider holds no text | N/A: same as default | N/A: same as default | [[Typography]] | tess-ui: n/a: the line draws no text or icon; tess-shell: n/a: element absent in tess-shell; tre: n/a: the line draws no text or icon |
+| line | icon size | - | N/A: a divider holds no icon | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: the line draws no text or icon; tess-shell: n/a: element absent in tess-shell; tre: n/a: the line draws no text or icon |
+| line | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - A horizontal divider fills the width of its container minus insets; a vertical one fills the height. It needs a container that gives it a cross size: in a container that sizes to content the divider has no length (tess-ui documents this).

@@ -74,6 +74,28 @@ The bar's height does not scale with the density level: 24 dp at default, compac
 - The progress edge is 4 dp, drawn over the top edge, and adds no height.
 - A project that needs a taller bar (the config app builds 32 dp with 8 dp padding all round) states it in a project ADR; it then fails AC-STB-1 by design.
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above; the height does not scale with density. Paddings and the dense reductions are Tesserae choices anchored on tess-ui #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | 24 | 24 | 24 | [[ADR-0002 Desktop density levels and target sizes]] (24 dp pointer minimum), tess-ui:src/tess_ui/views/StatusBar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container | padding | `space.3`, `space.2` | 0 8 0 8 | 0 8 0 8 | 0 4 0 4 | tess-ui:src/tess_ui/views/StatusBar_Stylesheet.tdl (8), design choice, proposed ADR: status bar paddings per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the window places the bar along its edge | N/A: same as the default level | N/A: same as the default level | [[Status Bar]] Anatomy | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `space.5`, `space.3` | 16 | 16 | 8 | tess-ui:src/tess_ui/views/StatusBar_Stylesheet.tdl (16), design choice, proposed ADR: status bar paddings per density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [[Status Bar]] Tokens used (no border drawn) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the bar draws no border; the container colour separates it | N/A: same as the default level | N/A: same as the default level | [[Status Bar]] Tokens used | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| item and note | padding | `space.2` | 0 4 0 4 | 0 4 0 4 | 0 4 0 4 | tess-ui:src/tess_ui/views/StatusBar_Stylesheet.tdl, design choice, proposed ADR: status bar paddings per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| item and note | gap | `space.2` | 4 | 4 | 4 | [[Status Bar]] Sizing and density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| item | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Status Bar]] States (hover layer corner) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| item and note | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| item and note | icon size | - | 16 | 16 | 16 | [[Iconography]], tess-ui:src/tess_ui/views/StatusBar_Stylesheet.tdl | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| progress edge | height | - | 4 | 4 | 4 | [[Progress Indicator]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+
 ## Layout and overflow
 
 - Single line everywhere: every text has `Max_Lines 1` and an ellipsis at its end; the full text is available as a tooltip on that note or item (ADR-0004) and is the item's name ([[10 Layout Overflow and Scrolling]]). A text that shrinks needs `Min_Width 0` on its container.

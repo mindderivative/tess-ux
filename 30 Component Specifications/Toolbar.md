@@ -76,6 +76,32 @@ Item sizes come from [[Icon Button]] (container 40, 32, 28 dp; icon 24, 20, 20 d
 - Every item hit area is at least 24 dp by 24 dp; adjacent hit areas do not overlap; in a touch context 48 dp ([[Spacing and Density]]).
 - Items centre vertically in a docked toolbar by construction ([[10 Layout Overflow and Scrolling]]); a trailing title text is centred on the same line.
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above; the thickness, paddings and gaps are Tesserae choices anchored on MD3 and tess-ui at 64 dp #needs-verification-as-design-choice. Thickness is the height of a horizontal toolbar and the width of a vertical one.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | 64 | 48 | 36 | design choice, proposed ADR: toolbar thickness per density; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container, docked | padding | `space.4`, `space.5`, `space.3`, `space.2` | 12 16 12 16 | 8 8 8 8 | 4 8 4 8 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container, floating | padding | `space.4`, `space.3`, `space.2` | 12 8 12 8 | 8 4 8 4 | 4 4 4 4 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the parent places the toolbar; a floating toolbar's offset is the author's | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `space.2`, `space.1` | 4 | 4 | 2 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container, with action button | gap | `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [[Toolbar]] Variants (no border drawn) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the toolbar draws no border; the container colour or the shadow separates it | N/A: same as the default level | N/A: same as the default level | [[Toolbar]] Variants | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container, docked | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container, floating | corner radius | `shape.full` | 32 | 24 | 18 | [[Shape]] (half the thickness) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container, docked | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container, floating | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]], tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| item | height | `density.control_height` | 40 | 32 | 28 | [[Icon Button]], [[Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| item | min width | - | 40 | 32 | 28 | [[Icon Button]] (square container) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| item | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| item, labelled | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| group divider | height | - | 1 | 1 | 1 | [[Divider]] (vertical line, 1 dp wide) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| group divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Divider]] | tess-ui: yes (style background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
+
 ## Layout and overflow
 
 Overflow rule (chapter 10): a toolbar never scrolls, never clips an item and never wraps. Items that do not fit move into the overflow [[Menu]] under the More button, from the end of the item list backwards, in their order, with their icon, name and disabled state; a Menu row replaces the icon button. The More button's width is reserved before items are measured. Items are measured by their real width, not by a count times a constant (tess-ui assumes 44 px per item, which fails for compact, dense and labelled buttons).

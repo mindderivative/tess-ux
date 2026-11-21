@@ -76,6 +76,32 @@ In Material Web the on-scroll container is `surface_container` with level 2 elev
 - Action icons: at most three; each icon button hit area at least 24 dp by 24 dp (48 dp in a touch context).
 - The title line box is centred vertically in the first row by construction (28 dp line in 64 dp: 18 dp above and below; 24 in 48: 12; 20 in 40: 10).
 
+## Dimensions and defaults
+
+Values agree with Sizing and density above; compact and dense heights, paddings, title roles and gaps are Tesserae choices #needs-verification-as-design-choice. Medium and large exist at the default density only.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container, small | height | - | 64 | 48 | 40 | https://github.com/material-components/material-web/tree/main/tokens/versions/v0_192 (64), design choice, proposed ADR: top app bar heights per density | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container, medium | height | - | 112 | N/A: medium renders as small at compact | N/A: medium renders as small at dense | https://github.com/material-components/material-web/tree/main/tokens/versions/v0_192 | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container, large | height | - | 152 | N/A: large renders as small at compact | N/A: large renders as small at dense | https://github.com/material-components/material-web/tree/main/tokens/versions/v0_192 | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container | padding | `space.2` | 0 4 0 4 | 0 4 0 4 | 0 4 0 4 | design choice, proposed ADR: top app bar heights per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | margin | - | N/A: the window or pane places the bar edge to edge | N/A: same as the default level | N/A: same as the default level | [[Top App Bar]] Anatomy | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | border width | - | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-top-app-bar-small.scss | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the bar draws no border; the scrolled state changes the container colour | N/A: same as the default level | N/A: same as the default level | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-top-app-bar-small.scss | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| title | padding | `space.5`, `space.4`, `space.3` | 0 0 0 16 | 0 0 0 12 | 0 0 0 8 | [[Top App Bar]] Sizing and density (offset without a navigation icon), design choice, proposed ADR: top app bar heights per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| title | font | `title_large`, `title_medium`, `title_small` | 22/28/400/0 | 16/24/500/0.15 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| title, medium | font | `headline_small` | 24/32/400/0 | N/A: medium renders as small at compact | N/A: medium renders as small at dense | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| title, large | font | `headline_medium` | 28/36/400/0 | N/A: large renders as small at compact | N/A: large renders as small at dense | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| title, medium and large | padding | `space.5` | 0 16 0 16 | N/A: renders as small at compact | N/A: renders as small at dense | https://github.com/material-components/material-components-android/blob/master/docs/components/TopAppBar.md (16) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| navigation icon and title | gap | - | 12 | 8 | 8 | [[Top App Bar]] Sizing and density, design choice, proposed ADR: top app bar heights per density | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| action icon button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| action icon button | min width | - | 40 | 32 | 28 | [[Icon Button]] (square container) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| action icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+
 ## Layout and overflow
 
 - Title: single line (`Max_Lines 1`), ellipsis at the end, the full title as the accessible name and as a tooltip on the title text when truncated (ADR-0004); the title shrinks (`Min_Width 0`) before icons do. The navigation icon and the actions never shrink or overlap.

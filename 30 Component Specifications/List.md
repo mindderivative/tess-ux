@@ -61,6 +61,30 @@ Row tokens are defined once in [[List Item]]; scrollbar tokens in [[Scrollbar an
 
 Density comes from the container or project ([[ADR-0002 Desktop density levels and target sizes]]); all rows of a list share it. Width 100 percent of the parent (the shell List defaults to 240 by 200 dp when no size is given). Height is set by the parent; a list taller than its parent is wrapped in a scroll container. A sticky section header has the single-line row height of the density and role `title_small` text in `on_surface_variant`.
 
+## Dimensions and defaults
+
+The list container sets no row size: rows carry the density values of [[List Item]]. The container values below describe the box around the rows, the sticky section header and the empty state. The container values are Tesserae choices #needs-verification-as-design-choice (proposed ADR: list container defaults).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | N/A: the parent sets the height; a list taller than its parent scrolls (the shell List defaults to 200) | N/A: same as default | N/A: same as default | [[List#Sizing and density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container | min width | - | N/A: the list is 100 percent of the parent width and has no minimum of its own (the shell List defaults to 240) | N/A: same as default | N/A: same as default | [[List#Sizing and density]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| section header | height | `density.row_height` | 40 | 32 | 24 | [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| section header | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| container | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | design choice, proposed ADR (list container defaults); rows carry their own padding ([[List Item]]) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| section header | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Spacing and Density]] (same as a row) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container | margin | - | N/A: the parent sets the outer space | N/A: same as default | N/A: same as default | [[List#Sizing and density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| rows | gap | `space.0` | 0 | 0 | 0 | design choice, proposed ADR (list container defaults); rows touch, a divider takes its own 1 dp ([[List Item]]) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | design choice, proposed ADR (list container defaults); [[List#Layout and overflow]] (the list draws no border) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| container | border color | - | N/A: the list draws no border; the surrounding panel or card owns it | N/A: same as default | N/A: same as default | [[List#Layout and overflow]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[List Item#Layout and overflow]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
+| container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the container clips rows to its rectangle) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| section header | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| container | icon size | - | N/A: the list draws no icon of its own; leading and trailing icons belong to [[List Item]] | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Vertical scrolling for rows. Rows truncate their text, so a list does not scroll horizontally; if a trailing control makes the row wider than the list, the list shows a horizontal bar ([[ADR-0003 Scrollbar rule]], F6).
