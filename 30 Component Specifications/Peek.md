@@ -83,6 +83,28 @@ The handle colour is a literal in code, not a role; see Deviations and AC-PEK-14
 
 The reserved space is the base thickness in every state; a peek never pushes windows. Density does not change these values; a strip that holds controls follows the [[Bar]] thickness rule.
 
+## Dimensions and defaults
+
+A peek is drawn by the Frame painter and does not follow density; the three columns hold the same values. Handle shapes are the owner's design of 2026-11-07, proposed in the ADR "Shell surface dimensions" #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| tab | height | `Size` | 24 | 24 | 24 | [[Peek#Defaults]] (tab depth, at least 1 and below the body depth) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Size of the Peek block); tre: n/a: tre draws no peek, the Frame painter sets the depth |
+| tab | min width | - | 24 | 24 | 24 | [[Peek#Sizing and density]], WCAG 2.2 SC 2.5.8 (48 in a touch context) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: n/a: tre draws no peek |
+| tab | min height | - | 24 | 24 | 24 | [[Peek#Sizing and density]], WCAG 2.2 SC 2.5.8 (48 in a touch context) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: n/a: tre draws no peek |
+| handle | min height | - | 8 | 8 | 8 | [[Peek#Sizing and density]] (handle drawn only when tab depth and side thickness are at least 8) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: n/a: the 8 dp rule is shell painter logic, tre has no such property |
+| tab | padding | - | N/A: the handle is centred in the tab; the tab sets no inner padding | N/A: same as default | N/A: same as default | [[Peek#Layout and overflow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the handle is centred, the tab has no padding part; tre: n/a: the handle is centred, the tab has no padding part |
+| tab | margin | - | N/A: the Frame sets the space around the tab; the peek sets no outer space | N/A: same as default | N/A: same as default | [[Frame]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the Frame sets the space around the tab; tre: n/a: the Frame sets the space around the tab |
+| handle | gap | - | N/A: one handle per tab; no neighbouring parts to space | N/A: same as default | N/A: same as default | [[Peek#Anatomy]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: one handle per tab, nothing to space; tre: n/a: one handle per tab, nothing to space |
+| tab | border width | - | N/A: the tab draws no border of its own; the Frame's borders continue along the contour | N/A: same as default | N/A: same as default | [[Frame]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the tab has no border of its own; tre: n/a: the tab has no border of its own |
+| tab | border color | - | N/A: the tab has no border; the handle takes the Frame's border colour when set | N/A: same as default | N/A: same as default | [[Peek#Tokens used]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the tab has no border of its own; tre: n/a: the tab has no border of its own |
+| contour | corner radius | `Inner_Radius` | 0 | 0 | 0 | [[Frame]] (the join fillet uses the Frame's inner corner radius) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Inner_Radius of the Frame); tre: yes (corner_radius) |
+| dots handle | corner radius | - | 3 | 3 | 3 | [[Peek#Sizing and density]] (circles of diameter 6) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (rx of the path node) |
+| bar handle | corner radius | - | 1.5 | 1.5 | 1.5 | [[Peek#Sizing and density]] (radii 1.5 by 1) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (rx of the path node) |
+| handle | font | - | N/A: the handle is a drawn shape; the peek shows no text | N/A: same as default | N/A: same as default | [[Peek#Anatomy]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: the handle is a drawn shape, no text; tre: n/a: the handle is a drawn shape, no text |
+| handle | icon size | - | 24 by 8 | 24 by 8 | 24 by 8 | [[Peek#Sizing and density]] (dots and chevron; the bar is 22 by 4) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (width, height of the path node) |
+| body | elevation | `elevation.level0` | 0 | 0 | 0 | [[Frame]], [[Elevation]] (the body takes the Frame's fill and casts no shadow) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation in the melded Panel Style); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The handle sits at the middle of the visible tab, centred along the edge, and moves with the far edge of the contour while it slides.
@@ -163,7 +185,7 @@ Check types follow [[Test Method]]. Timings are measured on the engine clock in 
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/surfaces/frame.py` (peek state, `_handle_colour`), `tess-shell:src/tess_shell/surfaces/handle.py`, `tess-shell:src/tess_shell/surfaces/mode.py`, `tess-shell:docs/guide/surfaces.md#peek`, `tess-shell:src/tess_shell/schema/docs.py` | Partly meets. `Size` 24, `Enter_Delay` 150, `Exit_Delay` 300, `Trigger` HOVER/CLICK/DRAG, `Handle`, `Handle_Opacity` 0.6, `Slide_From`, `Content_Fade` and reduced-motion handling are built, and the owner's KWin check of 2026-11-08 passed ("Everything implemented looks good"; the middle of the chevron turn is not visible). Fails AC-PEK-14 in part (handle colour is a literal grey or the border colour, not a role), AC-PEK-16 (handle nodes `hit_testable=False`, not exposed), AC-PEK-18 (single trigger only). Untested for lack of a demo knob: `Size` and a button inside a panel body. AC-PEK-3 (body stays open under the pointer) and AC-PEK-17 were not checked in code. AC-PEK-15 holds through the show actions; Shortcut Mode keyboard on KWin unchecked. |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/frame.py` (peek state, `_handle_colour`), `tess-shell:src/tess_shell/surfaces/handle.py`, `tess-shell:src/tess_shell/surfaces/mode.py`, `tess-shell:docs/guide/surfaces.md#peek`, `tess-shell:src/tess_shell/schema/docs.py` | Partly meets. `Size` 24, `Enter_Delay` 150, `Exit_Delay` 300, `Trigger` HOVER/CLICK/DRAG, `Handle`, `Handle_Opacity` 0.6, `Slide_From`, `Content_Fade` and reduced-motion handling are built, and the owner's KWin check of 2026-11-08 passed ("Everything implemented looks good"; the middle of the chevron turn is not visible). Fails AC-PEK-14 in part (handle colour is a literal grey or the border colour, not a role), AC-PEK-16 (handle nodes `hit_testable=False`, not exposed), AC-PEK-18 (single trigger only). Untested for lack of a demo knob: `Size` and a button inside a panel body. AC-PEK-3 (body stays open under the pointer) and AC-PEK-17 were not checked in code. AC-PEK-15 holds through the show actions; Shortcut Mode keyboard on KWin unchecked. Settable: no hook for tab min width and min height, handle min height, the dots and bar handle radii, or the handle icon size (painter constants). |
 | shell vault | `shell-vault:40 Specifications/Surfaces/Frame.md` (Peek Triggers and Handles, M3 Final Pass), `shell-vault:_attachments/Handle Icons/` | Source design; three SVG handles by the owner. |
 | tess-ui | not applicable | tess-ui has dock panels and a docking host ([[Dock]]); no peek. |
 | tre | `tre:docs/guide/animation.md` (`animate_param`) | Mechanism only. |

@@ -73,6 +73,37 @@ Let a person choose one font family for something they configure (a terminal, a 
 
 The list height is `Rows` times the row height. Hit area at least 24 by 24 dp ([[ADR-0002 Desktop density levels and target sizes]]).
 
+## Dimensions and defaults
+
+The trigger follows the outlined [[Button]] (heights from the control height; padding mirrored for a trailing chevron).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| Trigger | height | `density.control_height` | 40 | 32 | 28 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | min width | - | 64 | 48 | 48 | [[Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | padding | `space.6` | 0 16 0 24 | 0 12 0 16 | 0 8 0 12 | [[Button]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] #needs-verification-as-design-choice | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | border width | - | 1 | 1 | 1 | [[Button]] Variants (outlined) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | border color | `outline` | `outline` | `outline` | `outline` | [[Button]] Variants, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a button label) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | min width | - | 160 | 160 | 160 | [[Font List]] Sizing (`Width` range 160 to 640; default 280, 240 at dense) | tess-ui: yes (FontListPanel Width option); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | padding | `space.3` | 8 8 8 8 | 8 8 8 8 | 4 4 4 4 | [[Font List]] Sizing | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | margin | - | N/A: the popup is placed by the anchor; it has no outer space of its own | N/A: same as default | N/A: same as default | [[Popup]] | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Layer | gap | `space.0` | 0 | 0 | 0 | [[Font List]] Sizing (search field above the list, no gap stated) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | corner radius | `shape.medium` | 12 | 12 | 12 | [[Font List]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | border width | - | 0 | 0 | 0 | [[Popup]] (separated by its level 2 shadow) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | border color | - | N/A: the layer draws no border; the level 2 shadow separates it | N/A: same as default | N/A: same as default | [[Font List]] Anatomy part 2 | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Layer | elevation | `elevation.level2` | 2 | 2 | 2 | [[Font List]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Search field | height | `density.control_height` | 40 | 32 | 28 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Search field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Text Field]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| List row | height | `density.row_height` | 40 | 32 | 24 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| List row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| List row | margin | - | N/A: rows abut in the virtual list; the list sets no outer space per row | N/A: same as default | N/A: same as default | [[Font List]] Layout and overflow | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| List row | corner radius | `shape.medium` | 12 | 12 | 12 | [[Font List]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| List row | font | `body_large` | 16/24/400/0.5 | 16/24/400/0.5 | 16/24/400/0.5 | [[Font List]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 - Rows are one line, end ellipsis, minimum width 0; the full family name is the accessible name and the tooltip text when truncated ([[10 Layout Overflow and Scrolling]]).
@@ -149,6 +180,7 @@ Inline, `Rows` 8, `Width` 280, label "Font", placeholder "Choose a font", `Close
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/FontList_View.tdl`, `FontListPanel_View.tdl`, `FontList_Stylesheet.tdl`, `FontListPanel_Stylesheet.tdl`, `tess-ui:src/tess_ui/font_controls.py`, `tess-ui:src/tess_ui/font_families.py`, `tess-ui:docs/components/font-lists.md` | partly meets. Passes AC-FNT-2, 3, 4, 5, 7, 9, 10 by documented behaviour. Fails AC-FNT-1 (trigger 48, row 40 at every level), AC-FNT-6 in part (`list` and `listitem` roles), AC-FNT-11 (no tooltip on the trigger) |
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/views/FontList_Stylesheet.tdl` | Differences in [[#Dimensions and defaults]]: trigger minimum 48 at all levels, spec 40, 32 and 28; list row 40 at all levels, spec 32 and 24 at compact and dense (AC-FNT-1); layer padding 8 at dense, spec 4; width 280 at dense, spec 240. Not settable from the project layer (no hook): the trigger gap 8 and chevron 24, panel gap 8, row height `Item_Height` 40 and row padding 12, which are inline in `FontList_View.tdl` and `FontListPanel_View.tdl` |
 | tess-ui | Not built (component doc) | sample sentence in each row, favourites or recently used families, grouping by foundry or script, weights and styles of a family, system fonts the engine cannot draw (listed in the ordinary face) |
 | tess-shell | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`FontWidget`), `Main_View.tdl` | partly meets: the config app uses the popup variant; same gaps as tess-ui |
 | tre | none | not applicable |

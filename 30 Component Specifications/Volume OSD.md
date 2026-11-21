@@ -84,6 +84,29 @@ Roles and shell mapping: [[Colour Roles]]. MD3 Snackbar uses `inverse_surface`, 
 
 The card is a display, not a control, so it does not follow the density levels; it scales with the window scale factor. It has no interactive part, so the 24 dp target size does not apply (WCAG 2.2 SC 2.5.8 covers pointer targets).
 
+## Dimensions and defaults
+
+The card is a display, not a control: it does not follow the density levels, so the three columns hold the same values. Card size, paddings, gaps and the readout weight are Tesserae design choices recorded as built, proposed in the ADR "Shell surface dimensions" #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| card | height | `Height` | 64 | 64 | 64 | [[Volume OSD#Sizing and density]], design choice, proposed ADR Shell surface dimensions | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height of the Panel); tre: yes (size of the LayerWindow) |
+| card | min width | `Width` | 300 | 300 | 300 | [[Volume OSD#Sizing and density]], design choice, proposed ADR Shell surface dimensions | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width of the Panel); tre: yes (size of the LayerWindow) |
+| card | padding | `space.3`, `space.5` | 8 16 8 16 | 8 16 8 16 | 8 16 8 16 | [[Volume OSD#Sizing and density]], design choice, proposed ADR Shell surface dimensions | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: yes (padding) |
+| card | margin | `Inset` | 0 0 80 0 | 0 0 80 0 | 0 0 80 0 | [[Volume OSD#Defaults]] (bottom inset 80) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Inset of the Panel); tre: yes (margin of the LayerWindow) |
+| card | gap | `space.4` | 12 | 12 | 12 | [[Volume OSD#Sizing and density]] (between icon, body and readout) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: yes (gap) |
+| body | gap | - | 6 | 6 | 6 | [[Volume OSD#Sizing and density]] (between name and bar; off the spacing steps), design choice, proposed ADR Shell surface dimensions | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: yes (gap) |
+| bar | height | - | 8 | 8 | 8 | [[Volume OSD#Sizing and density]] (MD3 linear progress track is 4) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: yes (height) |
+| readout | min width | - | 64 | 64 | 64 | [[Volume OSD#Layout and overflow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| card | border width | - | 0 | 0 | 0 | [[Volume OSD#Tokens used]] (no border) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width in the Panel Style); tre: yes (border_width) |
+| card | border color | - | N/A: the card draws no border | N/A: same as default | N/A: same as default | [[Volume OSD#Tokens used]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color in the Panel Style); tre: yes (border_color) |
+| card | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], [[Volume OSD#Tokens used]] (shell literal 12) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius in the Panel Style); tre: yes (corner_radius) |
+| bar | corner radius | `shape.full` | 4 | 4 | 4 | [[Shape]] (pill, half of the 8 dp height) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| output name | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| readout | font | `title_medium` | 16/24/600/0.15 | 16/24/600/0.15 | 16/24/600/0.15 | [[Volume OSD#Tokens used]] (weight 600 is off the scale: `title_medium` is 500), design choice, proposed ADR Shell surface dimensions | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| level icon | icon size | - | 24 | 24 | 24 | [[Volume OSD#Sizing and density]], [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| card | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] (shell `Elevation: 20%`) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation in the Panel Style); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The output's name ends in an ellipsis at the body width; it never wraps and never paints outside the container ([[10 Layout Overflow and Scrolling]]).
@@ -163,6 +186,7 @@ Check types follow [[Test Method]]. Hand checks follow the shell's hand-check ki
 | tess-shell | `tess-shell:src/tess_shell/shipped/Volume_OSD/Volume_OSD_Module.tdl`, `Volume_OSD_Style.tdl`, `Volume_OSD_Module.py`, `tess-shell:docs/guide/modules.md#volume_osd`, `tess-shell:docs/guide/surfaces.md#panel` | Partly meets. Meets AC-OSD-1 to AC-OSD-5, AC-OSD-8, AC-OSD-9, AC-OSD-13 in design (25 module tests reported in the shell vault, not run here; four deliberate breaks each caught). Not run on a real compositor: AC-OSD-14 (look, layer above the Plasma panels, click-through). AC-OSD-6 and AC-OSD-7 not measured. AC-OSD-10 passes by the computed pairs. AC-OSD-15: the 0.4 opacity is a literal in the module; the bar colours come from the Default stylesheet. Not shipped as a Panel: the user writes it (decided as built, owner decision pending on a one-line enabler). |
 | shell vault | `shell-vault:40 Specifications/Modules/Volume OSD Module.md` | Source design, status review; its example Panel is 260 by 60, the module comment and guide use 300 by 64: this note follows the module. |
 | tess-ui | not applicable | tess-ui has a [[Snackbar]] for application windows; no OSD. |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Volume_OSD/Volume_OSD_Style.tdl` (dimensions) | Dimension difference: the readout is 16 dp weight 600, off the type scale (`title_medium` is weight 500); the table keeps 600 as built, pending the proposed ADR. |
 | tre | `tre:docs/reference/layer-window.md` | Mechanism only: `LayerWindow` on `overlay`, `input_region=[]`, `keyboard="none"`. |
 
 ## Deviations from Material Design 3

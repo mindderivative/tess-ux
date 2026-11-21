@@ -84,6 +84,28 @@ Side total = `Thickness` + each border width + `Margin` on that side. Examples: 
 - Changing a thickness changes a reserver's zone in one step and windows reflow once. It is not animated.
 - Radii larger than the band allows are reduced and a warning names the key.
 
+## Dimensions and defaults
+
+A Frame is a ring plus strips. The ring has no density level; strip values follow the [[Bar]] rule and are design choices proposed in the ADR "Shell surface dimensions" #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| ring | height | `Thickness` | N/A: the ring thickness is an author design value in dp and has no default (a side of 0 reserves nothing) | N/A: same as default | N/A: same as default | [[Frame#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Thickness); tre: yes (size of the LayerWindow) |
+| strip | height | `density.control_height` + 8 | 48 | 40 | 36 | design choice, proposed ADR Shell surface dimensions, [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Thickness in Edges); tre: yes (height) |
+| strip | min height | `density.control_height` + 8 | 48 | 40 | 36 | design choice, proposed ADR Shell surface dimensions, [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (min_height) |
+| peek tab | min height | - | 8 | 8 | 8 | [[Peek]] (a handle needs 8 dp of thickness) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: n/a: the 8 dp rule is shell painter logic, tre has no such property |
+| ring | padding | `Padding` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Frame#Defaults]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: yes (padding) |
+| strip | padding | `space.2`, `density.row_padding_x` | 4 12 4 12 | 4 8 4 8 | 4 4 4 4 | design choice, proposed ADR Shell surface dimensions, [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding of the Frame or of an Edges side); tre: yes (padding) |
+| ring | margin | `Margin` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Frame#Defaults]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: yes (margin) |
+| strip content | gap | `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR Shell surface dimensions, [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: yes (gap) |
+| inner and outer border | border width | - | 0 | 0 | 0 | [[Frame#Sizing and density]] (borders are written; none by default) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width of Inner_Border, Outer_Border); tre: yes (border_width) |
+| inner and outer border | border color | `outline_variant` | N/A: no border by default; `outline_variant` when a border is set | N/A: same as default | N/A: same as default | [[Colour Roles]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Color of Inner_Border, Outer_Border); tre: yes (border_color) |
+| outer contour | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]], [[Frame#Defaults]] (`Corner_Radius` 0) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| inner contour | corner radius | `Inner_Radius` | 0 | 0 | 0 | [[Frame#Defaults]] (`Inner_Radius` 0; any step of [[Shape]] allowed) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Inner_Radius); tre: yes (corner_radius) |
+| strip content | font | `label_large`, `label_medium` | 14/20/500/0.1 | 14/20/500/0.1 | 12/16/500/0.5 | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| strip content | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]], [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| ring | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] (the ring casts no shadow) | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - The top and bottom strips own the corner squares and run the full width of the output; the left and right strips run between them and lay their children out vertically. Text is not rotated.
@@ -186,6 +208,7 @@ Check types follow [[Test Method]]. Geometry checks run at scale 1.0, 1.25 and 2
 | tess-shell | `tess-shell:src/tess_shell/surfaces/frame.py`, `ring.py`, `outline.py`, `join.py`, `join_param.py`, `join_shader.py`, `frame_shader.py`, `handle.py`, `tess-shell:docs/guide/surfaces.md#frame`, `tess-shell:docs/guide/settings.md#debug` | Partly meets. Built: ring, margin, per-side thickness, inner and outer borders, radii, strips, melded Panels, peek, hide and show, `Frame_Join` (default `PARAM`), `Frame_Blend` (default `LINEAR`). Not built: `Children`, `Border_Tile`, `Meld` on the Frame, `Exclusive_Zone`, `Input_Region`, `Class`, `Elevation`, `Shadows`, `Shadow_Bleed` (AC-FRM2-11). The owner's join choice is in force (AC-FRM2-16). Measurements recorded in the shell vault (1.3 to 1.7 ms per frame, 66 region rectangles) support AC-FRM2-19 and AC-FRM2-21 but were not re-run here. AC-FRM2-20 should now hold through the LINEAR shader; not measured. AC-FRM2-22 and AC-FRM2-23 unmeasured (fractional scale; Shortcut Mode keyboard on KWin). A melded Panel ignores its own `Background`, `Fill`, `Opacity`, `Elevation`, `Shadows` and `Shadow_Bleed`: it is drawn in the Frame's colour. |
 | shell vault | `shell-vault:40 Specifications/Surfaces/Frame.md`, `shell-vault:90 Research/Hit Testing for Concave Corners.md` | Source design and the owner's KWin records of 2026-11-06, 2026-11-07, 2026-11-08. |
 | tess-ui | not applicable | tess-ui draws window chrome ([[Window]], [[Title Bar]]), not a screen frame. |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/frame.py` (dimensions) | Dimension difference: the shell example sets `Inner_Radius: 14`, off the shape scale (4, 8, 12, 16, 28); the spec default is 0 and a scale value is recommended. Settable: no hook for strip min height, for the peek tab min height, or for `Elevation` of the ring (not built). |
 | tre | `tre:docs/reference/layer-window.md`, `tre:docs/reference/paint.md` | Mechanism only: `LayerWindow`, `path` with `hit_shape="painted"`, `input_region="auto"`, linear, radial and sweep gradients, `animate_param`. Not applicable as a component. |
 
 ## Deviations from Material Design 3
