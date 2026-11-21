@@ -87,6 +87,28 @@ The thickness across the edge is `Height` for a top or bottom Bar and `Width` fo
 - Hit areas of modules are at least 24 by 24 dp ([[Spacing and Density]]); in a touch context 48 by 48 dp.
 - Material counterparts for scale: Navigation bar container height 80 dp, icon 24 dp (`md.comp.navigation-bar.container.height` 80px, `icon.size` 24px, verified in Sources); Navigation rail default width 80 dp. A desktop Bar is thinner by design.
 
+## Dimensions and defaults
+
+Thickness, padding and gaps are Tesserae design choices built on the control heights of [[ADR-0002 Desktop density levels and target sizes]]; the choice rows are proposed in the ADR "Shell surface dimensions" #needs-verification-as-design-choice. A flush Bar is the default; the floating Bar rows carry the values that change with `Gap` above 0.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| body | height | `density.control_height` + 8 | 48 | 40 | 36 | design choice, proposed ADR Shell surface dimensions, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: yes (size of the LayerWindow) |
+| body | min height | `density.control_height` + 8 | 48 | 40 | 36 | design choice, proposed ADR Shell surface dimensions, [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: yes (min_height) |
+| module hit area | min width | - | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 (48 in a touch context) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: yes (min_width) |
+| module hit area | min height | - | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 (48 in a touch context) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: yes (min_height) |
+| body | padding | `space.2`, `density.row_padding_x` | 4 12 4 12 | 4 8 4 8 | 4 4 4 4 | design choice, proposed ADR Shell surface dimensions, [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (padding) |
+| body | margin | `Gap` | 0 | 0 | 0 | [[Bar#Defaults]] (`Gap` 0; 8 for a floating Bar, which reserves it) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap); tre: yes (margin of the LayerWindow) |
+| content | gap | `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR Shell surface dimensions, [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: yes (gap) |
+| body | border width | - | 0 | 0 | 0 | [[Bar#Tokens used]] (no border by default), MD3 Navigation bar has none | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (border_width) |
+| body | border color | `outline_variant` | N/A: no border by default; `outline_variant` when a border is set | N/A: same as default | N/A: same as default | [[Colour Roles]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (border_color) |
+| flush body | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]], MD3 `md.comp.navigation-bar.container.shape` corner-none | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (corner_radius) |
+| floating body | corner radius | `shape.medium` | 12 | 12 | 12 | design choice, proposed ADR Shell surface dimensions, [[Shape]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: yes (corner_radius) |
+| module label | font | `label_large`, `label_medium` | 14/20/500/0.1 | 14/20/500/0.1 | 12/16/500/0.5 | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| module icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]], [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| flush body | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation in Style); tre: yes (shadows) |
+| floating body | elevation | `elevation.level2` | 2 | 2 | 2 | [[Elevation]] (shell `Elevation: 20%`) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation in Style); tre: yes (shadows) |
+
 ## Layout and overflow
 
 - Contents lay out as a `FlexBox` on the Bar's main axis: horizontal for `TOP` and `BOTTOM`, vertical for `LEFT` and `RIGHT`. Text on a vertical Bar is not rotated; `Text_Rotation` is opt-in and not built.
@@ -176,6 +198,7 @@ Check types follow [[Test Method]]. Geometry checks run at scale 1.0, 1.25 and 2
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/surfaces/bar.py` (placement function), `tess-shell:src/tess_shell/schema/blocks.py` (Bar root, not-built keys), `tess-shell:src/tess_shell/schema/docs.py`, `tess-shell:docs/guide/surfaces.md#bar` | Partly meets. Meets AC-BAR-1, AC-BAR-3 (zone 0 off `TOP`), AC-BAR-5, AC-BAR-11, AC-BAR-12 in design (unit tests of the placement function, not run here). Not built, so AC-BAR-17 holds and the dependent behaviour fails: `Exclusive_Zone` (AC-BAR-4), `Input_Region`, `Auto_Hide`, `Auto_Hide_Delay`, `Visible`, `Attach_To`, `Meld`, `Animation`, `Text_Rotation`, `Padding`, `Class`; `Reveal_Key` was removed (PR 59). A Bar cannot be hidden. AC-BAR-8 not run: no density setting, shipped examples use `Height: 32`. AC-BAR-13 depends on Shortcut Mode, whose keyboard on KWin is not checked. |
 | tess-shell | `tess-shell:src/tess_shell/surfaces/hotplug.py` | Meets AC-BAR-6 in design: surfaces are matched by key and output; a removed monitor closes its windows and a returning monitor recreates them. |
+| tess-shell | `tess-shell:src/tess_shell/surfaces/bar.py` (dimensions) | Dimension difference: shipped examples set `Height: 32` (thickness 32) against the table's 48 dp thickness at default; no density setting exists (AC-BAR-8). Settable: a Bar takes no `Padding`, and its `Style` takes no `Border_Width`, `Border_Color` or `Corner_Radius` (the table's body padding, border and radius cannot be set on the Bar itself). |
 | shell vault | `shell-vault:40 Specifications/Surfaces/Bar.md`, `shell-vault:40 Specifications/Surfaces/Surface Types.md` | Source design. Acceptance line 2 of the vault says a dock with `Gap: 8` and `Height: 64` sets a zone of 72; the measurement of 2026-11-04 says the compositor reserves thickness plus twice the gap (80). This note follows the measurement. |
 | tess-ui | not applicable | Application windows use [[Top App Bar]] and toolbars; tess-ui draws no shell surface. |
 | tre | `tre:docs/reference/layer-window.md` | Mechanism only: `LayerWindow` with `layer`, `anchor`, `size`, `margin`, `exclusive_zone`, `exclusive_edge`, `keyboard`, `input_region`. Not applicable as a component. |

@@ -76,6 +76,28 @@ Let a person keep, order, add and remove the values of a list setting (the words
 
 Hit areas at least 24 by 24 dp at every density ([[ADR-0002 Desktop density levels and target sizes]]). The three icon buttons keep 4 dp of space between hit areas at dense.
 
+## Dimensions and defaults
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| Row | height | `density.control_height` | 40 | 32 | 28 | [[List Editor]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Row | padding | - | N/A: the row holds controls that carry their own padding; the editor adds none | N/A: same as default | N/A: same as default | [[List Editor]] Tokens used | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Editor | margin | - | N/A: the form row places the editor; it has no outer space of its own | N/A: same as default | N/A: same as default | [[Form Row]] | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Row | gap | `space.3` | 8 | 8 | 4 | [[List Editor]] Sizing (gap between row controls) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Rows container | gap | `space.3` | 8 | 4 | 4 | [[List Editor]] Sizing (gap between rows) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Editor | border width | - | N/A: the editor draws no border; its controls keep their own | N/A: same as default | N/A: same as default | [[List Editor]] Tokens used | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Editor | border color | - | N/A: the editor draws no border; its controls keep their own | N/A: same as default | N/A: same as default | [[List Editor]] Tokens used | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Editor | corner radius | - | N/A: the editor has no container shape; its controls keep their own | N/A: same as default | N/A: same as default | [[List Editor]] Tokens used | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Icon button (Move up, Move down, Remove) | height | `density.icon_button_container` | 40 | 32 | 28 | [[List Editor]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Editor]] Sizing, [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Text item field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Text Field]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Empty note | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[List Editor]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Add button | height | `density.control_height` | 40 | 32 | 28 | [[Button]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Add button | padding | - | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Button]] Sizing (text variant) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Add button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Add button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Editor | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 - Row: horizontal, vertically centred, the item control takes the remaining width with minimum width 0 and the three buttons stay at the end edge; a text item truncates its display with an ellipsis only while unfocused ([[10 Layout Overflow and Scrolling]]).
@@ -147,6 +169,7 @@ Item kind `text`, `Step` 1, `Min_Items` 0, `Max_Items` 0 (no limit), label "Item
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/ListEditor_View.tdl`, `ListEditorRow_View.tdl`, `ListEditor_Stylesheet.tdl`, `tess-ui:src/tess_ui/list_controls.py` (`ListModel`), `tess-ui:docs/components/list-editors.md` | partly meets. Passes AC-LED-2 to 7 and 9 by documented behaviour (not run here). Fails AC-LED-1 (no density), AC-LED-10 (no focus rule), AC-LED-11 (the buttons show their label as tooltip, no run evidence), AC-LED-12, AC-LED-13 (no scroll container in the view), AC-LED-14 |
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/views/ListEditor_Stylesheet.tdl` | Differences in [[#Dimensions and defaults]]: row and icon button container 40 at all levels, spec 32 and 28 at compact and dense; icon 24 at all levels, spec 20 at compact and dense; gap between row controls 8 at all levels, spec 4 at dense; gap between rows 8 at all levels, spec 4 at compact and dense (AC-LED-1). Not settable from the project layer (no hook): the gap between row controls and between rows (8, inline in `ListEditorRow_View.tdl` and `ListEditor_View.tdl`) |
 | tess-ui | Not built (component doc) | dragging a row to move it, Alt+arrow keys to move one (a handler cannot yet choose between three calls by the key), items of mixed kinds, items that are themselves lists |
 | tess-shell | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`ListWidget`) | partly meets: the config app edits list keys through the toolkit editor; turning a TDL list into text and back is the widget's job, not the editor's |
 | tre | none | not applicable |

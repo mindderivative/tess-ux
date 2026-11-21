@@ -74,6 +74,36 @@ Let a person choose an icon by name or by sight for a launcher, a button or a bl
 
 Panel width is Columns times the cell size plus 16 dp. A cell is at least 24 by 24 dp so the dense cell of 32 dp meets the target size ([[ADR-0002 Desktop density levels and target sizes]]). Only 24 dp is built as a glyph size; other sizes are Not built.
 
+## Dimensions and defaults
+
+The trigger follows the outlined [[Button]] (heights from the control height; padding mirrored for a trailing chevron). The cell grid has no gap: the panel width is Columns times the cell size plus the 16 dp of layer padding.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| Trigger | height | `density.control_height` | 40 | 32 | 28 | [[Icon Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | min width | - | 64 | 48 | 48 | [[Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | padding | `space.6` | 0 16 0 24 | 0 12 0 16 | 0 8 0 12 | [[Button]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] #needs-verification-as-design-choice | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | border width | - | 1 | 1 | 1 | [[Button]] Variants (outlined) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | border color | `outline` | `outline` | `outline` | `outline` | [[Button]] Variants, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger icon | icon size | - | 24 | 24 | 24 | [[Icon Picker]] Anatomy part 1 | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a button label) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | padding | `space.3` | 8 8 8 8 | 8 8 8 8 | 4 4 4 4 | [[Icon Picker]] Sizing | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | margin | - | N/A: the popup is placed by the anchor; it has no outer space of its own | N/A: same as default | N/A: same as default | [[Popup]] | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Layer | gap | `space.0` | 0 | 0 | 0 | [[Icon Picker]] Sizing (cells touch; width equals Columns times cell plus 16) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | corner radius | `shape.medium` | 12 | 12 | 12 | [[Icon Picker]] Anatomy part 2, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | border width | - | 0 | 0 | 0 | [[Popup]] (separated by its level 2 shadow) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Layer | border color | - | N/A: the layer draws no border; the level 2 shadow separates it | N/A: same as default | N/A: same as default | [[Icon Picker]] Anatomy part 2 | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Layer | elevation | `elevation.level2` | 2 | 2 | 2 | [[Icon Picker]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Search field | height | `density.control_height` | 40 | 32 | 28 | [[Icon Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Search field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Text Field]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Cell | height | - | 48 | 40 | 32 | [[Icon Picker]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Cell | min width | - | 48 | 40 | 32 | [[Icon Picker]] Sizing (a square; at least 24 dp) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Cell | corner radius | `shape.medium` | 12 | 12 | 12 | [[Icon Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Cell glyph | icon size | - | 24 | 24 | 20 | [[Icon Picker]] Sizing (file preview 32) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 - The grid scrolls vertically only; cells never truncate because they hold no text. The scrollbar is visible when more than `Rows` rows exist ([[ADR-0003 Scrollbar rule]]).
@@ -147,6 +177,7 @@ Inline, 8 columns, 6 rows, label "Icon", placeholder "Choose an icon", `Close_On
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/IconPicker_View.tdl`, `IconPickerPanel_View.tdl`, `IconPicker_Stylesheet.tdl`, `IconPickerPanel_Stylesheet.tdl`, `tess-ui:src/tess_ui/icon_controls.py`, `tess-ui:docs/components/icon-pickers.md` | partly meets. Passes AC-ICP-2, 3, 4, 5, 8, 9, 10 by documented behaviour. Fails AC-ICP-1 (cell 48 and trigger 48 at every level), AC-ICP-6 in part (`list` and `listitem` roles), AC-ICP-7 (no tooltip on cells) |
+| tess-ui (dimensions) | `tess-ui:src/tess_ui/views/IconPicker_Stylesheet.tdl` | Differences in [[#Dimensions and defaults]]: trigger 48 at all levels, spec 40, 32 and 28; cell 48 at all levels, spec 40 and 32 at compact and dense (AC-ICP-1); glyph 24 at dense, spec 20; layer padding 8 at dense, spec 4. Not settable from the project layer (no hook): the trigger gap 8, trigger and chevron icons 24, panel gap 8, cell 48 (`Item_Height`) and glyph 24, which are inline in `IconPicker_View.tdl` and `IconPickerPanel_View.tdl` |
 | tess-ui | Not built (component doc) | icon categories or tags, recently used icons, other file types (`.jpg`, `.webp`), a PNG's own colour, sizes other than 24 pixels |
 | tess-shell | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`IconWidget`), `Main_View.tdl` | partly meets: popup variant with the user Icons folder; the shell-vault specification asks for a searchable picker over the shipped set and the user Icons folder, which it does |
 | tre | none | not applicable |

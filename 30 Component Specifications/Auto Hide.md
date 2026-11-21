@@ -76,6 +76,25 @@ Roles of the Bar itself are in [[Bar]].
 - The hover strip spans the Bar's full length along the edge and is at least 1 dp deep. A hover strip below 24 dp is allowed because the screen edge makes the target effectively unbounded in the pointer's direction and the equivalent keyboard controls exist (WCAG 2.2 SC 2.5.8 exception) #needs-verification.
 - Density does not change these values.
 
+## Dimensions and defaults
+
+Auto hide adds no painted part: the Bar keeps its own values ([[Bar]]). The rows give the hover strip and the hidden offset; the strip depth is open #needs-verification-as-design-choice, proposed in the ADR "Shell surface dimensions". Density does not change these values.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| hover strip | height | - | 1 | 1 | 1 | design choice, proposed ADR Shell surface dimensions (minimum depth; a few dp suffices at the screen edge), [[Auto Hide#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (size of the LayerWindow, input_region) |
+| hover strip | min height | - | 1 | 1 | 1 | [[Auto Hide#Sizing and density]] (WCAG 2.2 SC 2.5.8 exception) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (size of the LayerWindow) |
+| hover strip | min width | - | N/A: the strip spans the Bar's full length along the edge, so it has no width of its own | N/A: same as default | N/A: same as default | [[Auto Hide#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip spans the Bar's length, no width of its own |
+| hover strip | padding | - | N/A: the strip is transparent and holds no content | N/A: same as default | N/A: same as default | [[Auto Hide#Tokens used]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| Bar | margin | - | N/A: the hidden edge margin is -(thickness - strip), so it depends on the Bar thickness | N/A: same as default | N/A: same as default | [[Auto Hide#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (margin of the LayerWindow, negative accepted) |
+| hover strip | gap | - | N/A: the strip has no child parts to space | N/A: same as default | N/A: same as default | [[Auto Hide#Anatomy]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| hover strip | border width | - | 0 | 0 | 0 | [[Auto Hide#Tokens used]] (transparent, no role) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| hover strip | border color | - | N/A: the strip is transparent and draws no border | N/A: same as default | N/A: same as default | [[Auto Hide#Tokens used]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| hover strip | corner radius | - | N/A: the strip is transparent and draws no shape | N/A: same as default | N/A: same as default | [[Auto Hide#Tokens used]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| hover strip | font | - | N/A: the strip shows no text; the Bar's text fades out with the slide | N/A: same as default | N/A: same as default | [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| hover strip | icon size | - | N/A: the strip shows no icon | N/A: same as default | N/A: same as default | [[Bar]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: n/a: the strip is transparent and has no such part |
+| hover strip | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] (the shadow margin moves off screen while hidden) | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - While hidden, nothing of the Bar's content is clickable except what lies in the strip; content does not paint outside the strip.

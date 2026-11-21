@@ -76,6 +76,45 @@ Choose exactly one value from a closed set (an enum key, a unit, a mode) and see
 
 Hit area at least 24 by 24 dp at every density ([[ADR-0002 Desktop density levels and target sizes]]).
 
+## Dimensions and defaults
+
+The button follows the outlined [[Button]] (heights from the control height; padding mirrored for a trailing chevron). The popup surface follows [[Menu]] (container vertical padding 8, 4, 4).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| Button | height | `density.control_height` | 40 | 32 | 28 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | min width | - | 64 | 48 | 48 | [[Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | padding | `space.6` | 0 16 0 24 | 0 12 0 16 | 0 8 0 12 | [[Button]] Sizing; design choice, [[ADR-0002 Desktop density levels and target sizes]] #needs-verification-as-design-choice | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | border width | - | 1 | 1 | 1 | [[Button]] Variants (outlined) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | border color | `outline` | `outline` | `outline` | `outline` | [[Button]] Variants, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a button label) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | min width | - | 160 | 160 | 160 | [[Choice Picker]] Sizing (button width, at least 160, at most 360) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | padding | - | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | [[Menu]] Sizing (container vertical padding) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | margin | `space.3` | 8 8 8 8 | 8 8 8 8 | 8 8 8 8 | [[Choice Picker]] Layout and overflow (window less 8 dp margin) | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | gap | `space.0` | 0 | 0 | 0 | [[Choice Picker]] Sizing (option rows abut) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | corner radius | `shape.medium` | 12 | 12 | 12 | [[Choice Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | border width | - | 0 | 0 | 0 | [[Popup]] (separated by its level 2 shadow) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Popup | border color | - | N/A: the popup draws no border; the level 2 shadow separates it | N/A: same as default | N/A: same as default | [[Choice Picker]] Anatomy part 2 | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Popup | elevation | `elevation.level2` | 2 | 2 | 2 | [[Choice Picker]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Dialog | height | - | 400 | 400 | 400 | [[Choice Picker]] Sizing (maximum height; width 440) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Dialog | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Choice Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Dialog | elevation | `elevation.level3` | 3 | 3 | 3 | [[Choice Picker]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option row | height | `density.row_height` | 40 | 32 | 24 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option row | margin | - | N/A: rows abut in the list; the list sets no outer space per row | N/A: same as default | N/A: same as default | [[Choice Picker]] Layout and overflow | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
+| Option row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option row | corner radius | `shape.small` | 8 | 8 | 8 | [[Choice Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Choice Picker]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option hint | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Choice Picker]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Colour swatch | height | - | 20 | 20 | 20 | [[Choice Picker]] Anatomy part 5 | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Colour swatch | border width | - | 1 | 1 | 1 | [[Choice Picker]] Anatomy part 5 | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Colour swatch | border color | `outline` | `outline` | `outline` | `outline` | [[Choice Picker]] Anatomy part 5, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Colour swatch | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Choice Picker]] Anatomy part 5, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Selected check | icon size | - | 24 | 20 | 16 | [[Iconography]] (trailing icon in a list row) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+
 ## Layout and overflow
 
 - Label: one line, end ellipsis, minimum width 0. Hint: wraps to at most 2 lines, then end ellipsis; the full hint is the accessible description ([[10 Layout Overflow and Scrolling]]).
@@ -148,6 +187,7 @@ Anchored popup, no filter at 12 options or fewer, no wrap, placeholder "choose" 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (parts `picker`, `picker_list`, `option`), `tess-ui:apps/shell_config/src/tess_shell_config/formcontrol.py` (`pick_option`), `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`ChoiceWidget`) | partly meets. A modal Dialog (440 by at most 400) lists options as `listitem` rows with `selected`, swatch, label (fixed 150 dp) and a hint of at most 2 lines; a press picks and closes; Cancel closes. Passes AC-CHO-4 for pointer and Cancel, AC-CHO-8 in part. Fails AC-CHO-1 (no density), AC-CHO-2 and AC-CHO-3 and AC-CHO-5 (no arrow, Home, End, type-ahead keys in `picker_list`), AC-CHO-6 (roles `list` and `listitem`, no `haspopup`), AC-CHO-7 (no filter), AC-CHO-9 (no scrollbar rule applied to the list), AC-CHO-10 (no button tooltip), AC-CHO-12 (no anchored form) |
+| tess-ui (dimensions) | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` | Differences in [[#Dimensions and defaults]]: option row about 36 (padding 8 around a 20 dp line) at all levels, spec 40, 32 and 24; row horizontal padding 8 at default, spec 12; button is the `xs` config button (32), spec 40, 32 and 28 (AC-CHO-1) |
 | tess-ui | the toolkit has no choice picker view; the toolkit [[Menu]] and Dialog are the parts | absent as a shipped view |
 | tess-shell | none | absent: the shell has a Menu only |
 | tre | none | not applicable |
