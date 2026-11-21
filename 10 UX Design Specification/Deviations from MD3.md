@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 522 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 523 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
 
 ## [[03 Typography and Text Rules]]
 
@@ -260,7 +260,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Hide on pointer absence and show on pointer presence at the edge (MD3 Top app bar: scroll direction) | a desktop shell has a pointer and no scrolling content under the Bar | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
-| On by default with opt-out | owner decision 2026-10-27 | none (owner decision) |
+| Off by default, opt in with `Auto_Hide: true` | owner decision 2026-11-21: apps opt in; supersedes the earlier default on with opt-out (2026-10-27) | [[ADR-0022 Bar Auto_Hide default is off]] |
 | Hide and show take the same duration (MD3 and the Tesserae motion rule: exit shorter than enter) | one `Animation` block for both directions | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | The reserved zone changes once at the end of the hide and the start of the show | a zone change is a configure round trip; animating it would reflow windows on every frame | none (compositor limit) |
 
