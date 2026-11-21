@@ -44,6 +44,7 @@ No keyboard trap was found in the code read: the modal layers keep Tab inside by
 | F7 single-line field text top aligned | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_Stylesheet.tdl` line 10: `TextInput` `Padding: 8`, field centred by padding (pull request 329) | centring by padding only, see TUI-024 |
 | F1 for the config app | `tess-ui:apps/shell_config/src/tess_shell_config/app.py` line 50 sets `theme_seed` (pull request 330) | the toolkit default remains open: TUI-001 |
 | F5 for the config tree label | `Main_Stylesheet.tdl` line 14: label `Flex: expand_horizontal`, `Min_Width: 0` | the toolkit default remains open: TUI-023 |
+| State layers on the seven pressable components, token table and pixel tests (TUI-032, TUI-074) | `tess-ui:src/tess_ui/interaction.py`; pull request 339 | the table and tests are done; components outside the seven remain to check |
 | Warning for `dark=True` with no seed | `tess-ui:src/tess_ui/app.py` `_warn_dark_needs_a_seed` (pull request 331) | a warning, not a scheme: TUI-001 |
 
 ## Declared deviation: toolkit default density
@@ -55,8 +56,8 @@ Declared by the tess-ui bot and recorded by bot:Orchestrator, 2026-11-21 ([[17 C
 | Severity | Rows |
 |---|---|
 | P0 | 8 |
-| P1 | 39 |
-| P2 | 23 |
+| P1 | 38 |
+| P2 | 24 |
 | Total | 70 |
 
 ## Worklist
@@ -106,7 +107,7 @@ Ids are stable once the note leaves draft. Criteria are cited by id; the spec no
 |---|---|---|---|---|---|---|
 | TUI-030 | P1 | Left does not move to the parent and Right does not move to the first child of an open branch; `*` is absent | AC-TRE-04, AC-TRE-05, AC-TRE-08 | `tess-ui:src/tess_ui/composed.py` (`Focus_Group`, `_typeahead`) | Add the tree key handlers | [[Tree]] |
 | TUI-031 | P1 | The tree name is the literal "Tree"; children are not in a `group`; no multi select; no Page keys; no empty-state slot | AC-TRE-01, AC-TRE-10, AC-TRE-11, AC-TRE-16, AC-TRE-18 | `tess-ui:src/tess_ui/views/Tree_View.tdl`, `TreeLevel_View.tdl` | Make the name a required parameter; add the group, slot and keys | [[Tree]] |
-| TUI-032 | P1 | Hover, focus and press layers are absent from the tree row stylesheet | AC-TRN-10 | `TreeNode_Stylesheet.tdl` (no state layer rule) | Add the 8, 10, 10 percent layers | [[Tree Node]] |
+| TUI-032 | P2 | Done in tess-ui pull request 339: every pressable component (Button, IconButton, Chip, ListItem, MenuItem, Fab, TreeNode) already draws a state layer (`tess-ui:src/tess_ui/interaction.py`); what was missing was one token table (hover 8, keyboard focus 10 beating hover, pressed 10, none when disabled) and pixel tests pinning it. Remaining gap: any pressable component not covered by the table and the tests | AC-TRN-10, AC-STL-1, AC-STL-4 | `tess-ui:src/tess_ui/interaction.py`, tests of pull request 339 | List the pressable components outside the seven above and add them to the table and the pixel tests | [[Tree Node]] |
 | TUI-033 | P1 | A plain list has no roving focus, no type-ahead, no Home and End, no empty slot | AC-LST-02, AC-LST-03, AC-LST-04, AC-LST-05, AC-LST-06, AC-LST-09 | `tess-ui:src/tess_ui/views/ListItem_View.tdl`; no `List` view | Add a `List` view with `Focus_Group: vertical` and type-ahead | [[List]] |
 | TUI-034 | P1 | Trees have no virtualisation; a long tree builds every row | AC-TRE-12, AC-LAY-11, AC-LAY-13 | `Tree_View.tdl` | Build the tree on `VirtualList` with set size and position; needs the tre hooks of [[UXREQ-002 Virtual list keys and scroll to index]] (keys, scroll to index) and [[UXREQ-003 Accessibility set size, position, mixed, orientation and modal]] (set size and position) | [[Tree]] |
 | TUI-035 | P2 | No multi selection in Tree, List or NodeGraph; no start indicator | AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-9 | `tess-ui:docs/guide/lists.md` ("Not built: selecting several") | Add selection models | [[Selection]] |
@@ -160,7 +161,7 @@ Ids are stable once the note leaves draft. Criteria are cited by id; the spec no
 | TUI-071 | P1 | Stylesheets use the literals 150 and 200 ms instead of duration names; the reduced-motion path is not run | AC-MOT-6, AC-MOT-5, AC-SWI-10 | `TreeNode_Stylesheet.tdl` (`Transition { Background: 150 }`); `tess-ui:src/tess_ui/motion.py` | Use duration tokens; add the reduced-motion test | [[Motion]] |
 | TUI-072 | P1 | Cards have no hover or dragged elevation; chevron rotation and the height easing of Accordion and extended FAB are absent; modal drawer does not slide | AC-CRD-2, AC-ACC-09, AC-EFB-9, AC-NDR-16, AC-TRN-13 | `Card_Stylesheet.tdl`, `Accordion_View.tdl`, `Fab_Stylesheet.tdl` | Needs a tre hook for an animatable height (no UXREQ yet; to be requested); add the rest | [[Card]] |
 | TUI-073 | P2 | Loading: no delay or minimum display, no skeleton, no timeout rule | AC-LOD-1, AC-LOD-4, AC-LOD-6, AC-PRG-10 | `tess-ui:src/tess_ui/widgets/progress.py` | Add the delay rule | [[Loading States]] |
-| TUI-074 | P2 | State layer precedence verified for plain nodes only; layers apply to `Rect` nodes | AC-STL-4 | `tess-ui:src/tess_ui/interaction.py`, `ripple.py` | Test the MD3 controls | [[State Layers]] |
+| TUI-074 | P2 | Token table and pixel tests for state layer precedence and ripple timings: done in tess-ui pull request 339. Remaining gap: the same check for any pressable component not covered | AC-STL-4 | `tess-ui:src/tess_ui/interaction.py`, `ripple.py` | Extend the table and tests to the components not yet covered | [[State Layers]] |
 
 ### Overlays
 
