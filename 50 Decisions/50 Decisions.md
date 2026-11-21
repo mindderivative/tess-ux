@@ -12,7 +12,7 @@ depends_on: []
 
 # 50 Decisions
 
-Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0023 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
+Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0024 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
 
 ## Notes
 
@@ -38,5 +38,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0020 The engine never blocks the design]]
 - [[ADR-0021 Shortcut Mode reveals a hidden Bar]]
 - [[ADR-0023 Text Field label placement by density]]
+- [[ADR-0024 Shell tray and task item sizes]]
 
 Back to [[Index]].

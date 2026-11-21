@@ -55,9 +55,9 @@ No tokens of its own; the items carry them ([[Tray Item]]). Gap between items `s
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Item hit area | 40 | 32 | 28 | [[Tray Item]] |
+| Item hit area | 32 | 24 | 24 | [[Tray Item]] ([[ADR-0024 Shell tray and task item sizes]]) |
 | Gap between items | 4 | 4 | 4 | param `spacing` (code default 6) |
-| Icon | 24 | 20 | 20 | param `icon_size` (code default 18) |
+| Icon | 20 | 18 | 18 | param `icon_size` (code default 18); [[ADR-0024 Shell tray and task item sizes]] |
 
 ## Dimensions and defaults
 
@@ -65,7 +65,7 @@ The row is transparent and owns only the gap between items; every other size of 
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| root | height | `density.icon_button_container` | 40 | 32 | 28 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root | height | - | 32 | 24 | 24 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | root | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
 | root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl` (no padding set) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
 | root | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
@@ -76,9 +76,9 @@ The row is transparent and owns only the gap between items; every other size of 
 | root | font | - | N/A: the row draws no text; the items show icons only | N/A: as in Default | N/A: as in Default | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | root | icon size | - | N/A: the row holds no icon; the items do | N/A: as in Default | N/A: as in Default | [[Tray Item]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
-| item | height | `density.icon_button_container` | 40 | 32 | 28 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| item | height | - | 32 | 24 | 24 | Sizing table of this note (item hit area), [[Tray Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | item | min width | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
-| item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | Sizing table of this note (param `icon_size`), [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| item | icon size | - | 20 | 18 | 18 | Sizing table of this note (param `icon_size`), [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 
 ## Layout and overflow
 
@@ -126,7 +126,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TRY-4 (scripted input): Tab visits each item once and leaves; the Menu key on an item opens its menu below the item and Escape returns focus to the item.
 - [ ] AC-MOD-TRY-5 (scripted input): hover two different items in turn: at most one tooltip layer at any time.
 - [ ] AC-MOD-TRY-6 (static check): the Root carries no `Tooltip`.
-- [ ] AC-MOD-TRY-7 (geometry check): item hit areas are 40, 32, 28 dp at default, compact, dense and at least 24 dp; gaps are 4 dp; hit areas do not overlap.
+- [ ] AC-MOD-TRY-7 (geometry check): item hit areas are 32, 24, 24 dp at default, compact, dense and at least 24 dp ([[ADR-0024 Shell tray and task item sizes]]); gaps are 4 dp; hit areas do not overlap.
 - [ ] AC-MOD-TRY-8 (scripted input): opening a menu of 100 entries shows the popup within 100 ms (budget of the vault note) and the popup height is at most 60 percent of the output height.
 
 ## Status in code
@@ -143,7 +143,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 | Deviation | Reason | ADR |
 |---|---|---|
 | No MD3 counterpart | Tesserae-specific status area | [[ADR-0001 MD3 role names are the specification vocabulary]] |
-| Hit areas by density | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Hit areas 32, 24, 24 dp and icons 20, 18, 18 dp (items follow [[Tray Item]]) | the shell keeps today's compact sizes; 24 dp pointer minimum | [[ADR-0024 Shell tray and task item sizes]] |
 
 ## Sources
 
