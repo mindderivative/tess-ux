@@ -1,0 +1,10 @@
+# Hidden files and folders (.obsidian, .claude, ...), except this file
+.*
+!.gitignore
+
+# Agent instructions (local only)
+AGENTS.md
+CLAUDE.md
+
+# graphify output
+graphify-out/
