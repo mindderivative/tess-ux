@@ -82,6 +82,35 @@ The control is as high as a single-line text field and the buttons are icon butt
 - Hit area: every part at least 24 by 24 dp (met at all densities); 48 by 48 dp in a touch context ([[Spacing and Density]]).
 - The value is centred vertically by construction, as in [[Text Field]] (AC-DEN-9).
 
+## Dimensions and defaults
+
+The control is a row of decrease button, outlined number field and increase button, as high as a single-line text field ([[Text Field]]). The vertical padding of the field is `(height - line height) / 2`. Rows marked as design choice carry #needs-verification-as-design-choice.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| control | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| control | min height | `density.control_height` | 40 | 32 | 28 | the 24 dp pointer minimum is met at every level, [[Spacing and Density]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| control | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]], the parts carry their own padding | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| control | margin | - | N/A: the parent container or Form Row sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]], [[Form Row]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| control | gap | `space.2` | 4 | 4 | 2 | Sizing table, [[Spacing and Density]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| control | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| number field | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Text Field]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| number field | min width | - | 64 | 56 | 56 | `tess-ui:src/tess_ui/controls.py` (64 at default); compact and dense: design choice, proposed ADR: compact and dense sizes of composite input controls | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| number field | padding | `density.field_padding_x` | 8 12 8 12 | 6 8 6 8 | 4 8 4 8 | [[Spacing and Density]], vertical = (height - line box) / 2 | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| number field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| number field | border color | `outline` | `outline` | `outline` | `outline` | MD3 outlined text field tokens, `primary` when focused, `error` in error | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| number field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section (tess-ui draws 8) | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| number field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Sizing table | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| decrease and increase button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], Sizing table | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| decrease and increase button | min width | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], square container | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| decrease and increase button | border width | - | 0 | 0 | 0 | [[Icon Button]], standard icon button has no border | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| decrease and increase button | border color | - | N/A: the standard icon button draws no border | N/A: same as default | N/A: same as default | [[Icon Button]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| decrease and increase button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Icon Button]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| decrease and increase button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| decrease and increase button | padding | - | N/A: the icon is centred in the square container, no padding is set | N/A: same as default | N/A: same as default | [[Icon Button]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| label | font | `label_medium` | 12/16/500/0.5 | 12/16/500/0.5 | 12/16/500/0.5 | [[Typography]], Tokens used section | tess-ui: via Typography_Role on the Text in SpinBoxField_View.tdl; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], Tokens used section | tess-ui: via Typography_Role on the Text in SpinBoxField_View.tdl; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+
 ## Layout and overflow
 
 - Value text is one line, never wraps. Numbers align to the end of the field by default so that digits line up in a column of spin boxes (a numeric field may align end, [[Text Field]]); prefix and suffix stay beside the number.
@@ -170,6 +199,7 @@ All colours are roles; the control follows the system theme ([[Theme Following t
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`NumberWidget`) | partly meets: numeric keys with range, step and unit are refused with the range text; not built on `SpinBox` in the shipped views found; AC-SPN-5 meets in behaviour |
 | tess-shell | none | absent: no spin box block or module (shipped modules: `Slider`, `TextInput`, no number input) |
 | tre | engine `text_input` with `input_mode` `numeric` or `decimal` (`tre:docs/guide/text.md`) | not applicable (primitive): no spin box node; `input_mode` is kept for a keyboard that can adapt |
+| tess-ui | same files, Dimensions and defaults | differs: field corner radius 8, spec 4 (AC-SPN-13); buttons fixed 40, spec 40/32/28; field fixed 64 by 40, spec 64/56/56 wide and 40/32/28 high (AC-SPN-1); value type 14, spec 16 at default |
 
 Evidence: `tess-ui:docs/components/spin-boxes.md`.
 
@@ -177,7 +207,7 @@ Evidence: `tess-ui:docs/components/spin-boxes.md`.
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/controls.py`, `tess-ui:src/tess_ui/views/SpinBoxField_View.tdl`, `tess-ui:docs/components/spin-boxes.md` | exists, partial |
+| tess-ui | `tess-ui:src/tess_ui/controls.py`, `tess-ui:src/tess_ui/views/SpinBoxField_View.tdl`, `tess-ui:docs/components/spin-boxes.md` | exists, partial; not settable: sizes, gap, corner, padding, icon and type of the built-in parts (class constants `BUTTON`, `FIELD` and literals in `SpinBox`, no style key reaches them) |
 | tess-shell | none | absent |
 | tre | `tre:docs/guide/text.md` | primitive only |
 

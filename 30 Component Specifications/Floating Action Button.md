@@ -78,6 +78,40 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]]). Defa
 - The icon is centred in the container both ways (centre offset at most 0.5 dp).
 - Position: the FAB sits 16 dp from the end and bottom edges of its view region at default, 12 dp at compact, 8 dp at dense (design choice #needs-verification); it never covers the scrollbar ([[Scrollbar and Scroll Container]]).
 
+## Dimensions and defaults
+
+Values agree with the Sizing table above. The padding is the remainder around the centred icon, `(size - icon) / 2`; margins, compact and dense sizes are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container (small) | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (medium) | height | - | 56 | 48 | 40 | [Material Web FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-fab-primary.scss); compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (large) | height | - | 96 | 72 | 56 | [Material Web large FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-fab-primary-large.scss); compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container (small) | min width | `density.control_height` | 40 | 32 | 28 | the container is square, [[Floating Action Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container (medium) | min width | - | 56 | 48 | 40 | the container is square, [[Floating Action Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container (large) | min width | - | 96 | 72 | 56 | the container is square, [[Floating Action Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container (small) | padding | `space.*` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | derived from size and icon; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (medium) | padding | `space.*` | 16 16 16 16 | 12 12 12 12 | 10 10 10 10 | derived from size and icon; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (large) | padding | `space.*` | 30 30 30 30 | 22 22 22 22 | 16 16 16 16 | derived from size and icon; [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (placement in the view region) | margin | `space.5` | 0 16 16 0 | 0 12 12 0 | 0 8 8 0 | [[Floating Action Button]] Sizing; design choice, proposed ADR for FAB placement margins | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | - | N/A: the FAB holds one icon and no text, so no inner gap exists | N/A: the FAB holds one icon and no text, so no inner gap exists | N/A: the FAB holds one icon and no text, so no inner gap exists | [[Floating Action Button]] Anatomy | tess-ui: n/a: the element has no inner gap; tess-shell: n/a: element absent in tess-shell; tre: n/a: the element has no inner gap |
+| container | border width | - | 0 | 0 | 0 | [Material Web FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-fab-primary.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the FAB container draws no border | N/A: the FAB container draws no border | N/A: the FAB container draws no border | [[Floating Action Button]] Variants table | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container (small) | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container (medium) | corner radius | `shape.large` | 16 | 16 | 16 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container (large) | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container | font | - | N/A: the plain FAB shows an icon and no text; the extended FAB has its own note | N/A: the plain FAB shows an icon and no text; the extended FAB has its own note | N/A: the plain FAB shows an icon and no text; the extended FAB has its own note | [[Extended Floating Action Button]] | tess-ui: n/a: the element shows no text; tess-shell: n/a: element absent in tess-shell; tre: n/a: the element shows no text |
+| icon (small) | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Floating Action Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| icon (medium) | icon size | - | 24 | 24 | 20 | [[Iconography]], [[Floating Action Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| icon (large) | icon size | - | 36 | 28 | 24 | [[Iconography]], [[Floating Action Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container (rest, focus, pressed) | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]], [Material Web FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-fab-primary.scss) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container (hover) | elevation | `elevation.level4` | 4 | 4 | 4 | [[Elevation]], Material Web `hover-container-elevation` | tess-ui: via stylesheet Rule (State: hovered, Elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the container) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - The FAB is out of flow in its region and floats over the content; the content gets bottom padding equal to the FAB size plus margin so the last item is reachable ([[10 Layout Overflow and Scrolling]]).
@@ -135,6 +169,7 @@ Variant primary, size medium, no tooltip text beyond the accessible name. Densit
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Fab_View.tdl`, `Fab_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/buttons.py` (`fab`), `tess-ui:docs/components/fabs.md`, test `tess-ui:tests/test_fab.py` | partly meets: four variants with the verified roles (AC-FAB-3 meets), sizes 40, 56, 96 and corners 12, 16, 28 as literals not role tokens (AC-FAB-1 partly at default, fails at compact and dense; AC-FAB-2 meets values, fails token), elevation 3 rest, 4 hover, 3 pressed (AC-FAB-4 meets; focus elevation not set), `Disabled` fades the whole FAB (AC-FAB-5 fails), role `button` with name from `Label` but a plain FAB has no `Label` unless given: icon-only FAB without `Label` has no accessible name and no tooltip (AC-FAB-8, AC-FAB-9 fail), no density, no placement or content padding (AC-FAB-10 not built) |
+| tess-ui | `tess-ui:src/tess_ui/views/Fab_Stylesheet.tdl` dimensions | differs: no compact or dense sizes (spec 32, 48, 72 and 28, 40, 56; AC-FAB-1); no placement margin (spec 16, 12, 8); focus elevation not set (spec 3) |
 | tess-shell | none found | absent |
 | tre | none | not applicable |
 

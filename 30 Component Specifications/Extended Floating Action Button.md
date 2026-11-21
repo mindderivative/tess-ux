@@ -60,6 +60,31 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]]; compa
 - Collapsed: the container is the square of the [[Floating Action Button]] size for the same density.
 - Hit area as the FAB.
 
+## Dimensions and defaults
+
+Values agree with the Sizing table above and the FAB elevations; compact and dense values and the placement margin are design choices (#needs-verification-as-design-choice).
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| container | height | - | 56 | 40 | 32 | [Material Web extended FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-extended-fab-primary.scss); compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | min width | - | 56 | 40 | 32 | never narrower than a square FAB of the same height, [[Extended Floating Action Button]] Sizing | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| container | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container (touch hit area) | min height | `target.touch` | 48 | 48 | 48 | [[Spacing and Density]], touch context only | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| container (icon and label) | padding | `space.*` | 0 20 0 16 | 0 16 0 12 | 0 12 0 8 | [Material Web FAB styles](https://github.com/material-components/material-web/blob/main/fab/internal/_fab.scss); compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (label only) | padding | `space.*` | 0 20 0 20 | 0 16 0 16 | 0 12 0 12 | Material Web FAB styles; compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container (placement in the view region) | margin | `space.5` | 0 16 16 0 | 0 12 12 0 | 0 8 8 0 | as [[Floating Action Button]]; design choice, proposed ADR for FAB placement margins | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| container | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| container | border width | - | 0 | 0 | 0 | [Material Web extended FAB tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-extended-fab-primary.scss) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| container | border color | - | N/A: the extended FAB container draws no border | N/A: the extended FAB container draws no border | N/A: the extended FAB container draws no border | [[Extended Floating Action Button]] Variants | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| container | corner radius | `shape.large` | 16 | 12 | 8 | [[Shape]] (`large`, `medium`, `small`); compact and dense design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| leading icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Extended Floating Action Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| container (rest, focus, pressed) | elevation | `elevation.level3` | 3 | 3 | 3 | as [[Floating Action Button]], [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| container (hover) | elevation | `elevation.level4` | 4 | 4 | 4 | as [[Floating Action Button]], [[Elevation]] | tess-ui: via stylesheet Rule (State: hovered, Elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+| focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+| focus ring | margin | - | 2 2 2 2 | 2 2 2 2 | 2 2 2 2 | [[Focus Ring]] (offset outside the container) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: tre draws no focus ring |
+
 ## Layout and overflow
 
 - One line. A label longer than the maximum width ends with an ellipsis; the full label stays the name and the tooltip ([[10 Layout Overflow and Scrolling]]).
@@ -110,6 +135,7 @@ Variant primary, icon plus label, extended (not collapsed).
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Fab_View.tdl`, `Fab_Stylesheet.tdl`, `tess-ui:docs/components/extended-fabs.md`, `tess-ui:src/tess_ui/widgets/buttons.py` (`extended_fab`) | partly meets: 56 high, padding 16 and 20 for icon plus label (AC-EFB-1 meets at default; fails compact and dense; label-only padding is 16 and 20 not 20 and 20), gap 8 (meets), `label_large`, name from `Label`, collapsed form with label tooltip (AC-EFB-6, AC-EFB-8 meet by reading), no easing of collapse because the width goes between a number and `auto` (AC-EFB-9 fails), disabled fades the whole control (AC-EFB-4 partly), label centring not measured (AC-EFB-2 unmeasured) |
+| tess-ui | `tess-ui:src/tess_ui/views/Fab_Stylesheet.tdl` dimensions | differs: height 56 at every density (spec 40, 32 at compact and dense; AC-EFB-1); label-only padding 16 and 20 (spec 20 and 20); icon 24 at every density (spec 20) |
 | tess-shell | none found | absent |
 | tre | none | not applicable |
 

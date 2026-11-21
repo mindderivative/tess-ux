@@ -75,6 +75,25 @@ State layers do not apply to text; a link changes colour, underline and focus ri
 - A standalone link meets the 24 by 24 dp target minimum by extending its hit area above and below the 20 dp line box at compact and dense (WCAG 2.2 SC 2.5.8, [target size](https://www.w3.org/TR/WCAG22/#target-size-minimum)); the width is the text width, which is at least 24 dp for any link text of 3 characters or more; a one or two-character link pads its hit area to 24 dp wide. Inline links are exempt from the minimum (the same criterion, inline exception).
 - Vertical centring by construction, as [[Text]]; the hit area is centred on the line box.
 
+## Dimensions and defaults
+
+A standalone link has no container; it is a text line with an extended hit area. Compact and dense hit-area padding is derived: (24 - 20) / 2 = 2.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| text | height | `body_large` / `body_medium` | 24 | 20 | 20 | Sizing table, [[Typography]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| hit area | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, Sizing section; 48 in a touch context | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
+| hit area | min width | - | 24 | 24 | 24 | Sizing section (a one or two-character link pads to 24 wide), [[Spacing and Density]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
+| hit area | padding | `space.1` | 0 0 0 0 | 2 0 2 0 | 2 0 2 0 | Sizing section, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| link | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
+| link | gap | `density.icon_label_gap` | 8 | 8 | 4 | text to the external-link glyph, design choice, proposed ADR: gap of an external-link glyph, [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
+| link | border width | - | 0 | 0 | 0 | a link draws no border; the focus ring is the focus indicator, [[Focus Ring]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
+| link | border color | - | N/A: the link draws no border | N/A: same as default | N/A: same as default | States table, [[Focus Ring]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
+| link | corner radius | - | N/A: the link draws no container; the focus ring follows the text box | N/A: same as default | N/A: same as default | [[Focus Ring]], Anatomy section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| text | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| external-link glyph | icon size | - | 16 | 16 | 16 | Anatomy section (`open_in_new` at 16 dp), [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| link | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
+
 ## Layout and overflow
 
 - A standalone link is one line by default (`Wrap: none`, `Overflow: ellipsis` in the Python widget; the view default is `Wrap: word`, `Overflow: clip`, so a project sets `ellipsis` explicitly, [[Text]] AC-TXT-14). A link that can exceed its box truncates with `…` and shows its full text in a tooltip ([[10 Layout Overflow and Scrolling]], [[ADR-0004 Tooltip rule]]).
@@ -149,6 +168,7 @@ The colours are roles; the scheme recomputes them ([[Theme Following the System]
 | tess-ui | `tess-ui:src/tess_ui/views/Link_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/structural.py` (`link`), `tess-ui:docs/components/links.md`, `tess-ui:docs/guide/rich-text.md` | partly meets: `primary`, `secondary` visited, disabled `on_surface` at 0.38 opacity (AC-LNK-1 meets as the stylesheet reads: opacity 0.38 on `on_surface`), `Href` allow-list of `http`, `https`, `mailto`, `tel` (AC-LNK-3 meets as documented), `Visited`, `Underline` hover, always, never, Tab stop and Enter (AC-LNK-2, AC-LNK-4, AC-LNK-5 meet as documented, unmeasured), `role="link"` in the Python widget; no density setting, 24 dp high widget (AC-LNK-6 partly meets; compact and dense hit area not specified); the view default `Overflow: clip` (AC-LNK-7 fails unless set); inline link runs are underlined by default; no external-link glyph; Space handling and destination tooltip not documented; no app or example uses `Link` (Inventory), so unmeasured in context |
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`On_Link` on `Text`), `shell-vault:41 TDL Reference/Block Reference.md` | partly meets: link spans inside `Text` with `On_Link`; no standalone Link block (AC-LNK-2, AC-LNK-5, AC-LNK-6 absent for a standalone link) |
 | tre | `tre:docs/guide/text.md` (links), `tre:docs/guide/accessibility.md` | meets as the primitive: a span with a `link` fires a `link` event with `href`, hand cursor, accessible `link` node with its URL and a `click` action; the engine opens nothing and draws no underline or colour by itself |
+| tess-ui | same files, Dimensions and defaults | differs: no density setting, Python `link` widget 24 high at every level where the text box is 24, 20, 20 with a 24 hit area (AC-LNK-6 partly); view default `Overflow: clip` |
 
 ## Status in code
 

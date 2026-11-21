@@ -86,6 +86,28 @@ Text on a coloured container takes the matching `on_` role (`on_primary_containe
 - Maximum measure: a reading paragraph is at most 840 dp wide ([[10 Layout Overflow and Scrolling]]).
 - A selectable text and a link have a pointer hit area of at least 24 by 24 dp when they act alone (a standalone link); inline links in a sentence are exempt ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum), exception for inline targets).
 
+## Dimensions and defaults
+
+A text has no container: it draws glyphs in a line box and takes spacing from its parent. Values are those of a control label (role by use in the Tokens used section). Rows for properties the element does not own say so.
+
+| Part | Property | Token | Default | Compact | Dense | Source | Settable |
+|---|---|---|---|---|---|---|---|
+| content (single line) | height | `body_large` / `body_medium` | 24 | 20 | 20 | Sizing section, [[Typography]] (line height of the role) | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| content (single line) | min height | - | 24 | 20 | 20 | Sizing section, [[Spacing and Density]]; the 24 dp pointer minimum applies only to a standalone link or selectable target | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
+| content (wrapping block) | min width | - | 120 | 120 | 120 | Sizing section, [[10 Layout Overflow and Scrolling]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
+| content | padding | - | N/A: the text has no padding; the container supplies it | N/A: same as default | N/A: same as default | Tokens used section (Spacing), [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| content | margin | - | N/A: the parent container sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
+| content | gap | - | N/A: lines stack with no extra space; the line height is the line spacing | N/A: same as default | N/A: same as default | Sizing section, [[Typography]] | tess-ui: n/a: a text has no children to space; tess-shell: n/a: a text has no children to space; tre: n/a: a text has no children to space |
+| content | border width | - | N/A: the text draws no border | N/A: same as default | N/A: same as default | Anatomy section, [[Shape]] | tess-ui: yes (style border_width); tess-shell: n/a: the Text block has no Border_Width key; tre: yes (border_width) |
+| content | border color | - | N/A: the text draws no border | N/A: same as default | N/A: same as default | Anatomy section, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: the Text block has no Border_Color key; tre: yes (border_color) |
+| content | corner radius | - | N/A: the text draws no container; the selection highlight is an engine rectangle | N/A: same as default | N/A: same as default | Anatomy section, `tre:docs/guide/text.md` | tess-ui: yes (style corner_radius); tess-shell: n/a: the Text block has no Corner_Radius key; tre: yes (corner_radius) |
+| content | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section (control label row) | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| section title | font | `title_medium` / `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], Tokens used section; design choice, proposed ADR: role choice by density for static text | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| dialog title | font | `headline_small` / `title_large` | 24/32/400/0 | 22/28/400/0 | 22/28/400/0 | [[Typography]], Tokens used section; design choice, proposed ADR: role choice by density for static text | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| content | icon size | - | N/A: the text element holds no icon; an icon is a sibling part of the owning control | N/A: same as default | N/A: same as default | Anatomy section, [[Iconography]] | tess-ui: n/a: a text holds no icon; tess-shell: n/a: a text holds no icon; tre: n/a: a text holds no icon |
+| content | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], text casts no shadow | tess-ui: yes (style elevation); tess-shell: n/a: the Text block has no Elevation key; tre: yes (shadows) |
+
 ## Layout and overflow
 
 This section applies chapter [[10 Layout Overflow and Scrolling]]; it does not restate its principles.
@@ -162,6 +184,7 @@ The colour is a role; the scheme recomputes it ([[Theme Following the System]]).
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | partly meets: the directory text neither wrapped nor ellipsised and ran past its container in the 2026-11-20 demo (AC-TXT-3 fails, F5); single-line text top-aligned in fields (AC-TXT-5 fails, F7) |
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/binder/tables.py`, `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl`, `shell-vault:41 TDL Reference/Block Reference.md` | partly meets: `Text` with `Wrap`, `Max_Lines`, `Selectable`, `On_Link`, `Overflow` (`CLIP` or `ELLIPSIS`) exists; `Label` sets `Wrap: NONE`; the default is `CLIP` (AC-TXT-14 fails by default); shell type roles are 5 names (`caption` and four more) mapped to MD3 roles in [[Typography]]; `Width` and `Height` default to `fit-content` (a bridge for tre); no `Heading` property in the Text block table of the block reference (AC-TXT-9 absent for headings) |
 | tre | `tre:docs/guide/text.md`, `tre:docs/guide/accessibility.md`, `tre:docs/reference/window.md` | meets as the primitive: `wrap`, `max_lines`, `overflow` (`clip`, `ellipsis`), `align`, `selectable`, spans with `link`, selection model, measuring (`measure_text`), accessibility text container; draws a text at the top of its box (no vertical align), so centring is the parent's job (AC-TXT-5) |
+| tess-ui | same files, Dimensions and defaults | differs: no density rule for the role choice, a view sets its own role (AC-TXT-2 partial); tracking 0 unless the theme sets `MD3_TRACKING` where the spec has the per-role tracking |
 
 Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
@@ -170,7 +193,7 @@ Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:docs/components/text.md`, `tess-ui:src/tess_ui/tokens.py` | exists, partial |
-| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl` | exists, partial |
+| tess-shell | `tess-shell:src/tess_shell/schema/blocks.py`, `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl` | exists, partial; not settable: letter spacing (no `Letter_Spacing` key on `Text`) |
 | shell vault | `shell-vault:41 TDL Reference/Block Reference.md` | spec of the block |
 | tre | `tre:docs/guide/text.md` | engine primitive |
 
