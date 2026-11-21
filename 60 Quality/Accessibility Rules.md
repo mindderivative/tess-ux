@@ -57,7 +57,7 @@ How to use: go down the list for every view; mark pass, fail or not run; link fa
 | ID | Rule | Test type | Defined in | Standard |
 |---|---|---|---|---|
 | AR-21 | Information needed to use a control is not only in a tooltip: it is in the visible label, the name or the description. | AT tree assertion | AC-A11Y-9 | WCAG 2.2 SC 1.3.1, [[ADR-0004 Tooltip rule]] |
-| AR-22 | A tooltip appears on keyboard focus within one frame as it does on hover after 500 ms, and Escape dismisses it. | scripted input | AC-A11Y-8, AC-ICB-6 | WCAG 2.2 SC 1.4.13 |
+| AR-22 | A tooltip appears on keyboard focus within one frame as it does on hover after 500 ms, Escape dismisses it without moving the pointer, and every tooltip, plain or rich, stays open for 150 ms after the pointer leaves the trigger so the pointer can move onto it. | scripted input | AC-A11Y-8, AC-ICB-6, AC-TIP-4, AC-TIP-5, AC-TIP-17 | WCAG 2.2 SC 1.4.13, [[ADR-0011 Tooltip hover grace for all tooltips]] |
 | AR-23 | A tooltip has an opaque container and is clipped to the window. | pixel check | AC-SWI-5, AC-TIP-* in [[Tooltip]] | [[ADR-0004 Tooltip rule]] |
 
 ## Announcements, motion and contrast preferences

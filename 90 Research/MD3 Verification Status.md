@@ -19,7 +19,7 @@ How Material Design 3 values were checked in Phase 1 (closes OQ-12 for the slice
 
 ## Verified (examples)
 
-- State layers: hover 8, focus 10, pressed 10, dragged 16 percent in the latest token set. The older set `v0_192` has focus and pressed at 12 percent; ADR-0009 follows the latest.
+- State layers: hover 8, focus 10, pressed 10, dragged 16 percent in the latest token set. The older set `v0_192` has focus and pressed at 12 percent; ADR-0009 and [[ADR-0013 Focus and pressed state layer 10 percent]] follow the latest.
 - Focus ring 3 px, 2 px offset, `secondary`; ripple timings 450, 105, 225, 375 ms and hover fade 15 ms.
 - Scrim opacity 0.32; dialog width 280 to 560 dp; menu item height 48 dp; switch 52 by 32 dp; button height 40 dp; elevation shadows equal tess-ui's formulas (this corrects the Phase 0 remark in [[Existing Tokens]] that called them a legacy formula).
 - WCAG 2.5.8 (24 by 24 CSS px) and window size classes (600, 840, 1200, 1600 wide).
@@ -66,7 +66,7 @@ How Material Design 3 values were checked in Phase 1 (closes OQ-12 for the slice
 | Button | Expressive sizes, square shape, pressed squaring | Expressive spec pages not fetched |
 | Button | paddings at compact and dense (16, 12 dp; icon 16 dp at dense) | design choice, MD3 gives 24 dp and 18 dp icon only |
 | Button | reduced-motion behaviour of the loading spinner | design choice |
-| 14 Accessibility Basics | WCAG 1.4.13 hoverable condition versus the tooltip rule (plain tooltips dismissed on pointer leave) | needs owner decision whether the supplemental-content exception applies; ADR-0004 grants a 150 ms grace for rich tooltips only |
+| 14 Accessibility Basics | WCAG 1.4.13 hoverable condition versus the tooltip rule | closed by [[ADR-0011 Tooltip hover grace for all tooltips]]: all tooltips get the 150 ms grace |
 | 14 Accessibility Basics | high-contrast scheme thresholds 7 to 1 text and 4.5 to 1 non-text | Tesserae design choice, no MD3 value |
 | 14 Accessibility Basics | scrollbar thumb rest alpha 38 percent may fail 3 to 1 contrast | needs contrast computation once Colour Roles values exist |
 | Test Method | WCAG contrast ratio definition anchor and Accessibility Rules SC 1.1.1, 1.3.1, 3.3.1 | anchors not separately fetched |

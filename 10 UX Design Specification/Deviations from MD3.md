@@ -97,7 +97,7 @@ The register of every departure from Material Design 3 recorded in the notes so 
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Focus and pressed use 10 percent (the latest MD3 tokens), not the 12 percent of older tokens | follows the current published tokens | [[ADR-0009 State layer percentages]] |
+| Focus and pressed use 10 percent (the latest MD3 tokens), not the 12 percent of older tokens | follows the current published tokens | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | One layer at a time, with precedence | avoids stacked opacity that changes contrast unpredictably | [[ADR-0009 State layer percentages]] |
 | Reduced motion removes the ripple | accessibility | [[ADR-0009 State layer percentages]] |
 
@@ -167,7 +167,7 @@ The register of every departure from Material Design 3 recorded in the notes so 
 | Heights 40, 32, 24 (one line) instead of 56 | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Padding 12, 8, 4 dp and gap 8, 8, 4 dp instead of 16 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Disabled text 0.38 instead of MD3 label opacity 0.30 | one disabled content value across Tesserae ([[State Layers]]) | [[ADR-0009 State layer percentages]] |
-| State layer focus and pressed 10 percent instead of the 12 percent listed in the Material Web tokens | decided state layer scale | [[ADR-0009 State layer percentages]] |
+| State layer focus and pressed 10 percent instead of the 12 percent listed in the Material Web tokens | decided state layer scale | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Selected container `secondary_container` | MD3 list tokens give no selected container | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 ## [[List]]
@@ -239,7 +239,7 @@ The register of every departure from Material Design 3 recorded in the notes so 
 | Hover delay 500 ms | MD3 sources read (Flutter M3 default wait 0 ms, Compose long-press only) give no desktop hover delay; desktop toolkits use about 500 ms and the code already uses it | [[ADR-0004 Tooltip rule]] |
 | Tooltip on keyboard focus is shown within one frame | Keyboard users have no hover; matches WAI-ARIA tooltip pattern | [[ADR-0004 Tooltip rule]] |
 | Dismiss on scroll, press and activation | WCAG 1.4.13 dismissible; prevents the F2 and F9 symptoms | [[ADR-0004 Tooltip rule]] |
-| Rich tooltip grace period 150 ms | Hoverable condition of WCAG 1.4.13 | [[ADR-0004 Tooltip rule]] |
+| Grace period 150 ms for plain and rich tooltips | Hoverable condition of WCAG 1.4.13 | [[ADR-0011 Tooltip hover grace for all tooltips]] |
 | Rich tooltip actions reachable by Tab | Keyboard access; MD3 describes touch and pointer | [[ADR-0004 Tooltip rule]] |
 | Trigger is the control, never a row or group | Owner feedback F8; MD3 has no row-level tooltip, so this is a restriction rather than a deviation | [[ADR-0004 Tooltip rule]] |
 

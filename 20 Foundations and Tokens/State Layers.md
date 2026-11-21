@@ -28,13 +28,13 @@ Result colour of a pixel in the layer: `container * (1 - a) + layer_colour * a`,
 | State | Opacity | MD3 value | Token (Material Web) |
 |---|---|---|---|
 | Hover (pointer over the control) | 8 percent (0.08) | 8 | `md.sys.state.hover.state-layer-opacity` |
-| Focus (keyboard focus) | 10 percent (0.10) | 10 (the earlier published value was 12, see note) | `md.sys.state.focus.state-layer-opacity` |
-| Pressed (pointer or key held) | 10 percent (0.10) | 10 (earlier 12) | `md.sys.state.pressed.state-layer-opacity` |
+| Focus (keyboard focus) | 10 percent (0.10) | 10 ([[ADR-0013 Focus and pressed state layer 10 percent]]) | `md.sys.state.focus.state-layer-opacity` |
+| Pressed (pointer or key held) | 10 percent (0.10) | 10 ([[ADR-0013 Focus and pressed state layer 10 percent]]) | `md.sys.state.pressed.state-layer-opacity` |
 | Dragged | 16 percent (0.16) | 16 | `md.sys.state.dragged.state-layer-opacity` |
 | Disabled content (label, icon, text) | 38 percent (0.38) | 38 | `md.sys.state.disabled.state-layer-opacity` and `md.comp.*.disabled.label-text.opacity` |
 | Disabled container | 12 percent (0.12) | 12 | `md.comp.filled-button.disabled.container.opacity` |
 
-Note on 10 versus 12: Material Web `tokens/versions/v0_192` carries focus 0.12 and pressed 0.12; `tokens/versions/latest` carries 0.10 and 0.10. Tesserae adopts the latest values (10). Both are verified at the URLs below.
+Source note on 10 versus 12: Material Web `tokens/versions/v0_192` carries focus 0.12 and pressed 0.12 (older value, kept only as a source note); `tokens/versions/latest` carries 0.10 and 0.10. Tesserae uses 10 ([[ADR-0013 Focus and pressed state layer 10 percent]]). Both are verified at the URLs below.
 
 ### Layer colour
 
@@ -94,7 +94,7 @@ Rules:
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Focus and pressed use 10 percent (the latest MD3 tokens), not the 12 percent of older tokens | follows the current published tokens | [[ADR-0009 State layer percentages]] |
+| Focus and pressed use 10 percent (the latest MD3 tokens), not the 12 percent of older tokens | follows the current published tokens | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | One layer at a time, with precedence | avoids stacked opacity that changes contrast unpredictably | [[ADR-0009 State layer percentages]] |
 | Reduced motion removes the ripple | accessibility | [[ADR-0009 State layer percentages]] |
 
