@@ -16,6 +16,7 @@ Accessibility rules, the test method for acceptance criteria and the per-project
 
 ## Notes
 
-No notes yet.
+- [[Test Method]]
+- [[Accessibility Rules]]
 
 Back to [[Index]].

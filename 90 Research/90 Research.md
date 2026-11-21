@@ -16,6 +16,7 @@ Sources, Material Design 3 extracts and evidence with links. Unverified claims c
 
 ## Notes
 
+- [[MD3 Verification Status]]
 - [[Gaps and Contradictions]]
 - [[Inventory Source tess-ui]]
 - [[Inventory Source tess-ui Foundations]]

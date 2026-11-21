@@ -16,6 +16,17 @@ Colour roles, type scale, shape, elevation, motion, spacing, density, iconograph
 
 ## Notes
 
+- [[Colour Roles]]
+- [[Theme Following the System]]
+- [[Typography]]
+- [[Shape]]
+- [[Elevation]]
+- [[Motion]]
+- [[Scrim]]
+- [[Spacing and Density]]
+- [[State Layers]]
+- [[Focus Ring]]
+- [[Iconography]]
 - [[Existing Tokens]]: the tokens in code today and the differences between tess-ui, the shell, tre and MD3.
 
 Back to [[Index]].
