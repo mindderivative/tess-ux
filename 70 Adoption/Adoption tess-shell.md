@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 29 open findings (P0 0, P1 16, P2 13; TSH-008 and TSH-084 are blocked on shell features), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Seven open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 26 open findings (P0 0, P1 13, P2 13; TSH-008 and TSH-084 are blocked on shell features), 31 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Seven open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -57,14 +57,14 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-004 | P1 | Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
+| TSH-004 | P1 | Status: in tess-shell PR 151. Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
 | TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `For` plus `Class` on a module call). Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
 
 ### Keyboard reachability
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-015 | P1 | No F6 landmark cycling between surfaces | AC-KBN-3 | text search of origin/main `src` finds none | Add F6 and Shift+F6 over Bar, Panels and the focused window | [[Keyboard Navigation]] |
+| TSH-015 | P1 | Status: in tess-shell PR 150. No F6 landmark cycling between surfaces | AC-KBN-3 | text search of origin/main `src` finds none | Add F6 and Shift+F6 over Bar, Panels and the focused window | [[Keyboard Navigation]] |
 
 ### State feedback
 
@@ -72,40 +72,38 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 |---|---|---|---|---|---|---|
 | TSH-020 | P1 | OQ-23 closed 2026-11-22: the owner adopted the MD3 state layers for the shell. The shell has no state layers; states change `Background`, `Border_Color` or `Opacity` (Toggle and Checkbox hovered 0.85, pressed 0.7; disabled 0.5 on all widgets) Update (2026-11-22, tess-shell audit against main, schema 1.30): state layers implemented; the 15, 105 and 150 ms fades wait for tre 0.6.12; OQ-23 is closed (the owner adopted the state layers on 2026-11-22). | AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5, AC-C09-1, AC-C09-2, AC-C09-4 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:43-83,121-123` | Owner decides adopt or declare a deviation; do not fix until then | [[State Layers]], [[ADR-0009 State layer percentages]] |
 | TSH-022 | P1 | OQ-23 closed (adopted). Toggle gets the generic focus ring; hover and pressed are opacity, not state layers Update (2026-11-22, tess-shell audit against main, schema 1.30): as TSH-020 (Toggle hover and pressed layers); fades wait for tre 0.6.12. | AC-MOD-TGL-4 | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl:57` | Follow TSH-020 | [[Toggle]] |
-| TSH-023 | P2 | Task Item minimised shows as opacity 0.5 only, the disabled look | AC-MOD-TIT-7 | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Style.tdl` | Use an icon or text state cue, not the disabled opacity | [[Task Item]] |
+| TSH-023 | P2 | Status: in tess-shell PR 152. Task Item minimised shows as opacity 0.5 only, the disabled look | AC-MOD-TIT-7 | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Style.tdl` | Use an icon or text state cue, not the disabled opacity | [[Task Item]] |
 
 ### Density and sizes
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-037 | P2 | Default icon size 16 literal where list and menu icons are 24 | AC-ICO-1, AC-C08-1 | `tess-shell:src/tess_shell/shipped/Icon/Icon_Module.tdl`, `MenuItem/MenuItem_Module.tdl:52-53` | Take icon size from the density tokens | [[Iconography]] |
-| TSH-039 | P2 | Modules use pixel literals not the spacing tokens | AC-DEN-1 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:47-55` | Replace literals by `$space` tokens when TSH-034 lands | [[Spacing and Density]] |
+| TSH-037 | P2 | Status: not started (tess-shell starts it now). Default icon size 16 literal where list and menu icons are 24 | AC-ICO-1, AC-C08-1 | `tess-shell:src/tess_shell/shipped/Icon/Icon_Module.tdl`, `MenuItem/MenuItem_Module.tdl:52-53` | Take icon size from the density tokens | [[Iconography]] |
+| TSH-039 | P2 | Status: not started (tess-shell starts it now). Modules use pixel literals not the spacing tokens | AC-DEN-1 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:47-55` | Replace literals by `$space` tokens when TSH-034 lands | [[Spacing and Density]] |
 
 ### Contrast
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-042 | P1 | No contrast script over the shipped themes exists | AC-COL-3, AC-COL-4, AC-LNC-15, AC-LNC-17 | `tess-shell:docs/design/60 Quality/Accessibility.md` (rule 9 asks for it) | Add a script that checks every role pair in the three modes | [[Colour Roles]], [[Launcher]] |
-| TSH-043 | P1 | The token `accent` on `surface` measures 4.38 Dark and 3.82 Light, below the 4.5 text requirement; no shipped file uses `accent` as text (`shipped/`), so it is a token finding. The specification now says accent is never text ([[ADR-0025 Shell outline and high contrast status colours, accent never text]], AC-COL-12); the contrast tool lists the token as a known violation | AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22` | Keep `accent` to non-text uses or darken the token; lint text uses | [[Colour Roles]] |
-| TSH-090 | P1 | Dark `outline` `#55657A` on `surface_raised` measures 2.69 to 1 (Button border, card edge; needs 3 to 1); the specification raises it to `#5F7188` (3.61 on `surface`, 3.21 on `surface_raised`) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` | Set Dark `Color.Outline` to `#5F7188` | [[Colour Roles]] |
-| TSH-091 | P1 | High_Contrast on a Light scheme leaves `error`, `warning` and `success` at their Light values, which measure 3.21, 3.54 and 3.27 to 1 on the black High_Contrast surface (needs 4.5, 7 at the high level); the specification sets explicit High_Contrast values `#F2958C`, `#E6BB6A`, `#8CCB9A` (9.45, 11.68, 11.12 on black) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` (High_Contrast block) | Add the three High_Contrast colours | [[Colour Roles]] |
+| TSH-042 | P1 | Status: in tess-shell PR 148. No contrast script over the shipped themes exists | AC-COL-3, AC-COL-4, AC-LNC-15, AC-LNC-17 | `tess-shell:docs/design/60 Quality/Accessibility.md` (rule 9 asks for it) | Add a script that checks every role pair in the three modes | [[Colour Roles]], [[Launcher]] |
+| TSH-043 | P1 | Status: in tess-shell PR 148. The token `accent` on `surface` measures 4.38 Dark and 3.82 Light, below the 4.5 text requirement; no shipped file uses `accent` as text (`shipped/`), so it is a token finding. The specification now says accent is never text ([[ADR-0025 Shell outline and high contrast status colours, accent never text]], AC-COL-12); the contrast tool lists the token as a known violation | AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22` | Keep `accent` to non-text uses or darken the token; lint text uses | [[Colour Roles]] |
+| TSH-090 | P1 | Status: in tess-shell PR 148. Dark `outline` `#55657A` on `surface_raised` measures 2.69 to 1 (Button border, card edge; needs 3 to 1); the specification raises it to `#5F7188` (3.61 on `surface`, 3.21 on `surface_raised`) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` | Set Dark `Color.Outline` to `#5F7188` | [[Colour Roles]] |
+| TSH-091 | P1 | Status: in tess-shell PR 148. High_Contrast on a Light scheme leaves `error`, `warning` and `success` at their Light values, which measure 3.21, 3.54 and 3.27 to 1 on the black High_Contrast surface (needs 4.5, 7 at the high level); the specification sets explicit High_Contrast values `#F2958C`, `#E6BB6A`, `#8CCB9A` (9.45, 11.68, 11.12 on black) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` (High_Contrast block) | Add the three High_Contrast colours | [[Colour Roles]] |
 
 ### Surfaces not built
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-052 | P1 | Bar `Meld` and `Attach_To` not built; Frame `Meld` not built | AC-BAR-17, AC-FRM2-11 | `tess-shell:src/tess_shell/schema/docs.py:274-277,340` | Build the Frame `Meld` key | [[Bar]], [[Frame]] |
 | TSH-053 | P1 | Bar and Popup `Animation` not built (no popup show and hide animation) | AC-BAR-17, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:278,330` | Build `Animation` with the motion tokens and reduced motion | [[Bar]], [[Popup]] |
 | TSH-054 | P1 | OQ-23 closed (adopted); the level model follows. Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
-| TSH-055 | P2 | Panel `Margin`, `Padding`, `Class`, `Exclusive_Zone` and Bar `Padding`, `Class`, `Text_Rotation` not built | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
-| TSH-056 | P2 | Peek handle colour is a literal; handle nodes not exposed; single trigger only | AC-PEK-14, AC-PEK-16, AC-PEK-18 | `tess-shell:src/tess_shell/surfaces/frame.py` (`_handle_colour`), `surfaces/handle.py` | Colour from a role; expose the handle as a named control | [[Peek]], [[Dock]] |
+| TSH-055 | P2 | Status: not started. Panel `Margin`, `Padding`, `Class`, `Exclusive_Zone` and Bar `Padding`, `Class`, `Text_Rotation` not built | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
+| TSH-056 | P2 | Status: not started (tess-shell starts it now). Peek handle colour is a literal; handle nodes not exposed; single trigger only | AC-PEK-14, AC-PEK-16, AC-PEK-18 | `tess-shell:src/tess_shell/surfaces/frame.py` (`_handle_colour`), `surfaces/handle.py` | Colour from a role; expose the handle as a named control | [[Peek]], [[Dock]] |
 | TSH-057 | P2 | The Launcher is a Panel with an output-sized catcher since M7k, so it no longer takes the popup grab. Ordinary focused Popups still use the PopupWindow grab, which steals the keyboard on KWin: popups that need keyboard input fault there. Popup Escape closed by the shell is not verified on KWin | AC-POP-1, AC-POP-6, AC-POP-7 | `tess-shell:src/tess_shell/surfaces/popup.py` (`_key`) | Run the hand checks on KWin for a keyboard Popup and record | [[Popup]] |
 
 ### Theming
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-060 | P1 | Reduced motion lives in code; the theme `Reduced_Motion { }` block is empty; `EMPHASIZED` easing differs from the table | AC-MOT-2, AC-MOT-5 | `tess-shell:src/tess_shell/binder/motion.py`, `Themes/Default_Theme.tdl:67-70` | Put the behaviour in the theme and correct the curve | [[Motion]] |
 | TSH-061 | P1 | No persistent user override of the scheme; first-frame behaviour with a slow portal not tested | AC-TH-4, AC-TH-5, AC-TH-7 | `tess-shell:src/tess_shell/services/portal.py`, `appearance.py` | Add a settings key for the override | [[Theme Following the System]] |
 | TSH-064 | P2 | The tooltip cards use tokens (`$color.surface_raised`), not hex fallbacks; `Corner_Radius: 8` and `Elevation: 20%` are repeated literals outside the theme Update (2026-11-22, tess-shell audit against main, schema 1.30): partly done (tess-shell audit). | AC-TIP-13 | the six tooltip files | Resolved by TSH-004 | [[Colour Roles]] |
 
@@ -114,17 +112,16 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-070 | P1 | held: Orca is not installed on the owner's machine, so this is a hand check. Launcher, announcements and `active_descendant` for the Launcher list are untested | AC-MOD-APP-1, AC-LNC-20 | `tess-shell:docs/design/60 Quality/Accessibility.md`, `docs/design/00 Home/Hand Checks.md` | Run the hand checks when Orca is available | [[Accessibility Tree]], [[Launcher]] |
-| TSH-071 | P1 | Roles for tooltip carriers are `GROUP` (see TSH-001 to TSH-003); a group with a tooltip has no control to announce it | AC-MOD-BAT-1, AC-MOD-NET-1 | the three root files | Same fix as TSH-001 | [[Accessibility Tree]] |
-| TSH-072 | P2 | There is no Accordion module; Expander is the module. It has no header and no keys of its own, and the controlling Button carries `expanded` | AC-ACC-09 | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` | Document the pairing of Expander and Button | [[Expander]] |
-| TSH-073 | P2 | Tray attention shows an AttentionIcon cue when the app sends one; otherwise it is colour plus border only | AC-MOD-TRI-7 | `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Style.tdl` | Add a shape cue for items without an AttentionIcon | [[Tray Item]] |
+| TSH-072 | P2 | Status: not started. There is no Accordion module; Expander is the module. It has no header and no keys of its own, and the controlling Button carries `expanded` | AC-ACC-09 | `tess-shell:src/tess_shell/shipped/Expander/Expander_Module.tdl` | Document the pairing of Expander and Button | [[Expander]] |
+| TSH-073 | P2 | Status: in tess-shell PR 152. Tray attention shows an AttentionIcon cue when the app sends one; otherwise it is colour plus border only | AC-MOD-TRI-7 | `tess-shell:src/tess_shell/shipped/Tray_Item/Tray_Item_Style.tdl` | Add a shape cue for items without an AttentionIcon | [[Tray Item]] |
 
 ### Blocks not built
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built Update (2026-11-22, tess-shell audit against main, schema 1.30): scrollbars for ScrollBox and the Popup scroll view are built; `Scroll_Snap` and `On_Scroll` are still not built. | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
-| TSH-081 | P2 | Text Selection: no copy command (Ctrl+C is in tess-shell PR 153, merge pending) | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
-| TSH-082 | P2 | List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
+| TSH-081 | P2 | Status: in tess-shell PR 153. Text Selection: no copy command (Ctrl+C is in tess-shell PR 153, merge pending) | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
+| TSH-082 | P2 | Status: not started. List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
 | TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
 
 ## Fixed since the audit
@@ -160,6 +157,8 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-044 | Launcher hover fill `surface_raised` equals the card fill | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-LNC-18 | [[Launcher]] |
 | TSH-063 | Shape scale has 5 of 7 steps; dialog and rich tooltip steps cannot be expressed | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-SHP-2, AC-C04-1 | [[Shape]] |
 | TSH-085 | Marquee has no hover pause | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MQT-7 | [[Marquee Text]] |
+| TSH-060 | The theme `Reduced_Motion` block was empty and `EMPHASIZED` differed from the table | `Reduced_Motion` sets every duration to 0 in `Default_Theme.tdl`; `EMPHASIZED` is (0.2, 0, 0, 1) in `binder/motion.py` (checked in tess-shell origin/main, 5377644) | `tess-shell:src/tess_shell/binder/motion.py`, `Themes/Default_Theme.tdl:67-70` | [[Motion]] |
+| TSH-071 | Tooltip carriers had role `GROUP` | Battery and Network roots are `IMG` with the tooltip as description; the Audio tooltip sits on the controls (checked in origin/main, 5377644; Media root is still a `GROUP` without a tooltip) | the three root files | [[Accessibility Tree]] |
 
 
 ## Implemented, merge pending the owner check
@@ -190,6 +189,7 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 
 | ID | Finding | Reason |
 |---|---|---|
+| TSH-052 | Bar `Meld` and `Attach_To` not built; Frame `Meld` not built | Won't do (decision of bot:Orchestrator under its UX-vault delegation, 2026-11-22): a Bar in the Frame is a Frame strip (a thick edge with peek and hide); [[Frame]] AC-FRM2-11 and [[Bar]] AC-BAR-17 list `Meld` and `Attach_To` as intentionally not built and the Bar specification gives them no behaviour; the 'not built' wording of AC-BAR-17 stays. |
 | TSH-083 | Rectangle block offers no `Hit_Shape` | The [[Rectangle Block]] specification does not offer `Hit_Shape` (it belongs to [[Path Block]]); a Rectangle that must let clicks through is a transparent box. The row was wrong and its AC citation (AC-BLK-RCT-5, a tree assertion) did not test it. |
 
 ## Engine hooks needed
