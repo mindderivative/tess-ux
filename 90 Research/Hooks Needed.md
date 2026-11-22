@@ -14,29 +14,43 @@ depends_on: []
 
 What each project must expose so that every default of the [[Defaults Matrix]] is settable from Python without touching the engine (ADR-0020, the owner principle that the engine never blocks the design). Collected from the `Settable` column of the component notes and from the tre audit of its own hardcoded visuals (tess-re, 2026-11-21, approved by the owner, being built for tre 0.6.11 with the specification values as defaults). Requests to tre are filed in `80 Requests`; requests to tess-ui and tess-shell go through the Orchestrator.
 
-State as of 2026-11-22. P13 (state layer hooks) and P14 (focus outline) of the tre audit are approved as UXREQ-010 and UXREQ-008. The component notes were written against tre 0.6.10; on tre 0.6.11 the `both` scroll view (PR 326) already takes `scrollbar_width`, `scrollbar_hit_width`, `scrollbar_margin`, `scrollbar_min_length`, `scrollbar_gutter`, `scrollbar_corner`, `scrollbar_fill` and the three opacities, with the specification defaults (thumb 8, hit 12, margin 2, minimum 32, rest 0.70, hover 0.80, drag 1.00, wheel 40). One-axis scroll views keep the legacy 4 px thumb until properties are set.
+State as of 2026-11-22, synchronised with tre 0.6.11 on 2026-11-22. P13 (state layer hooks) and P14 (focus outline) of the tre audit are approved as UXREQ-010 and UXREQ-008. The component notes were written against tre 0.6.10; on tre 0.6.11 the `both` scroll view (PR 326) already takes `scrollbar_width`, `scrollbar_hit_width`, `scrollbar_margin`, `scrollbar_min_length`, `scrollbar_gutter`, `scrollbar_corner`, `scrollbar_fill` and the three opacities, with the specification defaults (thumb 8, hit 12, margin 2, minimum 32, rest 0.70, hover 0.80, drag 1.00, wheel 40). One-axis scroll views keep the legacy 4 px thumb until properties are set.
 
 ## tre
 
+### Delivered in tre 0.6.11
+
+Checked in the `v0.6.11` tag (PR titles, `docs/reference/properties.md`, `docs/api/python.md`); the property names below were found there. Delivery does not mean the vault criteria pass: each row still needs its audit.
+
+| Hook | tre PR | Request | Unlocks |
+|---|---|---|---|
+| Two-axis `scroll_view` with the specified scrollbar | 326 | [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] | AC-SCB-01 to AC-SCB-21 |
+| Every scrollbar aspect is a property (`scrollbar_*`: radius, side, show policy, track, per-state colours, fade, arrows, lane click, steps, smooth scroll); `virtual_list` shares the scroll view scrollbar | 329 | UXREQ-001, [[UXREQ-002 Virtual list keys and scroll to index]] | AC-SCB-22 to AC-SCB-30 |
+| `virtual_list` keys, `scroll_to_index`, `scroll_into_view` | 325 | UXREQ-002 | AC-SCB-14, [[List]], [[Tree]] |
+| `hit_testable` on every node (text hit-testable by default); `vertical_align` on `text` and `text_input` | 327 | [[UXREQ-005 Vertical alignment of text and text input, tracking and line height on text input]] | AC-TIP-1 for a label, F7, [[Text Field]] |
+| `letter_spacing` and `line_height` on `text_input` (0.6.11) | consolidated in 337 | UXREQ-005 | AC-TYP-2, [[Text Field]] |
+| `set_size` and `pos_in_set` (derived for `virtual_list`), `checked` mixed, `orientation`, `modal` and 18 more roles | 328 | [[UXREQ-003 Accessibility set size, position, mixed, orientation and modal]], [[UXREQ-004 Accessibility roles]] | [[14 Accessibility Basics]], [[Accessibility Tree]] |
+| `Window` and `App` `scheme` selects the baseline colours of every engine default (the dark-by-default and light-literal defaults are gone) | 330 | tre audit P4 | [[Colour Roles]], AC-COL-11 (98 of 98 roles match, `tools/compare_scheme.py`) |
+| `set_defaults` declares the baseline look per node kind | 331 | tre audit P12 | [[Defaults Matrix]] defaults |
+| Named easings everywhere an easing is taken; snap and fling timings are properties | 332 | tre audit P7 | [[Motion]], scroll snap |
+| Terminal `escape_chord` (and `escape_chord_reverse`) leaves a focused terminal without sending the key to the shell | 333 | [[UXREQ-006 Terminal escape chord and history scrollbar]] (first half) | [[ADR-0018 Terminal escape chord]], [[Terminal]] |
+| `Window(first_present=..., background=...)` and `window.ready()` hold the first present for windows | 334 | [[UXREQ-009 First frame hold]] (windows) | [[ADR-0005 Theme follows the system]] |
+| `hover_layer`, `pressed_layer`, `focus_layer` (colour, opacity), `focus_layer_any_modality`, `state_layer_ms`, `state_layer_easing`: the engine draws and fades state layers | 335 | [[UXREQ-010 State layer hooks]] | [[State Layers]] (the 16 percent dragged layer is not covered: the engine has no drag state to follow) |
+| `outline` and `focus_outline` draw a ring outside the box | 336 | [[UXREQ-008 Outline property for focus rings]] | [[Focus Ring]], AC-FOC-2, AC-FOC-5 |
+
+### Still needed
+
 | Hook | Today | Unlocks | Request |
 |---|---|---|---|
-| Scrollbar radius, track fill, per-state colours | hardcoded (pill on `both`, 2 px one-axis; no track) | AC-SCB-22, AC-SCB-23 | [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] |
-| Scrollbar side (vertical left or right, horizontal top or bottom, RTL), show policy, fade time and easing, arrow buttons, lane-click mode, page repeat timing | hardcoded | AC-SCB-26, AC-SCB-27, AC-SCB-28 | UXREQ-001 |
-| Wheel notch, key line, page fraction, smooth scroll time | hardcoded (40 px, 40 px, 0.9, instant) | AC-SCB-24 | UXREQ-001, [[UXREQ-002 Virtual list keys and scroll to index]] |
-| Virtual list takes every `scrollbar_*` property | rejected on non-scroll views | AC-SCB-22 to AC-SCB-30 for lists and trees | UXREQ-002 |
-| Snap timing and curve (`snap_settle_ms`, `snap_duration_ms`, `snap_easing`); snap per axis on a `both` view | hardcoded 120 ms, 200 ms, bezier(0.2, 0, 0, 1); snap on the main axis only | scroll snap rules | UXREQ-001 |
-| Fling constants | hardcoded (tau 0.35, stop 30, minimum 150) | touch scrolling feel | UXREQ-001 |
-| Text nodes hit-testable (pointer enter, leave on plain text) | a plain `text` never claims a hit | AC-TIP-1 for a tooltip on a label | tre P2, approved |
-| Static text selection colour (`selection_fill` on `text` as on `text_input`), terminal font family, line height, cursor shape and blink, bold weight, dim opacity, underline geometry, palette defaults | hardcoded | [[Text Selection]], [[Terminal]] | to be filed |
-| Gesture thresholds (long press 500 ms, tap 300 ms, double tap 300 ms and 30 px, swipe 600 px/s and 40 px, multi-click 500 ms and 4 px) | hardcoded except `touch_slop` | [[11 Interaction]] timings | to be filed |
-| Vertical alignment of text and text input, letter spacing and line height on `text_input` | missing | [[Text Field]], F7 | UXREQ-005 |
-| Accessibility set size and position, mixed, orientation, modal; roles | missing | [[14 Accessibility Basics]] | UXREQ-003, UXREQ-004 |
-| Terminal escape chord, history scrollbar | missing | [[Terminal]] | UXREQ-006 |
-| Layer placement policy: viewport margin, flip threshold | hardcoded margin 0, slack 0 | [[Anchored Placement]] | to be filed |
-| First-frame hold (the first present is deferred until the application is ready) | missing | ADR-0005 | UXREQ-009 (held) |
-| Declarative state layers: colour, opacity per state (hover, focus, pressed, dragged), fade, shape, disabled scheme (tre audit P13) | tre draws none; tess-ui constants, tess-shell opacity literals | [[State Layers]], every control | [[UXREQ-010 State layer hooks]] (approved) |
-| Outline outside the border box (width, offset, colour) for focus rings (tre audit P14) | `stroke_*` draws inside the box; the ring is a shadow with spread | [[Focus Ring]], AC-FOC-2, AC-FOC-5 | [[UXREQ-008 Outline property for focus rings]] (approved) |
-| Default colours that follow a scheme (scrollbar `#CAC4D0`, text black, terminal palette) | light-scheme literals | dark by default | to be filed |
+| Terminal history scrollbar | not built (the wheel scrolls the history; `docs/guide/text.md` calls it a later item) | [[Terminal]] | UXREQ-006 (second half, open) |
+| First-frame hold for layer and popup surfaces | windows only; layers follow in tre's `feat/first-present-layers` | [[ADR-0005 Theme follows the system]] | UXREQ-009 |
+| Multi-click window 500 ms and 4 px as properties; a drag start distance property | hardcoded; no drag threshold (absent in the 0.6.11 tag) | [[11 Interaction]] double click and drag rules, [[Drag and Drop]] | to be filed (tess-re 0.6.12 list) |
+| `selection_foreground`, `selection_radius` | absent in the 0.6.11 tag; `caret_width` is settable on `text_input` in tre | [[Text Selection]] | to be filed (tess-re 0.6.12 list); tess-re counts `caret_width` as a gap, which in 0.6.11 is a project-layer gap |
+| Layer placement viewport margin and flip threshold; popup edge margin | absent in the 0.6.11 tag (margin 0, slack 0) | [[Anchored Placement]], [[Popup Window]] | to be filed (tess-re 0.6.12 list) |
+| Per-state state layer timings | in progress in tre | [[State Layers]] | UXREQ-010 follow-up |
+| Shadows on a path including holes | in progress in tre | [[Elevation]] for path shapes | tess-re 0.6.12 |
+| Static text selection colour (`selection_fill` on `text`), terminal font family, line height, cursor shape and blink, bold weight, dim opacity, underline geometry | hardcoded in the audit; re-check against 0.6.11 | [[Text Selection]], [[Terminal]] | to be filed |
+| Gesture thresholds (long press 500 ms, tap 300 ms, double tap 300 ms and 30 px, swipe 600 px/s and 40 px) | hardcoded except `touch_slop` | [[11 Interaction]] timings | to be filed |
 
 ## tess-ui
 
