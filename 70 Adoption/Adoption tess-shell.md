@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 30 open findings (P0 0, P1 16, P2 14), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Five open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 29 open findings (P0 0, P1 16, P2 13; TSH-008 and TSH-084 are blocked on shell features), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Seven open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -58,7 +58,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-004 | P1 | Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
-| TSH-008 | P2 | Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
+| TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `For` plus `Class` on a module call). Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
 
 ### Keyboard reachability
 
@@ -123,10 +123,9 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built Update (2026-11-22, tess-shell audit against main, schema 1.30): scrollbars for ScrollBox and the Popup scroll view are built; `Scroll_Snap` and `On_Scroll` are still not built. | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
-| TSH-081 | P2 | Text Selection: no copy command | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
+| TSH-081 | P2 | Text Selection: no copy command (Ctrl+C is in tess-shell PR 153, merge pending) | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
 | TSH-082 | P2 | List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
-| TSH-083 | P2 | Rectangle block offers no `Hit_Shape` | AC-BLK-RCT-5 | `tess-shell:src/tess_shell/schema/blocks.py` | Add the key | [[Rectangle Block]] |
-| TSH-084 | P2 | Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
+| TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
 
 ## Fixed since the audit
 
@@ -183,7 +182,15 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 | TSH-022 | tre 0.6.12 | follows TSH-020 (Toggle hover and pressed) |
 | TSH-054 | tre 0.6.12 | the path build waits for tre 0.6.12 |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
+| TSH-008 | shell feature | dynamic tooltips in `For` plus `Class` on a module call |
+| TSH-084 | shell feature | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots) |
 | TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
+
+## Won't do
+
+| ID | Finding | Reason |
+|---|---|---|
+| TSH-083 | Rectangle block offers no `Hit_Shape` | The [[Rectangle Block]] specification does not offer `Hit_Shape` (it belongs to [[Path Block]]); a Rectangle that must let clicks through is a transparent box. The row was wrong and its AC citation (AC-BLK-RCT-5, a tree assertion) did not test it. |
 
 ## Engine hooks needed
 

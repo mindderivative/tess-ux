@@ -19,7 +19,7 @@ How the specifications reach the projects. Each project has an audit worklist de
 | Project | Note | Findings | P0 | P1 | P2 | Method |
 |---|---|---|---|---|---|---|
 | tess-ui | [[Adoption tess-ui]] | 70 | 8 | 38 | 24 | desk audit against `origin/main`, nothing run |
-| tess-shell | [[Adoption tess-shell]] | 30 open, 29 fixed, 3 implemented pending the owner check | 0 | 16 | 14 | desk audit against `origin/main`, nothing run |
+| tess-shell | [[Adoption tess-shell]] | 29 open (2 blocked on shell features), 29 fixed, 3 implemented pending the owner check, 1 won't do | 0 | 16 | 13 | desk audit against `origin/main`, nothing run |
 | tre | [[Adoption tre]] | 17 | 5 high | 10 medium | 2 low | desk audit, severities high, medium, low |
 | tess-dl, tess-el, tess-utils | [[Adoption Libraries]] | 9 | 0 | 1 medium | 1 low | nothing applies to tess-dl and tess-el |
 
