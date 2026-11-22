@@ -94,7 +94,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-051 | P1 | Bar `Input_Region` and `Exclusive_Zone` are not built (the rest of TSH-051 is fixed by PR 131; the shell guide still lists both as not built for a Bar, and Panel has `Input_Region`) | AC-BAR-4, AC-BAR-17 | `tess-shell:src/tess_shell/schema/docs.py` | Build `Exclusive_Zone` and `Input_Region` for the Bar | [[Bar]] |
+| TSH-051 | P1 | Not built, no demand (decision of bot:Orchestrator, 2026-11-22): Bar `Input_Region` and `Exclusive_Zone` are not built (the shell's `reserve` true or false covers the common case and the specification gives the two keys no behaviour beyond the key, so they stay as not-built keys in AC-BAR-17; the rest of TSH-051 is fixed by PR 131; the shell guide still lists both as not built for a Bar, and Panel has `Input_Region`) | AC-BAR-4, AC-BAR-17 | `tess-shell:src/tess_shell/schema/docs.py` | Build `Exclusive_Zone` and `Input_Region` for the Bar | [[Bar]] |
 | TSH-053 | P1 | Bar and Popup `Animation` not built (no popup show and hide animation) | AC-BAR-17, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:278,330` | Build `Animation` with the motion tokens and reduced motion | [[Bar]], [[Popup]] |
 | TSH-054 | P1 | OQ-23 closed (adopted); the level model follows. Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
 | TSH-055 | P2 | Status: partly done: Bar and Panel `Padding` built in tess-shell PR 156 (AC-BAR-22). Still not built: Panel `Exclusive_Zone`, Bar `Text_Rotation`; `Class` is won't do until specified; `Margin` is `Inset`, not a new key | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
@@ -165,6 +165,27 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-051 | Bar `Visible` | Fixed on tess-shell main by PR 131 (verified by the owner on KWin, A1 to A7); the other two keys of the original row stay open, see the worklist | AC-BAR-4, AC-BAR-17 | [[Bar]] |
 
 
+## Shipped, verified headless only, not seen on the owner's real KWin
+
+The owner does not run `main` and skipped these checks (tess-shell's list, reported by the Orchestrator on 2026-11-22; not re-checked here). Until a hand check on KWin, each stays `not run` for the real-compositor part of its criteria ([[17 Conformance]], AC-CON-13).
+
+| Item | Spec notes |
+|---|---|
+| Tooltip card | [[Tooltip]] |
+| Focus ring 3 dp at 2 dp offset | [[Focus Ring]] |
+| F6 pane cycling | [[Keyboard Navigation]], [[11 Interaction]] |
+| Launcher scrollbars | [[Launcher]], [[Scrollbar and Scroll Container]] |
+| State layers | [[State Layers]] |
+| Frame shadow | [[Frame]], [[Elevation]] |
+| Minimised cue and tray attention dot | [[Task Item]], [[Tray Item]] |
+| Icon sizes 24, 20, 20 | [[Iconography]] |
+| Bar and Panel `Padding` | [[Bar]], [[Panel and Surface]] |
+| Bar `Animation` FADE and NONE | [[Bar]], [[Auto Hide]] |
+| `Appearance.Scheme` live switch | [[Theme Following the System]] |
+| Ctrl+C clipboard on selectable text | [[Text Selection]] |
+| Peek handle as an assistive-technology button | [[Peek]] |
+| List `Empty` slot | [[List]], [[Empty States]] |
+
 ## Held findings
 
 These rows wait on a decision or a hook, not on shell work; each carries `held: <reason>` in its Finding text.
@@ -175,7 +196,7 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 | TSH-022 | tre 0.6.12 | follows TSH-020 (Toggle hover and pressed) |
 | TSH-054 | tre 0.6.12 | the path build waits for tre 0.6.12 |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
-| TSH-082 | tre hook | multi-selection in tre (queued with tess-re): the List multi-select rules need it; the `Empty` slot does not |
+| TSH-082 | tre hook | multi-selection in tre: delivered as `selection_mode` on `virtual_list` in tre PR 350 (0.6.12 unreleased); the shell List can use it once released; the `Empty` slot does not need it |
 | TSH-008 | shell feature | dynamic tooltips in `For` plus `Class` on a module call |
 | TSH-084 | shell feature | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots) |
 | TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
