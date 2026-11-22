@@ -139,7 +139,7 @@ Text takes `on_surface` through the Default stylesheet (`Text` rule) in light, d
 
 | Project | Path | Status |
 |---|---|---|
-| tess-shell | `tess-shell:src/tess_shell/shipped/Marquee_Text/Marquee_Text_Module.tdl`, `Marquee_Text_Module.py`, `tess-shell:src/tess_shell/binder/marquee.py` | partly meets: engine-driven scroll, no frames at idle, reduced motion, disabled and tooltip gate, name = text (meets AC-MOD-MQT-1, -2, -3, -4, -5, -6, -9 by reading); no hover pause (fails AC-MOD-MQT-7); always-on tooltip nests inside tooltip-bearing controls (fails AC-MOD-MQT-8) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Marquee_Text/Marquee_Text_Module.tdl`, `Marquee_Text_Module.py`, `tess-shell:src/tess_shell/binder/marquee.py` | partly meets: engine-driven scroll, no frames at idle, reduced motion, disabled and tooltip gate, name = text (meets AC-MOD-MQT-1, -2, -3, -4, -5, -6, -9 by reading); no hover pause (fails AC-MOD-MQT-7); always-on tooltip nests inside tooltip-bearing controls (fails AC-MOD-MQT-8) Resuming after a hover restarts the full pause (1500 ms); accepted. |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Marquee_Text/Marquee_Text_Module.tdl` (dimensions) | meets: width 160, body type, no padding or border; letter spacing (tracking) has no hook in tess-shell |
 | shell-vault | `shell-vault:50 Design System/Standard Modules.md` (Marquee text) | exists |
 | tess-ui | none | not applicable: no marquee |

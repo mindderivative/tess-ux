@@ -78,10 +78,12 @@ Element notes ([[Tooltip]], [[Menu]], [[Dialog]], [[Popup]], [[Button]]) carry t
 | `$shape.none` | 0 | `none` |
 | `$shape.small` | 4 | `extra_small` |
 | `$shape.medium` | 8 | `small` |
+| `$shape.medium_large` | 12 | `medium` |
 | `$shape.large` | 16 | `large` |
+| `$shape.extra_large` | 28 | `extra_large` |
 | `$shape.full` | 999 | `full` |
 
-The shell names (`small`, `medium`) mean one step less than the MD3 names of the same value ([[ADR-0001 MD3 role names are the specification vocabulary]]).
+The shell names `small` and `medium` mean one step less than the MD3 names of the same value ([[ADR-0001 MD3 role names are the specification vocabulary]]). Decision for the two steps the shell added (tess-shell review of its shape token change, 2026-11-22, recorded by bot:Orchestrator): the shell keeps its existing names, so a theme that already says `small` or `medium` does not change meaning; the 12 dp step is `medium_large` (the MD3 name `medium` would collide with the shell's `medium` of 8 dp); the 28 dp step is `extra_large`, the same name and value as MD3. The mapping table is the single place that equates the two vocabularies; a project that adds a step adds its row here first.
 
 ## Rules
 
@@ -99,14 +101,14 @@ The shell names (`small`, `medium`) mean one step less than the MD3 names of the
 - [ ] AC-SHP-3: Pixel check. For a 40 by 40 dp box with radius `full`, the pixel at (1,1) from the corner is the background and the pixel at the centre of the left edge is the container colour. Pass: both hold at scale 1.0 and 2.0.
 - [ ] AC-SHP-4: Token test (static scan). No view stylesheet sets `Corner_Radius` to a number that is not in the baseline scale, except in the allow-list of Rules 1. Pass: zero hits outside the allow-list.
 - [ ] AC-SHP-5: Geometry check. A child larger than its rounded parent is clipped at the parent's corner. Pass: the child pixel at the corner outside the radius equals the background.
-- [ ] AC-SHP-6: Token test. The 5 shell shape tokens equal the mapping table values. Pass: 5 of 5.
+- [ ] AC-SHP-6: Token test. The 7 shell shape tokens (`none`, `small`, `medium`, `medium_large`, `large`, `extra_large`, `full`) equal the mapping table values (0, 4, 8, 12, 16, 28, 999). Pass: 7 of 7.
 
 ## Status in code
 
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/tokens.py` (`SHAPES`, `FULL_RADIUS`); `tess-ui:src/tess_ui/spec/default_theme.tdl`; `tess-ui:src/tess_ui/views/*_Stylesheet.tdl` | Partly meets. AC-SHP-1 meets (0, 4, 8, 12, 16, 28, `full` 9999). AC-SHP-2 meets for Menu 4, Tooltip 4 (rich 12), Snackbar 4, Card 12, Dialog 28; the navigation rail indicator is 16 where MD3 uses a pill #needs-verification. AC-SHP-4 fails: per-component literals in stylesheets (Button sheet 12, 16, 28 for sizes, Chip 8, Date picker day 24, Pagination item 20, Tabs indicator 3, Badge 3 and 8). Expressive tokens are absent as tokens. |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` lines 38 to 42 | Partly meets. AC-SHP-6 meets (0, 4, 8, 16, 999). The scale has 5 of 7 steps (no 12, no 28). AC-SHP-2 not checked per element. |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` lines 38 to 42 | Partly meets. AC-SHP-6 meets (0, 4, 8, 16, 999). The scale had 5 of 7 steps; the shell adds `medium_large` (12) and `extra_large` (28) in its shape token change (not yet verified here). AC-SHP-2 not checked per element. |
 | tre | `tre:docs/reference/properties.md` (corner_radius); `tre:crates/engine-render/src/lib.rs` | Not applicable as a scale. The engine takes a radius per node (default 0, single value or four) and clamps by the renderer; scroll thumb radius 2 dp is a primitive. |
 
 ## Deviations from Material Design 3
@@ -114,5 +116,5 @@ The shell names (`small`, `medium`) mean one step less than the MD3 names of the
 | Deviation | Reason | ADR |
 |---|---|---|
 | Expressive steps 20, 32 and 48 dp excluded from the baseline | Baseline is the 2022 shape scale; Expressive adopted by name only | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
-| tess-shell scale has 5 steps with names shifted by one | The shell has its own flat token set | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| tess-shell scale has names shifted by one below `large` (`small` 4, `medium` 8) and two added steps `medium_large` (12) and `extra_large` (28) | The shell has its own flat token set; renaming would change the meaning of existing themes; the MD3 name `medium` would collide with the shell `medium` | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Popup container radius `extra_small` | MD3 has no popup; the menu value is used | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
