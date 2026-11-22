@@ -1,7 +1,7 @@
 ---
 title: ADR-0027 Shell popup and tooltip fade
 type: adr
-status: proposed
+status: accepted
 owner: phil
 created: 2026-11-22
 updated: 2026-11-22
@@ -13,7 +13,7 @@ depends_on: []
 # ADR-0027 Shell popup and tooltip fade
 
 > [!important] Status
-> `proposed`: records a decision that tess-shell shipped (PR 178, schema 1.42; reported, not re-checked). It becomes `accepted` when bot:Orchestrator or the owner says so.
+> `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-22, on tess-shell's shipped decision (PR 178, schema 1.42; reported, not re-checked). The owner can overturn it.
 
 ## Context
 
