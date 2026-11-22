@@ -113,7 +113,7 @@ The popup draws a body and a shadow margin; the content owns the rest (menu rows
 
 ## Motion
 
-No animation is required. Where a project animates, a fade of 100 ms ([[Motion]] `short2`) is the recommended bound; popups have no slide because the compositor places them. With reduced motion on, open and close are instant #needs-verification-as-design-choice.
+No animation is required. Where a project animates, a fade of 100 ms ([[Motion]] `short2`) is the recommended bound; popups have no slide because the compositor places them. tess-shell ships a 200 ms default ([[ADR-0027 Shell popup and tooltip fade]]); a popup that is dismissed closes at once. With reduced motion on, open and close are instant #needs-verification-as-design-choice.
 
 ## Accessibility
 
@@ -157,6 +157,7 @@ Scripted input uses the toolkit's simulated pointer and key events and frame clo
 - [ ] AC-POP-14 (scripted input, lifetime): closing or removing the opener's surface, or removing its monitor, closes the popup within one frame and logs the reason.
 - [ ] AC-POP-15 (AT tree assertion): the popup root has a role and a non-empty accessible name; the tooltip popup root is hidden from the tree and its text is the trigger's description.
 - [ ] AC-POP-16 (review): a launcher opened by shortcut or IPC is a Panel on the overlay layer with exclusive keyboard, not a focused popup.
+- [ ] AC-POP-17 (scripted input, fade, ADR-0027): with `Animation: FADE` and the default duration, a popup reaches full opacity in 200 ms and a tooltip does too; with reduced motion on, both are instant; `SLIDE` is refused with an error; a popup that is dismissed is gone in one frame; a popup that grabs the keyboard releases it no later than the end of its fade-out and keeps it until then. Pass: opacity at 0 ms, 100 ms and 200 ms; the refusal; the one-frame close; the grab timing from the event log.
 
 ## Status in code
 
@@ -175,6 +176,7 @@ Evidence: Launcher failure and the keyboard grab are recorded in `shell-vault:00
 | A popup that takes text input is allowed; MD3 menus hold commands only | Launcher and search flyouts; the text input rule is needed because the outside-click mechanism broke typing on KWin | [[ADR-0001 MD3 role names are the specification vocabulary]] (vocabulary); behaviour recorded here |
 | The popup-window route (`xdg_popup`) and its grab have no MD3 counterpart | MD3 is platform-agnostic; Wayland layer-shell hosts clip layers to the surface | [[Deviations from MD3]] |
 | Outside click is consumed | MD3 menus dismiss on outside tap; whether the tap is consumed is not specified in the sources read | [[Deviations from MD3]] |
+| tess-shell fades in 200 ms by default (`short4`), `SLIDE` refused | Fade is the only transition that does not move a compositor-placed popup; the design choice of the shell | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## Sources
 

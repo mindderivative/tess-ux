@@ -70,7 +70,7 @@ The popup window adds only a transparent shadow margin around the body and fixes
 | body | padding | - | N/A: the surface adds no padding; the element sets it ([[Menu]], [[Tooltip]]) | N/A: same as the Default column | N/A: same as the Default column | [[Menu]], [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: yes (padding) |
 | body (menu, flyout, rich tooltip) shadow margin | margin | `elevation.level2` | 10 | 10 | 10 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (geometry, margin inside the surface) |
 | body (plain tooltip) shadow margin | margin | `elevation.level0` | 0 | 0 | 0 | [[Elevation#Margin a layer window reserves for its shadow]] | tess-ui: n/a: element absent in tess-ui; tess-shell: via Elevation or Shadows (the bleed is computed from them); tre: yes (geometry, margin inside the surface) |
-| body to output edge | margin | `space.3` | 8 | 8 | 8 | [[Popup Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: no hook; tre: hardcoded in tre (compositor flip and slide through constraint_adjustment, margin 0) |
+| body to output edge | margin | `space.3` | 8 | 8 | 8 | [[Popup Window#Sizing and density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (8 px edge margin when the popup has a shadow, shell PR 176, reported and not re-checked); tre: hardcoded in tre (compositor flip and slide through constraint_adjustment, margin 0) |
 | body to anchor rectangle | gap | `space.0` | 0 | 0 | 0 | [[Popup]] (`Gap` default 0) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap); tre: yes (offset) |
 | body to anchor rectangle, tray menu | gap | `space.2` | 4 | 4 | 4 | [[Popup]] (the shell uses 4 for tray menus) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Gap); tre: yes (offset) |
 | body | border width | - | 0 | 0 | 0 | [[Popup]] (no border) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: yes (border_width) |
@@ -100,7 +100,7 @@ A tooltip is a popup; one tooltip at a time; dismissed on pointer leave after 15
 
 ## Motion
 
-Open and close are not animated by the surface (its settings cannot change after creation); an animation of content inside the body is the module's; durations from [[Motion]], reduced motion: immediate.
+Open and close are not animated by the surface (its settings cannot change after creation); an animation of content inside the body is the module's; durations from [[Motion]], reduced motion: immediate. tess-shell fades the whole popup (`Animation: FADE`, default 200 ms) by [[ADR-0027 Shell popup and tooltip fade]]: a popup that is dismissed closes at once, and a popup that holds the keyboard grab keeps it during the fade-out.
 
 ## Accessibility
 
@@ -125,6 +125,7 @@ Roles per scheme; the body is opaque ([[ADR-0004 Tooltip rule]]).
 - [ ] AC-PPW-7 (AT tree assertion): a menu popup exposes role `menu` with `menuitem` children and focus is on the first item or the opener-defined item.
 - [ ] AC-PPW-8 (scripted input): a popup with no parent that is open fails with reason `failed` and no surface remains.
 - [ ] AC-PPW-9 (pixel check): the body is opaque: no pixel of the body area has alpha below 255 at the container colour.
+- [ ] AC-PPW-10 (geometry check): a popup that has a shadow is placed with at least 8 dp between its body and every output edge, and a flip happens before the body would cross that margin; a popup without a shadow may touch the edge. Pass: the distance is 8 dp or more in all four cases.
 
 ## Status in code
 
@@ -140,6 +141,7 @@ Roles per scheme; the body is opaque ([[ADR-0004 Tooltip rule]]).
 |---|---|---|
 | Menu surface placed by the compositor, shadow in a transparent margin | Wayland protocol | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Tooltip hover grace for all tooltips | WCAG 2.2 SC 1.4.13 | [[ADR-0011 Tooltip hover grace for all tooltips]] |
+| tess-shell fades the popup in 200 ms by default; `SLIDE` is refused | Fade is the only transition a compositor-placed popup can do without moving; 200 ms is `short4` | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## Sources
 

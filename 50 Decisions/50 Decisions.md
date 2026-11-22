@@ -42,5 +42,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0024 Shell tray and task item sizes]]
 - [[ADR-0025 Shell outline and high contrast status colours, accent never text]]
 - [[ADR-0026 Selection highlight radius 2 dp]]
+- [[ADR-0027 Shell popup and tooltip fade]] (proposed)
 
 Back to [[Index]].

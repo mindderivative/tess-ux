@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 524 rows from 141 notes as of 2026-11-22.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 527 rows from 141 notes as of 2026-11-22.
 
 ## [[03 Typography and Text Rules]]
 
@@ -759,6 +759,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Menu surface placed by the compositor, shadow in a transparent margin | Wayland protocol | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Tooltip hover grace for all tooltips | WCAG 2.2 SC 1.4.13 | [[ADR-0011 Tooltip hover grace for all tooltips]] |
+| tess-shell fades the popup in 200 ms by default; `SLIDE` is refused | Fade is the only transition a compositor-placed popup can do without moving; 200 ms is `short4` | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## [[Popup]]
 
@@ -767,6 +768,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | A popup that takes text input is allowed; MD3 menus hold commands only | Launcher and search flyouts; the text input rule is needed because the outside-click mechanism broke typing on KWin | [[ADR-0001 MD3 role names are the specification vocabulary]] (vocabulary); behaviour recorded here |
 | The popup-window route (`xdg_popup`) and its grab have no MD3 counterpart | MD3 is platform-agnostic; Wayland layer-shell hosts clip layers to the surface | [[Deviations from MD3]] |
 | Outside click is consumed | MD3 menus dismiss on outside tap; whether the tap is consumed is not specified in the sources read | [[Deviations from MD3]] |
+| tess-shell fades in 200 ms by default (`short4`), `SLIDE` refused | Fade is the only transition that does not move a compositor-placed popup; the design choice of the shell | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## [[Progress Indicator]]
 
@@ -1083,6 +1085,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Grace period 150 ms for plain and rich tooltips | Hoverable condition of WCAG 1.4.13 | [[ADR-0011 Tooltip hover grace for all tooltips]] |
 | Rich tooltip actions reachable by Tab | Keyboard access; MD3 describes touch and pointer | [[ADR-0004 Tooltip rule]] |
 | Trigger is the control, never a row or group | Owner feedback F8; MD3 has no row-level tooltip, so this is a restriction rather than a deviation | [[ADR-0004 Tooltip rule]] |
+| tess-shell fades in 200 ms by default (`short4`), `SLIDE` refused | Fade is the only transition that does not move a compositor-placed popup; the design choice of the shell | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## [[Top App Bar]]
 
