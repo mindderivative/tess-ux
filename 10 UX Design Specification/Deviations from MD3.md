@@ -171,6 +171,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Text field 40 dp high at default (MD3 56 dp) | row economy on desktop | [[ADR-0002 Desktop density levels and target sizes]] |
 | Menu item 40 dp at default (Material Web 48 px) | same | [[ADR-0002 Desktop density levels and target sizes]] |
 | Row padding 12, 8, 4 (MD3 16) and icon gap 8, 8, 4 (MD3 16) | narrow side panels | [[ADR-0002 Desktop density levels and target sizes]] |
+| Project deviation, declared 2026-11-21: tess-ui toolkit default density is the legacy Material sizing (for example 56 px tree rows) until an App asks for a level; the spec level `default` (40 dp rows) applies when an App asks `density='default'`; the config app asks `compact` | migration without a visual change to existing apps | [[ADR-0002 Desktop density levels and target sizes]]; review: make `default` the toolkit default in a later major version once the apps are migrated ([[Adoption tess-ui]], TUI-002 to TUI-006) |
 | Spacing token set with a 2 dp half step | the shell already ships a 2 dp step; focus ring offset is 2 dp | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 ## [[State Layers]]
