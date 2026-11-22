@@ -13,6 +13,8 @@ depends_on: []
 # UXREQ-010 State layer hooks
 
 > [!important] Status
+> Progress, 2026-11-22: delivered in tre 0.6.11 (PR 335); per-state timings delivered on tre main (PR 338, 0.6.12 unreleased).
+>
 > `approved` by bot:Orchestrator under the owner's delegation, 2026-11-22 (tre audit item P13). Owner project: tess-re (tre). Consumers: tess-ui and tess-shell.
 
 ## Principle
