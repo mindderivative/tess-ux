@@ -33,7 +33,7 @@ One selection model for every collection, so Shift and Ctrl behave the same in a
 1. Focus and selection are different things. Focus is where the keyboard is (the ring, [[Focus Ring]]); selection is the set of chosen items. Moving focus does not change selection, except in the single-select case of rule 3.
 2. Models: single (at most one selected), multiple (any set). The container declares which (`aria-multiselectable`); the item states `selected` or, in a check-style multi list, `checked`, never both ([[14 Accessibility Basics]]).
 3. Single select: a click or Enter or Space selects the item and deselects the previous one. Selection does not follow focus by default ([[List]], [[Tree]]); a list that previews on arrow keys (the shell List, a file picker) may let selection follow focus when the preview is cheap, and states it.
-4. Anchor: the anchor is the item where a range starts. It is set by a plain click, a Ctrl+click and Space (toggle on). Shift+click and Shift+Arrow never move the anchor; they select the range anchor to target.
+4. Anchor: the anchor is the item where a range starts. It is set by a plain click, a Ctrl+click and Space (toggle on). Shift+click and Shift+Arrow never move the anchor; they select the range anchor to target. A selection set from code (the app restoring a saved selection, or an initial selection) sets the anchor to the first selected item in order, so Shift+click then extends from the restored selection instead of discarding it; an empty set leaves no anchor, and Shift+click with no anchor acts as a plain click.
 5. Pointer rules:
 
 | Input | Result |
