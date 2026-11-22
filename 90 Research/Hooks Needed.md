@@ -44,7 +44,7 @@ Checked in the `v0.6.11` tag (PR titles, `docs/reference/properties.md`, `docs/a
 |---|---|---|---|
 | `first_present` and `ready()` on `LayerWindow` and `PopupWindow` (the first-frame hold for layer surfaces; proven on sway, not seen on KWin) | 340 | [[UXREQ-009 First frame hold]] | [[ADR-0005 Theme follows the system]] for shell surfaces |
 | Escape cancels a held gesture, `dock_cancel`, edge auto-scroll while dragging (drag cancel and auto-scroll) | 344 | [[UXREQ-007 Drag cancel by Escape and edge auto-scroll]] | [[Drag and Drop]], [[Drag and Drop Pattern]], [[Dock]] (AC-DND, AC-DNP, AC-DCK-6) |
-| Terminal history scrollbar and terminal appearance | 347 | [[UXREQ-006 Terminal escape chord and history scrollbar]] (second half) | [[Terminal]], [[Scrollbar and Scroll Container]] |
+| Terminal history scrollbar (opt-in `scrollbar_show`; takes the scroll-view `scrollbar_*` properties except gutter, corner and the horizontal side) and terminal appearance (`font_family`, `line_height`, `caret_shape`, `caret_width`, `caret_blink`, `caret_unfocused`, `bold_weight`, `dim_opacity`, `underline_offset`, `underline_thickness`, `selection_foreground`, `selection_radius`) | 347 | [[UXREQ-006 Terminal escape chord and history scrollbar]] (second half) | [[Terminal]], [[Scrollbar and Scroll Container]] |
 | Per-state state layer timings | 338 | [[UXREQ-010 State layer hooks]] | [[State Layers]] |
 | Shadows on a path follow its holes | 339 | tess-re 0.6.12 | [[Elevation]] for path shapes |
 
@@ -55,9 +55,9 @@ Reported by the Orchestrator from tess-re; not re-checked against a tag.
 | Hook | Today | Unlocks | Request |
 |---|---|---|---|
 | Multi-click window 500 ms and 4 px as properties; a drag start distance property | hardcoded; no drag threshold (absent in the 0.6.11 tag) | [[11 Interaction]] double click and drag rules, [[Drag and Drop]] | to be filed (tess-re 0.6.12 list) |
-| `selection_foreground`, `selection_radius` | absent in the 0.6.11 tag; `caret_width` is settable on `text_input` in tre | [[Text Selection]] | to be filed (tess-re 0.6.12 list); tess-re counts `caret_width` as a gap, which in 0.6.11 is a project-layer gap |
+| `selection_foreground`, `selection_radius` on `text` and `text_input` | delivered for the `terminal` in PR 347; not stated for `text` and `text_input` in the 0.6.11 tag | [[Text Selection]] | to be filed (tess-re 0.6.12 list); tess-re counts `caret_width` as a gap, which in 0.6.11 is a project-layer gap |
 | Layer placement viewport margin and flip threshold; popup edge margin | absent in the 0.6.11 tag (margin 0, slack 0) | [[Anchored Placement]], [[Popup Window]] | to be filed (tess-re 0.6.12 list) |
-| Static text selection colour (`selection_fill` on `text`); terminal appearance is delivered in PR 347 (re-check which of font family, line height, cursor shape and blink, bold weight, dim opacity and underline geometry it covers) | hardcoded in the audit; re-check against 0.6.11 | [[Text Selection]], [[Terminal]] | to be filed |
+| Static text selection colour (`selection_fill` on `text`); the terminal appearance is delivered in PR 347 (see the delivered table). Not built in tre: the 256-colour cube and grey ramp, italic and strikethrough geometry, ligature toggle, cell padding, a separate terminal `selection_fill` (use `palette['selection']`) | hardcoded in the audit; re-check against 0.6.11 | [[Text Selection]], [[Terminal]] | to be filed |
 | Gesture thresholds (long press 500 ms, tap 300 ms, double tap 300 ms and 30 px, swipe 600 px/s and 40 px) | hardcoded except `touch_slop` | [[11 Interaction]] timings | to be filed |
 
 ## tess-ui
