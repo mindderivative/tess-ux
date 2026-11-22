@@ -354,7 +354,7 @@ Source of truth: `tesserae-shell schema --json` (saved as sh-schema.json) and th
 | `$color.error` | `#F2958C` | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22 | An error or a critical state; overridden in mode(s): Light |
 | `$color.warning` | `#E6BB6A` | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:23 | A warning or a low state; overridden in mode(s): Light |
 | `$color.success` | `#8CCB9A` | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:24 | A success state; overridden in mode(s): Light |
-| `$color.outline` | `#55657A` | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:25 | Borders, dividers and tracks; overridden in mode(s): Light, High_Contrast |
+| `$color.outline` | `#55657A` (the specification asks `#5F7188`, [[ADR-0025 Shell outline and high contrast status colours, accent never text]]) | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:25 | Borders, dividers and tracks; overridden in mode(s): Light, High_Contrast |
 | `$color.scrim` | `#000000` | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:26 | The colour laid over what a modal surface covers |
 
 #### Colour mode overrides (Default_Theme.tdl)

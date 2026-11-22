@@ -46,7 +46,7 @@ Gives one command or choice in a menu a place, a name and an optional shortcut h
 | State | Visual change | Token values |
 |---|---|---|
 | Rest | Text `on_surface` | [[Menu]] |
-| Hover or lit by keys | Fill `outline` (code); spec: state layer 8 percent in `on_surface` | `on_surface` on `outline`: 4.91:1 dark, 4.54:1 light |
+| Hover or lit by keys | Fill `outline` (code); spec: state layer 8 percent in `on_surface` | `on_surface` on `outline`: 4.12:1 dark, 4.54:1 light (the dark value fell from 4.91 when ADR-0025 raised the shell `outline`; 4.12 is below 4.5, one more reason the spec uses a state layer and not an `outline` fill) |
 | Focus (keyboard) | The lit row is the focus indication (a row is no Tab stop; the Menu holds focus) | [[Menu]] |
 | Pressed | Fill `primary` (code); spec: state layer 10 percent | `on_surface` on `primary`: 2.58:1 dark, 2.89:1 light (fails 4.5:1) |
 | Disabled | Opacity 0.5; no click, no focus; no tooltip | [[State Layers#Disabled scheme|Disabled State]] |

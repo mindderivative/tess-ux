@@ -51,7 +51,7 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 | OQ-21 | Closed 2026-11-21 by [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: the 12 dp hit area is accepted with the keyboard path as the equivalent control | closed | [[Scrollbar and Scroll Container]] |
 | OQ-22 | Closed 2026-11-21 by [[ADR-0013 Focus and pressed state layer 10 percent]]: focus and pressed state layers stay 10 percent | closed | [[State Layers]] |
 | OQ-32 | Closed 2026-11-22 by the amendment of [[ADR-0012 Scrollbar thumb opacity and hit area exception]]: thumb rest opacity 0.70 (minimum 3.40 to 1 over every surface role; 0.65 is the smallest value that reaches 3.0) | closed | [[Scrollbar and Scroll Container]] |
-| OQ-23 | Shell state layers (ADR-0009): adoption not decided; the shell audit will record the gap | Orchestrator asks the owner at the shell audit | [[State Layers]] |
+| OQ-23 | Closed 2026-11-22: the owner answered yes (his item 22): the shell adopts the MD3 state layers 8, 10, 10 percent ([[ADR-0009 State layer percentages]], amended) | closed | [[State Layers]] |
 | OQ-24 | Closed 2026-11-21: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] and [[UXREQ-002 Virtual list keys and scroll to index]] are filed and approved in [[80 Requests]] | closed | [[Scrollbar and Scroll Container]] |
 
 ## Decided in Phase 2 (2026-11-21, by bot:Orchestrator under the owner's delegation)
@@ -70,6 +70,5 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 
 | ID | Question | Recommendation | Evidence |
 |---|---|---|---|
-| OQ-23 | Shell state layers (ADR-0009): adopt or keep the opacity literals | Adopt, at the shell audit | [[State Layers]], [[Adoption tess-shell]] |
 
 Back to [[Index]].
