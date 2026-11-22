@@ -19,7 +19,7 @@ How the specifications reach the projects. Each project has an audit worklist de
 | Project | Note | Findings | P0 | P1 | P2 | Method |
 |---|---|---|---|---|---|---|
 | tess-ui | [[Adoption tess-ui]] | 70 | 8 | 38 | 24 | desk audit against `origin/main`, nothing run |
-| tess-shell | [[Adoption tess-shell]] | 58 open, 2 fixed | 2 | 32 | 24 | desk audit against `origin/main`, nothing run |
+| tess-shell | [[Adoption tess-shell]] | 28 open, 29 fixed, 3 implemented pending the owner check | 0 | 14 | 14 | desk audit against `origin/main`, nothing run |
 | tre | [[Adoption tre]] | 17 | 5 high | 10 medium | 2 low | desk audit, severities high, medium, low |
 | tess-dl, tess-el, tess-utils | [[Adoption Libraries]] | 9 | 0 | 1 medium | 1 low | nothing applies to tess-dl and tess-el |
 
@@ -29,7 +29,7 @@ Severity: P0 blocks use (an owner-feedback item still failing, a keyboard trap, 
 
 1. P0 in tess-ui (the owner-feedback items): theme with no seed and first-frame flash (TUI-001, TUI-060; the hold of the first frame needs a tre hook, UXREQ-009), tree indent and chevron gap (TUI-002, TUI-003), tooltip scope and dismissal (TUI-010, TUI-011), two-axis scrolling (TUI-020, needs the tre hook of UXREQ-001), icon-only FAB name (TUI-050).
 2. The tre hooks that the P0 and P1 items need: [[UXREQ-001 Two-axis scroll view with the specified scrollbar]] and [[UXREQ-002 Virtual list keys and scroll to index]] (approved), then set size and position, roles, the terminal escape chord and the vertical alignment of text (TRE-009, TRE-014 and UXREQ-003 to UXREQ-006, approved; UXREQ-007 to UXREQ-009, proposed and held; see [[Adoption tre]]).
-3. P0 in tess-shell: pressed menu item contrast (TSH-040), the clock colour on the light scheme (TSH-041); P1: build `Auto_Hide` (default off, [[ADR-0022 Bar Auto_Hide default is off]]), `Auto_Hide_Delay` and the Shortcut Mode reveal together (TSH-010, [[ADR-0021 Shortcut Mode reveals a hidden Bar]]).
+3. tess-shell: the P0 rows are done on main (TSH-040, TSH-041); `Auto_Hide` (default off, [[ADR-0022 Bar Auto_Hide default is off]]), `Auto_Hide_Delay` and the Shortcut Mode reveal ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]) are implemented in shell PR 131, merge pending the owner's KWin check (TSH-010, TSH-050, TSH-051). Next for the shell: TSH-042 and TSH-043, TSH-061, TSH-015, TSH-004, TSH-053, then the P2 bundles.
 4. P1 by theme across tess-ui and tess-shell: density (ADR-0002), tooltips (ADR-0004, ADR-0011), state layers (ADR-0009, shell adoption undecided: OQ-23), roles and names, keyboard paths, state feedback.
 5. A contrast script in a shared library (LIB-004 in [[Adoption Libraries]]) so that every project runs the contrast acceptance criteria the same way.
 6. P2 last; components that no application uses are audited when an application adopts them.
