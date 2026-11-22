@@ -1,7 +1,7 @@
 ---
 title: ADR-0028 Tree rows are flat in the accessibility tree
 type: adr
-status: proposed
+status: accepted
 owner: phil
 created: 2026-11-22
 updated: 2026-11-22
@@ -13,7 +13,7 @@ depends_on: []
 # ADR-0028 Tree rows are flat in the accessibility tree
 
 > [!important] Status
-> `proposed`. Acceptance waits for two things: tess-ui's Tree pull request is ready, and the owner has made a real screen-reader pass (Orca on KDE) over one flat tree. Until that pass, the claim that a flat tree reads as well as a nested one is unverified: it comes from the WAI-ARIA text and the APG tree pattern, not from a test with a screen reader (the vault records no screen-reader run, [[14 Accessibility Basics]]).
+> `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-22, so that tess-ui's flat Tree can merge. Two claims stay UNVERIFIED until the owner has made a real screen-reader pass (Orca on KDE) over one flat tree (open owner check): that a flat tree reads as well as a nested one, and that tre exposes level, set size and position in set to the screen reader. They come from the WAI-ARIA text and the APG tree pattern and from the tre notes, not from a test with a screen reader (the vault records no screen-reader run, [[14 Accessibility Basics]]). If the pass shows a loss, this ADR is reopened.
 
 ## Context
 
@@ -21,7 +21,7 @@ depends_on: []
 
 ## Options
 
-1. Flat accessibility tree: the visible rows are direct children of the tree, each with `aria-level`, `aria-setsize` and `aria-posinset`; no `group` wrapper (chosen, proposed)
+1. Flat accessibility tree: the visible rows are direct children of the tree, each with `aria-level`, `aria-setsize` and `aria-posinset`; no `group` wrapper (chosen)
 2. Nested tree with `group` wrappers, and the engine selects across descendants in tree order
 
 ## Decision

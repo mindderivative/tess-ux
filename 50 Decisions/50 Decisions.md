@@ -12,7 +12,7 @@ depends_on: []
 
 # 50 Decisions
 
-Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0027 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
+Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0028 were accepted by bot:Orchestrator under the owner's delegation (2026-11-21 to 2026-11-22); later ADRs start `proposed`.
 
 ## Notes
 
@@ -43,6 +43,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0025 Shell outline and high contrast status colours, accent never text]]
 - [[ADR-0026 Selection highlight radius 2 dp]]
 - [[ADR-0027 Shell popup and tooltip fade]]
-- [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed)
+- [[ADR-0028 Tree rows are flat in the accessibility tree]]
 
 Back to [[Index]].

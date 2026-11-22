@@ -27,7 +27,7 @@ Navigate and choose in hierarchical data (files by type, configuration structure
 ## Anatomy
 
 1. Tree container: role `tree`, vertical roving focus, lays rows in a column.
-2. Tree rows: the visible rows are direct children of the tree, each with its level; the children of an open branch follow it in tree order, with no group wrapper ([[ADR-0028 Tree rows are flat in the accessibility tree]], proposed).
+2. Tree rows: the visible rows are direct children of the tree, each with its level; the children of an open branch follow it in tree order, with no group wrapper ([[ADR-0028 Tree rows are flat in the accessibility tree]], accepted).
 3. [[Tree Node]] rows.
 4. Scroll container around the tree ([[Scrollbar and Scroll Container]]).
 5. Empty-state slot, shown when there are no nodes.
@@ -120,7 +120,7 @@ Chevron rotation 200 ms; no height animation of the children ([[Tree Node]], [[M
 ## Accessibility
 
 - Role `tree` with an accessible name taken from the pane or heading label ("Files", "Structure"), never a generic word.
-- Each row: role `treeitem`, `aria-level` (depth + 1), `aria-setsize` and `aria-posinset` (the number of siblings under the same parent and the position among them), `aria-expanded` on branches only, `aria-selected` on selectable rows; the rows are direct children of the tree and no group wrapper is required (the APG flat form, [[ADR-0028 Tree rows are flat in the accessibility tree]], proposed; the claim that screen readers announce this well is unverified until a real pass).
+- Each row: role `treeitem`, `aria-level` (depth + 1), `aria-setsize` and `aria-posinset` (the number of siblings under the same parent and the position among them), `aria-expanded` on branches only, `aria-selected` on selectable rows; the rows are direct children of the tree and no group wrapper is required (the APG flat form, [[ADR-0028 Tree rows are flat in the accessibility tree]], accepted; the claim that screen readers announce this well is unverified until a real pass).
 - Multi select: `aria-multiselectable` true.
 - Keys per the table; the focus indicator is visible and keyboard only ([[Focus Ring]], [[14 Accessibility Basics]]).
 - Collapsing, expanding and selecting changes are exposed as property changes of the node; no extra announcement is made.
@@ -171,7 +171,7 @@ Evidence: F3, F4, F5, F6 in [[Owner Feedback 2026-11-20]]; row geometry and the 
 |---|---|---|
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
-| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed) |
+| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] |
 
 ## Sources
 
