@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 523 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 524 rows from 141 notes as of 2026-11-22.
 
 ## [[03 Typography and Text Rules]]
 
@@ -1004,6 +1004,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Static text selection with copy as a behaviour | desktop users copy paths and values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Highlight from a role pair rather than the text colour at 30 percent | guaranteed contrast | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Highlight alpha 30 percent (Compose Material 3 uses 40 percent of `primary`) | body text in `on_surface` on a 40 percent `primary` highlight is 3.74 to 1 on the dark `surface_bright` container, below the 4.5 to 1 of AC-SEL-8; at 30 percent the minimum is 4.61 to 1 | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Highlight corner radius 2 dp (MD3 and Compose draw a square rectangle) | a softer highlight edge at the shell's default; the shell's approved default for selectable Text | [[ADR-0026 Selection highlight radius 2 dp]] |
 
 ## [[Text]]
 

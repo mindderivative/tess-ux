@@ -12,7 +12,7 @@ depends_on: []
 
 # 50 Decisions
 
-Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0025 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
+Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0001 to ADR-0026 were accepted by bot:Orchestrator under the owner's delegation on 2026-11-21; later ADRs start `proposed`.
 
 ## Notes
 
@@ -41,5 +41,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0023 Text Field label placement by density]]
 - [[ADR-0024 Shell tray and task item sizes]]
 - [[ADR-0025 Shell outline and high contrast status colours, accent never text]]
+- [[ADR-0026 Selection highlight radius 2 dp]]
 
 Back to [[Index]].

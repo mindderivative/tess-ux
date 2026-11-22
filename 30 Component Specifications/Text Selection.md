@@ -73,7 +73,7 @@ Selection paints a highlight behind glyphs and a caret in text inputs. It has no
 | highlight fill colour role (no border drawn) | border color | `primary` at 30% | `primary` at 30% | `primary` at 30% | `primary` at 30% | Compose Material 3 `rememberTextSelectionColors`, [[ADR-0001 MD3 role names are the specification vocabulary]], [[Colour Roles]] | tess-ui: no hook; tess-shell: no hook; tre: yes (selection_fill) |
 | highlighted text colour role (no border drawn) | border color | N/A: selected text keeps its own colour | N/A: selected text keeps its own colour | N/A: selected text keeps its own colour | N/A: selected text keeps its own colour | Compose Material 3 `rememberTextSelectionColors`, [[Colour Roles]] | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (selected text keeps its own colour, no selection text colour) |
 | highlight fill, engine default until the engine exposes a role | border color | - | `on_surface` at 30% | `on_surface` at 30% | `on_surface` at 30% | `tre:docs/guide/text.md`, [[Existing Tokens]] | tess-ui: no hook; tess-shell: no hook; tre: yes (selection_fill, None gives the text colour at 30 percent) |
-| highlight | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (rectangle behind glyphs; engine value #needs-verification) | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (square highlight rectangle, no radius property) |
+| highlight | corner radius | - | 2 | 2 | 2 | design choice, [[ADR-0026 Selection highlight radius 2 dp]] (the engine default is a square rectangle; tre has `selection_radius` for the terminal since PR 347) #needs-verification-as-design-choice | tess-ui: no hook; tess-shell: via the theme default for selectable Text; tre: yes (selection_radius, tre PR 347 for the terminal) |
 | highlight | font | - | N/A: selection uses the font of the selected text and never sets one | N/A: same as the Default column | N/A: same as the Default column | [[Typography]] | tess-ui: n/a: selection never sets a font; tess-shell: n/a: selection never sets a font; tre: n/a: selection never sets a font |
 | highlight | icon size | - | N/A: selection applies to text only; icons are not selectable | N/A: same as the Default column | N/A: same as the Default column | [[Iconography]] | tess-ui: n/a: icons are not selectable; tess-shell: n/a: icons are not selectable; tre: n/a: icons are not selectable |
 | highlight | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: the highlight has no depth; tess-shell: n/a: the highlight has no depth; tre: n/a: the highlight has no depth |
@@ -133,6 +133,10 @@ Highlight and text per scheme; the contrast check runs in both.
 | tess-shell | `tess-shell:src/tess_shell/schema/blocks.py` (`Text` `Selectable`, default false) | partly meets: key built; no copy command; AC-SEL-10 not verified; no key for the selection colour or the caret width, a project request |
 | tre | `tre:docs/guide/text.md` (Rich text and selectable text), `tre:crates/engine-py/src/text_interaction.rs`, `tre:docs/guide/accessibility.md` (Text, selection and links) | meets AC-SEL-1 to 6, 9 by documented behaviour; highlight is the text colour at 30 percent unless `selection_fill` is set; no keyboard start (WCAG gap). Dimension difference: highlight fill is the text colour at 30% in tre against `secondary_container` in the spec (AC-SEL-8 not verified); the selected text colour and the highlight radius are fixed in the engine, an engine request |
 
+## Shell default
+
+tess-shell gives selectable Text a theme-driven default selection (approved by tess-shell, reported by the Orchestrator, 2026-11-22): fill role `primary` at 30 percent (the contrast-checked value of this note, minimum 4.61 to 1 for `on_surface` text) and a corner radius of 2 dp. The shell's theme holds both as defaults; an application overrides them per Text.
+
 ## Deviations from Material Design 3
 
 | Deviation | Reason | ADR |
@@ -140,6 +144,7 @@ Highlight and text per scheme; the contrast check runs in both.
 | Static text selection with copy as a behaviour | desktop users copy paths and values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Highlight from a role pair rather than the text colour at 30 percent | guaranteed contrast | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Highlight alpha 30 percent (Compose Material 3 uses 40 percent of `primary`) | body text in `on_surface` on a 40 percent `primary` highlight is 3.74 to 1 on the dark `surface_bright` container, below the 4.5 to 1 of AC-SEL-8; at 30 percent the minimum is 4.61 to 1 | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Highlight corner radius 2 dp (MD3 and Compose draw a square rectangle) | a softer highlight edge at the shell's default; the shell's approved default for selectable Text | [[ADR-0026 Selection highlight radius 2 dp]] |
 
 ## Sources
 
