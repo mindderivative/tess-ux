@@ -58,7 +58,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-004 | P1 | Status: in tess-shell PR 151. Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
-| TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `For` plus `Class` on a module call). Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
+| TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `If` or `For` plus `Class` on a module call). Design conclusion (tess-shell, 2026-11-22, reported by the Orchestrator): designed, with a per-entry tooltip identity, the captured loop scope read when the tooltip opens, and the caller's class applied to the callee root with a Kind match; PARKED, with no consumer beyond this P2 row. Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
 
 ### Keyboard reachability
 
@@ -94,7 +94,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-051 | P1 | Bar `Input_Region` and `Exclusive_Zone` are not built (the rest of TSH-051 is fixed by PR 131; the shell guide still lists both as not built for a Bar, and Panel has `Input_Region`) | AC-BAR-4, AC-BAR-17 | `tess-shell:src/tess_shell/schema/docs.py` | Build `Exclusive_Zone` and `Input_Region` for the Bar | [[Bar]] |
+| TSH-051 | P1 | Not built, no demand (decision of bot:Orchestrator, 2026-11-22): Bar `Input_Region` and `Exclusive_Zone` are not built (the shell's `reserve` true or false covers the common case and the specification gives the two keys no behaviour beyond the key, so they stay as not-built keys in AC-BAR-17; the rest of TSH-051 is fixed by PR 131; the shell guide still lists both as not built for a Bar, and Panel has `Input_Region`) | AC-BAR-4, AC-BAR-17 | `tess-shell:src/tess_shell/schema/docs.py` | Build `Exclusive_Zone` and `Input_Region` for the Bar | [[Bar]] |
 | TSH-053 | P1 | Bar and Popup `Animation` not built (no popup show and hide animation) | AC-BAR-17, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:278,330` | Build `Animation` with the motion tokens and reduced motion | [[Bar]], [[Popup]] |
 | TSH-054 | P1 | OQ-23 closed (adopted); the level model follows. Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
 | TSH-055 | P2 | Status: partly done: Bar and Panel `Padding` built in tess-shell PR 156 (AC-BAR-22). Still not built: Panel `Exclusive_Zone`, Bar `Text_Rotation`; `Class` is won't do until specified; `Margin` is `Inset`, not a new key | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
@@ -123,7 +123,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built Update (2026-11-22, tess-shell audit against main, schema 1.30): scrollbars for ScrollBox and the Popup scroll view are built; `Scroll_Snap` and `On_Scroll` are still not built. | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
 | TSH-081 | P2 | Status: in tess-shell PR 153. Text Selection: no copy command (Ctrl+C is in tess-shell PR 153, merge pending) | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
 | TSH-082 | P2 | held: needs a tre hook (multi-selection; queued with tess-re). List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
-| TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
+| TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Design conclusion (tess-shell, 2026-11-22): a module-level `Receives { On_Changed: Field, ... }` declaration, validated when the module is read; APPROVED and tess-shell builds it, then this row follows. Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
 
 ## Fixed since the audit
 
@@ -165,6 +165,27 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-051 | Bar `Visible` | Fixed on tess-shell main by PR 131 (verified by the owner on KWin, A1 to A7); the other two keys of the original row stay open, see the worklist | AC-BAR-4, AC-BAR-17 | [[Bar]] |
 
 
+## Shipped, verified headless only, not seen on the owner's real KWin
+
+The owner does not run `main` and skipped these checks (tess-shell's list, reported by the Orchestrator on 2026-11-22; not re-checked here). Until a hand check on KWin, each stays `not run` for the real-compositor part of its criteria ([[17 Conformance]], AC-CON-13).
+
+| Item | Spec notes |
+|---|---|
+| Tooltip card | [[Tooltip]] |
+| Focus ring 3 dp at 2 dp offset | [[Focus Ring]] |
+| F6 pane cycling | [[Keyboard Navigation]], [[11 Interaction]] |
+| Launcher scrollbars | [[Launcher]], [[Scrollbar and Scroll Container]] |
+| State layers | [[State Layers]] |
+| Frame shadow | [[Frame]], [[Elevation]] |
+| Minimised cue and tray attention dot | [[Task Item]], [[Tray Item]] |
+| Icon sizes 24, 20, 20 | [[Iconography]] |
+| Bar and Panel `Padding` | [[Bar]], [[Panel and Surface]] |
+| Bar `Animation` FADE and NONE | [[Bar]], [[Auto Hide]] |
+| `Appearance.Scheme` live switch | [[Theme Following the System]] |
+| Ctrl+C clipboard on selectable text | [[Text Selection]] |
+| Peek handle as an assistive-technology button | [[Peek]] |
+| List `Empty` slot | [[List]], [[Empty States]] |
+
 ## Held findings
 
 These rows wait on a decision or a hook, not on shell work; each carries `held: <reason>` in its Finding text.
@@ -175,9 +196,9 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 | TSH-022 | tre 0.6.12 | follows TSH-020 (Toggle hover and pressed) |
 | TSH-054 | tre 0.6.12 | the path build waits for tre 0.6.12 |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
-| TSH-082 | tre hook | multi-selection in tre (queued with tess-re): the List multi-select rules need it; the `Empty` slot does not |
-| TSH-008 | shell feature | dynamic tooltips in `For` plus `Class` on a module call |
-| TSH-084 | shell feature | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots) |
+| TSH-082 | tre hook | multi-selection in tre: delivered as `selection_mode` on `virtual_list` in tre PR 350 (0.6.12 unreleased); the shell List can use it once released; the `Empty` slot does not need it |
+| TSH-008 | shell feature, parked | dynamic tooltips in `If` or `For` plus `Class` on a module call: designed and parked (no consumer beyond this row) |
+| TSH-084 | shell feature, approved | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots): the `Receives { On_Changed: Field }` module declaration is approved and being built by tess-shell |
 | TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
 
 ## Won't do
