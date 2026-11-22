@@ -15,7 +15,7 @@ depends_on: []
 > [!important] Status
 > `approved` by bot:Orchestrator under the owner's delegation, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui and tess-shell. Routed through bot:Orchestrator. Finding: TRE-014 in [[Adoption tre]].
 >
-> Progress, 2026-11-22: the escape chord is delivered in tre 0.6.11 (PR 333: `escape_chord`, `escape_chord_reverse`). The second half, the terminal history scrollbar, is NOT built in tre 0.6.11 (`docs/guide/text.md`: the wheel scrolls the history, a scrollbar is a later item); it stays open.
+> Progress, 2026-11-22: the escape chord is delivered in tre 0.6.11 (PR 333: `escape_chord`, `escape_chord_reverse`); the history scrollbar follows in tre PR 347 (reported by the Orchestrator, not yet merged). The second half, the terminal history scrollbar, is NOT built in tre 0.6.11 (`docs/guide/text.md`: the wheel scrolls the history, a scrollbar is a later item); it stays open.
 
 ## Principle
 
