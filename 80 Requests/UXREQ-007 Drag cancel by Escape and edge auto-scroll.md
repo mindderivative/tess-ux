@@ -1,7 +1,7 @@
 ---
 title: UXREQ-007 Drag cancel by Escape and edge auto-scroll
 type: request
-status: proposed
+status: done
 owner: phil
 created: 2026-11-22
 updated: 2026-11-22
@@ -13,7 +13,7 @@ depends_on: []
 # UXREQ-007 Drag cancel by Escape and edge auto-scroll
 
 > [!important] Status
-> `proposed`; held by the Orchestrator, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui. Finding: TRE-015 in [[Adoption tre]]. Not routed until the Orchestrator releases it.
+> `done`: delivered in tre main (0.6.12, unreleased) by PR 344 (Escape cancels a held gesture, `dock_cancel`, edge auto-scroll), reported by the Orchestrator and not re-checked in tre. Earlier: `proposed`; held by the Orchestrator, 2026-11-21. Owner project: tess-re (tre). Consumer: tess-ui. Finding: TRE-015 in [[Adoption tre]]. Not routed until the Orchestrator releases it.
 
 ## Principle
 
