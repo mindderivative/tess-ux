@@ -38,17 +38,24 @@ Checked in the `v0.6.11` tag (PR titles, `docs/reference/properties.md`, `docs/a
 | `hover_layer`, `pressed_layer`, `focus_layer` (colour, opacity), `focus_layer_any_modality`, `state_layer_ms`, `state_layer_easing`: the engine draws and fades state layers | 335 | [[UXREQ-010 State layer hooks]] | [[State Layers]] (the 16 percent dragged layer is not covered: the engine has no drag state to follow) |
 | `outline` and `focus_outline` draw a ring outside the box | 336 | [[UXREQ-008 Outline property for focus rings]] | [[Focus Ring]], AC-FOC-2, AC-FOC-5 |
 
+### Delivered on tre main after 0.6.11 (0.6.12, unreleased)
+
+| Hook | tre PR | Request | Unlocks |
+|---|---|---|---|
+| `first_present` and `ready()` on `LayerWindow` and `PopupWindow` (the first-frame hold for layer surfaces; proven on sway, not seen on KWin) | 340 | [[UXREQ-009 First frame hold]] | [[ADR-0005 Theme follows the system]] for shell surfaces |
+| Per-state state layer timings | 338 | [[UXREQ-010 State layer hooks]] | [[State Layers]] |
+| Shadows on a path follow its holes | 339 | tess-re 0.6.12 | [[Elevation]] for path shapes |
+
+Reported by the Orchestrator from tess-re; not re-checked against a tag.
+
 ### Still needed
 
 | Hook | Today | Unlocks | Request |
 |---|---|---|---|
 | Terminal history scrollbar | not built (the wheel scrolls the history; `docs/guide/text.md` calls it a later item) | [[Terminal]] | UXREQ-006 (second half, open) |
-| First-frame hold for layer and popup surfaces | windows only; layers follow in tre's `feat/first-present-layers` | [[ADR-0005 Theme follows the system]] | UXREQ-009 |
 | Multi-click window 500 ms and 4 px as properties; a drag start distance property | hardcoded; no drag threshold (absent in the 0.6.11 tag) | [[11 Interaction]] double click and drag rules, [[Drag and Drop]] | to be filed (tess-re 0.6.12 list) |
 | `selection_foreground`, `selection_radius` | absent in the 0.6.11 tag; `caret_width` is settable on `text_input` in tre | [[Text Selection]] | to be filed (tess-re 0.6.12 list); tess-re counts `caret_width` as a gap, which in 0.6.11 is a project-layer gap |
 | Layer placement viewport margin and flip threshold; popup edge margin | absent in the 0.6.11 tag (margin 0, slack 0) | [[Anchored Placement]], [[Popup Window]] | to be filed (tess-re 0.6.12 list) |
-| Per-state state layer timings | in progress in tre | [[State Layers]] | UXREQ-010 follow-up |
-| Shadows on a path including holes | in progress in tre | [[Elevation]] for path shapes | tess-re 0.6.12 |
 | Static text selection colour (`selection_fill` on `text`), terminal font family, line height, cursor shape and blink, bold weight, dim opacity, underline geometry | hardcoded in the audit; re-check against 0.6.11 | [[Text Selection]], [[Terminal]] | to be filed |
 | Gesture thresholds (long press 500 ms, tap 300 ms, double tap 300 ms and 30 px, swipe 600 px/s and 40 px) | hardcoded except `touch_slop` | [[11 Interaction]] timings | to be filed |
 
