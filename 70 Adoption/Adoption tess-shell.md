@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 58 open findings (P0 2, P1 32, P2 24) and 2 fixed (TSH-016, TSH-062). Six open rows are held on an owner or engine decision (see Held findings). One owner decision is open: OQ-23 (state layers). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 28 open findings (P0 0, P1 14, P2 14), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Five open rows are held on an owner or engine decision or are partly done (see Held findings). One owner decision is open: OQ-23 (state layers). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -57,72 +57,44 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-001 | P1 | Tooltip sits on the `GROUP` root of Battery and Network instead of on one control | AC-MOD-BAT-1, AC-MOD-BAT-5, AC-MOD-NET-1, AC-MOD-NET-4 | `tess-shell:src/tess_shell/shipped/Battery/Battery_Module.tdl:38-43`, `Network/Network_Module.tdl:37-42` | Move the `Tooltip` to the icon and keep the root a plain group | [[Battery Module]], [[Network Module]] |
-| TSH-002 | P1 | Audio tooltip on the group root, not on the controls | AC-MOD-AUD-5, AC-MOD-AUD-6 | `tess-shell:src/tess_shell/shipped/Audio/Audio_Module.tdl:44-58` | One tooltip per control (mute button, slider) | [[Audio Module]] |
-| TSH-003 | P1 | Media has a tooltip on the root and a second on the Marquee | AC-MOD-MED-5, AC-MOD-MED-6 | `tess-shell:src/tess_shell/shipped/Media/Media_Module.tdl:47-59`, `Marquee_Text/Marquee_Text_Module.tdl:32-33` | Keep only the Marquee cut-text tooltip, drop the root card | [[Media Module]] |
 | TSH-004 | P1 | Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
-| TSH-005 | P2 | Tooltip exit delay is 200 ms where ADR-0011 asks a 150 ms grace; a tooltip is hoverable today (the pointer can enter it), only the close delay differs | AC-TIP-4 | `tess-shell:src/tess_shell/schema/model.py:129`, `schema/shell.py:2076` | Set the default `Exit_Delay` to 150 | [[Tooltip]] |
-| TSH-006 | P1 | held: needs shell decision D64 superseded (the tooltip stays open on a press). No Escape, scroll or press dismissal; hover only | AC-TIP-1 | `tess-shell:src/tess_shell/surfaces/popup.py` (`hover`, `_open_tooltip`, `_arm_exit`) | After D64 is superseded: dismiss on press, Escape and scroll; add the focus trigger | [[Tooltip]] |
-| TSH-007 | P1 | Workspaces and Task Item have no tooltip on the item; Task Item has a Marquee tooltip inside | AC-MOD-WSP-4, AC-MOD-TIT-4, AC-MOD-TIT-5 | `tess-shell:src/tess_shell/shipped/Workspaces/Workspaces_Module.tdl`, `Task_Item/Task_Item_Module.tdl` | Add one tooltip on the item with the full name | [[Workspaces Module]], [[Task Item]] |
 | TSH-008 | P2 | Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
 
 ### Keyboard reachability
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-010 | P1 | `Auto_Hide`, `Auto_Hide_Delay` and the Shortcut Mode reveal must be built together ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]); the default is off ([[ADR-0022 Bar Auto_Hide default is off]]), so only a Bar that opts in with `Auto_Hide: true` hides, which is why this is P1 and not P0: a Bar that hides without the Shortcut Mode reveal cannot be reached by keyboard. Today the Bar cannot hide at all (`Reveal_Key` removed), so nothing is broken until `Auto_Hide` is built | AC-AHD-8, AC-AHD-9, AC-AHD-10, AC-AHD-20, AC-AHD-21, AC-BAR-13, AC-BAR-21 | `tess-shell:src/tess_shell/schema/blocks.py:438`, `schema/docs.py:192` | Build the reveal with `Auto_Hide`: Shortcut Mode shows the hidden Bar and focuses it; Escape or leaving the mode hides it per the delay; focus holds it; plain keys do not reveal it | [[Auto Hide]], [[Bar]] |
-| TSH-011 | P1 | Tray has no key path to an item or its menu | AC-MOD-TRY-4, AC-MOD-TRI-4 | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl`, `Tray_Item/Tray_Item_Module.tdl` | Make each item a Tab stop and open the menu on Menu, Enter and Shift+F10 | [[Tray Module]], [[Tray Item]] |
-| TSH-012 | P1 | Task close is middle click only; Delete key absent | AC-MOD-TIT-3 | `tess-shell:src/tess_shell/shipped/Tasks/Tasks_Module.tdl:61` | Add Delete (and a menu item) on a focused task | [[Task Item]] |
-| TSH-013 | P1 | Volume changes by scroll and secondary click with no key path | AC-MOD-AUD-4 | `tess-shell:src/tess_shell/shipped/Audio/Audio_Module.tdl:50` | Keep the slider arrow keys reachable from the module and add Menu for outputs | [[Audio Module]] |
-| TSH-014 | P1 | `Tab_Index` positive ordering is the documented model; the specification forbids positive indices | AC-KBN-2 | `tess-shell:src/tess_shell/binder/build.py:643-657` | Keep document order; allow only 0 and -1 | [[Keyboard Navigation]] |
 | TSH-015 | P1 | No F6 landmark cycling between surfaces | AC-KBN-3 | text search of origin/main `src` finds none | Add F6 and Shift+F6 over Bar, Panels and the focused window | [[Keyboard Navigation]] |
-| TSH-017 | P1 | No keyboard way to move a Movable Panel | AC-DND-5, AC-DND-1, AC-DND-2 | `tess-shell:src/tess_shell/surfaces/manager.py` (`drag_margin`) | Add arrow-key move on a focused Panel handle or a menu command | [[Drag and Drop]], [[Drag and Drop Pattern]] |
-| TSH-018 | P2 | The focus ring is generic (`Shadows` ring from `model/look.py`) and reaches Workspaces; what remains is the Orca hand check, which is TSH-070 | AC-A11Y-1 | `tess-shell:src/tess_shell/model/look.py:140-163` | Run the hand check with TSH-070 | [[Workspaces Module]], [[Accessibility Tree]] |
 
 ### State feedback
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-020 | P1 | held: OQ-23 (shell state layers, owner decision). ADR-0009 shell adoption is undecided. The shell has no state layers; states change `Background`, `Border_Color` or `Opacity` (Toggle and Checkbox hovered 0.85, pressed 0.7; disabled 0.5 on all widgets) | AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5, AC-C09-1, AC-C09-2, AC-C09-4 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:43-83,121-123` | Owner decides adopt or declare a deviation; do not fix until then | [[State Layers]], [[ADR-0009 State layer percentages]] |
-| TSH-021 | P1 | Focus ring is 2 px in `primary`, no offset, and only on blocks that take `Shadows` | AC-FOC-1, AC-FOC-2 | `tess-shell:src/tess_shell/model/look.py:140-163` | Offset 2 dp ring on every focusable block; a ring with a transparent gap needs a tre hook ([[UXREQ-008 Outline property for focus rings]], held) | [[Focus Ring]] |
-| TSH-022 | P1 | held: OQ-23. Toggle gets the generic focus ring; hover and pressed are opacity, not state layers | AC-MOD-TGL-4 | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl:57` | Follow TSH-020 | [[Toggle]] |
+| TSH-020 | P1 | held: OQ-23 (shell state layers, owner decision). ADR-0009 shell adoption is undecided. The shell has no state layers; states change `Background`, `Border_Color` or `Opacity` (Toggle and Checkbox hovered 0.85, pressed 0.7; disabled 0.5 on all widgets) Update (2026-11-22, tess-shell audit against main, schema 1.30): state layers implemented; the 15, 105 and 150 ms fades wait for tre 0.6.12; the owner decision OQ-23 (adoption of ADR-0009) is still recorded as open in the vault. | AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5, AC-C09-1, AC-C09-2, AC-C09-4 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:43-83,121-123` | Owner decides adopt or declare a deviation; do not fix until then | [[State Layers]], [[ADR-0009 State layer percentages]] |
+| TSH-022 | P1 | held: OQ-23. Toggle gets the generic focus ring; hover and pressed are opacity, not state layers Update (2026-11-22, tess-shell audit against main, schema 1.30): as TSH-020 (Toggle hover and pressed layers); fades wait for tre 0.6.12. | AC-MOD-TGL-4 | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl:57` | Follow TSH-020 | [[Toggle]] |
 | TSH-023 | P2 | Task Item minimised shows as opacity 0.5 only, the disabled look | AC-MOD-TIT-7 | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Style.tdl` | Use an icon or text state cue, not the disabled opacity | [[Task Item]] |
-| TSH-024 | P2 | Disabled opacity is 0.5 where the specification is 0.38 | AC-LSI-08, AC-MEN-6 | `Stylesheets/Default_Stylesheet.tdl:123` | Set 0.38 | [[List Item]], [[Menu]] |
 
 ### Density and sizes
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-030 | P2 | The tray item hit area is 24 by 24 dp (meets the 24 dp minimum); the 18 is the icon. Icon 18 and spacing 6 are literals, where the density rows ask a 40, 32 or 28 dp hit area, icon 24, 20, 20 and gap 4 | AC-MOD-TRY-7, AC-MOD-TRI-2 | `tess-shell:src/tess_shell/shipped/Tray/Tray_Module.tdl:27,31`, `Tray_Item/Tray_Item_Module.tdl:16` | Hit area and icon by density token, gap 4 | [[Tray Module]], [[Tray Item]] |
-| TSH-031 | P1 | Menu item row 28 dp, padding 10, icon 16 literals at default and compact; menu minimum width 160 not 112 | AC-MOD-MIT-4, AC-MOD-TRM-5, AC-MEN-1, AC-MEN-2, AC-MEN-3 | `tess-shell:src/tess_shell/shipped/MenuItem/MenuItem_Module.tdl:37,40,52-53` | Read height and icon from the density tokens | [[Menu Item]], [[Tray Menu]], [[Menu]] |
-| TSH-032 | P1 | The Audio and Media controls are Button modules, 32 dp with a 16 dp icon at every density | AC-MOD-AUD-8, AC-MOD-MED-8 | `tess-shell:src/tess_shell/shipped/Audio/Audio_Module.tdl:81`, `Media/Media_Module.tdl:78` | Size the Button from the density tokens; icon 24 at default | [[Audio Module]], [[Media Module]] |
-| TSH-033 | P1 | Task Item height is derived (icon 18 plus padding), not a literal; icon 18, padding 6 and gap 6 are literals, so it is 24 high rather than 40, 32, 28 by density. Workspaces height is text plus padding 10 | AC-MOD-TIT-6, AC-MOD-WSP-6 | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Module.tdl:24,39`, `Workspaces/Workspaces_Module.tdl` | Density tokens for icon and padding | [[Task Item]], [[Workspaces Module]] |
-| TSH-034 | P1 | No density setting; list rows 40, Button 32, Checkbox box 18, Toggle 40 by 22 are literals below 24 dp targets | AC-DEN-1, AC-LSI-01, AC-LSI-02, AC-LSI-03, AC-LSI-06, AC-MOD-TGL-4 | `Button/Button_Module.tdl:34`, `Checkbox/Checkbox_Module.tdl:31-32`, `Stylesheets/Default_Stylesheet.tdl` | Add the density token set and read sizes from it | [[Spacing and Density]], [[List Item]], [[Toggle]] |
-| TSH-035 | P2 | Applications rows 40 dp, padding 10, width 456 literal | AC-MOD-APP-5, AC-MOD-APP-6, AC-LNC-13 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Density tokens and a width token | [[Applications Module]], [[Launcher]] |
-| TSH-036 | P2 | Badge dot is 8 by 8 and pill 18 high, 11 px; specification 6 and 16 | AC-BDG-1, AC-BDG-2 | `tess-shell:src/tess_shell/shipped/Badge/Badge_Module.tdl` | Set 6 and 16 and the badge label type role | [[Badge]] |
 | TSH-037 | P2 | Default icon size 16 literal where list and menu icons are 24 | AC-ICO-1, AC-C08-1 | `tess-shell:src/tess_shell/shipped/Icon/Icon_Module.tdl`, `MenuItem/MenuItem_Module.tdl:52-53` | Take icon size from the density tokens | [[Iconography]] |
-| TSH-038 | P2 | Label overflow default is `CLIP`; Network name not truncated | AC-MOD-LBL-2, AC-MOD-LBL-3 | `tess-shell:src/tess_shell/shipped/Label/Label_Module.tdl` | Default `ELLIPSIS` | [[Label]], [[Network Module]] |
 | TSH-039 | P2 | Modules use pixel literals not the spacing tokens | AC-DEN-1 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:47-55` | Replace literals by `$space` tokens when TSH-034 lands | [[Spacing and Density]] |
 
 ### Contrast
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-040 | P0 | Pressed menu item text `on_surface` on `primary` measures 2.58 to 1 in Dark and 2.89 to 1 in Light; the pressed fill is also used by the tray menu | AC-MOD-MIT-5, AC-MOD-TRM-8 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:122`, `Themes/Default_Theme.tdl:15-20,72-76` | Use `on_primary` for the pressed text or a state layer (see TSH-020) | [[Menu Item]], [[Tray Menu]] |
-| TSH-041 | P0 | Clock Face foreground is the literal `#ffffff`; on the Light `surface` `#F4F7FA` it measures 1.08 to 1 | AC-MOD-CLK-6 | `tess-shell:src/tess_shell/shipped/Clock/Clock_Style.tdl:13` | Use `$color.on_surface` | [[Clock Module]] |
 | TSH-042 | P1 | No contrast script over the shipped themes exists | AC-COL-3, AC-COL-4, AC-LNC-15, AC-LNC-17 | `tess-shell:docs/design/60 Quality/Accessibility.md` (rule 9 asks for it) | Add a script that checks every role pair in the three modes | [[Colour Roles]], [[Launcher]] |
 | TSH-043 | P1 | The token `accent` on `surface` measures 4.38 Dark and 3.82 Light, below the 4.5 text requirement; no shipped file uses `accent` as text (`shipped/`), so it is a token finding. The contrast tool lists it as a known violation | AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22` | Keep `accent` to non-text uses or darken the token; lint text uses | [[Colour Roles]] |
-| TSH-044 | P2 | Launcher hover fill `surface_raised` equals the card fill | AC-LNC-18 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Style.tdl` | Use a distinguishable hover fill | [[Launcher]] |
 
 ### Surfaces not built
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-050 | P1 | `Auto_Hide`, `Auto_Hide_Delay`, `Reveal_Key` absent: a Bar cannot be hidden; built together with the Shortcut Mode reveal (TSH-010) | AC-AHD-1, AC-AHD-2, AC-AHD-3, AC-AHD-4, AC-AHD-5, AC-AHD-6, AC-AHD-7, AC-AHD-12, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:191-192`, `schema/blocks.py:438` | Build on the Frame strip slide in `surfaces/frame.py`, together with TSH-010 | [[Auto Hide]] |
-| TSH-051 | P1 | Bar `Visible`, `Input_Region`, `Exclusive_Zone` not built | AC-BAR-4, AC-BAR-17 | `tess-shell:src/tess_shell/schema/docs.py:270-273` | Build `Visible` first (needed by the actions `Show`, `Hide`, `Toggle`) | [[Bar]] |
 | TSH-052 | P1 | Bar `Meld` and `Attach_To` not built; Frame `Meld` not built | AC-BAR-17, AC-FRM2-11 | `tess-shell:src/tess_shell/schema/docs.py:274-277,340` | Build the Frame `Meld` key | [[Bar]], [[Frame]] |
 | TSH-053 | P1 | Bar and Popup `Animation` not built (no popup show and hide animation) | AC-BAR-17, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:278,330` | Build `Animation` with the motion tokens and reduced motion | [[Bar]], [[Popup]] |
-| TSH-054 | P1 | held: OQ-23 (the level model is decided with state layers). Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
+| TSH-054 | P1 | held: OQ-23 (the level model is decided with state layers). Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
 | TSH-055 | P2 | Panel `Margin`, `Padding`, `Class`, `Exclusive_Zone` and Bar `Padding`, `Class`, `Text_Rotation` not built | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
 | TSH-056 | P2 | Peek handle colour is a literal; handle nodes not exposed; single trigger only | AC-PEK-14, AC-PEK-16, AC-PEK-18 | `tess-shell:src/tess_shell/surfaces/frame.py` (`_handle_colour`), `surfaces/handle.py` | Colour from a role; expose the handle as a named control | [[Peek]], [[Dock]] |
 | TSH-057 | P2 | The Launcher is a Panel with an output-sized catcher since M7k, so it no longer takes the popup grab. Ordinary focused Popups still use the PopupWindow grab, which steals the keyboard on KWin: popups that need keyboard input fault there. Popup Escape closed by the shell is not verified on KWin | AC-POP-1, AC-POP-6, AC-POP-7 | `tess-shell:src/tess_shell/surfaces/popup.py` (`_key`) | Run the hand checks on KWin for a keyboard Popup and record | [[Popup]] |
@@ -133,8 +105,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 |---|---|---|---|---|---|---|
 | TSH-060 | P1 | Reduced motion lives in code; the theme `Reduced_Motion { }` block is empty; `EMPHASIZED` easing differs from the table | AC-MOT-2, AC-MOT-5 | `tess-shell:src/tess_shell/binder/motion.py`, `Themes/Default_Theme.tdl:67-70` | Put the behaviour in the theme and correct the curve | [[Motion]] |
 | TSH-061 | P1 | No persistent user override of the scheme; first-frame behaviour with a slow portal not tested | AC-TH-4, AC-TH-5, AC-TH-7 | `tess-shell:src/tess_shell/services/portal.py`, `appearance.py` | Add a settings key for the override | [[Theme Following the System]] |
-| TSH-063 | P2 | Shape scale has 5 of 7 steps; dialog and rich tooltip steps cannot be expressed | AC-SHP-2, AC-C04-1 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:38-42` | Add 12 and 28 or declare the deviation | [[Shape]] |
-| TSH-064 | P2 | The tooltip cards use tokens (`$color.surface_raised`), not hex fallbacks; `Corner_Radius: 8` and `Elevation: 20%` are repeated literals outside the theme | AC-TIP-13 | the six tooltip files | Resolved by TSH-004 | [[Colour Roles]] |
+| TSH-064 | P2 | The tooltip cards use tokens (`$color.surface_raised`), not hex fallbacks; `Corner_Radius: 8` and `Elevation: 20%` are repeated literals outside the theme Update (2026-11-22, tess-shell audit against main, schema 1.30): partly done (tess-shell audit). | AC-TIP-13 | the six tooltip files | Resolved by TSH-004 | [[Colour Roles]] |
 
 ### Accessibility roles
 
@@ -149,12 +120,11 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
+| TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built Update (2026-11-22, tess-shell audit against main, schema 1.30): scrollbars for ScrollBox and the Popup scroll view are built; `Scroll_Snap` and `On_Scroll` are still not built. | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
 | TSH-081 | P2 | Text Selection: no copy command | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
 | TSH-082 | P2 | List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
 | TSH-083 | P2 | Rectangle block offers no `Hit_Shape` | AC-BLK-RCT-5 | `tess-shell:src/tess_shell/schema/blocks.py` | Add the key | [[Rectangle Block]] |
 | TSH-084 | P2 | Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
-| TSH-085 | P2 | Marquee has no hover pause | AC-MOD-MQT-7 | `tess-shell:src/tess_shell/binder/marquee.py` | Pause on hover | [[Marquee Text]] |
 
 ## Fixed since the audit
 
@@ -162,6 +132,44 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 |---|---|---|---|---|
 | TSH-016 | Text Editor took Tab and could not leave the field | Tab leaves the Text Editor since tre 0.6.8 | AC-MOD-TED-4 | [[Text Editor]] |
 | TSH-062 | A theme without `Elevation.Max` drew `#00000040` while the shipped theme says `#00000066` (the audit note was stale) | `DEFAULT_MAX` in `tess-shell:src/tess_shell/binder/shadow.py` is `#00000066` on main, equal to the theme; no deviation | AC-ELV-3 | [[Elevation]] |
+| TSH-001 | Tooltip sits on the `GROUP` root of Battery and Network instead of on one control | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-BAT-1, AC-MOD-BAT-5, AC-MOD-NET-1, AC-MOD-NET-4 | [[Battery Module]], [[Network Module]] |
+| TSH-002 | Audio tooltip on the group root, not on the controls | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-AUD-5, AC-MOD-AUD-6 | [[Audio Module]] |
+| TSH-003 | Media has a tooltip on the root and a second on the Marquee | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MED-5, AC-MOD-MED-6 | [[Media Module]] |
+| TSH-005 | Tooltip exit delay is 200 ms where ADR-0011 asks a 150 ms grace; a tooltip is hoverable today (the pointer can enter it), only the close delay differs | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-TIP-4 | [[Tooltip]] |
+| TSH-006 | No Escape, scroll or press dismissal; hover only | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-TIP-1 | [[Tooltip]] |
+| TSH-007 | Workspaces and Task Item have no tooltip on the item; Task Item has a Marquee tooltip inside | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-WSP-4, AC-MOD-TIT-4, AC-MOD-TIT-5 | [[Workspaces Module]], [[Task Item]] |
+| TSH-011 | Tray has no key path to an item or its menu | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-TRY-4, AC-MOD-TRI-4 | [[Tray Module]], [[Tray Item]] |
+| TSH-012 | Task close is middle click only; Delete key absent | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-TIT-3 | [[Task Item]] |
+| TSH-013 | Volume changes by scroll and secondary click with no key path | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-AUD-4 | [[Audio Module]] |
+| TSH-014 | `Tab_Index` positive ordering is the documented model; the specification forbids positive indices | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-KBN-2 | [[Keyboard Navigation]] |
+| TSH-017 | No keyboard way to move a Movable Panel | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-DND-5, AC-DND-1, AC-DND-2 | [[Drag and Drop]], [[Drag and Drop Pattern]] |
+| TSH-018 | The focus ring is generic (`Shadows` ring from `model/look.py`) and reaches Workspaces; what remains is the Orca hand check, which is TSH-070 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-A11Y-1 | [[Workspaces Module]], [[Accessibility Tree]] |
+| TSH-021 | Focus ring is 2 px in `primary`, no offset, and only on blocks that take `Shadows` | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-FOC-1, AC-FOC-2 | [[Focus Ring]] |
+| TSH-024 | Disabled opacity is 0.5 where the specification is 0.38 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-LSI-08, AC-MEN-6 | [[List Item]], [[Menu]] |
+| TSH-030 | The tray item hit area is 24 by 24 dp (meets the 24 dp minimum); the 18 is the icon. Icon 18 and spacing 6 are literals, where the density rows ask a 40, 32 or 28 dp hit area, icon 24, 20, 20 and gap 4 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-TRY-7, AC-MOD-TRI-2 | [[Tray Module]], [[Tray Item]] |
+| TSH-031 | Menu item row 28 dp, padding 10, icon 16 literals at default and compact; menu minimum width 160 not 112 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MIT-4, AC-MOD-TRM-5, AC-MEN-1, AC-MEN-2, AC-MEN-3 | [[Menu Item]], [[Tray Menu]], [[Menu]] |
+| TSH-032 | The Audio and Media controls are Button modules, 32 dp with a 16 dp icon at every density | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-AUD-8, AC-MOD-MED-8 | [[Audio Module]], [[Media Module]] |
+| TSH-033 | Task Item height is derived (icon 18 plus padding), not a literal; icon 18, padding 6 and gap 6 are literals, so it is 24 high rather than 40, 32, 28 by density. Workspaces height is text plus padding 10 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-TIT-6, AC-MOD-WSP-6 | [[Task Item]], [[Workspaces Module]] |
+| TSH-034 | No density setting; list rows 40, Button 32, Checkbox box 18, Toggle 40 by 22 are literals below 24 dp targets | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-DEN-1, AC-LSI-01, AC-LSI-02, AC-LSI-03, AC-LSI-06, AC-MOD-TGL-4 | [[Spacing and Density]], [[List Item]], [[Toggle]] |
+| TSH-035 | Applications rows 40 dp, padding 10, width 456 literal | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-APP-5, AC-MOD-APP-6, AC-LNC-13 | [[Applications Module]], [[Launcher]] |
+| TSH-036 | Badge dot is 8 by 8 and pill 18 high, 11 px; specification 6 and 16 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-BDG-1, AC-BDG-2 | [[Badge]] |
+| TSH-038 | Label overflow default is `CLIP`; Network name not truncated | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-LBL-2, AC-MOD-LBL-3 | [[Label]], [[Network Module]] |
+| TSH-040 | Pressed menu item text `on_surface` on `primary` measures 2.58 to 1 in Dark and 2.89 to 1 in Light; the pressed fill is also used by the tray menu | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MIT-5, AC-MOD-TRM-8 | [[Menu Item]], [[Tray Menu]] |
+| TSH-041 | Clock Face foreground is the literal `#ffffff`; on the Light `surface` `#F4F7FA` it measures 1.08 to 1 | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-CLK-6 | [[Clock Module]] |
+| TSH-044 | Launcher hover fill `surface_raised` equals the card fill | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-LNC-18 | [[Launcher]] |
+| TSH-063 | Shape scale has 5 of 7 steps; dialog and rich tooltip steps cannot be expressed | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-SHP-2, AC-C04-1 | [[Shape]] |
+| TSH-085 | Marquee has no hover pause | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MQT-7 | [[Marquee Text]] |
+
+
+## Implemented, merge pending the owner check
+
+Implemented in tess-shell PR 131, merged only after the owner's KWin check (tess-shell audit against main, schema 1.30; not re-checked here). They leave the open counts and return to them if the check fails.
+
+| ID | Finding | Failing ACs | Spec note |
+|---|---|---|---|
+| TSH-010 | `Auto_Hide`, `Auto_Hide_Delay` and the Shortcut Mode reveal must be built together ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]); the default is off ([[ADR-0022 Bar Auto_Hide default is off]]), so only a Bar that opts in with `Auto_Hide: true` hides, which | AC-AHD-8, AC-AHD-9, AC-AHD-10, AC-AHD-20, AC-AHD-21, AC-BAR-13, AC-BAR-21 | [[Auto Hide]], [[Bar]] |
+| TSH-050 | `Auto_Hide`, `Auto_Hide_Delay`, `Reveal_Key` absent: a Bar cannot be hidden; built together with the Shortcut Mode reveal (TSH-010) | AC-AHD-1, AC-AHD-2, AC-AHD-3, AC-AHD-4, AC-AHD-5, AC-AHD-6, AC-AHD-7, AC-AHD-12, AC-AHD-13 | [[Auto Hide]] |
+| TSH-051 | Bar `Visible`, `Input_Region`, `Exclusive_Zone` not built | AC-BAR-4, AC-BAR-17 | [[Bar]] |
 
 ## Held findings
 
@@ -169,12 +177,11 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 
 | ID | Held on | Waiting for |
 |---|---|---|
-| TSH-006 | shell decision D64 | D64 superseded: today the tooltip stays open on a press |
-| TSH-020 | OQ-23 | owner decision on shell state layers |
+| TSH-020 | OQ-23, tre 0.6.12 | state layers are implemented in the shell; the owner decision OQ-23 on adopting ADR-0009 is still open in the vault, and the fades wait for tre 0.6.12 |
 | TSH-022 | OQ-23 | follows TSH-020 (Toggle hover and pressed) |
 | TSH-054 | OQ-23 | owner decision; the elevation level model goes with it |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
-| TSH-080 | UXREQ-001 | a tre hook for a two-axis scroll view with the scrollbar |
+| TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
 
 ## Engine hooks needed
 
