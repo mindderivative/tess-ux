@@ -145,7 +145,7 @@ Per [[ADR-0004 Tooltip rule]] the tooltip belongs to the smallest element that c
 
 ## Accessibility
 
-- Role `treeitem`; name = label text; `aria-level` = depth + 1; `aria-expanded` true or false on branches only; `aria-selected` on selectable nodes; `aria-setsize` and `aria-posinset` when the tree is virtualised ([[Tree]], WAI-ARIA tree pattern).
+- Role `treeitem`; name = label text; `aria-level` = depth + 1; `aria-expanded` true or false on branches only; `aria-selected` on selectable nodes; `aria-setsize` and `aria-posinset` always (the sibling count under the same parent and the position among them; [[ADR-0028 Tree rows are flat in the accessibility tree]], proposed; [[Tree]], WAI-ARIA tree pattern).
 - Contrast: `on_surface` on the surface and `on_secondary_container` on `secondary_container` each reach 4.5 to 1; chevron and icon reach 3 to 1 ([[14 Accessibility Basics]]).
 
 ## Dark and light
@@ -171,7 +171,7 @@ Density `compact` in configuration tools, `default` elsewhere (set by the projec
 - [ ] AC-TRN-11: Contrast script. Label on `secondary_container` and on the surface, light and dark baseline schemes: at least 4.5 to 1; chevron and icon at least 3 to 1.
 - [ ] AC-TRN-12: Scripted input. A disabled row shows content at opacity 0.38, ignores click, Enter and Space, and the arrow keys and typeahead skip it.
 - [ ] AC-TRN-13: Pixel check. The chevron turns 0 to 90 degrees in 200 ms (sampled at 0, 100 and 200 ms) and in 0 ms under reduced motion.
-- [ ] AC-TRN-14: AT tree assertion. The node has role `treeitem`, name equal to the label, `aria-level` depth + 1, `aria-expanded` only on branches, `aria-selected` only on selectable nodes.
+- [ ] AC-TRN-14: AT tree assertion. The node has role `treeitem`, name equal to the label, `aria-level` depth + 1, `aria-expanded` only on branches, `aria-selected` only on selectable nodes, `aria-setsize` and `aria-posinset` among siblings.
 
 ## Status in code
 

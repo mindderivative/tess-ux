@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 527 rows from 141 notes as of 2026-11-22.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 528 rows from 141 notes as of 2026-11-22.
 
 ## [[03 Typography and Text Rules]]
 
@@ -1134,6 +1134,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
+| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed) |
 
 ## [[Video Player]]
 
