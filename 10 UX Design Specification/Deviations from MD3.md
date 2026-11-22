@@ -12,7 +12,7 @@ depends_on: []
 
 # Deviations from MD3
 
-The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 521 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
+The register of every departure from Material Design 3 recorded in the notes, with its reason and decision (chapter 16 of the UX Design Specification). Each row is owned by the note named in its section (one source of truth); this note only collects them, so a change is made in the owning note and re-collected here. Policy: [[ADR-0006 MD3 baseline with named Expressive adoptions]]. 522 rows from 141 notes as of 2026-11-22; notes with no deviation rows: 0.
 
 ## [[03 Typography and Text Rules]]
 
@@ -958,6 +958,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Active window marked by fill and 2 px border, not a `secondary_container` pill | legible at 28 dp height without a colour role | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Item height 32, 24, 24 dp and icons 20, 18, 18 dp instead of the control height 40, 32, 28 | the shell keeps today's compact sizes (owner principle: compact keeps today's sizes); 24 dp is the pointer minimum | [[ADR-0024 Shell tray and task item sizes]] |
 | Heights, paddings by density | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 
 ## [[Tasks Module]]
@@ -1097,7 +1098,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Hit area by density, 24 dp floor | desktop density, WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Hit area 32, 24, 24 dp and icon 20, 18, 18 dp instead of the icon button's 40, 32, 28 and 24, 20, 20 | the shell keeps today's compact sizes (owner principle: compact keeps today's sizes); 24 dp is the pointer minimum (WCAG 2.2 SC 2.5.8) | [[ADR-0024 Shell tray and task item sizes]] |
 | Rich tooltip without actions | title and text, no interactive parts | [[ADR-0004 Tooltip rule]] |
 
 ## [[Tray Menu]]
@@ -1112,7 +1113,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | No MD3 counterpart | Tesserae-specific status area | [[ADR-0001 MD3 role names are the specification vocabulary]] |
-| Hit areas by density | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Hit areas 32, 24, 24 dp and icons 20, 18, 18 dp (items follow [[Tray Item]]) | the shell keeps today's compact sizes; 24 dp pointer minimum | [[ADR-0024 Shell tray and task item sizes]] |
 
 ## [[Tree Node]]
 

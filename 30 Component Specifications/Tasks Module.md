@@ -57,7 +57,7 @@ No tokens of its own; the row is transparent and the items carry the tokens ([[T
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Item height | 40 | 32 | 28 | [[Task Item]] |
+| Item height | 32 | 24 | 24 | [[Task Item]] ([[ADR-0024 Shell tray and task item sizes]]) |
 | Gap between items | 4 | 4 | 4 | `space.2` |
 | Item maximum width | 180 | 180 | 180 | `max_width` |
 | Icon size | see [[Task Item]] |  |  | `icon_size` param, code 18 |
@@ -68,7 +68,7 @@ The row is transparent and owns only the gap between items; every size of an ite
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| root | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note (item height), [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| root | height | - | 32 | 24 | 24 | Sizing table of this note (item height), [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | root | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
 | root | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | `tess-shell:src/tess_shell/shipped/Tasks/Tasks_Module.tdl` (no padding set) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
 | root | margin | - | N/A: the Bar sets the gap between modules | N/A: as in Default | N/A: as in Default | [[Bar]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
@@ -79,7 +79,7 @@ The row is transparent and owns only the gap between items; every size of an ite
 | root | font | - | N/A: the row draws no text; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | root | icon size | - | N/A: the row holds no icon; the items do | N/A: as in Default | N/A: as in Default | [[Task Item]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
-| item | height | `density.control_height` | 40 | 32 | 28 | [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| item | height | - | 32 | 24 | 24 | [[Task Item]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 
 ## Layout and overflow
 
@@ -131,7 +131,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TSK-4 (scripted input): wheel +1 over the row activates the next window and -1 the previous, wrapping at the ends.
 - [ ] AC-MOD-TSK-5 (scripted input): hover an item for 500 ms: one tooltip; wheel over the row with the tooltip shown removes it within one frame.
 - [ ] AC-MOD-TSK-6 (static check): the Root carries no `Tooltip`.
-- [ ] AC-MOD-TSK-7 (geometry check): items are 40, 32, 28 dp high at default, compact, dense; gaps 4 dp; no two hit areas overlap.
+- [ ] AC-MOD-TSK-7 (geometry check): items are 32, 24, 24 dp high at default, compact, dense ([[ADR-0024 Shell tray and task item sizes]]); gaps 4 dp; no two hit areas overlap.
 - [ ] AC-MOD-TSK-8 (scripted input): with `announce` true a window opening queues exactly one polite announcement; with it false none.
 - [ ] AC-MOD-TSK-9 (scripted input): with more windows than fit, the active item is inside the slot and no item paints past the slot edge.
 

@@ -60,25 +60,25 @@ Roles: `on_surface`, `primary`, `warning`, `surface_raised`; shape: corner 6 (co
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Height | 40 | 32 | 28 | [[Button]] heights; code: 18 icon plus 6 padding = 24 |
-| Icon with title | 18 | 18 | 16 | `Icon next to a button label` in [[Iconography]]; code 18 |
-| Icon only | 24 | 20 | 20 | icon button icon in [[Iconography]] |
+| Height | 32 | 24 | 24 | shell sizes ([[ADR-0024 Shell tray and task item sizes]]); code: 18 icon plus 6 padding = 24 |
+| Icon with title | 20 | 18 | 18 | shell sizes ([[ADR-0024 Shell tray and task item sizes]]); code 18 |
+| Icon only | 20 | 18 | 18 | shell sizes ([[ADR-0024 Shell tray and task item sizes]]) |
 | Horizontal padding | 12 | 8 | 4 | `density.row_padding_x`; code: 6 |
 | Gap icon to title | 8 | 8 | 4 | `density.icon_label_gap`; code: 6 |
 | Width with title | 180 maximum | 180 | 180 | `max_width` param |
 
 ## Dimensions and defaults
 
-Heights, horizontal padding, gap and icon sizes follow the Sizing table above. Vertical padding is `(height - content height) / 2`: the title line box is 20 dp, the icon-only icon is 24, 20 and 20 dp, so the content is centred by construction and an icon-only item is square at the density height. The corner radius of 4 dp is the Tesserae choice between the 4 dp and 8 dp that the Tokens section left open (it matches the list row, [[List Item]]) #needs-verification-as-design-choice.
+Heights, horizontal padding, gap and icon sizes follow the Sizing table above. Vertical padding is `(height - content height) / 2`: the title line box is 20 dp (16 dp at the 24 dp heights, see the padding rows), the icon-only icon is 20, 18 and 18 dp, so the content is centred by construction and an icon-only item is square at the density height. The corner radius of 4 dp is the Tesserae choice between the 4 dp and 8 dp that the Tokens section left open (it matches the list row, [[List Item]]) #needs-verification-as-design-choice.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| container (with title) | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
-| container (icon only) | height | `density.control_height` | 40 | 32 | 28 | Sizing table of this note (square at the density height), [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container (with title) | height | - | 32 | 24 | 24 | Sizing table of this note, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| container (icon only) | height | - | 32 | 24 | 24 | Sizing table of this note (square at the density height), [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | container | min width | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
 | container | min height | `target.min` | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]]; 48 in a touch context | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
-| container (with title) | padding | `density.row_padding_x` | 10 12 10 12 | 6 8 6 8 | 4 4 4 4 | Sizing table of this note (horizontal), vertical = (height - 20) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
-| container (icon only) | padding | `space.3`, `space.2` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | vertical and horizontal = (height - icon) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container (with title) | padding | `density.row_padding_x` | 6 12 6 12 | 2 8 2 8 | 2 4 2 4 | Sizing table of this note (horizontal), vertical = (height - 20) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
+| container (icon only) | padding | `space.*` | 6 6 6 6 | 3 3 3 3 | 3 3 3 3 | vertical and horizontal = (height - icon) / 2, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
 | container | margin | - | N/A: the Tasks row gap spaces the items | N/A: as in Default | N/A: as in Default | [[Tasks Module]], [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
 | container | gap | `density.icon_label_gap` | 8 | 8 | 4 | Sizing table of this note (icon to title), [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
 | container (rest) | border width | - | 0 | 0 | 0 | [[Button]], this note States table: only the active item has a border | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
@@ -87,8 +87,8 @@ Heights, horizontal padding, gap and icon sizes follow the Sizing table above. V
 | container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], design choice, proposed ADR: Task Item corner radius | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], this note Tokens section | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 | title | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], this note Tokens section | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
-| icon (with title) | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a label), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
-| icon (icon only) | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]] (icon button icon), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| icon (with title) | icon size | - | 20 | 18 | 18 | [[Iconography]] (icon next to a label), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| icon (icon only) | icon size | - | 20 | 18 | 18 | [[Iconography]] (icon button icon), Sizing table of this note | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | attention mark | height | - | 6 | 6 | 6 | this note Anatomy (6 by 6 dp dot), `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Module.tdl` `Attention` | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | attention mark | corner radius | `shape.full` | 3 | 3 | 3 | [[Shape]] (half the 6 dp dot) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 
@@ -138,7 +138,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 - [ ] AC-MOD-TIT-3 (scripted input): Enter and Space on a focused item act as a click; Delete closes the window.
 - [ ] AC-MOD-TIT-4 (scripted input): hover an icon-only item for 500 ms: exactly 1 tooltip layer with the title and application; hover an item whose title is cut: exactly 1 layer, never 2.
 - [ ] AC-MOD-TIT-5 (static check): no node under the item other than the item itself carries a `Tooltip`.
-- [ ] AC-MOD-TIT-6 (geometry check): item height is 40, 32 and 28 dp, with-title icon 18, 18 and 16 dp, icon-only icon 24, 20 and 20 dp at default, compact and dense; hit area at least 24 dp.
+- [ ] AC-MOD-TIT-6 (geometry check): item height is 32, 24 and 24 dp, with-title and icon-only icon 20, 18 and 18 dp at default, compact and dense ([[ADR-0024 Shell tray and task item sizes]]); hit area at least 24 dp.
 - [ ] AC-MOD-TIT-7 (pixel check): active, minimised and attention each differ from rest in a greyscale render (fill and border; underline or equivalent; dot shape).
 - [ ] AC-MOD-TIT-8 (contrast script): title text against the Bar surface and the 2 px border at least 4.5:1 and 3:1 respectively in Light, Dark and High_Contrast.
 
@@ -156,6 +156,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 | Deviation | Reason | ADR |
 |---|---|---|
 | Active window marked by fill and 2 px border, not a `secondary_container` pill | legible at 28 dp height without a colour role | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Item height 32, 24, 24 dp and icons 20, 18, 18 dp instead of the control height 40, 32, 28 | the shell keeps today's compact sizes (owner principle: compact keeps today's sizes); 24 dp is the pointer minimum | [[ADR-0024 Shell tray and task item sizes]] |
 | Heights, paddings by density | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 
 ## Sources

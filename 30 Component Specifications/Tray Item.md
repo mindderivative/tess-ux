@@ -59,8 +59,8 @@ Roles: `on_surface` icon, `surface_raised` fill, `warning` border. Tooltip: rich
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Hit area (square) | 40 | 32 | 28 | [[Icon Button]] container; code: 24 by 24 (meets the 24 dp floor; the icon is 18) |
-| Icon | 24 | 20 | 20 | `density.icon_button_icon`; code 18 |
+| Hit area (square) | 32 | 24 | 24 | shell sizes, not the [[Icon Button]] container ([[ADR-0024 Shell tray and task item sizes]]); 24 dp is the pointer minimum; code today: 24 by 24 at every level |
+| Icon | 20 | 18 | 18 | shell sizes ([[ADR-0024 Shell tray and task item sizes]]); code today: 18 |
 | Gap between items | 4 | 4 | 4 | code: `spacing` 6 |
 
 ## Dimensions and defaults
@@ -69,10 +69,10 @@ The item is the icon-button geometry of [[Icon Button]] by density; the attentio
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| root | height | `density.icon_button_container` | 40 | 32 | 28 | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| root | height | - | 32 | 24 | 24 | [[ADR-0024 Shell tray and task item sizes]]; 24 dp pointer minimum, [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
 | root | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
 | root | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
-| root | padding | `space.*` | 8 8 8 8 | 6 6 6 6 | 4 4 4 4 | container minus icon, halved, from [[Spacing and Density]] (icon button rows); code 3 3 3 3 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
+| root | padding | `space.*` | 6 6 6 6 | 3 3 3 3 | 3 3 3 3 | container minus icon, halved ([[ADR-0024 Shell tray and task item sizes]]); code 3 3 3 3 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
 | root | margin | - | N/A: the Tray Module sets the space between items | N/A: same as the default column | N/A: as in Default | [[Spacing and Density]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Margin); tre: n/a: element absent in tre |
 | root | gap | `space.2` | 4 | 4 | 4 | gap between items, [[Spacing and Density]]; code 6 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Spacing); tre: n/a: element absent in tre |
 | root | border width | - | 0 | 0 | 0 | MD3 icon button https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-icon-button.scss | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
@@ -84,7 +84,7 @@ The item is the icon-button geometry of [[Icon Button]] by density; the attentio
 | icon | font | - | N/A: the icon draws no text | N/A: same as the default column | N/A: as in Default | [[Typography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
 | tooltip title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Tooltip]] (rich, geometry does not scale with density) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
 | tooltip text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Tooltip]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
-| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]]; code 18 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
+| icon | icon size | - | 20 | 18 | 18 | [[ADR-0024 Shell tray and task item sizes]]; code 18 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
 | root | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 | tooltip | elevation | `elevation.level2` | 2 | 2 | 2 | [[Tooltip]], [[Elevation]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 
@@ -130,7 +130,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 ## Acceptance criteria
 
 - [ ] AC-MOD-TRI-1 (AT tree assertion): the item has role `BUTTON`, a non-empty name equal to the item title (plus `needs attention` when it applies) and a description equal to the tooltip text.
-- [ ] AC-MOD-TRI-2 (geometry check): the hit area is 40, 32 and 28 dp square and the icon 24, 20 and 20 dp at default, compact and dense; never below 24 dp.
+- [ ] AC-MOD-TRI-2 (geometry check): the hit area is 32, 24 and 24 dp square and the icon 20, 18 and 18 dp at default, compact and dense ([[ADR-0024 Shell tray and task item sizes]]); never below 24 dp.
 - [ ] AC-MOD-TRI-3 (scripted input): click, middle click, secondary click and wheel each send the matching action once.
 - [ ] AC-MOD-TRI-4 (scripted input): Enter and Space activate; the Menu key opens the item's menu and focus enters the menu.
 - [ ] AC-MOD-TRI-5 (scripted input): hover for 500 ms: exactly 1 tooltip layer with the title and the text; leave removes it within 150 ms plus one frame.
@@ -152,7 +152,7 @@ Colours resolve from theme tokens: the shell theme `Default` has a dark base blo
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Hit area by density, 24 dp floor | desktop density, WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Hit area 32, 24, 24 dp and icon 20, 18, 18 dp instead of the icon button's 40, 32, 28 and 24, 20, 20 | the shell keeps today's compact sizes (owner principle: compact keeps today's sizes); 24 dp is the pointer minimum (WCAG 2.2 SC 2.5.8) | [[ADR-0024 Shell tray and task item sizes]] |
 | Rich tooltip without actions | title and text, no interactive parts | [[ADR-0004 Tooltip rule]] |
 
 ## Sources

@@ -61,6 +61,7 @@ State as of 2026-11-22. P13 (state layer hooks) and P14 (focus outline) of the t
 |---|---|---|
 | `Letter_Spacing` on Text, Marquee and TextField (tracking of the type roles) | no key | every module with a type role |
 | `Line_Height` on TextField | no key | [[Text Field]] |
+| `Line_Height` unit | pixels in the shell, a multiple in tre; the binder converts px to tre's multiplier once tess-shell fixes it | [[Typography]] |
 | Bar `Padding`, `Border_Width`, `Border_Color`, `Corner_Radius`; Frame `Min_Height` per side, `Elevation` | not built | [[Bar]], [[Frame]] |
 | Peek: handle size and radius, tab minimum size, handle minimum size | painter constants | [[Peek]] |
 | Panel and Popup `Padding` and `Margin` | not built (routed through the content block) | [[Panel and Surface]], [[Popup]] |
