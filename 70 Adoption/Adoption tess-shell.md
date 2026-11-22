@@ -58,7 +58,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-004 | P1 | Status: in tess-shell PR 151. Six literal tooltip cards differ from the plain tooltip look | AC-TIP-13, AC-TIP-21, AC-MOD-AUD-10, AC-MOD-BAT-9, AC-MOD-CLK-5, AC-MOD-MED-10, AC-MOD-NET-8, AC-MOD-TRI-8 | the six paths listed under "Verified in code" | Replace the six blocks with one shipped tooltip card style read from tokens | [[Tooltip]] |
-| TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `For` plus `Class` on a module call). Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
+| TSH-008 | P2 | held: blocked on a shell feature (dynamic tooltips in `If` or `For` plus `Class` on a module call). Design conclusion (tess-shell, 2026-11-22, reported by the Orchestrator): designed, with a per-entry tooltip identity, the captured loop scope read when the tooltip opens, and the caller's class applied to the callee root with a Kind match; PARKED, with no consumer beyond this P2 row. Applications rows have no tooltip for cut text | AC-MOD-APP-8 | `tess-shell:src/tess_shell/shipped/Applications/Applications_Module.tdl` | Add the cut-text tooltip on the row label | [[Applications Module]] |
 
 ### Keyboard reachability
 
@@ -123,7 +123,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-080 | P1 | held: UXREQ-001 (needs a tre hook). ScrollBox has no scrollbar of either axis; `Scroll_Snap` and `On_Scroll` not built Update (2026-11-22, tess-shell audit against main, schema 1.30): scrollbars for ScrollBox and the Popup scroll view are built; `Scroll_Snap` and `On_Scroll` are still not built. | AC-SCB-02, AC-SCB-03, AC-SCB-04, AC-SCB-05, AC-SCB-06, AC-SCB-07, AC-SCB-08, AC-SCB-09, AC-SCB-12, AC-SCB-13, AC-BLK-SBX-5, AC-LAY-7, AC-LAY-8 | `tess-shell:src/tess_shell/schema/blocks.py` (`ScrollBox`) | Build the block on the hook ([[UXREQ-001 Two-axis scroll view with the specified scrollbar]]) | [[ScrollBox]], [[Scrollbar and Scroll Container]] |
 | TSH-081 | P2 | Status: in tess-shell PR 153. Text Selection: no copy command (Ctrl+C is in tess-shell PR 153, merge pending) | AC-SEL-10 | `tess-shell:src/tess_shell/schema/blocks.py` (`Selectable`) | Add Ctrl+C on a selectable Text | [[Text Selection]] |
 | TSH-082 | P2 | held: needs a tre hook (multi-selection; queued with tess-re). List has no empty text; selection is single only; no multi select rules | AC-EMP-1, AC-SLT-1, AC-SLT-2, AC-SLT-3, AC-SLT-4, AC-SLT-6, AC-SLT-9 | `tess-shell:src/tess_shell/shipped/List/List_Module.tdl` | Add an `Empty` slot and the multi-select keys | [[Empty States]], [[Selection]] |
-| TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
+| TSH-084 | P2 | held: blocked on a shell feature (events to a non-root block of a composite TextInput). Design conclusion (tess-shell, 2026-11-22): a module-level `Receives { On_Changed: Field, ... }` declaration, validated when the module is read; APPROVED and tess-shell builds it, then this row follows. Text Input has no error, helper text or `invalid` state | AC-VAL-3, AC-VAL-5 | `tess-shell:src/tess_shell/shipped/TextInput/TextInput_Module.tdl` | Add `Error` and `Helper` slots | [[Validation]], [[Text Field]] |
 
 ## Fixed since the audit
 
@@ -197,8 +197,8 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 | TSH-054 | tre 0.6.12 | the path build waits for tre 0.6.12 |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
 | TSH-082 | tre hook | multi-selection in tre: delivered as `selection_mode` on `virtual_list` in tre PR 350 (0.6.12 unreleased); the shell List can use it once released; the `Empty` slot does not need it |
-| TSH-008 | shell feature | dynamic tooltips in `For` plus `Class` on a module call |
-| TSH-084 | shell feature | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots) |
+| TSH-008 | shell feature, parked | dynamic tooltips in `If` or `For` plus `Class` on a module call: designed and parked (no consumer beyond this row) |
+| TSH-084 | shell feature, approved | events to a non-root block of a composite TextInput (the `Error` and `Helper` slots): the `Receives { On_Changed: Field }` module declaration is approved and being built by tess-shell |
 | TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
 
 ## Won't do
