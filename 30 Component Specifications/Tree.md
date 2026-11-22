@@ -27,7 +27,7 @@ Navigate and choose in hierarchical data (files by type, configuration structure
 ## Anatomy
 
 1. Tree container: role `tree`, vertical roving focus, lays rows in a column.
-2. Tree levels: the rows of one depth, followed by the level of each open branch's children (role `group`).
+2. Tree rows: the visible rows are direct children of the tree, each with its level; the children of an open branch follow it in tree order, with no group wrapper ([[ADR-0028 Tree rows are flat in the accessibility tree]], proposed).
 3. [[Tree Node]] rows.
 4. Scroll container around the tree ([[Scrollbar and Scroll Container]]).
 5. Empty-state slot, shown when there are no nodes.
@@ -38,7 +38,7 @@ Navigate and choose in hierarchical data (files by type, configuration structure
 |---|---|---|
 | Single select | the default | one `aria-selected` node, selection chosen explicitly |
 | Multi select | planned | `aria-multiselectable`, Space toggles, Shift range keys |
-| Virtualised | thousands of rows | only visible rows are built; `aria-setsize`, `aria-posinset` on every node |
+| Virtualised | thousands of rows | only visible rows are built; `aria-setsize`, `aria-posinset` on every node (as in every tree, [[ADR-0028 Tree rows are flat in the accessibility tree]]) |
 | Dense, compact, default | density per container | row tokens of [[Tree Node]] |
 
 ## States
@@ -120,7 +120,7 @@ Chevron rotation 200 ms; no height animation of the children ([[Tree Node]], [[M
 ## Accessibility
 
 - Role `tree` with an accessible name taken from the pane or heading label ("Files", "Structure"), never a generic word.
-- Each row: role `treeitem`, `aria-level`, `aria-expanded` on branches only, `aria-selected` on selectable rows; the children of a branch are in an element with role `group`; a virtualised tree sets `aria-setsize` and `aria-posinset` on every row (APG).
+- Each row: role `treeitem`, `aria-level` (depth + 1), `aria-setsize` and `aria-posinset` (the number of siblings under the same parent and the position among them), `aria-expanded` on branches only, `aria-selected` on selectable rows; the rows are direct children of the tree and no group wrapper is required (the APG flat form, [[ADR-0028 Tree rows are flat in the accessibility tree]], proposed; the claim that screen readers announce this well is unverified until a real pass).
 - Multi select: `aria-multiselectable` true.
 - Keys per the table; the focus indicator is visible and keyboard only ([[Focus Ring]], [[14 Accessibility Basics]]).
 - Collapsing, expanding and selecting changes are exposed as property changes of the node; no extra announcement is made.
@@ -144,9 +144,9 @@ Single select, nothing selected, all branches closed, `default` density unless t
 - [ ] AC-TRE-07: Scripted input. Enter on a branch chooses it and toggles it; Space on a branch chooses it and does not toggle; arrow keys alone never change the chosen node.
 - [ ] AC-TRE-08: Scripted input. `*` on a depth-1 node opens every closed sibling at depth 1 and no others.
 - [ ] AC-TRE-09: AT tree assertion. Exactly one node has `aria-selected` true in a single-select tree; every selectable node has `aria-selected` true or false; non-selectable nodes have none.
-- [ ] AC-TRE-10: AT tree assertion. Each open branch's children are inside an element of role `group`; each branch has `aria-expanded`, each leaf has none; levels are 1 for roots and increase by 1 per depth.
+- [ ] AC-TRE-10: AT tree assertion ([[ADR-0028 Tree rows are flat in the accessibility tree]]). Every visible row is a direct child of the tree with role `treeitem`; each branch has `aria-expanded`, each leaf has none; `aria-level` is 1 for roots and increases by 1 per depth; `aria-setsize` equals the number of siblings under the same parent and `aria-posinset` the position among them (not the count of all visible rows); the children of a closed branch are not in the tree. Pass: values equal on a tree with two open levels.
 - [ ] AC-TRE-11: Scripted input and AT tree assertion (applies when multi select exists). Space toggles selection, Shift plus Down extends it, the tree has `aria-multiselectable` true.
-- [ ] AC-TRE-12: Geometry check. In a virtualised tree of 100000 rows with row height 32 dp and a 400 dp viewport, at most 33 rows (13 visible plus 10 overscan rows on each side) exist at any moment; every built row has `aria-setsize`, `aria-posinset` and `aria-level`; End focuses and shows the last row; the focused row is fully inside the viewport after every key.
+- [ ] AC-TRE-12: Geometry check. In a virtualised tree of 100000 rows with row height 32 dp and a 400 dp viewport, at most 33 rows (13 visible plus 10 overscan rows on each side) exist at any moment; every built row has `aria-setsize`, `aria-posinset` and `aria-level` (as in every tree, AC-TRE-10); End focuses and shows the last row; the focused row is fully inside the viewport after every key.
 - [ ] AC-TRE-13: Geometry check (F6). A tree wider than its container (container 120 dp, depth 6 at `default`) shows a horizontal bar in the surrounding container, and the vertical bar appears when rows exceed the viewport.
 - [ ] AC-TRE-14: Scripted input. Closing a branch that contains the focused node moves focus to the branch; opening or closing does not change the chosen node.
 - [ ] AC-TRE-15: Geometry check. All rows in one tree have equal height and take the container density; changing the density re-flows the rows with the values of [[Tree Node]].
@@ -171,6 +171,7 @@ Evidence: F3, F4, F5, F6 in [[Owner Feedback 2026-11-20]]; row geometry and the 
 |---|---|---|
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
+| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed) |
 
 ## Sources
 

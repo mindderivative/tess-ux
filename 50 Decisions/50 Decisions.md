@@ -43,5 +43,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0025 Shell outline and high contrast status colours, accent never text]]
 - [[ADR-0026 Selection highlight radius 2 dp]]
 - [[ADR-0027 Shell popup and tooltip fade]]
+- [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed)
 
 Back to [[Index]].
