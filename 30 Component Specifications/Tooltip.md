@@ -136,7 +136,7 @@ Layer route: in an application window the tooltip is a layer over the window con
 
 ## Motion
 
-No enter or exit animation is required. Where a project animates, enter and exit durations come from [[Motion]] (`short2`, 100 ms is the recommended upper bound; #needs-verification-as-design-choice, MD3 gives no tooltip duration in the sources read). With reduced motion on, the tooltip appears and disappears in one frame ([[Accessibility Rules]]).
+No enter or exit animation is required. Where a project animates, enter and exit durations come from [[Motion]] (`short2`, 100 ms is the recommended upper bound; tess-shell ships a 200 ms fade by default, [[ADR-0027 Shell popup and tooltip fade]]; #needs-verification-as-design-choice, MD3 gives no tooltip duration in the sources read). With reduced motion on, the tooltip appears and disappears in one frame ([[Accessibility Rules]]).
 
 ## Accessibility
 
@@ -211,6 +211,7 @@ Evidence: [[Owner Feedback 2026-11-20]] F2 (no scroll or leave handling visible 
 | Grace period 150 ms for plain and rich tooltips | Hoverable condition of WCAG 1.4.13 | [[ADR-0011 Tooltip hover grace for all tooltips]] |
 | Rich tooltip actions reachable by Tab | Keyboard access; MD3 describes touch and pointer | [[ADR-0004 Tooltip rule]] |
 | Trigger is the control, never a row or group | Owner feedback F8; MD3 has no row-level tooltip, so this is a restriction rather than a deviation | [[ADR-0004 Tooltip rule]] |
+| tess-shell fades in 200 ms by default (`short4`), `SLIDE` refused | Fade is the only transition that does not move a compositor-placed popup; the design choice of the shell | [[ADR-0027 Shell popup and tooltip fade]] |
 
 ## Sources
 
