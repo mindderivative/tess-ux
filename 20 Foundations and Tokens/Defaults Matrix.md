@@ -1568,7 +1568,7 @@ depends_on: []
 | [[Text Editor]] | container | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Text Field]] outlined variant; design choice, proposed ADR: text editor uses the outlined variant | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | [[Text Field]] | container | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | [[Text Field]] | container (filled) | `shape.extra_small_top` | 4 4 0 0 | 4 4 0 0 | 4 4 0 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| [[Text Selection]] | highlight | `shape.none` | 0 | 0 | 0 | [[Shape]] (rectangle behind glyphs; engine value #needs-verification) | tess-ui: no hook; tess-shell: no hook; tre: hardcoded in tre (square highlight rectangle, no radius property) |
+| [[Text Selection]] | highlight | - | 2 | 2 | 2 | design choice, [[ADR-0026 Selection highlight radius 2 dp]] (the engine default is a square rectangle; tre has `selection_radius` for the terminal since PR 347) #needs-verification-as-design-choice | tess-ui: no hook; tess-shell: via the theme default for selectable Text; tre: yes (selection_radius, tre PR 347 for the terminal) |
 | [[Time Input]] | hour and minute field | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | [[Time Input]] | period selector | - | 8 | 8 | 8 | Tokens used section (picker, MD3 value #needs-verification), [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | [[Time Picker]] | dial | `shape.full` | 128 | 112 | 96 | [[Shape]] (half of the dial) | tess-ui: no hook (half of the dial size in controls.py); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
@@ -2479,6 +2479,7 @@ Rows whose Token cell is `-` and whose default is a value, not N/A. Each has a S
 | [[Text Field]] | container | min width | 48 | design choice, proposed ADR: minimum width of single-line input controls, [[Spacing and Density]] |
 | [[Text Selection]] | highlight fill, engine default until the engine exposes a role | border color | `on_surface` at 30% | `tre:docs/guide/text.md`, [[Existing Tokens]] |
 | [[Text Selection]] | highlight | border width | 0 | [[Text Selection#Anatomy]] (fill only) |
+| [[Text Selection]] | highlight | corner radius | 2 | design choice, [[ADR-0026 Selection highlight radius 2 dp]] (the engine default is a square rectangle; tre has `selection_radius` for the terminal since PR 347) #needs-verification-as-design-choice |
 | [[Text Selection]] | caret (text inputs) | min width | 1.5 | `tre:docs/reference/paint.md` (default 1.5 px bar), [[Existing Tokens]] |
 | [[Time Input]] | hour and minute field | border width | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused |
 | [[Time Input]] | period selector | border width | 1 | [[Segmented Button]], States table (outline `outline`) |
