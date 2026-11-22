@@ -27,7 +27,7 @@ The owner decided on 2026-10-27 that no key reveals an auto-hidden Bar (`Reveal_
 
 ## Decision
 
-A hidden Bar is revealed by Shortcut Mode. Entering Shortcut Mode shows every hidden Bar and moves focus to it. Leaving Shortcut Mode, or pressing Escape, hides the Bar again according to `Auto_Hide` and `Auto_Hide_Delay`. There is no always-on reveal key: plain keys still do not reveal a Bar, so the decision of 2026-10-27 holds for plain keys. A Bar that holds keyboard focus is not hidden while it holds it.
+A hidden Bar is revealed by Shortcut Mode. Entering Shortcut Mode shows every hidden Bar and keeps it visible while the mode is active. Focus does not jump to the Bar: it starts where the shell's focus rule 4 puts it (the Frame, or the surface the developer set as the default focus; when there is no Frame and no default, the first revealed surface in `Tab_Index` order), and `Next_Focus` and `Previous_Focus` move it through the Frame's panels, peeks, bars and strips in `Tab_Index` order, so the Bar is reached with `Next_Focus` (`shell-vault:40 Specifications/Integration/Focus and Keyboard.md`, rule 4 and rule 5). Leaving Shortcut Mode, or pressing Escape, hides the Bar again according to `Auto_Hide` and `Auto_Hide_Delay`. There is no always-on reveal key: plain keys still do not reveal a Bar, so the decision of 2026-10-27 holds for plain keys. A Bar that holds keyboard focus is not hidden while it holds it.
 
 ## Consequences
 

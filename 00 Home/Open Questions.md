@@ -64,7 +64,7 @@ Decisions for the maintainer, recommendation first, and facts still to verify. A
 | OQ-29 | Node Graph panning instead of scrollbars | Accepted as a deviation from ADR-0003: [[ADR-0017 Node Graph pans instead of scrolling]] |
 | OQ-30 | Terminal keyboard trap | Accepted, escape chord: [[ADR-0018 Terminal escape chord]] |
 | OQ-31 | Focus chords for banner and snackbar | Accepted as proposed defaults, collision check required: [[ADR-0019 Banner and snackbar focus chords]] |
-| OQ-25 | Shell Bar auto-hide against keyboard reachability | Closed 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]]: Shortcut Mode reveals a hidden Bar and moves focus to it; plain keys still do not reveal it |
+| OQ-25 | Shell Bar auto-hide against keyboard reachability | Closed 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]]: Shortcut Mode reveals a hidden Bar; initial focus stays where the shell's focus rule 4 puts it and `Next_Focus` reaches the Bar; plain keys still do not reveal it |
 
 ## Open for the owner
 

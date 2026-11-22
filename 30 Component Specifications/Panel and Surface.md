@@ -128,7 +128,7 @@ Surface show and hide in the shell is a margin slide of 200 ms with content fade
 - Each shell surface window is published as one more window of the application with an accessible name set per surface; a bar's window node has no name in tre, so the shell sets it.
 - A pane carries role `group` with a label ("Files", "Structure") so assistive technology can name regions.
 - Text on every surface role used for text meets 4.5:1 (3:1 for large text and icons); a surface boundary needs no contrast ratio unless it is the only cue to a control edge (3:1, WCAG 1.4.11).
-- A hidden or collapsed shell surface has a keyboard way to open it: Shortcut Mode reveals a hidden Bar or Panel and moves focus to it ([[ADR-0021 Shortcut Mode reveals a hidden Bar]], [[Accessibility Rules]]).
+- A hidden or collapsed shell surface has a keyboard way to open it: Shortcut Mode reveals a hidden Bar or Panel and keeps it visible while the mode is active; focus starts where the shell's focus rule 4 puts it and `Next_Focus` reaches the revealed surface ([[ADR-0021 Shortcut Mode reveals a hidden Bar]], [[Accessibility Rules]]).
 
 ## Dark and light
 
@@ -162,7 +162,7 @@ Test methods follow [[Test Method]]. Pixel checks sample both schemes.
 - [ ] AC-PNL-11 (geometry check, reserved space): an exclusive zone is accepted only on the `TOP` layer; on another layer loading fails with an error (shell load test).
 - [ ] AC-PNL-12 (AT tree assertion): every shell surface window has a non-empty accessible name; every pane has role `group` and a label.
 - [ ] AC-PNL-13 (geometry check, clipping): content that overflows a pane is clipped to the pane's rounded rectangle and a scrollbar thumb is visible on each overflowing axis; no pixel of the content lies outside the pane rectangle.
-- [ ] AC-PNL-14 (scripted input, hidden Panel reachable by keyboard, ADR-0021): with a hidden Panel (`Hide_After` elapsed), `Enter_Shortcut_Mode` shows it and moves focus to it; Escape or `Exit_Shortcut_Mode` hides it again per its `Hide_After`; while it holds keyboard focus it is not hidden; a plain key press with no mode active leaves it hidden. Pass: states as stated.
+- [ ] AC-PNL-14 (scripted input, hidden Panel reachable by keyboard, ADR-0021): with a hidden Panel (`Hide_After` elapsed), `Enter_Shortcut_Mode` shows it and keeps it visible while the mode is active, and `Next_Focus` reaches it; Escape or `Exit_Shortcut_Mode` hides it again per its `Hide_After`; while it holds keyboard focus it is not hidden; a plain key press with no mode active leaves it hidden. Pass: states as stated.
 
 ## Status in code
 
