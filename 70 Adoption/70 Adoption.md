@@ -22,5 +22,6 @@ Audits of each Tesserae project against the specifications, routed through the O
 - [[Adoption tess-ui]]
 - [[Adoption tre]]
 - [[Audit Template]]
+- [[Behavior Standard Inventory]]
 
 Back to [[Index]].
