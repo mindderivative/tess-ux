@@ -145,7 +145,7 @@ Per [[ADR-0004 Tooltip rule]] the tooltip belongs to the smallest element that c
 
 ## Accessibility
 
-- Role `treeitem`; name = label text; `aria-level` = depth + 1; `aria-expanded` true or false on branches only; `aria-selected` on selectable nodes; `aria-setsize` and `aria-posinset` always (the sibling count under the same parent and the position among them; [[ADR-0028 Tree rows are flat in the accessibility tree]], proposed; [[Tree]], WAI-ARIA tree pattern).
+- Role `treeitem`; name = label text; `aria-level` = depth + 1; `aria-expanded` true or false on branches only; `aria-selected` on selectable nodes; `aria-setsize` and `aria-posinset` always (the sibling count under the same parent and the position among them; [[ADR-0028 Tree rows are flat in the accessibility tree]], accepted; [[Tree]], WAI-ARIA tree pattern).
 - Contrast: `on_surface` on the surface and `on_secondary_container` on `secondary_container` each reach 4.5 to 1; chevron and icon reach 3 to 1 ([[14 Accessibility Basics]]).
 
 ## Dark and light

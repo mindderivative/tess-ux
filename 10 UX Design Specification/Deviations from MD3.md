@@ -1134,7 +1134,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
-| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] (proposed) |
+| Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] |
 
 ## [[Video Player]]
 
