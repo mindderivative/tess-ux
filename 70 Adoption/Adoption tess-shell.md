@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 26 open findings (P0 0, P1 13, P2 13; TSH-008 and TSH-084 are blocked on shell features, TSH-082 on a tre hook), 31 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Seven open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 26 open findings (P0 0, P1 13, P2 13; TSH-008 and TSH-084 are blocked on shell features, TSH-082 on a tre hook), 34 fixed (TSH-010, TSH-050 and TSH-051 fixed by tess-shell PR 131, verified by the owner on KWin), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Seven open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -159,17 +159,10 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | TSH-085 | Marquee has no hover pause | done on tess-shell main (tess-shell audit, schema 1.30; not re-checked here) | AC-MOD-MQT-7 | [[Marquee Text]] |
 | TSH-060 | The theme `Reduced_Motion` block was empty and `EMPHASIZED` differed from the table | `Reduced_Motion` sets every duration to 0 in `Default_Theme.tdl`; `EMPHASIZED` is (0.2, 0, 0, 1) in `binder/motion.py` (checked in tess-shell origin/main, 5377644) | `tess-shell:src/tess_shell/binder/motion.py`, `Themes/Default_Theme.tdl:67-70` | [[Motion]] |
 | TSH-071 | Tooltip carriers had role `GROUP` | Battery and Network roots are `IMG` with the tooltip as description; the Audio tooltip sits on the controls (checked in origin/main, 5377644; Media root is still a `GROUP` without a tooltip) | the three root files | [[Accessibility Tree]] |
+| TSH-010 | `Auto_Hide`, `Auto_Hide_Delay` and the Shortcut Mode reveal must be built together ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]); the default is off ([[ADR-0022 Bar Auto_Hide default is off]]), so only a Bar that opts in with `Auto_Hide: true` hides, which | Fixed on tess-shell main by PR 131 (Bar `Visible`, `Auto_Hide` default off per ADR-0022, Auto_Hide_Delay, the Shortcut Mode reveal per ADR-0021); verified by the owner on a real KWin (checks A1 to A7), reported by the Orchestrator | AC-AHD-8, AC-AHD-9, AC-AHD-10, AC-AHD-20, AC-AHD-21, AC-BAR-13, AC-BAR-21 | [[Auto Hide]], [[Bar]] |
+| TSH-050 | `Auto_Hide`, `Auto_Hide_Delay`, `Reveal_Key` absent: a Bar cannot be hidden; built together with the Shortcut Mode reveal (TSH-010) | Fixed on tess-shell main by PR 131 (Bar `Visible`, `Auto_Hide` default off per ADR-0022, Auto_Hide_Delay, the Shortcut Mode reveal per ADR-0021); verified by the owner on a real KWin (checks A1 to A7), reported by the Orchestrator | AC-AHD-1, AC-AHD-2, AC-AHD-3, AC-AHD-4, AC-AHD-5, AC-AHD-6, AC-AHD-7, AC-AHD-12, AC-AHD-13 | [[Auto Hide]] |
+| TSH-051 | Bar `Visible`, `Input_Region`, `Exclusive_Zone` not built | Fixed on tess-shell main by PR 131 (Bar `Visible`, `Auto_Hide` default off per ADR-0022, Auto_Hide_Delay, the Shortcut Mode reveal per ADR-0021); verified by the owner on a real KWin (checks A1 to A7), reported by the Orchestrator | AC-BAR-4, AC-BAR-17 | [[Bar]] |
 
-
-## Implemented, merge pending the owner check
-
-Implemented in tess-shell PR 131, merged only after the owner's KWin check (tess-shell audit against main, schema 1.30; not re-checked here). They leave the open counts and return to them if the check fails.
-
-| ID | Finding | Failing ACs | Spec note |
-|---|---|---|---|
-| TSH-010 | `Auto_Hide`, `Auto_Hide_Delay` and the Shortcut Mode reveal must be built together ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]); the default is off ([[ADR-0022 Bar Auto_Hide default is off]]), so only a Bar that opts in with `Auto_Hide: true` hides, which | AC-AHD-8, AC-AHD-9, AC-AHD-10, AC-AHD-20, AC-AHD-21, AC-BAR-13, AC-BAR-21 | [[Auto Hide]], [[Bar]] |
-| TSH-050 | `Auto_Hide`, `Auto_Hide_Delay`, `Reveal_Key` absent: a Bar cannot be hidden; built together with the Shortcut Mode reveal (TSH-010) | AC-AHD-1, AC-AHD-2, AC-AHD-3, AC-AHD-4, AC-AHD-5, AC-AHD-6, AC-AHD-7, AC-AHD-12, AC-AHD-13 | [[Auto Hide]] |
-| TSH-051 | Bar `Visible`, `Input_Region`, `Exclusive_Zone` not built | AC-BAR-4, AC-BAR-17 | [[Bar]] |
 
 ## Held findings
 
