@@ -26,7 +26,7 @@ depends_on: ["[[ADR-0009 State layer percentages]]"]
 
 ## Decision
 
-Focus and pressed state layers are 10 percent. Hover stays 8, dragged 16, disabled content 38 and disabled container 12 percent. Adoption of state layers by tess-shell stays undecided (OQ-23); the shell audit records it as a gap and the Orchestrator asks the owner.
+Focus and pressed state layers are 10 percent. Hover stays 8, dragged 16, disabled content 38 and disabled container 12 percent. The owner decided on 2026-11-22 that tess-shell adopts the state layers (OQ-23 closed).
 
 ## Consequences
 

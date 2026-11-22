@@ -13,7 +13,7 @@ depends_on: ["[[Audit Template]]", "[[17 Conformance]]", "[[Test Method]]"]
 # Adoption tess-shell
 
 > [!info] Summary
-> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 28 open findings (P0 0, P1 14, P2 14), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Five open rows are held on an owner or engine decision or are partly done (see Held findings). One owner decision is open: OQ-23 (state layers). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
+> The severity-ordered worklist of what tess-shell must change to meet the specifications, built from the `Status in code` rows of every note that names tess-shell and checked against `tess-shell` at origin/main commit `42cdfb5` (committed 2026-11-20), then corrected against the tess-shell bot's own read of its code on origin/main. It is not an audit: no test was run, no result below is `pass`, and the coverage counts are approximate. Counts: 30 open findings (P0 0, P1 16, P2 14), 29 fixed and 3 implemented with the merge pending the owner check (TSH-010, TSH-050, TSH-051), after the tess-shell audit against main (schema 1.30, 2026-11-22; taken from the shell bot, not re-checked here). Five open rows are held on an owner or engine decision or are partly done (see Held findings). No owner decision is open (OQ-23, state layers, was closed on 2026-11-22 with a yes). OQ-25 (Bar auto-hide against keyboard reachability) was closed on 2026-11-21 by [[ADR-0021 Shortcut Mode reveals a hidden Bar]].
 
 ## Method and header
 
@@ -70,8 +70,8 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
-| TSH-020 | P1 | held: OQ-23 (shell state layers, owner decision). ADR-0009 shell adoption is undecided. The shell has no state layers; states change `Background`, `Border_Color` or `Opacity` (Toggle and Checkbox hovered 0.85, pressed 0.7; disabled 0.5 on all widgets) Update (2026-11-22, tess-shell audit against main, schema 1.30): state layers implemented; the 15, 105 and 150 ms fades wait for tre 0.6.12; the owner decision OQ-23 (adoption of ADR-0009) is still recorded as open in the vault. | AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5, AC-C09-1, AC-C09-2, AC-C09-4 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:43-83,121-123` | Owner decides adopt or declare a deviation; do not fix until then | [[State Layers]], [[ADR-0009 State layer percentages]] |
-| TSH-022 | P1 | held: OQ-23. Toggle gets the generic focus ring; hover and pressed are opacity, not state layers Update (2026-11-22, tess-shell audit against main, schema 1.30): as TSH-020 (Toggle hover and pressed layers); fades wait for tre 0.6.12. | AC-MOD-TGL-4 | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl:57` | Follow TSH-020 | [[Toggle]] |
+| TSH-020 | P1 | OQ-23 closed 2026-11-22: the owner adopted the MD3 state layers for the shell. The shell has no state layers; states change `Background`, `Border_Color` or `Opacity` (Toggle and Checkbox hovered 0.85, pressed 0.7; disabled 0.5 on all widgets) Update (2026-11-22, tess-shell audit against main, schema 1.30): state layers implemented; the 15, 105 and 150 ms fades wait for tre 0.6.12; OQ-23 is closed (the owner adopted the state layers on 2026-11-22). | AC-STL-1, AC-STL-2, AC-STL-3, AC-STL-5, AC-C09-1, AC-C09-2, AC-C09-4 | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl:43-83,121-123` | Owner decides adopt or declare a deviation; do not fix until then | [[State Layers]], [[ADR-0009 State layer percentages]] |
+| TSH-022 | P1 | OQ-23 closed (adopted). Toggle gets the generic focus ring; hover and pressed are opacity, not state layers Update (2026-11-22, tess-shell audit against main, schema 1.30): as TSH-020 (Toggle hover and pressed layers); fades wait for tre 0.6.12. | AC-MOD-TGL-4 | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `Stylesheets/Default_Stylesheet.tdl:57` | Follow TSH-020 | [[Toggle]] |
 | TSH-023 | P2 | Task Item minimised shows as opacity 0.5 only, the disabled look | AC-MOD-TIT-7 | `tess-shell:src/tess_shell/shipped/Task_Item/Task_Item_Style.tdl` | Use an icon or text state cue, not the disabled opacity | [[Task Item]] |
 
 ### Density and sizes
@@ -86,7 +86,9 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 | ID | Severity | Finding | Failing ACs | Evidence | Suggested fix | Spec note |
 |---|---|---|---|---|---|---|
 | TSH-042 | P1 | No contrast script over the shipped themes exists | AC-COL-3, AC-COL-4, AC-LNC-15, AC-LNC-17 | `tess-shell:docs/design/60 Quality/Accessibility.md` (rule 9 asks for it) | Add a script that checks every role pair in the three modes | [[Colour Roles]], [[Launcher]] |
-| TSH-043 | P1 | The token `accent` on `surface` measures 4.38 Dark and 3.82 Light, below the 4.5 text requirement; no shipped file uses `accent` as text (`shipped/`), so it is a token finding. The contrast tool lists it as a known violation | AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22` | Keep `accent` to non-text uses or darken the token; lint text uses | [[Colour Roles]] |
+| TSH-043 | P1 | The token `accent` on `surface` measures 4.38 Dark and 3.82 Light, below the 4.5 text requirement; no shipped file uses `accent` as text (`shipped/`), so it is a token finding. The specification now says accent is never text ([[ADR-0025 Shell outline and high contrast status colours, accent never text]], AC-COL-12); the contrast tool lists the token as a known violation | AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:22` | Keep `accent` to non-text uses or darken the token; lint text uses | [[Colour Roles]] |
+| TSH-090 | P1 | Dark `outline` `#55657A` on `surface_raised` measures 2.69 to 1 (Button border, card edge; needs 3 to 1); the specification raises it to `#5F7188` (3.61 on `surface`, 3.21 on `surface_raised`) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` | Set Dark `Color.Outline` to `#5F7188` | [[Colour Roles]] |
+| TSH-091 | P1 | High_Contrast on a Light scheme leaves `error`, `warning` and `success` at their Light values, which measure 3.21, 3.54 and 3.27 to 1 on the black High_Contrast surface (needs 4.5, 7 at the high level); the specification sets explicit High_Contrast values `#F2958C`, `#E6BB6A`, `#8CCB9A` (9.45, 11.68, 11.12 on black) | AC-COL-4, AC-COL-3 | `tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl` (High_Contrast block) | Add the three High_Contrast colours | [[Colour Roles]] |
 
 ### Surfaces not built
 
@@ -94,7 +96,7 @@ Six tooltip cards repeat one literal block, and five of the six triggers are `GR
 |---|---|---|---|---|---|---|
 | TSH-052 | P1 | Bar `Meld` and `Attach_To` not built; Frame `Meld` not built | AC-BAR-17, AC-FRM2-11 | `tess-shell:src/tess_shell/schema/docs.py:274-277,340` | Build the Frame `Meld` key | [[Bar]], [[Frame]] |
 | TSH-053 | P1 | Bar and Popup `Animation` not built (no popup show and hide animation) | AC-BAR-17, AC-AHD-13 | `tess-shell:src/tess_shell/schema/docs.py:278,330` | Build `Animation` with the motion tokens and reduced motion | [[Bar]], [[Popup]] |
-| TSH-054 | P1 | held: OQ-23 (the level model is decided with state layers). Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
+| TSH-054 | P1 | OQ-23 closed (adopted); the level model follows. Frame `Elevation`, `Shadows`, `Shadow_Bleed` not built; one shadow list scaled by percent Update (2026-11-22, tess-shell audit against main, schema 1.30): Frame shadow in the ring shader and Elevation levels 1 to 5 implemented; the path build waits for tre 0.6.12. | AC-FRM2-11, AC-PNL-5, AC-ELV-3 | `tess-shell:src/tess_shell/binder/shadow.py`, `schema/docs.py:339-340` | After OQ-23, build the keys | [[Frame]], [[Panel and Surface]], [[Elevation]] |
 | TSH-055 | P2 | Panel `Margin`, `Padding`, `Class`, `Exclusive_Zone` and Bar `Padding`, `Class`, `Text_Rotation` not built | AC-BAR-17, AC-PNL-4 | `tess-shell:src/tess_shell/schema/docs.py:203,275-276,307-310` | Build `Padding` and `Class` first | [[Panel and Surface]], [[Bar]] |
 | TSH-056 | P2 | Peek handle colour is a literal; handle nodes not exposed; single trigger only | AC-PEK-14, AC-PEK-16, AC-PEK-18 | `tess-shell:src/tess_shell/surfaces/frame.py` (`_handle_colour`), `surfaces/handle.py` | Colour from a role; expose the handle as a named control | [[Peek]], [[Dock]] |
 | TSH-057 | P2 | The Launcher is a Panel with an output-sized catcher since M7k, so it no longer takes the popup grab. Ordinary focused Popups still use the PopupWindow grab, which steals the keyboard on KWin: popups that need keyboard input fault there. Popup Escape closed by the shell is not verified on KWin | AC-POP-1, AC-POP-6, AC-POP-7 | `tess-shell:src/tess_shell/surfaces/popup.py` (`_key`) | Run the hand checks on KWin for a keyboard Popup and record | [[Popup]] |
@@ -177,9 +179,9 @@ These rows wait on a decision or a hook, not on shell work; each carries `held: 
 
 | ID | Held on | Waiting for |
 |---|---|---|
-| TSH-020 | OQ-23, tre 0.6.12 | state layers are implemented in the shell; the owner decision OQ-23 on adopting ADR-0009 is still open in the vault, and the fades wait for tre 0.6.12 |
-| TSH-022 | OQ-23 | follows TSH-020 (Toggle hover and pressed) |
-| TSH-054 | OQ-23 | owner decision; the elevation level model goes with it |
+| TSH-020 | tre 0.6.12 | state layers are implemented in the shell (OQ-23 closed 2026-11-22: adopted); the 15, 105 and 150 ms fades wait for tre 0.6.12 |
+| TSH-022 | tre 0.6.12 | follows TSH-020 (Toggle hover and pressed) |
+| TSH-054 | tre 0.6.12 | the path build waits for tre 0.6.12 |
 | TSH-070 | Orca | a hand check; Orca is not installed on the owner's machine |
 | TSH-080 | not built | `Scroll_Snap` and `On_Scroll` on ScrollBox (the scrollbars are built) |
 
@@ -239,4 +241,4 @@ Counts come from the prose of each `Status in code` row, not from a run. "Meets"
 
 | Id | Question | Related rows |
 |---|---|---|
-| OQ-23 | Does the shell adopt state layers ([[ADR-0009 State layer percentages]])? The audit records the gap; the Orchestrator asks the owner. | TSH-020, TSH-022, TSH-054, TSH-023, TSH-024, TSH-040 |
+| OQ-23 | Closed 2026-11-22: yes, the shell adopts the MD3 state layers ([[ADR-0009 State layer percentages]]). | TSH-020, TSH-022, TSH-054, TSH-023, TSH-024, TSH-040 |

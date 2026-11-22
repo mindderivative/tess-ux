@@ -29,11 +29,11 @@ tess-ui implements MD3 state layers; the shell uses opacity literals (hover 0.85
 
 ## Decision
 
-Specification rule: hover 8, focus 10, pressed 10, dragged 16 percent; disabled content 38 and container 12 percent; focus ring 3 dp wide, 2 dp offset, role `secondary`, keyboard focus only. Adoption by tess-shell is not decided: the shell audit records it as a deviation and gap, and the Orchestrator asks the owner when the audit is due.
+Specification rule: hover 8, focus 10, pressed 10, dragged 16 percent; disabled content 38 and container 12 percent; focus ring 3 dp wide, 2 dp offset, role `secondary`, keyboard focus only. Adoption by tess-shell: decided yes by the owner on 2026-11-22 (his item 22, 'Adopt the MD3 state layers in the shell'); recorded in OQ-23.
 
 ## Consequences
 
-tess-shell status is `absent` until the owner decides.
+The owner decided on 2026-11-22 that the shell adopts the state layers; tess-shell implements them (the fades wait for tre 0.6.12, TSH-020, TSH-022).
 
 ## Affected notes
 
