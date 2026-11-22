@@ -29,6 +29,7 @@ The UX Design Specification and the UX Component Design Specification: the guidi
 
 ## Recent changes
 
+- 2026-11-22: ADR-0022: the Bar `Auto_Hide` default is off (owner decision); Auto Hide, Bar and the shell worklist updated.
 - 2026-11-22: Dimensions and defaults tables for all component notes with a Settable column, [[Defaults Matrix]], [[Hooks Needed]], UXREQ-008 and UXREQ-010 approved, ADR-0020 and ADR-0021.
 - 2026-11-22: Phase 3 integration: ADR-0014 to ADR-0019, indexes, complete [[Deviations from MD3]] register, [[Inventory]] coverage mapping, audit worklists for tess-ui, tess-shell, tre and the libraries.
 - 2026-11-21: Phase 2: chapters 03 to 17, 9 patterns, 100 component notes, blocks and engine surfaces.

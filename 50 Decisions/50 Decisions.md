@@ -37,6 +37,7 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0019 Banner and snackbar focus chords]]
 - [[ADR-0020 The engine never blocks the design]]
 - [[ADR-0021 Shortcut Mode reveals a hidden Bar]]
+- [[ADR-0022 Bar Auto_Hide default is off]]
 - [[ADR-0023 Text Field label placement by density]]
 - [[ADR-0024 Shell tray and task item sizes]]
 

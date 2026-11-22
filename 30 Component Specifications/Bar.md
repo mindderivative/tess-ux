@@ -161,7 +161,7 @@ The fill and text resolve from the scheme at draw time ([[ADR-0005 Theme follows
 | `Gap` | 0 |
 | `Keyboard` | `NONE` |
 | `Alignment` | `CENTER` (no effect on an `EXPAND` axis) |
-| `Auto_Hide` | `true` in the design, not built; a Bar is always shown today |
+| `Auto_Hide` | `false` (owner decision 2026-11-21, [[ADR-0022 Bar Auto_Hide default is off]]; an application opts in with `Auto_Hide: true`); not built, a Bar is always shown today |
 | `Auto_Hide_Delay` | 1000 ms proposed, not built |
 | Fill | `surface` |
 | Thickness | 48 dp at the default level (proposed) |

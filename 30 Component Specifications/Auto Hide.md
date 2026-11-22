@@ -127,7 +127,7 @@ A hidden Bar shows no tooltip. A tooltip or popup opened from a module while the
 ## Accessibility
 
 - A hidden Bar is not in the tab order and its window keeps its accessible name; a reveal by keyboard announces the Bar's name politely and `Next_Focus` moves focus to its first focusable module (initial focus stays where the shell's focus rule 4 puts it).
-- A Bar with a recording or warning indicator that must be seen is not hidden: the author sets `Auto_Hide: false` for it (a design rule of this note, not a WCAG requirement).
+- A Bar with a recording or warning indicator that must be seen is not hidden: the author does not set `Auto_Hide: true` for it (a design rule of this note, not a WCAG requirement).
 - Time limit: the delay is an author setting between 0 and a large value; no content is lost when the Bar hides, so WCAG 2.2 SC 2.2.1 does not apply.
 - Reduced motion: see Motion.
 - Keyboard path: see Behaviour; Shortcut Mode reveals a hidden Bar, so AR-9 passes ([[ADR-0021 Shortcut Mode reveals a hidden Bar]]).
@@ -140,7 +140,7 @@ No difference; the Bar's colours follow the scheme ([[Bar]]).
 
 | Setting | Default |
 |---|---|
-| `Auto_Hide` | `true` (decided 2026-10-27; opt out with `Auto_Hide: false`) |
+| `Auto_Hide` | `false` (owner decision 2026-11-21, [[ADR-0022 Bar Auto_Hide default is off]], supersedes the 2026-10-27 default `true`; an application opts in with `Auto_Hide: true`) |
 | `Auto_Hide_Delay` | 1000 ms (proposed, to be tuned in testing) |
 | `Reveal_Key` | none (removed from the loader until Auto Hide is built) |
 | `Visible` | `true` (starts shown) |
@@ -148,11 +148,11 @@ No difference; the Bar's colours follow the scheme ([[Bar]]).
 
 ## Acceptance criteria
 
-Check types follow [[Test Method]]. All criteria currently fail because the feature is not built; the table in Status in code gives the per-key state.
+Check types follow [[Test Method]]. Criteria AC-AHD-3 to AC-AHD-21 assume a Bar written with `Auto_Hide: true` (the default is off, [[ADR-0022 Bar Auto_Hide default is off]]); AC-AHD-1 and AC-AHD-2 check the default. All criteria currently fail because the feature is not built; the table in Status in code gives the per-key state.
 
-- [ ] AC-AHD-1 (token test, default): a Bar written without `Auto_Hide` has `Auto_Hide` true and `Auto_Hide_Delay` 1000; `Auto_Hide: false` leaves it false. Pass: values equal in the shell schema export.
-- [ ] AC-AHD-2 (scripted input, opt-out): with `Auto_Hide: false` and the pointer away for 60 s the Bar stays visible and the zone is unchanged. Pass: Bar state visible; zone equal.
-- [ ] AC-AHD-3 (scripted input, delay): with the pointer leaving the Bar at t = 0, the slide starts at 1000 ms (one frame tolerance) by default and at 3000 ms with `Auto_Hide_Delay: 3000`; the pointer returning at 900 ms cancels the hide and the next leave starts a full delay. Pass: start times as stated.
+- [ ] AC-AHD-1 (token test, default): a Bar written without `Auto_Hide` has `Auto_Hide` false and `Auto_Hide_Delay` 1000; `Auto_Hide: true` turns the behaviour on and leaves the delay at 1000. Pass: values equal in the shell schema export.
+- [ ] AC-AHD-2 (scripted input, off by default): with no `Auto_Hide` written, or `Auto_Hide: false`, and the pointer away for 60 s the Bar stays visible and the zone is unchanged; with `Auto_Hide: true` the same scenario hides it after the delay. Pass: Bar state visible; zone equal.
+- [ ] AC-AHD-3 (scripted input, delay): with the pointer leaving the Bar at t = 0, for a Bar with `Auto_Hide: true` the slide starts at 1000 ms (one frame tolerance) by default and at 3000 ms with `Auto_Hide_Delay: 3000`; the pointer returning at 900 ms cancels the hide and the next leave starts a full delay. Pass: start times as stated.
 - [ ] AC-AHD-4 (geometry check, hide sequence): during the hide the Bar window size stays unchanged, the edge margin goes to -(thickness - strip) over 200 ms (±1 frame), the zone is the full zone during the slide and 0 after it. Pass: margin and zone samples as stated; the window origin moves only along the edge's perpendicular.
 - [ ] AC-AHD-5 (geometry check, show sequence): on reveal the zone becomes full before the first slide frame and the margin returns to its start value after 200 ms (±1 frame). Pass: zone full at frame 0 of the slide; margin equal at the end.
 - [ ] AC-AHD-6 (scripted input, reflow once): a maximised window receives at most one configure event for a hide and at most one for a show. Pass: counts at most 1 and 1.
@@ -177,7 +177,7 @@ Check types follow [[Test Method]]. All criteria currently fail because the feat
 | Project | Path | Status |
 |---|---|---|
 | tess-shell | `tess-shell:src/tess_shell/schema/docs.py` ("Not built" for `Auto_Hide`, `Auto_Hide_Delay`, `Visible` of a Bar, `Animation` of a Bar, `Input_Region` of a Bar), `tess-shell:src/tess_shell/schema/blocks.py` (`Reveal_Key` removed, error `removed-key`), `tess-shell:docs/guide/surfaces.md#bar` ("A Bar cannot be hidden by a command or a shortcut") | Absent for Bars: AC-AHD-1 to AC-AHD-19 fail. The building blocks exist for Frame strips and melded Panels (slide by contour, content fade, reduced motion, `Show`, `Hide`, `Toggle` by name in `surfaces/frame.py`); a strip hides only through `Peek`. The Bar placement function already supports a size that never reaches 0 (`surfaces/bar.py`). |
-| shell vault | `shell-vault:40 Specifications/Surfaces/Bar.md` (Auto-hide, decided 2026-10-27), `shell-vault:40 Specifications/Surfaces/Frame.md` | Source design. The vault's default delay of 1000 ms is proposed; the hover strip thickness is open. |
+| shell vault | `shell-vault:40 Specifications/Surfaces/Bar.md` (Auto-hide, decided 2026-10-27), `shell-vault:40 Specifications/Surfaces/Frame.md` | Source design. The vault says on by default; the owner changed that on 2026-11-21 to off by default ([[ADR-0022 Bar Auto_Hide default is off]]). The vault's default delay of 1000 ms is proposed; the hover strip thickness is open. |
 | tess-ui | not applicable | Application windows use the [[Top App Bar]] scroll behaviour, outside the shell. |
 | tre | `tre:docs/reference/layer-window.md` | Mechanism only: negative margins accepted on KWin and sway, `exclusive_zone` live through `set()`, margin animation, input region. |
 
@@ -186,7 +186,7 @@ Check types follow [[Test Method]]. All criteria currently fail because the feat
 | Deviation | Reason | ADR |
 |---|---|---|
 | Hide on pointer absence and show on pointer presence at the edge (MD3 Top app bar: scroll direction) | a desktop shell has a pointer and no scrolling content under the Bar | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
-| On by default with opt-out | owner decision 2026-10-27 | none (owner decision) |
+| Off by default, opt in with `Auto_Hide: true` | owner decision 2026-11-21: apps opt in; supersedes the earlier default on with opt-out (2026-10-27) | [[ADR-0022 Bar Auto_Hide default is off]] |
 | Hide and show take the same duration (MD3 and the Tesserae motion rule: exit shorter than enter) | one `Animation` block for both directions | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | The reserved zone changes once at the end of the hide and the start of the show | a zone change is a configure round trip; animating it would reflow windows on every frame | none (compositor limit) |
 
