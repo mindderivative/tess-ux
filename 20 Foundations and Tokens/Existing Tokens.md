@@ -411,7 +411,7 @@ Source of truth: `tesserae-shell schema --json` (saved as sh-schema.json) and th
 | `$elevation.reach` | 64 | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:57 | How far the largest shadow reaches, in pixels |
 | `$elevation.max` | one shadow `#00000066`, X 0, Y 16, Blur 48, Spread 0 | tess-shell:src/tess_shell/shipped/Themes/Default_Theme.tdl:58 | Shadow list at 100%; `Elevation: N%` scales it (guide: Elevation on a Bar, Panel, Popup, Rectangle or Box) |
 | tooltip card Elevation | 20% | tess-shell:src/tess_shell/shipped/Clock/Clock_Module.tdl (tooltip block); same in Audio, Media, Network, Battery, Tray_Item | Literal per module, not a token |
-| built-in fallback max shadow | one shadow #00000040 (alpha 0x40), X 0, Y 16, Blur 48, Spread 0 | tess-shell:src/tess_shell/binder/shadow.py:30 | Used when a theme has no Elevation.Max; alpha 0x40 differs from the theme's 0x66 |
+| built-in fallback max shadow | one shadow #00000066 (alpha 0x66, since the fix of TSH-062; Phase 0 read #00000040), X 0, Y 16, Blur 48, Spread 0 | tess-shell:src/tess_shell/binder/shadow.py:30 | Used when a theme has no Elevation.Max; equal to the theme's 0x66 |
 
 ### Motion
 
