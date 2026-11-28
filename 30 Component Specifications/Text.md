@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, content, text]
 related: ["[[Text Field]]", "[[Link]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "Text Measurement", "[[Text|Rich Text]]", "[[Text|Rich Text Span]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Form Row]]", "[[List Item]]", "[[Button]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[03 Typography and Text Rules]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Typography]]", "[[Colour Roles]]", "[[10 Layout Overflow and Scrolling]]"]
@@ -67,9 +67,9 @@ Text on a coloured container takes the matching `on_` role (`on_primary_containe
 
 | Use | default | compact and dense |
 |---|---|---|
-| Control label, row label, list headline, menu item | `body_large` (16 on 24) or `label_large` (14 on 20) for buttons | `body_medium` (14 on 20) |
+| Control label, row label, list headline, menu item | `body_large` (16 on 24) or `label_large` (14 on 20) for buttons | `body_medium` (14 on 20); `body_dense` (13 on 18) at dense |
 | Supporting text, captions, helper and error text | `body_small` (12 on 16) | `body_small` |
-| Section title in a panel | `title_medium` (16 on 24) | `title_small` (14 on 20) |
+| Section title in a panel | `title_medium` (16 on 24) | `title_small` (14 on 20); `title_dense` (13 on 18) at dense |
 | Dialog title | `headline_small` (24 on 32) | `title_large` (22 on 28) |
 | Page or window title | `headline_medium` (28 on 36) | `headline_small` |
 | Display text, clocks, large numerals | `display_*` | `headline_*` |
@@ -80,7 +80,7 @@ Text on a coloured container takes the matching `on_` role (`on_primary_containe
 
 ## Sizing and density
 
-- A single-line text is as high as the line height of its role: 24, 20, 16 dp for `body_large`, `body_medium`, `body_small` ([[Typography]]). Density changes the role used (table above), not the role's own size.
+- A single-line text is as high as the line height of its role: 24, 20, 18, 16 dp for `body_large`, `body_medium`, `body_dense`, `body_small` ([[Typography]]). Density changes the role used (table above), not the role's own size.
 - Width: a text that hugs its content is the measured text width plus 2 px (`tre:docs/guide/text.md`, "Sizing text to its content", Text Measurement); a text in a flex row has `Min_Width 0` so it can shrink and truncate ([[10 Layout Overflow and Scrolling]]).
 - Minimum text size: 11 dp (`label_small`) is the smallest role; no text is set below 11 dp. Body text in a wrapping block has a minimum container width of 120 dp ([[10 Layout Overflow and Scrolling]]).
 - Maximum measure: a reading paragraph is at most 840 dp wide ([[10 Layout Overflow and Scrolling]]).
@@ -92,7 +92,7 @@ A text has no container: it draws glyphs in a line box and takes spacing from it
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| content (single line) | height | `body_large` / `body_medium` | 24 | 20 | 20 | Sizing section, [[Typography]] (line height of the role) | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
+| content (single line) | height | `body_large` / `body_medium` | 24 | 20 | 18 | Sizing section, [[Typography]] (line height of the role); compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
 | content (single line) | min height | - | 24 | 20 | 20 | Sizing section, [[Spacing and Density]]; the 24 dp pointer minimum applies only to a standalone link or selectable target | tess-ui: yes (style min_height); tess-shell: yes (Min_Height); tre: yes (min_height) |
 | content (wrapping block) | min width | - | 120 | 120 | 120 | Sizing section, [[10 Layout Overflow and Scrolling]] | tess-ui: yes (style min_width); tess-shell: yes (Min_Width); tre: yes (min_width) |
 | content | padding | - | N/A: the text has no padding; the container supplies it | N/A: same as default | N/A: same as default | Tokens used section (Spacing), [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
@@ -101,9 +101,9 @@ A text has no container: it draws glyphs in a line box and takes spacing from it
 | content | border width | - | N/A: the text draws no border | N/A: same as default | N/A: same as default | Anatomy section, [[Shape]] | tess-ui: yes (style border_width); tess-shell: n/a: the Text block has no Border_Width key; tre: yes (border_width) |
 | content | border color | - | N/A: the text draws no border | N/A: same as default | N/A: same as default | Anatomy section, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: the Text block has no Border_Color key; tre: yes (border_color) |
 | content | corner radius | - | N/A: the text draws no container; the selection highlight is an engine rectangle | N/A: same as default | N/A: same as default | Anatomy section, `tre:docs/guide/text.md` | tess-ui: yes (style corner_radius); tess-shell: n/a: the Text block has no Corner_Radius key; tre: yes (corner_radius) |
-| content | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section (control label row) | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| content | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Tokens used section (control label row); compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | supporting text | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
-| section title | font | `title_medium` / `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], Tokens used section; design choice, proposed ADR: role choice by density for static text | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| section title | font | `title_medium` / `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]], Tokens used section; design choice, proposed ADR: role choice by density for static text; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | dialog title | font | `headline_small` / `title_large` | 24/32/400/0 | 22/28/400/0 | 22/28/400/0 | [[Typography]], Tokens used section; design choice, proposed ADR: role choice by density for static text | tess-ui: via type role in the theme (text.font_size, text.font_weight, text.line_height, text.letter_spacing); tess-shell: yes (Font_Size, Font_Weight, Line_Height), no hook for letter spacing; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | content | icon size | - | N/A: the text element holds no icon; an icon is a sibling part of the owning control | N/A: same as default | N/A: same as default | Anatomy section, [[Iconography]] | tess-ui: n/a: a text holds no icon; tess-shell: n/a: a text holds no icon; tre: n/a: a text holds no icon |
 | content | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], text casts no shadow | tess-ui: yes (style elevation); tess-shell: n/a: the Text block has no Elevation key; tre: yes (shadows) |
@@ -154,7 +154,7 @@ The colour is a role; the scheme recomputes it ([[Theme Following the System]]).
 
 ## Defaults
 
-- Role: `body_medium` in a control at compact and dense, `body_large` at default; `Wrap: word` for a block (engine default), `none` for a label.
+- Role: `body_medium` in a control at compact, `body_dense` at dense, `body_large` at default; `Wrap: word` for a block (engine default), `none` for a label.
 - `Overflow: ellipsis` for every text that can exceed its box (a project default, not the engine's).
 - `Text_Align: start`; not selectable; no heading; foreground `on_surface`.
 - The engine default `clip` is not accepted as the project default (see AC-TXT-3).
@@ -165,7 +165,7 @@ The colour is a role; the scheme recomputes it ([[Theme Following the System]]).
 - [ ] AC-TXT-2 (token test): the type role values equal the table of [[Typography]] (size, line height, weight; tracking where the theme sets it): `body_large` 16 on 24, `body_medium` 14 on 20, `body_small` 12 on 16, `label_large` 14 on 20, `title_medium` 16 on 24. Pass: values equal.
 - [ ] AC-TXT-3 (scripted input): a single-line text with `Wrap: none` set to a string at least 3 times wider than its box ends with `…` and no pixel of text lies outside the box; the same text in a flex row next to a fixed-width icon does not push the icon out of the container. Pass: ellipsis present, zero pixels outside, icon position unchanged (F5).
 - [ ] AC-TXT-4 (geometry check): a wrapping block 200 dp wide with `Wrap: word` and a 600-character text has no line wider than 200 dp; a single word of 40 characters without a break breaks at a glyph boundary and fits; with `Max_Lines: 3` the visible lines are 3 and the third ends with `…`. Pass: line widths at most the container, line count 3, ellipsis present.
-- [ ] AC-TXT-5 (geometry check): a single-line text with the role `body_medium` in a control 32 dp high has the space above its line box and below it differing by at most 1 px; the same at 40 dp with `body_large` and at 28 dp with `body_medium`, at scale 1.0, 1.25 and 2.0. Pass: difference at most 1 px (AC-DEN-9, F7).
+- [ ] AC-TXT-5 (geometry check): a single-line text with the role `body_medium` in a control 32 dp high has the space above its line box and below it differing by at most 1 px; the same at 40 dp with `body_large` and at 28 dp with `body_dense`, at scale 1.0, 1.25 and 2.0. Pass: difference at most 1 px (AC-DEN-9, F7).
 - [ ] AC-TXT-6 (pixel check): a render of "Hg" in a 32 dp control has the vertical centre of its glyph bounding box within 1 px of the control's vertical centre. Pass: offset at most 1 px.
 - [ ] AC-TXT-7 (scripted input): on a selectable text, double-click selects the word under the pointer, triple-click selects the line, press-drag selects the dragged range, a press elsewhere clears it, Ctrl+A selects all, Ctrl+C places the selected text in the clipboard, and the highlight is the role `primary` at 30 percent with the glyph colour unchanged. Pass: selection range, clipboard and highlight colour equal.
 - [ ] AC-TXT-8 (scripted input): a drag from one selectable paragraph into the next selects the rest of the first, the start of the second and every selectable text between; the drag over a non-selectable node keeps the selection it had. Pass: selection ranges equal.
@@ -201,7 +201,7 @@ Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Body text 14 dp (`body_medium`) in controls at compact and dense where MD3 uses `body_large` 16 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Body text 14 dp (`body_medium`) at compact and 13 dp (`body_dense`) at dense in controls where MD3 uses `body_large` 16 dp | desktop density | [[ADR-0029 Desktop density and type scale]] |
 | Ellipsis rule for every single-line text, middle truncation for paths | desktop content such as paths and file names | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Selection and copy of read-only text is a property of the text | desktop users copy values; MD3 is silent | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | No deviation in the 15 type roles and their sizes, line heights, weights | roles are MD3's | [[ADR-0001 MD3 role names are the specification vocabulary]] |

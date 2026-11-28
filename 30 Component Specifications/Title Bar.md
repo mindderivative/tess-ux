@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, frame, title-bar, window, keyboard]
 related: ["[[Window]]", "[[Title Bar|Window Title Bar]]", "[[Application Window]]", "[[Top App Bar]]", "[[Icon Button]]", "[[Tooltip]]", "[[Dialog]]", "[[State Layers]]", "[[Focus Ring]]", "[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[Window]]"]
@@ -30,7 +30,7 @@ A title bar names the window, carries the window controls and gives a large targ
 1. Container: full window width, height per density, the drag region.
 2. Inset (macOS only): room at the start for the OS traffic lights; width from the window's `titlebar_inset`, 0 elsewhere.
 3. Icon (optional): 20 dp.
-4. Title: one line, `title_small` (14/20, weight 500).
+4. Title: one line, `title_small` (14/20, weight 500); `title_dense` (13/18) at dense.
 5. Content: the application's own controls between the title and the buttons, growing to push the buttons to the end.
 6. Window buttons: minimise, maximise or restore, close; each 46 dp wide and as high as the bar; 16 dp glyph centred; hidden when the OS shows its own controls.
 
@@ -63,7 +63,7 @@ Applies to each window button. The bar itself has two states: active and inactiv
 |---|---|
 | Container | `surface` |
 | Title, icon, glyphs | `on_surface` |
-| Title type | `title_small` ([[Typography]]) |
+| Title type | `title_small` ([[Typography]]); `title_dense` at dense |
 | Bar border to content | none; the window border is [[Window]] (`outline_variant` 1 dp) |
 | Close hover and pressed layer | `error` ([[Colour Roles]]) |
 | Other hover, focus, pressed layers | `on_surface` ([[State Layers]]) |
@@ -101,7 +101,7 @@ Bar height at each density is derived from the control heights (`density.control
 | Bar container | border color | - | N/A: the bar draws no border; the window border belongs to the window | N/A: same as default | N/A: same as default | [[Window]] | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
 | Bar container | corner radius | `shape.none` | 0 | 0 | 0 | [[Title Bar]] Tokens used, [[Shape]] | tess-ui: yes (TitleBar style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Bar container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (TitleBar style elevation); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Title Bar]] Anatomy, [[Typography]] | tess-ui: via theme typography (role title_small); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Title Bar]] Anatomy, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via theme typography (role title_small); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Icon | icon size | - | 20 | 20 | 20 | [[Title Bar]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Window button | min width | - | 46 | 46 | 46 | [[Title Bar]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Window button | min height | - | 24 | 24 | 24 | [[Spacing and Density]] Target sizes (the button is as high as the bar) | tess-ui: via stylesheet class title_bar_button (min_height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
@@ -157,7 +157,7 @@ All colours are role references and follow the scheme. The unthemed app gets the
 | Height | 40 dp at `default` (32 compact, 28 dense) |
 | Button width | 46 dp |
 | Glyph, icon | 16 dp, 20 dp |
-| Title role | `title_small` |
+| Title role | `title_small`; `title_dense` at dense |
 | Inactive opacity | 0.6 |
 | System menu (icon, secondary press on the bar, Alt+Space) | on in borderless windows ([[ADR-0015 System menu default in borderless windows]]); tess-ui: off, fails AC-TTB-18 |
 | Windows 11 snap layouts on maximise hover | not built |
@@ -202,6 +202,7 @@ All colours are role references and follow the scheme. The unthemed app gets the
 | Close hover and pressed layer in `error` | desktops colour close red; `error_container` is too pale at an 8 percent layer | [[ADR-0009 State layer percentages]] |
 | Inactive fade to 0.6 | desktop convention for an inactive title bar; MD3 has no window focus state | [[ADR-0002 Desktop density levels and target sizes]] |
 | Inward focus ring on the window buttons | the buttons touch the window edge; an outward ring would be clipped | [[ADR-0013 Focus and pressed state layer 10 percent]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, module, text-input, keyboard]
 related: ["[[Text Field]]", "[[Text Box]]", "[[Form Row]]", "[[Scrollbar and Scroll Container]]", "[[14 Accessibility Basics#Reduced motion|Reduced Motion]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Keyboard Navigation]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
@@ -44,7 +44,7 @@ States, colours and tokens are those of [[Text Field]] (rest, hover, focus, erro
 
 ## Tokens used
 
-Container, label, placeholder, caret and selection tokens: see [[Text Field]]. Type `body_medium` at compact and dense, `body_large` at default (per [[Text Field]]).
+Container, label, placeholder, caret and selection tokens: see [[Text Field]]. Type `body_medium` at compact, `body_dense` at dense, `body_large` at default (per [[Text Field]]).
 
 ## Sizing and density
 
@@ -70,7 +70,7 @@ The container is the outlined variant of [[Text Field]] #needs-verification-as-d
 | container | border width | - | 1 | 1 | 1 | [[Text Field]] outlined variant (outline 1 dp, 2 dp when focused) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
 | container | border color | `outline` | `outline` | `outline` | `outline` | [[Text Field]] (focus `primary`, error `error`), [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | container | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], [[Text Field]] outlined variant; design choice, proposed ADR: text editor uses the outlined variant | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| text | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], [[Text Field]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| text | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], [[Text Field]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | container | icon size | - | N/A: the editor has no icon | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; a field is flat | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 
@@ -141,6 +141,7 @@ Colours follow the scheme through [[Text Field]] tokens ([[Theme Following the S
 |---|---|---|
 | Heights by density, 40 dp single-line base | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Escape then Tab as the documented way out until the engine lets Tab through | WCAG 2.2 SC 2.1.2 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

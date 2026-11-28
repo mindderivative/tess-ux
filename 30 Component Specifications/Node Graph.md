@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, widget, graph, tesserae-specific]
 related: ["[[Path Block]]", "[[Panel and Surface]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[Spacing and Density]]", "[[Drag and Drop]]", "[[Text Selection]]", "[[Accessibility Tree]]", "[[Scrollbar and Scroll Container]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Colour Roles]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[14 Accessibility Basics]]"]
@@ -91,7 +91,7 @@ Only the first row differs by density in this spec; the code has a fixed 32 dp. 
 | edge | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: no hook (the role outline is fixed in node_graph edge drawing); tess-shell: n/a: element absent in tess-shell; tre: yes (stroke_color of the edge path) |
 | node | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: no hook (the graph_node spec fixes shape medium and the title rounding 12.0); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | viewport | corner radius | - | N/A: the viewport clips to a rectangle; rounding belongs to the owner | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: n/a: the viewport clips to a rectangle and the owner rounds; tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| node title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via theme type role title_small (the graph_node spec fixes the role); tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| node title | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via theme type role title_small (the graph_node spec fixes the role); tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | node | icon size | - | N/A: nodes and edges carry no icon; the arrowhead is a 9 by 10 dp path | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: n/a: nodes and edges carry no icon; tess-shell: n/a: element absent in tess-shell; tre: n/a: nodes and edges carry no icon |
 | node | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook (the graph_node spec sets no elevation and the stylesheet reads only width and height); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 
@@ -165,6 +165,7 @@ Offset (0, 0), zoom 1.0, `Snap` 0, `Arrows` false, `Fit` false, nothing selected
 | Element with no MD3 counterpart, built from MD3 surface roles | tools need it | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Panning and zooming replace scrollbars on the canvas; no scrollbar is shown | the canvas has no content extent, so there is no extent to show (deviation from ADR-0003, keyboard pan and zoom required) | [[ADR-0017 Node Graph pans instead of scrolling]] |
 | Dragged state layer 16 percent | MD3 dragged state | [[ADR-0009 State layer percentages]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, tree, keyboard, owner-feedback]
 related: ["[[Tree Node]]", "[[List]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Owner Feedback 2026-11-20]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Tree Node]]", "[[Scrollbar and Scroll Container]]", "[[ADR-0003 Scrollbar rule]]"]
@@ -74,7 +74,7 @@ The tree is a container: it has no fill, border or text of its own, and every ro
 | container | border width | - | N/A: the tree draws no border; the surrounding panel or scroll container owns it | N/A: same as default | N/A: same as default | [[Tree#Anatomy]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | container | border color | - | N/A: the tree draws no border, so it has no border colour | N/A: same as default | N/A: same as default | [[Tree#Anatomy]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | container | corner radius | - | N/A: the tree has no fill or outline, so it has no corner; rows are rectangular ([[Tree Node]]) | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | container | icon size | - | N/A: the tree draws no icon of its own; the chevron and the node icon belong to [[Tree Node]] | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 
@@ -172,6 +172,7 @@ Evidence: F3, F4, F5, F6 in [[Owner Feedback 2026-11-20]]; row geometry and the 
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
 | Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

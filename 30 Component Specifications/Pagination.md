@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, navigation, pagination]
 related: ["[[Toolbar]]", "[[Top App Bar]]", "[[Tabs]]", "[[Status Bar]]", "[[Carousel]]", "[[Button]]", "[[Icon Button]]", "[[List]]", "[[Scrollbar and Scroll Container]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Button]]", "[[Icon Button]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]"]
@@ -64,7 +64,7 @@ The current page differs from the others by container (filled) and by `current`,
 
 ## Tokens used
 
-[[Colour Roles]] as in States. [[Typography]]: page numbers `label_large` (14 / 20, weight 500); summary `label_large`. [[Shape]]: number buttons and arrows `corner_full`, dots circle. [[Motion]]: layer fade `short3`. [[Spacing and Density]].
+[[Colour Roles]] as in States. [[Typography]]: page numbers `label_large` (14 / 20, weight 500; `title_dense` 13 / 18 at dense); summary `label_large` (same). [[Shape]]: number buttons and arrows `corner_full`, dots circle. [[Motion]]: layer fade `short3`. [[Spacing and Density]].
 
 ## Sizing and density
 
@@ -98,7 +98,7 @@ Values agree with Sizing and density above. Button paddings follow [[Button]] an
 | number button | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
 | number button | padding | `space.3` | 0 8 0 8 | 0 8 0 8 | 0 8 0 8 | [[Button]] (text variant padding 12, 8, 8; the pagination button grows with its digits), design choice, proposed ADR: pagination gaps and dots per density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | number button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| number button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| number button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | arrow button | height | `density.control_height` | 40 | 32 | 28 | [[Icon Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | arrow button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | ellipsis | min width | - | 40 | 32 | 28 | [[Pagination]] Sizing and density | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
@@ -179,6 +179,7 @@ Numbers form, page 1, density per container, windowing as above, previous and ne
 | Heights 40, 32, 28 dp and dot hit area 24 dp | desktop density and target size | [[ADR-0002 Desktop density levels and target sizes]] |
 | One Tab stop with arrow keys, Home and End | desktop keyboard-first; same group rule as [[Toolbar]] | none |
 | Non-current dots in `outline` (3 to 1) rather than a lower-contrast role | WCAG 2.2 SC 1.4.11 | none |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

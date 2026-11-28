@@ -199,6 +199,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | The 5 shell type roles map to the nearest MD3 role | Shell keeps its own flat token set | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Single-line text vertical centring and ellipsis rules | Desktop controls; owner feedback F5 and F7 | [[ADR-0002 Desktop density levels and target sizes]] |
 | Four desktop roles (`body_dense` 13/18, `title_dense` 13/18/500, `page_title_compact` 20/28, `page_title_dense` 18/24) and a density-to-role table | MD3 has one type scale for touch; at 32 and 28 dp controls the 16 and 14 dp body text reads large beside the control (owner feedback on the config app, 2026-11-28) | [[ADR-0029 Desktop density and type scale]] |
+| Known deviation (tess-ui, 2026-11-28): dense body text is 13 dp with a 19 dp line where this note and ADR-0029 say 18 | tess-ui has no theme role `body_dense`; a real `body_dense` 13/18 needs one, and 1 dp of line height does not justify an engine or theme request; accepted by bot:Orchestrator for the owner | [[ADR-0029 Desktop density and type scale]]; review: close when tess-ui gets a `body_dense` theme role ([[Adoption tess-ui]]) |
 
 ## [[Accessibility Tree]]
 
@@ -214,6 +215,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Element added that MD3 lacks | settings grouping | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Header heights 40, 32, 24 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Open and close use different durations and easings | decelerate in, accelerate out is the MD3 pattern for enter and exit; applied by analogy | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Active Descendant]]
 
@@ -320,6 +322,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Button group (standard and connected) adopted though Expressive | needed for the choice and action sets | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Gap 8 dp standard (4 dp dense); Android default is 12 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Heights 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
@@ -411,6 +414,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Element has no MD3 counterpart | MD3 chooses colours for a theme, not content; desktop editors need a square, strips, fields | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Trigger and field heights 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Contrast row with truncated ratio | WCAG 1.4.3 and 1.4.11 apply to a colour the user picks | [[ADR-0001 MD3 role names are the specification vocabulary]] |
@@ -457,6 +461,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Focus and pressed layers 10 percent, dragged 16 | Material Web latest state tokens | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Inward focus ring | the tab touches the strip edge | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Close button on a tab, 24 dp hit area | desktop panels are dismissable; MD3 tabs have no close | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Dock]]
 
@@ -522,6 +527,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Element has no MD3 counterpart | desktop apps pick installed fonts | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Trigger and rows 40, 32 and 28 or 24 dp (MD3 menu item 48 dp in Material Web) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Scrollbar visible when the list overflows | desktop pointer use | [[ADR-0003 Scrollbar rule]] |
@@ -534,6 +540,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | A settings row pattern that MD3 lacks | configuration tools are lists of named values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Label beside the control, not a floating or in-field label | scan by label column, fixed grid | [[ADR-0002 Desktop density levels and target sizes]] |
 | Persistent reset button | defaults matter in config files | none; design choice |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Frame]]
 
@@ -565,6 +572,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Element has no MD3 counterpart | desktop apps pick icons for launchers and blocks | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Icon set is Material Design Icons with Material Symbols names where they exist | existing assets | [[ADR-0007 Icon set and Material Symbols deviation]] |
 | Cell 48, 40, 32 dp; trigger 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
@@ -584,6 +592,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no key chord field | settings app needs recorded shortcuts | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Field and button heights 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Recording state is shown by text and `pressed`, plus a container colour | colour must not be the only cue | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
@@ -594,6 +603,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Single-line read-only text; no MD3 component named Label | MD3 has type roles, not a Label component | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Ellipsis by default | silent clipping is a defect (F5) | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Launcher]]
 
@@ -615,6 +625,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no link component | text that navigates is needed in help, about and settings | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Space does not activate a link, only Enter | link keyboard convention (WAI-ARIA link pattern) | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Underline on hover and focus for a standalone link; always for inline | colour must not be the only cue | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
@@ -625,6 +636,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Element has no MD3 counterpart | MD3 has no editor for a list of values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Row 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Tooltip on the icon buttons only | owner feedback F2, F8 | [[ADR-0004 Tooltip rule]] |
 | Alt+arrow keys to reorder, Delete to remove | keyboard-first desktop use | [[ADR-0002 Desktop density levels and target sizes]] |
@@ -644,6 +656,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Keyboard model from the WAI-ARIA listbox pattern; MD3 defines no list keyboard behaviour | desktop, keyboard first | [[ADR-0010 Document structure of the specifications]] |
 | Densities per [[List Item]] | desktop | [[ADR-0002 Desktop density levels and target sizes]] |
 | Scrollbar visible, no auto-hide | desktop | [[ADR-0003 Scrollbar rule]] |
@@ -675,6 +688,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Item height 40 / 32 / 28 dp (MD3: 48 dp) | Desktop density with a 24 dp minimum target; 48 dp kept for touch | [[ADR-0002 Desktop density levels and target sizes]] |
 | State layers 8, 10, 10 percent on items | Same as MD3; the shell has none yet (gap, not a promise) | [[ADR-0009 State layer percentages]] |
 | Tab closes the menu | WAI-ARIA Authoring Practices menu pattern; Material Web closes on focusout | [[Deviations from MD3]] |
@@ -720,6 +734,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Element with no MD3 counterpart, built from MD3 surface roles | tools need it | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Panning and zooming replace scrollbars on the canvas; no scrollbar is shown | the canvas has no content extent, so there is no extent to show (deviation from ADR-0003, keyboard pan and zoom required) | [[ADR-0017 Node Graph pans instead of scrolling]] |
 | Dragged state layer 16 percent | MD3 dragged state | [[ADR-0009 State layer percentages]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Pagination]]
 
@@ -729,6 +744,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Heights 40, 32, 28 dp and dot hit area 24 dp | desktop density and target size | [[ADR-0002 Desktop density levels and target sizes]] |
 | One Tab stop with arrow keys, Home and End | desktop keyboard-first; same group rule as [[Toolbar]] | none |
 | Non-current dots in `outline` (3 to 1) rather than a lower-contrast role | WCAG 2.2 SC 1.4.11 | none |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Panel and Surface]]
 
@@ -844,6 +860,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Bar height 40 and 32 dp at compact and dense (MD3 56 dp) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Search field variant (a text field with role `searchbox`) beside the bar | filtering inside a dense panel needs no pill or elevation | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Down and Up move an active row while focus stays in the input; Escape steps through close, clear, deactivate | keyboard-first | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
@@ -854,6 +871,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Heights 40, 32, 28 dp; smaller paddings at dense | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Baseline (2022) segmented button kept although Expressive replaces it by the connected [[Button Group]] | both are specified; the segmented button is the compact form | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Hit area is the segment with a 24 dp floor; 48 dp high only in touch contexts | WCAG 2.2 SC 2.5.8, desktop | [[ADR-0002 Desktop density levels and target sizes]] |
@@ -905,6 +923,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no spin box | desktop settings need stepped numbers | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Heights 40, 32, 28 dp (MD3 text field 56 dp, icon button 40 dp) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | The step buttons are outside the Tab order, the field is one tab stop | keyboard-first forms: Up and Down already step | [[ADR-0002 Desktop density levels and target sizes]] (target sizes only; the tab-stop rule is a Tesserae convention) |
@@ -914,6 +933,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Split button adopted although it is an Expressive component (not in the 2022 baseline) | useful for save and send with variants | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Heights 40, 32, 28 dp and smaller trailing widths | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Two Tab stops and Up/Down menu keys on both parts | desktop keyboard-first | [[ADR-0002 Desktop density levels and target sizes]] |
@@ -986,6 +1006,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Deviation | Reason | ADR |
 |---|---|---|
 | Read-only multi-line text; no MD3 component | MD3 has type roles, not a text box | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Text Editor]]
 
@@ -993,13 +1014,15 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Heights by density, 40 dp single-line base | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Escape then Tab as the documented way out until the engine lets Tab through | WCAG 2.2 SC 2.1.2 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Text Field]]
 
 | Deviation | Reason | ADR |
 |---|---|---|
 | Container height 40, 32, 28 dp instead of 56 dp (MD3 height from Material Web `textfield/demo` min-height 56 px and the label plus padding stack #needs-verification) | desktop density, config panels hold many fields | [[ADR-0002 Desktop density levels and target sizes]] |
-| Body text `body_medium` at compact and dense | 20 dp line box fits 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
+| Body text `body_medium` at compact, `body_dense` at dense | 20 dp and 18 dp line boxes fit 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Label may be external (above the field), and is the only placement at compact and dense | a floating label does not fit a 32 or 28 dp container; forms with aligned label column ([[Form Row]]) | [[ADR-0023 Text Field label placement by density]] |
 | Keyboard focus indicator is the 2 dp indicator or outline, no extra ring | MD3 text fields draw no separate ring | [[ADR-0009 State layer percentages]] |
 | Escape clears only in search fields | keyboard-first rule | [[ADR-0010 Document structure of the specifications]] (convention only) |
@@ -1017,7 +1040,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Body text 14 dp (`body_medium`) in controls at compact and dense where MD3 uses `body_large` 16 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Body text 14 dp (`body_medium`) at compact and 13 dp (`body_dense`) at dense in controls where MD3 uses `body_large` 16 dp | desktop density | [[ADR-0029 Desktop density and type scale]] |
 | Ellipsis rule for every single-line text, middle truncation for paths | desktop content such as paths and file names | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Selection and copy of read-only text is a property of the text | desktop users copy values; MD3 is silent | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | No deviation in the 15 type roles and their sizes, line heights, weights | roles are MD3's | [[ADR-0001 MD3 role names are the specification vocabulary]] |
@@ -1026,6 +1049,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Inline variant with fields 40, 32, 28 dp high instead of the 72 dp picker field | desktop forms hold many rows | [[ADR-0002 Desktop density levels and target sizes]] |
 | Up, Down stepping, A and P keys, auto-advance and colon hand-over in the fields | keyboard-first entry | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Fields exposed as `spinbutton` | each field has a numeric range | [[ADR-0001 MD3 role names are the specification vocabulary]] |
@@ -1053,6 +1077,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Close hover and pressed layer in `error` | desktops colour close red; `error_container` is too pale at an 8 percent layer | [[ADR-0009 State layer percentages]] |
 | Inactive fade to 0.6 | desktop convention for an inactive title bar; MD3 has no window focus state | [[ADR-0002 Desktop density levels and target sizes]] |
 | Inward focus ring on the window buttons | the buttons touch the window edge; an outward ring would be clipped | [[ADR-0013 Focus and pressed state layer 10 percent]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Toggle]]
 
@@ -1065,6 +1090,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Field height 40, 32, 28 dp (outlined button and field are 40 and 56 in MD3) | desktop forms need rows per screen | [[ADR-0002 Desktop density levels and target sizes]] |
 | Rows 56, 48, 40 dp two-line (MD3 list row 56 for two lines, 48 in menus) | density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Layer corners 12 dp and a search field in a menu-like surface (MD3 menu: 4 dp, no search) | tess-ui build; the layer is a searchable list | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
@@ -1080,6 +1106,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Overflow always by menu, never scroll or wrap | no hidden or clipped command (chapter 10 rule 3) | none (chapter 10) |
 | Roving focus with Home, End and wrap; one Tab stop | WAI-ARIA toolbar, desktop keyboard-first | none |
 | Fade, not slide, to hide | engine has no scroll-linked slide | none (code limit) |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Tooltip]]
 
@@ -1142,6 +1169,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Element added that MD3 lacks | hierarchical navigation | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Selection does not follow focus | APG: authors choose; avoids accidental action in file trees | none; design choice |
 | Rows are flat in the accessibility tree, no `group` wrappers | the engine container selection ranges over the direct children of one container; APG allows the flat form | [[ADR-0028 Tree rows are flat in the accessibility tree]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Video Player]]
 

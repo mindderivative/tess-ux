@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, navigation, text, tesserae-specific]
 related: ["[[Text]]", "[[Text|Rich Text]]", "[[Text|Rich Text Span]]", "[[Button]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[Tooltip]]", "[[Form Row]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text]]", "[[Colour Roles]]", "[[Focus Ring]]", "[[Spacing and Density]]"]
@@ -90,7 +90,7 @@ A standalone link has no container; it is a text line with an extended hit area.
 | link | border width | - | 0 | 0 | 0 | a link draws no border; the focus ring is the focus indicator, [[Focus Ring]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | link | border color | - | N/A: the link draws no border | N/A: same as default | N/A: same as default | States table, [[Focus Ring]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | link | corner radius | - | N/A: the link draws no container; the focus ring follows the text box | N/A: same as default | N/A: same as default | [[Focus Ring]], Anatomy section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| text | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| text | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Tokens used section; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | external-link glyph | icon size | - | 16 | 16 | 16 | Anatomy section (`open_in_new` at 16 dp), [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | link | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 
@@ -182,6 +182,7 @@ The colours are roles; the scheme recomputes them ([[Theme Following the System]
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no link component | text that navigates is needed in help, about and settings | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Space does not activate a link, only Enter | link keyboard convention (WAI-ARIA link pattern) | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Underline on hover and focus for a standalone link; always for inline | colour must not be the only cue | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |

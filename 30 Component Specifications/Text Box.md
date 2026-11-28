@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, module, text]
 related: ["[[Text]]", "[[Label]]", "[[Text Editor]]", "[[Text Selection]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[Scrollbar and Scroll Container]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
@@ -57,7 +57,7 @@ Colour `on_surface`; type `body_medium` (shell body 14/20); optional `on_surface
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Line height | 20 | 20 | 20 | `body_medium` |
+| Line height | 20 | 20 | 18 | `body_medium`; `body_dense` at dense |
 | Minimum width | 120 | 120 | 120 | [[Text]]: a wrapping block is at least 120 dp wide |
 | Maximum measure | 840 | 840 | 840 | [[Text]] |
 
@@ -74,7 +74,7 @@ Colour `on_surface`; type `body_medium` (shell body 14/20); optional `on_surface
 | text | border width | - | 0 | 0 | 0 | [[Text Box]] (Tokens used: no container) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
 | text | border color | - | N/A: the Text Box draws no border | N/A: same as the default column | N/A: as in Default | [[Text Box]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
 | text | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; no container | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
-| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; code shell `body` 14/400/20 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]]; code shell `body` 14/400/20; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
 | text | icon size | - | N/A: the Text Box draws text only | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
 | text | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Text Box]] (no container) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 
@@ -140,6 +140,7 @@ Text and selection roles follow the theme mode ([[Theme Following the System]]).
 | Deviation | Reason | ADR |
 |---|---|---|
 | Read-only multi-line text; no MD3 component | MD3 has type roles, not a text box | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

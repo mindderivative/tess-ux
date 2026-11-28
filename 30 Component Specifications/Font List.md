@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, picker, font, list, search, keyboard]
 related: ["[[List]]", "[[List Item]]", "[[Text Field]]", "[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Icon Picker]]", "[[Choice Picker]]", "[[Typography]]", "[[Typography#Rules|Desktop Font]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[List]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]"]
@@ -86,7 +86,7 @@ The trigger follows the outlined [[Button]] (heights from the control height; pa
 | Trigger | border width | - | 1 | 1 | 1 | [[Button]] Variants (outlined) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Trigger | border color | `outline` | `outline` | `outline` | `outline` | [[Button]] Variants, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Trigger | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Trigger | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Trigger | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Button]], [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Trigger chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a button label) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Layer | min width | - | 160 | 160 | 160 | [[Font List]] Sizing (`Width` range 160 to 640; default 280, 240 at dense) | tess-ui: yes (FontListPanel Width option); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Layer | padding | `space.3` | 8 8 8 8 | 8 8 8 8 | 4 4 4 4 | [[Font List]] Sizing | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
@@ -97,12 +97,12 @@ The trigger follows the outlined [[Button]] (heights from the control height; pa
 | Layer | border color | - | N/A: the layer draws no border; the level 2 shadow separates it | N/A: same as default | N/A: same as default | [[Font List]] Anatomy part 2 | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
 | Layer | elevation | `elevation.level2` | 2 | 2 | 2 | [[Font List]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Search field | height | `density.control_height` | 40 | 32 | 28 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Search field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Text Field]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Search field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Text Field]] Tokens used, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | List row | height | `density.row_height` | 40 | 32 | 24 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | List row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Font List]] Sizing, [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | List row | margin | - | N/A: rows abut in the virtual list; the list sets no outer space per row | N/A: same as default | N/A: same as default | [[Font List]] Layout and overflow | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
 | List row | corner radius | `shape.medium` | 12 | 12 | 12 | [[Font List]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| List row | font | `body_large` | 16/24/400/0.5 | 16/24/400/0.5 | 16/24/400/0.5 | [[Font List]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| List row | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Font List]] Anatomy part 5, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 
 ## Layout and overflow
 
@@ -189,6 +189,7 @@ Inline, `Rows` 8, `Width` 280, label "Font", placeholder "Choose a font", `Close
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Element has no MD3 counterpart | desktop apps pick installed fonts | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Trigger and rows 40, 32 and 28 or 24 dp (MD3 menu item 48 dp in Material Web) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Scrollbar visible when the list overflows | desktop pointer use | [[ADR-0003 Scrollbar rule]] |
