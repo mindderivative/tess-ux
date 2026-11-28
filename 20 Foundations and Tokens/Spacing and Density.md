@@ -115,6 +115,10 @@ A boundary value belongs to the larger class (width 600 is `medium`). Density is
 | `density.menu_item_height` | 40, 32, 28 |
 | `density.icon_button_container` | 40, 32, 28 |
 | `density.icon_button_icon` | 24, 20, 20 |
+| `density.switch_track_w` | 52, 40, 36 ([[ADR-0029 Desktop density and type scale]]) |
+| `density.switch_track_h` | 32, 24, 20 |
+| `density.tab_height` | 48, 32, 28 |
+| `density.font_body` | `body_large`, `body_medium`, `body_dense` ([[Typography]]) |
 | `density.row_padding_x` | 12, 8, 4 |
 | `density.icon_label_gap` | 8, 8, 4 |
 | `density.field_padding_x` | 12, 8, 8 |
