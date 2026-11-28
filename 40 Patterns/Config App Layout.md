@@ -37,7 +37,7 @@ One agreed layout so the keyboard order, the names read by assistive technology 
 | Topic | Decision |
 |---|---|
 | Panels | fixed: the user cannot close, add or move panels (no `Closable`, no drag between zones); tabs only choose which panel of a zone is shown |
-| Default sizes | left 240 dp, right 320 dp, bottom 160 dp |
+| Default sizes | left 240 dp, right 380 dp, bottom 160 dp (the right zone was 320 dp in the owner's 2026-11-27 decision; raised to 380 dp on 2026-11-28 because the widest Properties rows need about 420 px, tess-ui #405; an owner-informed change, the owner is told) |
 | Names | Files, Structure, Editor, View, Properties, Problems (sentence case, [[15 Writing]]); "Problems" and not "Errors", because findings include warnings |
 | F6 order | Files, Structure, Editor, View, Properties, Problems |
 | View | a live visual mockup of the shell with the Panel as the desktop, fidelity level A, drawn as a [[Preview Pane]] |
@@ -67,7 +67,7 @@ F6 and Shift+F6 cycle Files, Structure, Editor, View, Properties, Problems and w
 
 ## Acceptance criteria
 
-- [ ] AC-CFG-1 (geometry check): at 1100 by 700 dp with default sizes, the left zone is 240 dp wide and the right zone 320 dp wide, both full height; the bottom zone is 160 dp high and spans only the width between them; the centre fills the rest. Pass: rectangles equal.
+- [ ] AC-CFG-1 (geometry check): at 1100 by 700 dp with default sizes, the left zone is 240 dp wide and the right zone 380 dp wide, both full height; the bottom zone is 160 dp high and spans only the width between them; the centre fills the rest. Pass: rectangles equal.
 - [ ] AC-CFG-2 (AT tree assertion): the panel titles read, in tree order, Files, Structure, Editor, View, Properties, Problems; no panel is named Form, Text or Errors. Pass: names equal.
 - [ ] AC-CFG-3 (scripted input): F6 from Files goes to Structure, Editor (when Editor is the shown centre tab), Properties, Problems (when it has findings) and wraps; with View shown instead of Editor, F6 goes Structure, View, Properties; Shift+F6 reverses. Pass: focus order equals in each case.
 - [ ] AC-CFG-4 (scripted input): no panel has a close button and a tab drag does not change a panel's zone (a press on a tab and a move of 40 dp leaves it in place); the tab menu offers no move. Pass: zone of each panel unchanged.
@@ -92,7 +92,7 @@ F6 and Shift+F6 cycle Files, Structure, Editor, View, Properties, Problems and w
 
 ## Open questions
 
-- Whether the Properties panel needs a larger default than 320 dp for long forms (the owner chose 320 dp).
+- Whether 380 dp still suits the longest Properties rows: the widest need about 420 px, so such a row is clipped or wrapped at the default ([[10 Layout Overflow and Scrolling]] applies).
 - Corner ownership is specified in [[Dock]] AC-DCK-17; tess-ui's `Dock` behaviour is not re-checked.
 
 ## Sources
