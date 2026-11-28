@@ -1302,4 +1302,11 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Bar height 40, 32 and 28 dp and item padding 12, 8 and 8 dp | Desktop density levels; a 32 dp bar keeps a compact toolkit window uncluttered | [[ADR-0029 Desktop density and type scale]] |
 | Hover on a title opens its menu at once while another menu of the bar is open | Desktop menu bar convention (Windows, KDE, GTK) and the APG pattern; MD3 menus open from one button | [[ADR-0029 Desktop density and type scale]] |
 
+## [[Autocomplete]]
+
+| Deviation | Reason | ADR |
+|---|---|---|
+| A combo box (field with a filtered list), which MD3 does not have | the configuration application needs to pick one of many names by typing; MD3 offers the select and the search view only | [[ADR-0029 Desktop density and type scale]] |
+| Field 40, 32 and 28 dp and rows 40, 32 and 28 dp | desktop density | [[ADR-0029 Desktop density and type scale]] |
+
 Back to [[10 UX Design Specification]].
