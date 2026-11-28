@@ -32,7 +32,7 @@ Make every window operable by keyboard alone with few stops, a predictable order
 
 1. Stops: every interactive control is one Tab stop; a composite (tree, list, menu, toolbar, tab list, radio group, table body) is one stop with arrow keys inside (roving focus, `Focus_Group` in tess-ui). A window of 40 rows of controls inside a list is one stop for the list, not 40 ([[11 Interaction]], Focus model).
 2. Order: visual reading order, equal to tree order; no positive `tab_index` and no positive shell `Tab_Index` to reorder controls (AC-INT-5; [[14 Accessibility Basics]]). The shell's `Tab_Index` ordering is a documented departure in the shell (see Deviations) and lowers to layout order when the shell adopts the rule.
-3. Panes: a window with two or more panes (tree, form, text, problems) gets F6 and Shift+F6 to cycle panes in a fixed order, wrapping, working from any control including a multi-line text field and a focused tree; a pane that is hidden when empty joins the cycle when it gains content; F6 does nothing in a modal layer and is bound to nothing else (config app: Files, Structure, Form, Text, Problems). Tab still walks every stop inside a pane.
+3. Panes: a window with two or more panes (tree, form, text, problems) gets F6 and Shift+F6 to cycle panes in a fixed order, wrapping, working from any control including a multi-line text field and a focused tree; a pane that is hidden when empty joins the cycle when it gains content; F6 does nothing in a modal layer and is bound to nothing else (config app: Files, Structure, Editor, View, Properties, Problems, [[Config App Layout]]). Tab still walks every stop inside a pane.
 4. Entering a pane or composite: focus goes to the last focused item, else the selected item, else the first enabled item; leaving by Tab goes to the next stop in order, and Shift+Tab to the previous; coming back by F6 restores the same item.
 5. Skips: a disabled control, a hidden control, a control with zero size, and the content of a collapsed container (closed accordion or tree branch, `Expander`) take no focus and are passed by Tab, arrows, Home, End and typeahead. A control that is disabled while focused hands focus to the next stop in order the same frame, never to the window. The exception is a hidden shell Bar or Panel: Shortcut Mode shows it and keeps it visible (initial focus stays where the shell's focus rule 4 puts it, `Next_Focus` reaches it), and leaving the mode or Escape hides it again; plain keys do not reveal it ([[ADR-0021 Shortcut Mode reveals a hidden Bar]], [[Auto Hide]]).
 6. No trap: Tab always leaves every control; a multi-line text field leaves by Tab unless `tab_navigates` is false, and then documents Escape followed by Tab; a modal layer holds focus inside by design and Escape or an action leaves it ([[12 Overlays]]).
@@ -71,7 +71,7 @@ Container { Focus_Group: horizontal, Children { Button { Label: Save } Button { 
 ```
 
 ```text
-Config app: Tab (stops)  F6 / Shift+F6 (panes: Files, Structure, Form, Text, Problems)
+Config app: Tab (stops)  F6 / Shift+F6 (panes: Files, Structure, Editor, View, Properties, Problems)
             Ctrl+Shift+N "Add a child block (Ctrl+Shift+N)"   Menu key / Shift+F10  context menu
 ```
 

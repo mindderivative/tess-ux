@@ -40,7 +40,7 @@ One rule set for rows, groups, commit timing, defaults, dirty state and external
 8. Saving: write to a temporary file in the same folder and rename it over the old one; a failed write leaves the old file whole, keeps the user's changes in the window and names the cause ([[Error States]]); the first save of a session copies the old content to a backup folder; opening and saving without change leaves the bytes identical.
 9. External change: when the open file changes on disk, a [[Banner]] above the form says "File changed on disk" with Reload (take the disk's version, drop unsaved changes of that file and its undo history) and Keep mine (the next save replaces the disk's). The app's own saves never raise it. A save over a changed file is refused until the user chooses. The banner is announced assertively when unsaved changes exist, polite otherwise; Ctrl+Shift+L reloads and Ctrl+Shift+U keeps (config app keys).
 10. Validation per [[Validation]]: refuse and keep the text, show the range inline, list document findings in a problems list that opens the key on Enter or click.
-11. Areas and focus: a form page with panes (tree, form, text, problems) is reachable by F6 and Shift+F6 in order; F6 is also the way out of a text editor that takes Tab ([[Keyboard Navigation]]).
+11. Areas and focus: a form page with panes (tree, properties form, editor, view, problems) is reachable by F6 and Shift+F6 in order; F6 is also the way out of a text editor that takes Tab ([[Keyboard Navigation]]).
 12. Help: the label carries the tooltip with the setting's description (500 ms hover), the help line shows it on focus within the row, and the control's accessible description carries it; the row, group and form carry no tooltip ([[ADR-0004 Tooltip rule]]).
 13. A key the schema reserves or a value the widget cannot show is shown as text and is never rewritten unless edited; unknown keys are listed in a "Not in the schema" group and are not silently dropped.
 14. Density: a form uses the compact level in a config tool ([[07 Spacing and Density Rules]]); controls 32 dp high, rows as in the table of [[Form Row]]; the form scrolls in a container with both bars when content overflows ([[Scrollbar and Scroll Container]]).
@@ -94,7 +94,7 @@ Row, control, reset, label column and gap values per density are in [[Form Row]]
 ## Accessibility
 
 - Each row: control name equals the label, description equals the help text, error line polite ([[Form Row]]).
-- Every action (rows, buttons, menu entries, areas) works from the keyboard alone; Tab order is toolbar, Files, Structure, Form, Text; F6 cycles areas.
+- Every action (rows, buttons, menu entries, areas) works from the keyboard alone; Tab order follows the F6 order of [[Config App Layout]] (Files, Structure, Editor, View, Properties, Problems), after the toolbar; F6 cycles areas.
 - Group headers are buttons with `expanded`; the banner is a group named "File changed on disk" with a live text.
 - The dirty state and modified state have text, not colour alone (SC 1.4.1).
 - Undo and redo are available by key and by toolbar button with names.
@@ -112,7 +112,7 @@ Row, control, reset, label column and gap values per density are in [[Form Row]]
 - [ ] AC-FST-9 (scripted input): a save to a read-only folder fails, leaves the old file whole, keeps the window state, and shows an error naming the cause; a save of an unchanged opened file leaves the bytes identical. Pass: bytes and message equal.
 - [ ] AC-FST-10 (scripted input): changing the open file on disk from outside raises the banner with Reload and Keep mine; the app's own save does not; a save before choosing is refused; Reload drops unsaved changes and resets the undo history; Keep mine lets the next save replace the disk. Pass: banner presence and file contents equal at each step.
 - [ ] AC-FST-11 (AT tree assertion): the banner is a group with a name and a live text; its announcement is assertive with unsaved changes and polite without. Pass: politeness equals.
-- [ ] AC-FST-12 (scripted input): F6 moves focus Files, Structure, Form, Text, Problems (when it has rows) and wraps; Shift+F6 reverses; F6 from the text editor leaves it. Pass: focus order equals.
+- [ ] AC-FST-12 (scripted input): F6 moves focus Files, Structure, Editor, View, Properties, Problems (when it has rows) and wraps; Shift+F6 reverses; F6 from the editor leaves it; a pane that is not shown (a tab not selected) is skipped. The config app is the reference ([[Config App Layout]]). Pass: focus order equals.
 - [ ] AC-FST-13 (scripted input): a group header toggles with Enter and Space; the open state is remembered by group name when another block is chosen and back; a group with a refused value opens by itself. Pass: expanded flags equal.
 - [ ] AC-FST-14 (scripted input): hovering the label for 500 ms shows one tooltip with the description; the row, group and form show none; focus within the row shows the help line and does not move the control. Pass: tooltip counts and geometry equal ([[Form Row]] AC-FRM-4, AC-FRM-12).
 - [ ] AC-FST-15 (scripted input): every action of the page is performed by key events only. Pass: every action's effect observed (AC-A11Y-4).

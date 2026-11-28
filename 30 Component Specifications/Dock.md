@@ -27,7 +27,7 @@ A tool window (editor, inspector, file tree, console) holds many panels and the 
 
 ## Anatomy
 
-1. Zone: left, right, top, bottom or center. A left or right zone has a width, a top or bottom zone a height; the center zone fills what is left.
+1. Zone: left, right, top, bottom or center. A left or right zone has a width, a top or bottom zone a height; the center zone fills what is left. Corners: the left and right zones run the full height of the dock; the top and bottom zones span only the width between them, over or under the center zone (decided by the owner for the config app, 2026-11-27, applied to every Dock; the engine-side behaviour of tess-ui `Dock` is not re-checked, status in code: in progress).
 2. Tab strip: one tab per panel of the zone, over the shown panel ([[Dock Panel]]).
 3. Shown panel: the panel of the selected tab, one at a time.
 4. Resize handle: between a side or top or bottom zone and the center, 24 dp wide or high, holding a 4 by 48 dp grip; same behaviour as [[Splitter]].
@@ -173,6 +173,7 @@ All colours are roles; the dock follows the application's scheme and retints whe
 - [ ] AC-DCK-14 (scripted input): the edge dock of tess-shell opens by the keyboard: a key route reaches the peek handle (focusable, named "Expand dock") and Enter opens it; HOVER opens after 150 ms and closes after 300 ms away; the resting tab is at least 24 dp on its short side. Pass: open state after each input. Hand check on KWin (not automated) for the focusable handle.
 - [ ] AC-DCK-15 (review): the application offers no layout feature that only drag can do: every move has the tab menu, every size has the handle keys, every close has the close button; reviewer records each ([[ADR-0014 Window resize border and splitter alternative]]). Pass: sign-off.
 - [ ] AC-DCK-16 (scripted input): every zone handle meets the keyboard path of [[Splitter]] (AC-SPL-15): Tab focuses it, and the arrow keys on its axis, Home and End resize it as AC-DCK-3 states, with no resize function reachable by drag alone ([[ADR-0014 Window resize border and splitter alternative]]). Pass: zone size after each key; a handle without the path fails.
+- [ ] AC-DCK-17 (geometry check): with panels in all five zones, the left and right zone rectangles span the full dock height; the top and bottom zone rectangles span from the right edge of the left zone to the left edge of the right zone and do not overlap the side zones; the bottom zone's lower edge is the dock's lower edge. Pass: rectangles equal at 1100 by 700 dp.
 
 ## Status in code
 
