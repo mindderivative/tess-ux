@@ -27,3 +27,5 @@ jobs:
         run: python3 tools/contrast_check.py .
       - name: Check that the defaults matrix is current
         run: python3 tools/defaults_matrix.py . --check
+      - name: Check that the deviations register is current
+        run: python3 tools/gen_deviations.py . --check
