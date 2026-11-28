@@ -259,7 +259,7 @@ depends_on: []
 | [[Toggle]] | track | - | 32 | 32 | 28 | [[Switch]] sizing rule; code 22 | tess-ui: no hook; tess-shell: yes (Height); tre: n/a: element absent in tre |
 | [[Token Button]] | field | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | [[Token Button]] | row | - | 56 | 48 | 40 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
-| [[Toolbar]] | container | - | 64 | 48 | 36 | design choice, proposed ADR: toolbar thickness per density; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| [[Toolbar]] | container | - | 64 | 40 | 32 | design choice, [[ADR-0029 Desktop density and type scale]]; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | [[Toolbar]] | group divider | - | 1 | 1 | 1 | [[Divider]] (vertical line, 1 dp wide) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | [[Toolbar]] | item | `density.control_height` | 40 | 32 | 28 | [[Icon Button]], [[Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | [[Tooltip]] | plain container | - | N/A: sized by the text (at least the 24 dp minimum) | N/A: sized by the text | N/A: sized by the text | [[Tooltip]], Layout and overflow | tess-ui: no hook; tess-shell: yes (Height); tre: yes (height) |
@@ -718,8 +718,8 @@ depends_on: []
 | [[Token Button]] | field | `density.field_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Spacing and Density]], as [[Text Field]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | [[Token Button]] | layer | `space.3` | 8 8 8 8 | 4 4 4 4 | 4 4 4 4 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | [[Token Button]] | row | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Token Button]] Sizing; design choice, proposed ADR for token list row heights | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
-| [[Toolbar]] | container, docked | `space.4`, `space.5`, `space.3`, `space.2` | 12 16 12 16 | 8 8 8 8 | 4 8 4 8 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
-| [[Toolbar]] | container, floating | `space.4`, `space.3`, `space.2` | 12 8 12 8 | 8 4 8 4 | 4 4 4 4 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| [[Toolbar]] | container, docked | `space.4`, `space.5`, `space.3`, `space.2`, `space.1` | 12 16 12 16 | 4 8 4 8 | 2 8 2 8 | design choice, [[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| [[Toolbar]] | container, floating | `space.4`, `space.3`, `space.2`, `space.1` | 12 8 12 8 | 4 4 4 4 | 2 4 2 4 | design choice, [[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | [[Tooltip]] | plain container | `space.2`, `space.3` | 4 8 4 8 | 4 8 4 8 | 4 8 4 8 | [[Tooltip]], Sizing and density | tess-ui: no hook; tess-shell: yes (Padding); tre: yes (padding) |
 | [[Tooltip]] | rich container | `space.5` | 16 16 16 16 | 16 16 16 16 | 16 16 16 16 | [[Tooltip]], Sizing and density (16 horizontal, 16 below the text; the top follows the Compose M3 constants #needs-verification) | tess-ui: no hook; tess-shell: yes (Padding); tre: yes (padding) |
 | [[Top App Bar]] | container | `space.2` | 0 4 0 4 | 0 4 0 4 | 0 4 0 4 | design choice, proposed ADR: top app bar heights per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
@@ -1598,7 +1598,7 @@ depends_on: []
 | [[Token Button]] | field, row, layer | `shape.medium` | 12 | 12 | 12 | [[Shape]]; tess-ui build, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | [[Token Button]] | row swatch | `shape.small` | 8 | 8 | 8 | [[Shape]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | [[Toolbar]] | container, docked | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| [[Toolbar]] | container, floating | `shape.full` | 32 | 24 | 18 | [[Shape]] (half the thickness) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| [[Toolbar]] | container, floating | `shape.full` | 32 | 20 | 16 | [[Shape]] (half the thickness) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | [[Tooltip]] | plain container | `shape.extra_small` | 4 | 4 | 4 | [[Shape]] | tess-ui: no hook; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | [[Tooltip]] | rich container | `shape.medium` | 12 | 12 | 12 | [[Shape]] | tess-ui: no hook; tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | [[Top App Bar]] | container | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
@@ -1933,7 +1933,7 @@ depends_on: []
 | [[Token Button]] | field chevron | - | 24 | 24 | 24 | [[Token Button]] Anatomy, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | [[Token Button]] | field swatch | - | 24 | 20 | 16 | swatch box size, [[Token Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | [[Token Button]] | row swatch | - | 32 | 28 | 24 | swatch box size, [[Token Button]] Sizing | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
-| [[Toolbar]] | item | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| [[Toolbar]] | item | `density.icon_button_icon` | 24 | 20 | 18 | [[Icon Button]], [[Iconography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | [[Tooltip]] | tooltip | - | N/A: a tooltip holds text and text buttons, no icon | N/A: text and text buttons only | N/A: text and text buttons only | [[Tooltip]], Anatomy | tess-ui: n/a: a tooltip holds no icon; tess-shell: n/a: a tooltip holds no icon; tre: n/a: a tooltip holds no icon |
 | [[Top App Bar]] | action icon button | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | [[Tray Item]] | icon | - | 20 | 18 | 18 | [[ADR-0024 Shell tray and task item sizes]]; code 18 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
@@ -2539,7 +2539,7 @@ Rows whose Token cell is `-` and whose default is a value, not N/A. Each has a S
 | [[Token Button]] | focus ring (field) | margin | 2 2 2 2 | [[Focus Ring]] (offset outside the field) |
 | [[Token Button]] | layer | min width | 240 | the `Width` parameter range 240 to 640, [[Token Button]] Sizing |
 | [[Toolbar]] | container | border width | 0 | [[Toolbar]] Variants (no border drawn) |
-| [[Toolbar]] | container | height | 64 | design choice, proposed ADR: toolbar thickness per density; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl |
+| [[Toolbar]] | container | height | 64 | design choice, [[ADR-0029 Desktop density and type scale]]; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl |
 | [[Toolbar]] | group divider | height | 1 | [[Divider]] (vertical line, 1 dp wide) |
 | [[Toolbar]] | item | min height | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] |
 | [[Toolbar]] | item | min width | 40 | [[Icon Button]] (square container) |
