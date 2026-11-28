@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, accordion, disclosure, motion]
 related: ["[[Form Row]]", "[[List Item]]", "[[Tree]]", "[[Scrollbar and Scroll Container]]", "[[Spacing and Density]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]"]
@@ -68,7 +68,7 @@ The header is a list-row sized button, so it uses the single-line row height of 
 | Header horizontal padding | 12 dp | 8 dp | 4 dp |
 | Gap between header parts | 8 dp | 8 dp | 4 dp |
 | Chevron box | 24 dp | 20 dp | 16 dp |
-| Title type | `title_medium` 16/24 | `title_small` 14/20 | `title_small` 14/20 |
+| Title type | `title_medium` 16/24 | `title_small` 14/20 | `title_dense` 13/18 |
 | Content padding left, right | 12 dp | 8 dp | 4 dp |
 | Content padding bottom | 16 dp | 12 dp | 8 dp |
 
@@ -89,7 +89,7 @@ The header is a list-row sized button, so its height, padding and gap are the de
 | divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
 | divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Accordion#Anatomy]], MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | header | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the header is a list-row sized button, like the [[List Item]] container) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| title | font | `title_medium`, `title_small`, `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]]; design choice, proposed ADR (accordion dimensions by density) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| title | font | `title_medium`, `title_small`, `title_small` | 16/24/500/0.15 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; design choice, proposed ADR (accordion dimensions by density); compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | count | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | chevron box | icon size | `density.chevron_box` | 24 | 20 | 16 | [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | header | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
@@ -174,6 +174,7 @@ Single mode, all sections closed, dividers on, `default` density unless the proj
 | Element added that MD3 lacks | settings grouping | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Header heights 40, 32, 24 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Open and close use different durations and easings | decelerate in, accelerate out is the MD3 pattern for enter and exit; applied by analogy | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, action, expressive]
 related: ["[[Button]]", "[[Icon Button]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[Menu]]", "[[Popup]]", "[[Button Group]]", "[[12 Overlays]]"]
 depends_on: ["[[Button]]", "[[Colour Roles]]", "[[Shape]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Menu]]"]
@@ -92,7 +92,7 @@ Both parts follow [[Button]]; the trailing width, its chevron padding (derived a
 | outer corners | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | inner corners | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]]; design choice, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | trailing button (menu open) | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| main button label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| main button label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | main button leading icon | icon size | - | 18 | 18 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | trailing button chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | main button, trailing button | elevation | `elevation.level0` | 0 | 0 | 0 | as [[Button]]; the elevated variant rests at level 1 ([[Elevation]]) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
@@ -163,6 +163,7 @@ No app or example uses it.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Split button adopted although it is an Expressive component (not in the 2022 baseline) | useful for save and send with variants | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Heights 40, 32, 28 dp and smaller trailing widths | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Two Tab stops and Up/Down menu keys on both parts | desktop keyboard-first | [[ADR-0002 Desktop density levels and target sizes]] |

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, keyboard, tesserae-specific]
 related: ["[[Text Field]]", "[[Button]]", "[[Icon Button]]", "[[Form Row]]", "[[Key Chord Field|Key Chord Recorder]]", "[[11 Interaction#Shortcuts and conflicts|Global Shortcuts]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Button]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -96,7 +96,7 @@ The control is a row of an outlined field and a Record button. Vertical padding 
 | field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | field | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Text Field]], `primary` when focused, `error` when refused | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Tokens used section; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
 | Record button | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | Record button | min height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], the 24 dp pointer minimum is met at every level | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
 | Record button | min width | - | N/A: the width equals the wider of the "Record" and "Press keys" contents | N/A: same as default | N/A: same as default | Layout and overflow section, [[Button]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
@@ -105,7 +105,7 @@ The control is a row of an outlined field and a Record button. Vertical padding 
 | Record button | border width | - | 1 | 1 | 1 | States table (outline 1 dp `outline`), [[Button]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | Record button | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Button]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | Record button | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], Tokens used section (tess-ui 12) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| Record button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]], Tokens used section | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| Record button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]], Tokens used section; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | Record button | icon size | - | 24 | 20 | 20 | Anatomy section, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 
 ## Layout and overflow
@@ -211,6 +211,7 @@ Evidence: `tess-ui:docs/components/key-chord-fields.md`.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no key chord field | settings app needs recorded shortcuts | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Field and button heights 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Recording state is shown by text and `pressed`, plus a container colour | colour must not be the only cue | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |

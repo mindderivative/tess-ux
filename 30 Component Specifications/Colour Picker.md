@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, colour, picker, slider, contrast]
 related: ["[[Colour Roles]]", "[[Popup]]", "[[Text Field]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[14 Accessibility Basics#Contrast|Contrast]]", "[[Form Row]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Colour Roles]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
@@ -97,7 +97,7 @@ The square, strips and swatches keep their size at every level: they are drawing
 | Hue and alpha strip | height | - | 24 | 24 | 24 | [[Colour Picker]] Sizing (48 in a touch context) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Hex and channel field | height | `density.control_height` | 40 | 32 | 28 | [[Colour Picker]] Sizing, [[Spacing and Density]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Channel field | min width | - | 58 | 58 | 58 | [[Colour Picker]] Anatomy part 7 | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Hex and channel field | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Colour Picker]] Tokens used, [[Typography]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Hex and channel field | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Colour Picker]] Tokens used, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Contrast row | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Colour Picker]] Tokens used, [[Typography]] | tess-ui: via theme typography (role label_small); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Role swatch | height | - | 28 | 28 | 28 | [[Colour Picker]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Role swatches | gap | `space.2` | 4 | 4 | 4 | [[Colour Picker]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
@@ -216,6 +216,7 @@ Roles only; the role row shows the role colours of the active scheme and the che
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Element has no MD3 counterpart | MD3 chooses colours for a theme, not content; desktop editors need a square, strips, fields | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Trigger and field heights 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Contrast row with truncated ratio | WCAG 1.4.3 and 1.4.11 apply to a colour the user picks | [[ADR-0001 MD3 role names are the specification vocabulary]] |

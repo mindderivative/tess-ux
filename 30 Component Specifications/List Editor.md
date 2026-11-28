@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, list, editor, keyboard]
 related: ["[[List]]", "[[List Item]]", "[[Text Field]]", "[[Switch]]", "[[Icon Button]]", "[[Button]]", "[[Menu]]", "[[Colour Picker]]", "[[Choice Picker]]", "[[Form Row]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[List]]", "[[Icon Button]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]"]
@@ -90,12 +90,12 @@ Hit areas at least 24 by 24 dp at every density ([[ADR-0002 Desktop density leve
 | Editor | corner radius | - | N/A: the editor has no container shape; its controls keep their own | N/A: same as default | N/A: same as default | [[List Editor]] Tokens used | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
 | Icon button (Move up, Move down, Remove) | height | `density.icon_button_container` | 40 | 32 | 28 | [[List Editor]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Editor]] Sizing, [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Text item field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Text Field]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Empty note | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[List Editor]] Tokens used, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Text item field | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Text Field]] Tokens used, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Empty note | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[List Editor]] Tokens used, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Add button | height | `density.control_height` | 40 | 32 | 28 | [[Button]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Add button | padding | - | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Button]] Sizing (text variant) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Add button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
-| Add button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
+| Add button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Button]], [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 | Editor | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell (only the tess-ui config app uses it); tre: n/a: element absent in tre |
 
 ## Layout and overflow
@@ -179,6 +179,7 @@ Item kind `text`, `Step` 1, `Min_Items` 0, `Max_Items` 0 (no limit), label "Item
 | Deviation | Reason | ADR |
 |---|---|---|
 | Element has no MD3 counterpart | MD3 has no editor for a list of values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Row 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Tooltip on the icon buttons only | owner feedback F2, F8 | [[ADR-0004 Tooltip rule]] |
 | Alt+arrow keys to reorder, Delete to remove | keyboard-first desktop use | [[ADR-0002 Desktop density levels and target sizes]] |

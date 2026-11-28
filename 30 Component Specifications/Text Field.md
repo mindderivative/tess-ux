@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, owner-feedback]
 related: ["[[Owner Feedback 2026-11-20]]", "[[Switch]]", "[[Form Row]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[Iconography]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -74,7 +74,7 @@ Selection fill: role `primary` at 30 percent behind the text, text colour unchan
 ## Tokens used
 
 - Colour roles as listed in the State table: [[Colour Roles]].
-- Type: input and label `body_large` (16 dp on 24 dp) at default density; `body_medium` (14 dp on 20 dp) at compact and dense; floating label and supporting text `body_small` (12 dp on 16 dp). Values: [Material Web typescale tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-sys-typescale.scss). See [[Typography]].
+- Type: input and label `body_large` (16 dp on 24 dp) at default density; `body_medium` (14 dp on 20 dp) at compact; `body_dense` (13 dp on 18 dp) at dense; floating label and supporting text `body_small` (12 dp on 16 dp). Values: [Material Web typescale tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-sys-typescale.scss). See [[Typography]].
 - Shape: filled top corners 4 dp, bottom square; outlined 4 dp ([[Shape]]).
 - Spacing and density: [[Spacing and Density]].
 
@@ -86,7 +86,7 @@ Heights and padding from [[Spacing and Density]] under [[ADR-0002 Desktop densit
 |---|---|---|---|---|
 | default | 40 dp | 12 dp | 24 dp (`body_large`) | 8 dp |
 | compact | 32 dp | 8 dp | 20 dp (`body_medium`) | 6 dp |
-| dense | 28 dp | 8 dp | 20 dp (`body_medium`) | 4 dp |
+| dense | 28 dp | 8 dp | 18 dp (`body_dense`) | 5 dp |
 
 - Vertical centring is by construction: the input area's content box is the line box, and the container centres it (flex centring or equal computed padding). Authors do not tune top and bottom padding by hand. Rule: space above the line box equals space below to within 0.5 dp, at every density and at scale factors 1.0, 1.25 and 2.0 (see AC-TXF-1).
 - Minimum pointer target: 24 dp high and wide ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)), met by 28 dp at dense; 48 dp hit area in touch contexts.
@@ -127,7 +127,7 @@ Single-line outlined field unless the Part says filled. Vertical padding is `(he
 | active indicator | height | - | 1 | 1 | 1 | [Material Web filled text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-text-field.scss), 2 when focused (filled variant only) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | active indicator | border color | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | MD3 filled text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | container (filled) | corner radius | `shape.extra_small_top` | 4 4 0 0 | 4 4 0 0 | 4 4 0 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Tokens used section; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
 | container (floating label variant) | height | - | 56 | N/A: the floating label variant is not available at compact | N/A: the floating label variant is not available at dense | MD3 filled text field container height (Material Web `textfield` min-height 56 px), [[ADR-0023 Text Field label placement by density]] | tess-ui: yes (style height); tess-shell: n/a: the TextField block draws no floating label; tre: yes (height) |
 | external label | height | - | 16 | 16 | 16 | [[Typography]] (`body_small` line height), design choice, [[ADR-0023 Text Field label placement by density]] | tess-ui: yes (style height); tess-shell: n/a: the TextField block draws no label; tre: yes (height) |
 | external label | margin | `space.2` | 0 0 4 0 | 0 0 4 0 | 0 0 2 0 | design choice, [[ADR-0023 Text Field label placement by density]] (gap between the label and the container) #needs-verification-as-design-choice | tess-ui: yes (style margin); tess-shell: n/a: the TextField block draws no label; tre: yes (margin) |
@@ -257,7 +257,8 @@ Evidence: F5, F7 in [[Owner Feedback 2026-11-20]].
 | Deviation | Reason | ADR |
 |---|---|---|
 | Container height 40, 32, 28 dp instead of 56 dp (MD3 height from Material Web `textfield/demo` min-height 56 px and the label plus padding stack #needs-verification) | desktop density, config panels hold many fields | [[ADR-0002 Desktop density levels and target sizes]] |
-| Body text `body_medium` at compact and dense | 20 dp line box fits 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
+| Body text `body_medium` at compact, `body_dense` at dense | 20 dp and 18 dp line boxes fit 32 and 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Label may be external (above the field), and is the only placement at compact and dense | a floating label does not fit a 32 or 28 dp container; forms with aligned label column ([[Form Row]]) | [[ADR-0023 Text Field label placement by density]] |
 | Keyboard focus indicator is the 2 dp indicator or outline, no extra ring | MD3 text fields draw no separate ring | [[ADR-0009 State layer percentages]] |
 | Escape clears only in search fields | keyboard-first rule | [[ADR-0010 Document structure of the specifications]] (convention only) |

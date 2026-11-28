@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, selection, tesserae-specific, config-app]
 related: ["[[Button]]", "[[Icon Button]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[Text Field]]", "[[Menu]]", "[[Popup]]", "[[List]]", "[[List Item]]", "[[Form Row]]", "[[12 Overlays]]", "[[Existing Tokens]]"]
 depends_on: ["[[Button]]", "[[Text Field]]", "[[Popup]]", "[[List]]", "[[Colour Roles]]", "[[Shape]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -29,13 +29,13 @@ Lets a person point a setting at a token of the theme instead of typing a litera
 
 1. Field: an outlined container (1 dp `outline`) with the current value.
 2. Swatch (optional): 24 dp rounded square with a 1 dp `outline` border, shown when the held token is a colour the control knows.
-3. Value text: the token's ref, `body_large`; the placeholder ("Choose a token") in `on_surface_variant` while empty.
+3. Value text: the token's ref, `body_large` (`body_medium` at compact, `body_dense` at dense); the placeholder ("Choose a token") in `on_surface_variant` while empty.
 4. Chevron icon: 24 dp, `on_surface_variant`, turned over while the layer is open.
 5. Layer: a [[Popup]] anchored below the field, a `surface_container` surface, elevation level_2, with
    1. search field ([[Text Field]], label "Search tokens"),
    2. list of token rows (a virtual list, 7 rows visible by default),
    3. empty note when the search finds nothing.
-6. Row: swatch (32 dp) or none, name (`body_large`), a line under it with the group and the doc line (`body_small`, `on_surface_variant`), the value at the end (`label_medium`, `on_surface_variant`, at most 120 dp wide).
+6. Row: swatch (32 dp) or none, name (`body_large`; `body_medium` at compact, `body_dense` at dense), a line under it with the group and the doc line (`body_small`, `on_surface_variant`), the value at the end (`label_medium`, `on_surface_variant`, at most 120 dp wide).
 7. State layer and focus ring on the field ([[State Layers]], [[Focus Ring]]).
 
 ## Variants
@@ -104,7 +104,7 @@ The field follows [[Text Field]] heights; every other value is a design choice m
 | field, row, layer | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]]; tess-ui build, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | field swatch | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | row swatch | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]]; design choice, proposed ADR for token list row heights | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| field value text, row name | font | `body_large` | 16/24/400/0.5 | 16/24/400/0.5 | 16/24/400/0.5 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| field value text, row name | font | `body_large` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], [[Token Button]] Anatomy; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | row detail line | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | row value | font | `label_medium` | 12/16/500/0.5 | 12/16/500/0.5 | 12/16/500/0.5 | [[Typography]], [[Token Button]] Anatomy | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | field chevron | icon size | - | 24 | 24 | 24 | [[Token Button]] Anatomy, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
@@ -185,6 +185,7 @@ There is no MD3 token button; deviations are from the nearest patterns.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Field height 40, 32, 28 dp (outlined button and field are 40 and 56 in MD3) | desktop forms need rows per screen | [[ADR-0002 Desktop density levels and target sizes]] |
 | Rows 56, 48, 40 dp two-line (MD3 list row 56 for two lines, 48 in menus) | density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Layer corners 12 dp and a search field in a menu-like surface (MD3 menu: 4 dp, no search) | tess-ui build; the layer is a searchable list | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |

@@ -100,7 +100,7 @@ Values agree with Sizing and density above; the thickness, paddings and gaps are
 | item | min width | - | 40 | 32 | 28 | [[Icon Button]] (square container) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | item | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
 | item | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Icon Button]], [[Iconography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
-| item, labelled | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| item, labelled | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Button]], [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | group divider | height | - | 1 | 1 | 1 | [[Divider]] (vertical line, 1 dp wide) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | group divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Divider]] | tess-ui: yes (style background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
 
@@ -191,6 +191,7 @@ Docked, standard (not vibrant), horizontal, `surface_container`, density per con
 | Overflow always by menu, never scroll or wrap | no hidden or clipped command (chapter 10 rule 3) | none (chapter 10) |
 | Roving focus with Home, End and wrap; one Tab stop | WAI-ARIA toolbar, desktop keyboard-first | none |
 | Fade, not slide, to hide | engine has no scroll-linked slide | none (code limit) |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, list, keyboard, virtualisation]
 related: ["[[List Item]]", "[[Tree]]", "[[Scrollbar and Scroll Container]]", "[[Menu]]", "[[Spacing and Density]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[Deviations from MD3]]"]
 depends_on: ["[[List Item]]", "[[Scrollbar and Scroll Container]]"]
@@ -59,7 +59,7 @@ Row tokens are defined once in [[List Item]]; scrollbar tokens in [[Scrollbar an
 
 ## Sizing and density
 
-Density comes from the container or project ([[ADR-0002 Desktop density levels and target sizes]]); all rows of a list share it. Width 100 percent of the parent (the shell List defaults to 240 by 200 dp when no size is given). Height is set by the parent; a list taller than its parent is wrapped in a scroll container. A sticky section header has the single-line row height of the density and role `title_small` text in `on_surface_variant`.
+Density comes from the container or project ([[ADR-0002 Desktop density levels and target sizes]]); all rows of a list share it. Width 100 percent of the parent (the shell List defaults to 240 by 200 dp when no size is given). Height is set by the parent; a list taller than its parent is wrapped in a scroll container. A sticky section header has the single-line row height of the density and role `title_small` text (`title_dense` 13/18 at dense) in `on_surface_variant`.
 
 ## Dimensions and defaults
 
@@ -80,8 +80,8 @@ The list container sets no row size: rows carry the density values of [[List Ite
 | divider | border width | `md.comp.divider.thickness` | 1 | 1 | 1 | MD3 [divider tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-divider.scss) | tess-ui: yes (style border_width); tess-shell: yes (Border_Width); tre: yes (border_width) |
 | divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[List Item#Layout and overflow]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the container clips rows to its rectangle) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| section header | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
-| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| section header | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| empty-state text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | container | icon size | - | N/A: the list draws no icon of its own; leading and trailing icons belong to [[List Item]] | N/A: same as default | N/A: same as default | [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 
@@ -163,6 +163,7 @@ Evidence: F6 in [[Owner Feedback 2026-11-20]] and the shell Launcher list. The e
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Keyboard model from the WAI-ARIA listbox pattern; MD3 defines no list keyboard behaviour | desktop, keyboard first | [[ADR-0010 Document structure of the specifications]] |
 | Densities per [[List Item]] | desktop | [[ADR-0002 Desktop density levels and target sizes]] |
 | Scrollbar visible, no auto-hide | desktop | [[ADR-0003 Scrollbar rule]] |

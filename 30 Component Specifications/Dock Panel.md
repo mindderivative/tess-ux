@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, dock, tabs, drag-and-drop, keyboard]
 related: ["[[Dock]]", "[[Splitter]]", "[[Tabs]]", "[[Menu]]", "[[Icon Button]]", "[[Tooltip]]", "[[Drag and Drop]]", "[[Panel and Surface#Variants|Melded Panel]]", "[[Panel and Surface]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[Colour Roles]]", "[[Spacing and Density]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Dock]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]"]
@@ -65,7 +65,7 @@ Layers: [[ADR-0009 State layer percentages]], [[ADR-0013 Focus and pressed state
 |---|---|
 | Strip and tab container | `surface` |
 | Label active, inactive | `on_surface`, `on_surface_variant` |
-| Label type | `title_small` (14/20, weight 500) ([[Typography]]) |
+| Label type | `title_small` (14/20, weight 500); `title_dense` (13/18) at dense ([[Typography]]) |
 | Indicator | `primary`, 2 dp |
 | Divider | `surface_variant`, 1 dp |
 | Close glyph | `on_surface_variant` |
@@ -99,7 +99,7 @@ Layers: [[ADR-0009 State layer percentages]], [[ADR-0013 Focus and pressed state
 | Strip divider | border color | `surface_variant` | `surface_variant` | `surface_variant` | `surface_variant` | [[Dock Panel]] Tokens used, [[Colour Roles]] | tess-ui: via theme role surface_variant; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Active indicator | height | - | 2 | 2 | 2 | [[Dock Panel]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Tab | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; MD3 secondary tab has no container shape | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Label | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Dock Panel]] Tokens used, [[Typography]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Label | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Dock Panel]] Tokens used, [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Close button | min width | - | 24 | 24 | 24 | [[Dock Panel]] Sizing (hit area; 48 in a touch context) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Close button | min height | - | 24 | 24 | 24 | [[Dock Panel]] Sizing (hit area; 48 in a touch context) | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Close glyph | icon size | - | 14 | 14 | 14 | [[Dock Panel]] Sizing | tess-ui: no hook; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
@@ -194,6 +194,7 @@ All colours are role references; the tab, strip and highlight retint when the sc
 | Focus and pressed layers 10 percent, dragged 16 | Material Web latest state tokens | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Inward focus ring | the tab touches the strip edge | [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Close button on a tab, 24 dp hit area | desktop panels are dismissable; MD3 tabs have no close | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

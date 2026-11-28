@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, search]
 related: ["[[Text Field]]", "[[Icon Button]]", "[[List]]", "[[List Item]]", "[[Popup]]", "[[Menu]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Empty States|Empty State]]", "[[Active Descendant]]", "[[Launcher]]", "[[Applications Module]]", "[[Keyboard Navigation]]", "[[Validation]]", "[[Forms and Settings]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[State Layers]]", "[[Focus Ring]]", "[[Motion]]", "[[10 Layout Overflow and Scrolling]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Icon Button]]", "[[List]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -72,7 +72,7 @@ State layers come from [[State Layers]], focus from [[Focus Ring]]. Values below
 ## Tokens used
 
 - Colour: roles above ([[Colour Roles]]); no literal colour.
-- Type: input `body_large` at default density, `body_medium` at compact and dense; result count `label_small`; empty text and rows per [[List Item]] ([[Typography]]).
+- Type: input `body_large` at default density, `body_medium` at compact, `body_dense` at dense; result count `label_small`; empty text and rows per [[List Item]] ([[Typography]]).
 - Shape: bar `corner-full`; view panel 28 dp (`corner-extra-large`) ([[Shape]]).
 - Elevation: bar level 3 in tess-ui (the MD3 value could not be read, #needs-verification; a project may set level 0 and use an outline) ([[Elevation]]).
 - Spacing and density: [[Spacing and Density]].
@@ -85,7 +85,7 @@ The bar keeps the MD3 56 dp at default density because it is the primary entry o
 |---|---|---|---|---|---|---|
 | default | 56 dp | 48 dp | 24 dp | 4 dp left, 12 dp right | `body_large` | 40 dp |
 | compact | 40 dp | 32 dp | 20 dp | 4 dp | `body_medium` | 32 dp |
-| dense | 32 dp | 28 dp | 20 dp | 4 dp | `body_medium` | 24 dp |
+| dense | 32 dp | 28 dp | 20 dp | 4 dp | `body_dense` | 24 dp |
 
 - The default row matches tess-ui (56 dp bar, 48 dp buttons, 24 dp icons, padding 4 and 12). Compact and dense are Tesserae design choices #needs-verification-as-design-choice: bar height equals the icon button container plus 8 dp at compact and 4 dp at dense so the pill keeps a margin around its buttons.
 - Search field variant: the height of a single-line [[Text Field]] (40, 32, 28 dp).
@@ -109,7 +109,7 @@ Search bar at the three levels; the search field variant is a [[Text Field]] (ro
 | bar | border color | - | N/A: the bar draws no border | N/A: same as default | N/A: same as default | `tess-ui:src/tess_ui/views/SearchBar_Stylesheet.tdl` | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | bar | corner radius | `shape.full` | 28 | 20 | 16 | [[Shape]] (half the bar height) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | bar | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]], Tokens used section (MD3 value #needs-verification) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
-| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Sizing table | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| input | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Sizing table; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: yes (Font_Family, Font_Size, Font_Weight), no hook for Line_Height and letter spacing; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
 | leading, clear and trailing icon button | height | - | 48 | 32 | 28 | Sizing table, [[Icon Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | leading, clear and trailing icon button | min width | - | 48 | 32 | 28 | square container, [[Icon Button]] | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | leading, clear and trailing icon button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | Sizing table, [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
@@ -231,6 +231,7 @@ All colours are roles; the frosted variant mixes the container role at 72 percen
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Bar height 40 and 32 dp at compact and dense (MD3 56 dp) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Search field variant (a text field with role `searchbox`) beside the bar | filtering inside a dense panel needs no pill or elevation | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Down and Up move an active row while focus stays in the input; Escape steps through close, clear, deactivate | keyboard-first | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |

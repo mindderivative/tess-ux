@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, number]
 related: ["[[Text Field]]", "[[Icon Button]]", "[[Form Row]]", "[[Switch]]", "[[Tooltip]]", "[[Validation]]", "[[Forms and Settings]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Icon Button]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -64,7 +64,7 @@ State layers and focus come from [[State Layers]] and [[Focus Ring]]. Buttons ta
 ## Tokens used
 
 - Colour: roles as in the State table ([[Colour Roles]]); no literal colour.
-- Type: value `body_large` at default density, `body_medium` at compact and dense; label `label_medium`; supporting text `body_small` ([[Typography]]).
+- Type: value `body_large` at default density, `body_medium` at compact, `body_dense` at dense; label `label_medium`; supporting text `body_small` ([[Typography]]).
 - Shape: field corners 4 dp (`corner-extra-small`); buttons per [[Icon Button]] ([[Shape]]). The tess-ui field corner is 8 dp (`tess-ui:src/tess_ui/controls.py`, `SpinBox.__init__`); see Status in code.
 - Spacing and density: [[Spacing and Density]].
 
@@ -76,7 +76,7 @@ The control is as high as a single-line text field and the buttons are icon butt
 |---|---|---|---|---|---|---|---|
 | default | 40 dp | 40 dp | 24 dp | 64 dp | 12 dp | 4 dp | `body_large` |
 | compact | 32 dp | 32 dp | 20 dp | 56 dp | 8 dp | 4 dp | `body_medium` |
-| dense | 28 dp | 28 dp | 20 dp | 56 dp | 8 dp | 2 dp | `body_medium` |
+| dense | 28 dp | 28 dp | 20 dp | 56 dp | 8 dp | 2 dp | `body_dense` |
 
 - The tess-ui default field is 64 by 40 px and the buttons 40 px (`tess-ui:src/tess_ui/controls.py`: `BUTTON = 40.0`, `FIELD = (64.0, 40.0)`); the compact and dense field widths of 56 dp are Tesserae design choices #needs-verification-as-design-choice. The field grows with its content up to the parent; the minimum fits the longest value at the range limits (digits, sign, decimal separator, prefix, suffix) without ellipsis, and a project sets the width from that.
 - Hit area: every part at least 24 by 24 dp (met at all densities); 48 by 48 dp in a touch context ([[Spacing and Density]]).
@@ -100,7 +100,7 @@ The control is a row of decrease button, outlined number field and increase butt
 | number field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | number field | border color | `outline` | `outline` | `outline` | `outline` | MD3 outlined text field tokens, `primary` when focused, `error` in error | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | number field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section (tess-ui draws 8) | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| number field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Sizing table | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| number field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Sizing table; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
 | decrease and increase button | height | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], Sizing table | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | decrease and increase button | min width | `density.icon_button_container` | 40 | 32 | 28 | [[Icon Button]], square container | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | decrease and increase button | border width | - | 0 | 0 | 0 | [[Icon Button]], standard icon button has no border | tess-ui: no hook (built into SpinBox in controls.py, no style key reaches it); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
@@ -215,6 +215,7 @@ Evidence: `tess-ui:docs/components/spin-boxes.md`.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | The element exists although MD3 has no spin box | desktop settings need stepped numbers | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Heights 40, 32, 28 dp (MD3 text field 56 dp, icon button 40 dp) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | The step buttons are outside the Tab order, the field is one tab stop | keyboard-first forms: Up and Down already step | [[ADR-0002 Desktop density levels and target sizes]] (target sizes only; the tab-stop rule is a Tesserae convention) |

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, module, text]
 related: ["[[Text]]", "[[Text Box]]", "[[Marquee Text]]", "[[Text Field]]", "[[Form Row]]", "[[03 Typography and Text Rules#Truncation across components|Text Truncation]]", "[[State Layers#Disabled scheme|Disabled State]]", "[[Owner Feedback 2026-11-20]]", "[[14 Accessibility Basics#Announcements and live regions|Accessibility Announcements]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0011 Tooltip hover grace for all tooltips]]"]
@@ -55,14 +55,14 @@ Colour role `on_surface` (default stylesheet `Text` rule); type: the shell `body
 
 | Measure | default | compact | dense | Note |
 |---|---|---|---|---|
-| Line box height | 20 | 20 | 20 | `body_medium`; type does not scale with density |
+| Line box height | 20 | 20 | 18 | `body_medium`; `body_dense` at dense |
 | Minimum hit area | Not applicable: not a target |  |  | a standalone Label with a tooltip needs a 24 dp high box |
 
 ## Dimensions and defaults
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| text | height | `body_medium` | 20 | 20 | 20 | [[Label]] (Sizing, line box); type does not scale with density | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
+| text | height | `body_medium` | 20 | 20 | 18 | [[Label]] (Sizing, line box); [[ADR-0029 Desktop density and type scale]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Height); tre: n/a: element absent in tre |
 | text | min height | - | N/A: a Label is not a target; a Label with a tooltip needs a 24 dp high box from its parent | N/A: same as the default column | N/A: as in Default | [[Label]] (Sizing), WCAG 2.2 SC 2.5.8 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Height); tre: n/a: element absent in tre |
 | text | min width | - | 0 | 0 | 0 | [[Label]] (Layout: `Min_Width 0` in a flex row so it can shrink) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Min_Width); tre: n/a: element absent in tre |
 | text | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]]; code sets none | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Padding); tre: n/a: element absent in tre |
@@ -71,7 +71,7 @@ Colour role `on_surface` (default stylesheet `Text` rule); type: the shell `body
 | text | border width | - | 0 | 0 | 0 | [[Label]] (Tokens used: no shape) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Width); tre: n/a: element absent in tre |
 | text | border color | - | N/A: the Label draws no border | N/A: same as the default column | N/A: as in Default | [[Label]] (Tokens used) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Border_Color); tre: n/a: element absent in tre |
 | text | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]]; no container | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Corner_Radius); tre: n/a: element absent in tre |
-| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; code shell `body` 14/400/20 | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
+| text | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]]; code shell `body` 14/400/20; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: n/a: element absent in tre |
 | text | icon size | - | N/A: the Label draws text only | N/A: same as the default column | N/A: as in Default | [[Iconography]] | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Width, Height of the SVG block); tre: n/a: element absent in tre |
 | text | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [[Label]] (no elevation) | tess-ui: n/a: element absent in tess-ui; tess-shell: yes (Elevation percentage); tre: n/a: element absent in tre |
 
@@ -118,7 +118,7 @@ Text takes `on_surface` through the Default stylesheet and follows the theme mod
 - [ ] AC-MOD-LBL-1 (AT tree assertion): a Label with text `Volume` exposes name `Volume`; a slot change to `Mute` changes the name within one loop turn without creating a node.
 - [ ] AC-MOD-LBL-2 (pixel check): a Label with a text wider than its `Width` ends with `…` inside the box and paints nothing past the box edge.
 - [ ] AC-MOD-LBL-3 (static check): no project stylesheet sets a Label `Overflow` to `CLIP` for a text that can exceed its box.
-- [ ] AC-MOD-LBL-4 (geometry check): the Label's line box is 20 dp high with `body_medium` and is centred in a 40, 32 or 28 dp row within 1 px.
+- [ ] AC-MOD-LBL-4 (geometry check): the Label's line box is 20 dp high with `body_medium` (18 dp with `body_dense` at dense) and is centred in a 40, 32 or 28 dp row within 1 px.
 - [ ] AC-MOD-LBL-5 (contrast script): Label text against the surface at least 4.5:1 in Light, Dark and High_Contrast.
 - [ ] AC-MOD-LBL-6 (scripted input): a Label inside a row is never focusable and receives no key.
 - [ ] AC-MOD-LBL-7 (scripted input): a Label with a tooltip shows exactly 1 layer after 500 ms and none from its row.
@@ -139,6 +139,7 @@ Text takes `on_surface` through the Default stylesheet and follows the theme mod
 |---|---|---|
 | Single-line read-only text; no MD3 component named Label | MD3 has type roles, not a Label component | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Ellipsis by default | silent clipping is a defect (F5) | [[ADR-0002 Desktop density levels and target sizes]] |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 

@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, overlay, menu, keyboard]
 related: ["[[12 Overlays]]", "[[Popup]]", "[[Tooltip]]", "[[List Item]]", "[[Icon Button]]", "[[Button]]", "[[Scrollbar and Scroll Container]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Colour Roles]]", "[[Elevation]]", "[[Shape]]", "[[Typography]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0009 State layer percentages]]"]
@@ -61,7 +61,7 @@ Pointer hover and keyboard highlight share one highlighted item: moving the poin
 | Container colour | `surface_container` |
 | Shape | `extra_small` (4 dp) |
 | Elevation | level 2 (3 dp in MD3 numbers); shadow colour `shadow` |
-| Label | `on_surface`, `label_large` (14/20) |
+| Label | `on_surface`, `label_large` (14/20; `title_dense` 13/18 at dense) |
 | Icons | `on_surface_variant`, trailing submenu indicator `on_surface_variant` |
 | Divider | `surface_variant` (token `md.comp.menu.divider.color`) |
 | Selected item | container `secondary_container`, content `on_secondary_container` |
@@ -106,7 +106,7 @@ Values agree with Sizing and density above. Compact and dense paddings and the d
 | item | margin | - | N/A: the item fills the container width; the container padding sets the outer space | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
 | item | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
 | item | corner radius | `shape.none` | 0 | 0 | 0 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu-item.scss | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| item | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| item | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | item | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 | divider | height | - | 1 | 1 | 1 | https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-menu.scss | tess-ui: yes (style height); tess-shell: yes (Height); tre: yes (height) |
@@ -199,6 +199,7 @@ All roles come from the scheme ([[Theme Following the System]]); state layers us
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Item height 40 / 32 / 28 dp (MD3: 48 dp) | Desktop density with a 24 dp minimum target; 48 dp kept for touch | [[ADR-0002 Desktop density levels and target sizes]] |
 | State layers 8, 10, 10 percent on items | Same as MD3; the shell has none yet (gap, not a promise) | [[ADR-0009 State layer percentages]] |
 | Tab closes the menu | WAI-ARIA Authoring Practices menu pattern; Material Web closes on focusout | [[Deviations from MD3]] |

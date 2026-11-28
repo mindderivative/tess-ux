@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, input, time]
 related: ["[[Time Picker]]", "[[Text Field]]", "[[Spin Box]]", "[[Segmented Button]]", "[[Dialog]]", "[[Form Row]]", "[[Validation]]", "[[Forms and Settings]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Text Field]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -39,7 +39,7 @@ The user enters a time of day by typing two numbers. The control keeps hour and 
 | Variant | Use | Differences |
 |---|---|---|
 | Picker (MD3 input mode) | inside the [[Time Picker]] dialog | numerals in `display_medium` (45 on 52 dp), fields 96 dp wide and 72 dp high (tess-ui Python `time_input_field`: 96 by 72 px; MD3 value #needs-verification), visible "Hour" and "Minute" supporting labels |
-| Inline | settings rows, forms, toolbars | fields at the control height of the density level, numerals `body_large` or `body_medium`, no visible field labels |
+| Inline | settings rows, forms, toolbars | fields at the control height of the density level, numerals `body_large`, `body_medium` or `body_dense`, no visible field labels |
 | 12-hour | locales with AM and PM | hour 1 to 12 plus the period selector |
 | 24-hour | the rest | hour 0 to 23, no period selector |
 
@@ -61,7 +61,7 @@ Field states are those of the outlined [[Text Field]]; the period selector takes
 ## Tokens used
 
 - Colour: roles as above ([[Colour Roles]]).
-- Type: picker numerals `display_medium` (45 on 52 dp); inline numerals `body_large` at default, `body_medium` at compact and dense; colon in the type role of the numerals ([[Typography]]).
+- Type: picker numerals `display_medium` (45 on 52 dp); inline numerals `body_large` at default, `body_medium` at compact, `body_dense` at dense; colon in the type role of the numerals ([[Typography]]).
 - Shape: field corners 4 dp; period selector 8 dp (picker, MD3 value #needs-verification) or `corner-full` segments per [[Segmented Button]] ([[Shape]]).
 - Spacing and density: [[Spacing and Density]].
 
@@ -71,7 +71,7 @@ Field states are those of the outlined [[Text Field]]; the period selector takes
 |---|---|---|---|---|---|---|
 | default | 40 dp | 48 dp | 12 dp | `body_large` | 4 dp | 40 dp |
 | compact | 32 dp | 40 dp | 8 dp | `body_medium` | 4 dp | 32 dp |
-| dense | 28 dp | 40 dp | 8 dp | `body_medium` | 2 dp | 28 dp |
+| dense | 28 dp | 40 dp | 8 dp | `body_dense` | 2 dp | 28 dp |
 
 - The picker variant keeps the MD3 sizes at every density: 96 by 72 dp fields, 12 dp gap in tess-ui (`tess-ui:src/tess_ui/views/TimeInput_View.tdl`: field width 96, Gap 12). The picker lives in a [[Dialog]] where touch use is likely.
 - Inline field width fits two digits plus padding: two digits of `body_large` take about 18 dp, so 48 dp at default; the widths 48, 40, 40 dp are Tesserae design choices #needs-verification-as-design-choice.
@@ -91,7 +91,7 @@ Inline variant values from the Sizing table; the picker variant keeps its own fi
 | hour and minute field | border width | - | 1 | 1 | 1 | [Material Web outlined text field tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-outlined-text-field.scss), 2 when focused | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | hour and minute field | border color | `outline` | `outline` | `outline` | `outline` | MD3 outlined text field tokens, `primary` when focused, `error` in error | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | hour and minute field | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Shape]], Tokens used section | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| hour and minute field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
+| hour and minute field | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], Tokens used section; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
 | hour and minute field (picker) | height | - | 72 | 72 | 72 | Variants table, `tess-ui:src/tess_ui/views/TimeInput_View.tdl`, MD3 value #needs-verification | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | hour and minute field (picker) | min width | - | 96 | 96 | 96 | Sizing section, `tess-ui:src/tess_ui/views/TimeInput_View.tdl` | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | hour and minute field (picker) | font | `display_medium` | 45/52/400/0 | 45/52/400/0 | 45/52/400/0 | [[Typography]], Tokens used section | tess-ui: via type role in the theme (family, size, weight), no hook for line height and tracking; tess-shell: n/a: element absent in tess-shell; tre: yes (font_family, font_size, font_weight), hardcoded in tre (text_input takes no line_height or letter_spacing) |
@@ -99,7 +99,7 @@ Inline variant values from the Sizing table; the picker variant keeps its own fi
 | row (picker) | gap | `space.4` | 12 | 12 | 12 | `tess-ui:src/tess_ui/views/TimeInput_View.tdl` (Gap 12), Sizing section | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
 | row | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | [[Spacing and Density]], the parts carry their own padding | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | row | margin | - | N/A: the parent container or Form Row sets the outer space | N/A: same as default | N/A: same as default | [[Spacing and Density]], [[Form Row]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
-| colon | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]], the colon takes the role of the numerals | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| colon | font | `body_large` / `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]], the colon takes the role of the numerals; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | period selector | height | `density.control_height` | 40 | 32 | 28 | Sizing table, [[Segmented Button]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | period selector | border width | - | 1 | 1 | 1 | [[Segmented Button]], States table (outline `outline`) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | period selector | border color | `outline` | `outline` | `outline` | `outline` | States table, [[Segmented Button]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
@@ -205,6 +205,7 @@ Evidence: `tess-ui:docs/components/time-input.md`.
 
 | Deviation | Reason | ADR |
 |---|---|---|
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 | Inline variant with fields 40, 32, 28 dp high instead of the 72 dp picker field | desktop forms hold many rows | [[ADR-0002 Desktop density levels and target sizes]] |
 | Up, Down stepping, A and P keys, auto-advance and colon hand-over in the fields | keyboard-first entry | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Fields exposed as `spinbutton` | each field has a numeric range | [[ADR-0001 MD3 role names are the specification vocabulary]] |

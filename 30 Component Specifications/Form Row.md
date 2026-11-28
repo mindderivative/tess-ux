@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, form, settings, owner-feedback]
 related: ["[[Text Field]]", "[[Switch]]", "[[Icon Button]]", "[[Button]]", "[[Tooltip]]", "[[Accordion]]", "[[Scrollbar and Scroll Container]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[State Layers]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Owner Feedback 2026-11-20]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0004 Tooltip rule]]", "[[ADR-0002 Desktop density levels and target sizes]]"]
@@ -103,7 +103,7 @@ Control height, row padding, icon button container and text-field padding are th
 | row | border width | - | N/A: the row draws no border; each control draws its own ([[Text Field]]) | N/A: same as default | N/A: same as default | [[Form Row#Anatomy]] | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | control (invalid) | border color | `error` | `error` | `error` | `error` | [[Form Row#States]] (the control outline turns `error`) | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | row | corner radius | - | N/A: the row has no fill or outline; corners belong to the controls ([[Text Field]], [[Button]]) | N/A: same as default | N/A: same as default | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 13/18/400/0.25 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | marker lines, column caption | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | help line, error line | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | reset button | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
@@ -192,6 +192,7 @@ Evidence: F6, F7, F8 and the config-app demo in [[Owner Feedback 2026-11-20]]; t
 | A settings row pattern that MD3 lacks | configuration tools are lists of named values | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Label beside the control, not a floating or in-field label | scan by label column, fixed grid | [[ADR-0002 Desktop density levels and target sizes]] |
 | Persistent reset button | defaults matter in config files | none; design choice |
+| Compact and dense text follow the desktop type scale (body_medium 14/20, body_dense 13/18; title_dense for labels) | Desktop density: text must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 
