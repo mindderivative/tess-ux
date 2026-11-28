@@ -72,7 +72,7 @@ The pointer highlight and the keyboard active row are one: moving the pointer on
 
 | Measure | default | compact | dense |
 |---|---|---|---|
-| Field height | 40 | 32 | 28 |
+| Field height | 40 (56 with a floating label) | 32 | 28 |
 | Option row height (label only) | 40 | 32 | 28 |
 | Row with hint | 56 | 48 | 40 |
 | Visible rows before the list scrolls | 8 | 8 | 8 |
@@ -86,7 +86,7 @@ Values come from [[Text Field]] and [[Menu]]; the rows and the hint rows are Tes
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| field | height | `density.control_height` | 40 | 32 | 28 | [[Spacing and Density]], [[Text Field]] | tess-ui: n/a: component absent, a new view; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| field | height | `density.control_height` | 40 (56 with a floating label) | 32 | 28 | [[Spacing and Density]], [[Text Field]] (the floating label variant is 56 dp at default density only) | tess-ui: n/a: component absent, a new view; tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | field | padding | `density.field_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 8 0 8 | [[Spacing and Density]] | tess-ui: n/a: component absent, a new view; tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | field | margin | - | N/A: the form row places the field | N/A: as in Default | N/A: as in Default | [[Form Row]] | tess-ui: n/a: component absent, a new view; tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
 | field | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (text to chevron and clear button) | tess-ui: n/a: component absent, a new view; tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
@@ -163,7 +163,7 @@ Strict, no inline completion, no chevron at dense, open on typing and on Down, 8
 
 ## Acceptance criteria
 
-- [ ] AC-ACP-1 (geometry check, density): at default, compact and dense the field is 40, 32 and 28 dp high, a label-only row 40, 32 and 28 dp, a row with a hint 56, 48 and 40 dp; the text roles are `body_large`, `body_medium` and `body_dense`. Pass: bounds and roles equal at scale 1.0 and 2.0.
+- [ ] AC-ACP-1 (geometry check, density): the field is as high as the [[Text Field]]: 56 dp at default density with a floating label, 40 dp at default with an external label or none, 32 dp at compact and 28 dp at dense; a label-only row is 40, 32 and 28 dp, a row with a hint 56, 48 and 40 dp; the text roles are `body_large`, `body_medium` and `body_dense`. Pass: bounds and roles equal at scale 1.0 and 2.0.
 - [ ] AC-ACP-2 (scripted input, filter): with the options Apple, Avocado, Banana, typing "a" shows Apple, Avocado and Banana (contains), "av" shows Avocado, "zzz" shows "No matches"; the list updates in the frame of the keystroke and the matched letters are weight 500. Pass: rows after each key equal.
 - [ ] AC-ACP-3 (scripted input, arrows): Down on a closed field opens the list with the first enabled row active (the selected row when there is one); Down moves to the next row and stops at the last; Up from the first row makes the active row none; disabled rows are skipped; Home and End move the caret and leave the active row. Pass: active row after each key equal.
 - [ ] AC-ACP-4 (scripted input, pick): Enter on an active row writes its label into the field, calls the change handler once, closes the list and leaves focus in the field; a press on a row does the same. Pass: value, call count, layer count, focus owner equal.
@@ -183,7 +183,7 @@ Strict, no inline completion, no chevron at dense, open on typing and on Down, 8
 
 | Project | Path | Status |
 |---|---|---|
-| tess-ui | none (text search of `src`, `apps` and `docs` on `origin/main` finds the role name `combobox` in `tess-ui:src/tess_ui/a11y.py` and no component); the config app opens its token, font and icon pickers and its Role and Move choices as dialogs or lists | absent. Read at `origin/main`, nothing run |
+| tess-ui | none (text search of `src`, `apps` and `docs` on `origin/main` finds the role name `combobox` in `tess-ui:src/tess_ui/a11y.py` and no component); the config app opens its token, font and icon pickers and its Role and Move choices as dialogs or lists | absent. Read at `origin/main`, nothing run. When the component lands: that Escape is consumed only when it changed something is model-only until the engine can consume keys (the tess-ui `KNOWN_GAPS` entry); the rest of AC-ACP-7 holds |
 | tess-shell | none | absent; the shell launcher's search list is the nearest ([[Search]], [[Launcher]]) |
 | tre | `tre:docs/reference/node.md` (role list), `tre:LOG.md` (TRE-REQ-023) | the role `combobox` is in the 0.6.11 role list; a settable `active_descendant` exists. Missing, not requested yet: nothing known; a screen reader check of the active descendant is open ([[Active Descendant]]) |
 
