@@ -4,7 +4,7 @@ type: register
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-22
+updated: 2026-11-27
 tags: [register, md3]
 related: ["[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[10 UX Design Specification]]"]
 depends_on: []
@@ -1246,5 +1246,17 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Summary plus inline for several errors | MD3 shows per-field text only | none; design choice |
 | Message states the allowed range | WCAG 2.2 SC 3.3.3 Error Suggestion | none |
 | Error line below the control column of a [[Form Row]] | label beside the control layout | [[ADR-0002 Desktop density levels and target sizes]] |
+
+## [[Config App Layout]]
+
+| Deviation | Reason | ADR |
+|---|---|---|
+| Element added that MD3 lacks | a tool window layout for a configuration application | [[ADR-0001 MD3 role names are the specification vocabulary]] |
+
+## [[Preview Pane]]
+
+| Deviation | Reason | ADR |
+|---|---|---|
+| Element added that MD3 lacks | a live picture of edited data | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 Back to [[10 UX Design Specification]].
