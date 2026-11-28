@@ -54,7 +54,7 @@ A density level sets the sizes below as one set. Levels are `default`, `compact`
 | Tree row, single line | 40 | 32 | 24 | no MD3 counterpart | MD3 has no tree; the row follows the list row |
 | Menu item | 40 | 32 | 28 | 48 (`$list-item-container-height` in `_md-comp-menu-item.scss`, Material Web) | desktop menus are dense; 28 dp keeps pointer targets above 24 dp |
 | Icon button container | 40 | 32 | 28 | 40 (`md.comp.icon-button.container.height`) | same reason as button |
-| Icon button icon size | 24 | 20 | 20 | 24 (`md.comp.icon-button.icon.size`) | at compact and dense the container shrinks by 8 to 12 dp and the 20 dp icon keeps 6 dp of margin |
+| Icon button icon size | 24 | 20 | 18 | 24 (`md.comp.icon-button.icon.size`) | at compact and dense the container shrinks by 8 to 12 dp; the 20 and 18 dp icons keep 6 and 5 dp of margin ([[ADR-0029 Desktop density and type scale]]) |
 
 Single-line text sits in the row with vertical centring by construction: the text line box (the line height of the [[Typography]] role, 20 dp for `body-medium`) is centred in the control height at every density, so the padding above and below differs by at most 1 px (see [[10 Layout Overflow and Scrolling]]).
 
@@ -89,11 +89,11 @@ Sources: WCAG 2.2 SC 2.5.8 Target Size (Minimum), Level AA: the target for point
 - In a touch context the hit area is at least 48 by 48 dp. A touch context is a window or container whose primary input is touch, set by the project. The level stays `default`; only hit areas grow, not painted sizes (a 40 dp button gets a 48 dp hit area).
 - Adjacent hit areas do not overlap. Two targets closer than their hit areas allow are separated by `space.1` (2 dp) at least only when each has a 24 dp hit area.
 - Chevron hit area in a tree: 24 dp wide and the full row height, extending into the row padding and the icon-to-label gap. At dense that is 4 dp padding + 16 dp box + 4 dp gap = 24 dp; the dense row height is 24 dp, which meets the minimum exactly.
-- Painted icon at compact and dense (20 dp) sits in a container of 32 or 28 dp; the container is the hit area.
+- Painted icon at compact (20 dp) and dense (18 dp) sits in a container of 32 or 28 dp; the container is the hit area.
 
 ## Density is a property of every element
 
-Density is not set only per project or per container: every element has an optional `Density` property with the values `default`, `compact` and `dense`; empty means inherit ([[ADR-0029 Desktop density and type scale]], owner direction 2026-11-28). The sizes of an element come from the first of these that applies, in this order:
+Density is not set only per project or per container: every element has an optional `Density` property with the values `default`, `compact` and `dense`; empty means the element does not set one and takes the density of its nearest ancestor, else the application density ([[ADR-0029 Desktop density and type scale]], owner direction 2026-11-28). Note the words: `default` is the roomy touch level of the three, while the application density of a desktop project is normally `compact`; an empty value never means `default`, it means "the application density". The sizes of an element come from the first of these that applies, in this order:
 
 1. An explicit number set on the element itself (a height, width, padding, gap, row height, font size or track size): it always wins, for that one property, over every density.
 2. The element's own `Density`.
@@ -103,7 +103,7 @@ Density is not set only per project or per container: every element has an optio
 Rules:
 
 - A density sets the whole set of sizes of its level (rule 2 of [[07 Spacing and Density Rules]]); an explicit number replaces only its own property. The other properties of that element still follow the resolved density, so a Button with an explicit `Height` keeps its density padding and text role.
-- The cascade runs through the tree of elements, not the order of drawing: a popup or a menu opened from a `dense` pane takes the density of the element that owns the layer, not of the application.
+- An overlay (a popup, a menu, a tooltip, a dialog) takes the density of the element that opened it, its opener, as if it were a child of the opener; it takes its own `Density` if it sets one, and an explicit number still wins. The cascade follows the tree of openers and elements, not the order of drawing, so a menu opened from a `dense` pane is `dense`, not the application density. Known deviation: tess-shell Popups use the application density today (Deviations table).
 - The property names are the specification vocabulary ([[ADR-0001 MD3 role names are the specification vocabulary]]); a project maps `Density` to its own key. The rule is toolkit-agnostic: the toolkit resolves it, a stylesheet or TDL file only names the value.
 - Mixed levels inside one list, tree, form or toolbar stay discouraged ([[07 Spacing and Density Rules]] rule 4); an explicit `Density` on a single element is for the case where the element must differ (a touch-sized primary action in a dense form).
 
@@ -130,7 +130,7 @@ A boundary value belongs to the larger class (width 600 is `medium`). Density is
 | `density.row_height` | 40, 32, 24 |
 | `density.menu_item_height` | 40, 32, 28 |
 | `density.icon_button_container` | 40, 32, 28 |
-| `density.icon_button_icon` | 24, 20, 20 |
+| `density.icon_button_icon` | 24, 20, 18 |
 | `density.switch_track_w` | 52, 40, 36 ([[ADR-0029 Desktop density and type scale]]) |
 | `density.switch_track_h` | 32, 24, 20 |
 | `density.tab_height` | 48, 32, 28 |
@@ -167,6 +167,7 @@ Evidence: [[Owner Feedback 2026-11-20]] F3, F4, F7.
 | Menu item 40 dp at default (Material Web 48 px) | same | [[ADR-0002 Desktop density levels and target sizes]] |
 | Row padding 12, 8, 4 (MD3 16) and icon gap 8, 8, 4 (MD3 16) | narrow side panels | [[ADR-0002 Desktop density levels and target sizes]] |
 | Project deviation, declared 2026-11-21: tess-ui toolkit default density is the legacy Material sizing (for example 56 px tree rows) until an App asks for a level; the spec level `default` (40 dp rows) applies when an App asks `density='default'`; the config app asks `compact` | migration without a visual change to existing apps | [[ADR-0002 Desktop density levels and target sizes]]; review: make `default` the toolkit default in a later major version once the apps are migrated ([[Adoption tess-ui]], TUI-002 to TUI-006) |
+| Known deviation (tess-shell, 2026-11-28): a Popup is its own surface and takes the shell's application density, not the density of its opener; tess-shell is evaluating the cost of passing the opener's density to the surface | the spec rule is that an overlay takes the density of the element that opened it (rule below); the shell cannot do it today | [[ADR-0029 Desktop density and type scale]]; review: close when the shell Popup resolves its opener's density ([[Adoption tess-shell]]) |
 | Spacing token set with a 2 dp half step | the shell already ships a 2 dp step; focus ring offset is 2 dp | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 ## Acceptance criteria
@@ -182,7 +183,7 @@ Evidence: [[Owner Feedback 2026-11-20]] F3, F4, F7.
 - [ ] AC-DEN-9 (geometry check): in a Text Field and any single-line control, the line box of the text is centred in the control height: the space above differs from the space below by at most 1 px at each level (also AC-LAY-2).
 - [ ] AC-DEN-10 (token test): `width_class(w)` returns compact for 0 to 599, medium for 600 to 839, expanded for 840 to 1199, large for 1200 to 1599 and extra-large for 1600 and up; `height_class(h)` returns compact for 0 to 479, medium for 480 to 899 and expanded for 900 and up.
 - [ ] AC-DEN-11 (review): a density level is declared once per project and per container in a project ADR or a container property. A size, padding, row height, font size or track size that is a literal in a stylesheet is an explicit override of one element (rule 1 of [[#Density is a property of every element]]), not a density value; a reviewer lists each literal and its reason, and finds none where the density token would do.
-- [ ] AC-DEN-12 (geometry check, density property): in a window whose application density is `compact`: (a) a Button with no `Density` and no size is 32 dp high; (b) the same Button with an explicit `Height` of 48 is 48 dp high (the hard number wins); (c) a pane with `Density: dense` lays out its descendants at the `dense` sizes (a Button 28 dp, a Switch track 36 by 20, text role `body_dense`) and a Button outside it stays 32 dp; (d) inside that pane a Button with `Density: default` is 40 dp high (the element's own density beats the ancestor's), while its siblings stay 28 dp; (e) an element with an empty `Density` inherits from the nearest ancestor that sets one, else from the application. Pass: the dp values equal in each case.
+- [ ] AC-DEN-12 (geometry check, density property): in a window whose application density is `compact`: (a) a Button with no `Density` and no size is 32 dp high; (b) the same Button with an explicit `Height` of 48 is 48 dp high (the hard number wins); (c) a pane with `Density: dense` lays out its descendants at the `dense` sizes (a Button 28 dp, a Switch track 36 by 20, text role `body_dense`) and a Button outside it stays 32 dp; (d) inside that pane a Button with `Density: default` is 40 dp high (the element's own density beats the ancestor's), while its siblings stay 28 dp; (e) an element with an empty `Density` takes the density of the nearest ancestor that sets one, else the application density; (f) a popup or menu opened by a Button inside the `dense` pane lays out at the `dense` sizes (the density of its opener), one opened by a Button outside it at `compact`, and a popup with its own `Density: default` at 40 dp rows whatever its opener. Pass: the dp values equal in each case.
 
 ## Sources
 

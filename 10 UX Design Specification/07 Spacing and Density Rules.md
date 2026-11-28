@@ -40,7 +40,7 @@ How a level is chosen:
 
 ## Hit area and painted size
 
-- Painted size and hit area are separate. A 16 dp chevron at the `dense` level has a hit area 24 dp wide and as high as the row; a 20 dp icon sits in a 28 dp button whose hit area is the whole container.
+- Painted size and hit area are separate. A 16 dp chevron at the `dense` level has a hit area 24 dp wide and as high as the row; an 18 dp icon sits in a 28 dp button whose hit area is the whole container.
 - The hit area grows into padding and gaps, never into a neighbour's hit area.
 - Gaps between targets are the spacing steps. Targets whose hit areas are smaller than 24 dp need a spacing exception from WCAG 2.2 SC 2.5.8 (a 24 dp circle on each does not overlap another target); the spec avoids exceptions by making every hit area at least 24 dp.
 - The painted size never exceeds the hit area.

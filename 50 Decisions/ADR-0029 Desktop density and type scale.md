@@ -1,7 +1,7 @@
 ---
 title: ADR-0029 Desktop density and type scale
 type: adr
-status: proposed
+status: accepted
 owner: phil
 created: 2026-11-28
 updated: 2026-11-28
@@ -13,7 +13,7 @@ depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]"]
 # ADR-0029 Desktop density and type scale
 
 > [!important] Status
-> `proposed`. Amends [[ADR-0002 Desktop density levels and target sizes]]. The owner decided the substance on 2026-11-28 (config app feedback, scale option A, a desktop Switch track: yes); this record writes it down and waits for `bot:Orchestrator` to accept it under the owner's delegation. Raised by the owner's feedback on the config app: buttons, switches and dropdowns are too big and do not match the text or the input box; the text in Files and Structure is too large; the specifications read as if for mobile, not desktop.
+> `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-28 (the owner decided scale A, the desktop Switch track and density on every element). The owner can overturn it. Amends [[ADR-0002 Desktop density levels and target sizes]]. Raised by the owner's feedback on the config app: buttons, switches and dropdowns are too big and do not match the text or the input box; the text in Files and Structure is too large; the specifications read as if for mobile, not desktop.
 
 ## Context
 
@@ -70,7 +70,7 @@ The hit row of a Switch, Checkbox and Radio stays 40, 32 and 28 dp: the painted 
 
 **Config app** ([[Config App Layout]]): the application level is `compact`; the Files and Structure panels are `dense` (a region of its own, [[07 Spacing and Density Rules]] rule 4). The config app's project ADR records it.
 
-**Density on every element** (owner direction, 2026-11-28): every element has an optional `Density` property (`default`, `compact`, `dense`; empty inherits). The order of resolution is: an explicit number on the element (size, padding, row height, font size, track size) first, then the element's own `Density`, then the nearest ancestor's `Density` (it cascades), then the application density. The rule and AC-DEN-12 are in [[Spacing and Density]]; it is toolkit-agnostic (tess-ui implements; a TDL file names the value).
+**Density on every element** (owner direction, 2026-11-28): every element has an optional `Density` property (`default`, `compact`, `dense`; empty means the nearest ancestor's, else the application density; `default` is the roomy touch level, not "inherit"). The order of resolution is: an explicit number on the element (size, padding, row height, font size, track size) first, then the element's own `Density`, then the nearest ancestor's `Density` (it cascades), then the application density. An overlay (popup, menu, tooltip, dialog) takes the density of its opener unless it sets its own. The rule and AC-DEN-12 are in [[Spacing and Density]]; it is toolkit-agnostic (tess-ui implements; a TDL file names the value). Known deviation: tess-shell Popups use the application density today.
 
 ## Consequences
 

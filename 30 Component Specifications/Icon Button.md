@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, action, owner-feedback]
 related: ["[[Owner Feedback 2026-11-20]]", "[[Button]]", "[[Tooltip]]", "[[Text Field]]", "[[Form Row]]", "[[Iconography]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0007 Icon set and Material Symbols deviation]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[Colour Roles]]", "[[Iconography]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Tooltip]]"]
@@ -27,7 +27,7 @@ An action or a toggle that a glyph names well enough, in toolbars, form rows (re
 ## Anatomy
 
 1. Container: a circle (round) or rounded square, 40 dp at default; absent for the standard variant (the state layer shows the 40 dp shape).
-2. Icon: 24 dp at default, 20 dp at compact and dense ([[Iconography]]).
+2. Icon: 24 dp at default, 20 dp at compact and 18 dp at dense ([[Iconography]]).
 3. State layer: same shape as the container ([[State Layers]]).
 4. Hit area: the container, extended to 48 dp in touch contexts.
 5. Focus ring: around the container, keyboard focus only ([[Focus Ring]]).
@@ -71,7 +71,7 @@ Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]], [[Spa
 |---|---|---|---|---|
 | default | 40 dp | 24 dp | 40 dp (at least 24 dp) | 48 dp |
 | compact | 32 dp | 20 dp | 32 dp (at least 24 dp) | 48 dp |
-| dense | 28 dp | 20 dp | 28 dp (at least 24 dp) | 48 dp |
+| dense | 28 dp | 18 dp | 28 dp (at least 24 dp) | 48 dp |
 
 - Pointer target never falls below 24 dp by 24 dp ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)).
 - In touch contexts the hit area extends to 48 dp beyond the container (centred, transparent), and must not overlap another control's hit area; where neighbours are closer than 48 dp the hit areas split the gap at the midpoint.
@@ -98,7 +98,7 @@ Values agree with the Sizing table above. The padding is the margin around the i
 | container (round form) | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | container (square form) | corner radius | `shape.medium` | 12 | 12 | 12 | [[Shape]], Expressive adoption, [[ADR-0006 MD3 baseline with named Expressive adoptions]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | container | font | - | N/A: the icon button shows no text; the label is only the name and tooltip | N/A: the icon button shows no text; the label is only the name and tooltip | N/A: the icon button shows no text; the label is only the name and tooltip | [[Icon Button]] Anatomy | tess-ui: n/a: the element shows no text; tess-shell: n/a: the element shows no text; tre: n/a: the element shows no text |
-| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Spacing and Density]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Spacing and Density]], [[Iconography]], [[ADR-0029 Desktop density and type scale]] (dense 20 to 18) | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | container | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]]; the icon button tokens define no elevation | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 | focus ring | border width | - | 3 | 3 | 3 | [[Focus Ring]] | tess-ui: no hook; tess-shell: via Shadows (spread and offset of the block shadow ring); tre: n/a: tre draws no focus ring |
 | focus ring | border color | `secondary` | `secondary` | `secondary` | `secondary` | [[Focus Ring]] | tess-ui: via App(focus_ring=) ring colour argument; tess-shell: via Shadows (colour of the block shadow ring); tre: n/a: tre draws no focus ring |
@@ -142,7 +142,7 @@ Variant standard; container and icon by the container's density; hit area equal 
 
 ## Acceptance criteria
 
-- [ ] AC-ICB-1: Token test. Container 40/32/28 dp and icon 24/20/20 dp at default, compact, dense. Pass: values equal.
+- [ ] AC-ICB-1: Token test. Container 40/32/28 dp and icon 24/20/18 dp at default, compact, dense. Pass: values equal.
 - [ ] AC-ICB-2: Geometry check. The pointer hit area is at least 24 dp by 24 dp at every density; in the touch context at least 48 dp by 48 dp, centred on the container, extending beyond it. Pass: bounds at or above the limits.
 - [ ] AC-ICB-3: Geometry check. The icon is centred in the container (±0.5 dp) and never clipped by it. Pass: offsets within tolerance, zero clipped icon pixels.
 - [ ] AC-ICB-4: Scripted input. Focus, press Enter and separately Space: activation count 1 each; pointer press, drag out, release: count 0; disabled: no focus, count 0. Pass: counts equal.
@@ -158,7 +158,7 @@ Variant standard; container and icon by the container's density; hit area equal 
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/IconButton_View.tdl`, `IconButton_Stylesheet.tdl` | partly meets: four variants and toggle exist; `Label` is the name and the tooltip (AC-ICB-5 and AC-ICB-6 meet by reading the docs); sizes xs to xl are 32, 40, 56, 96, 136 px, not the 40/32/28 density levels (AC-ICB-1 fails at dense); 48 px touch target around a 40 px button not built (AC-ICB-2 fails); disabled filled container 12 percent not built, a whole-button fade is used (AC-ICB-7 fails); state layer percentages 8, 10, 10 and 16 match the [[State Layers]] tokens (`tess-ui:src/tess_ui/interaction.py`) |
-| tess-ui | `tess-ui:src/tess_ui/views/IconButton_Stylesheet.tdl` dimensions | differs: icon 20, 24, 24 by size and container 32, 40, 56 by size, no density (spec icon 24, 20, 20 and container 40, 32, 28; AC-ICB-1) |
+| tess-ui | `tess-ui:src/tess_ui/views/IconButton_Stylesheet.tdl` dimensions | differs: icon 20, 24, 24 by size and container 32, 40, 56 by size, no density (spec icon 24, 20, 18 and container 40, 32, 28; AC-ICB-1) |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Button/Button_Module.tdl` dimensions | differs: icon-only Button uses the Button height literal 32 (spec container 40 at default; AC-ICB-1) |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Button/Button_Module.tdl` (icon-only Button) | partly meets: role BUTTON, `Label` is the name and the shell warns at load when an icon-only Button has no name (AC-ICB-5 meets by reading); no variants, no toggle form, no density, no tooltip tie-in for icon-only (AC-ICB-1, AC-ICB-6, AC-ICB-7 absent) |
 | tre | none (no button primitive) | not applicable |
@@ -176,7 +176,7 @@ Evidence: F8 (the reset button showed the row tooltip) in [[Owner Feedback 2026-
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Container 32 dp and 28 dp, icon 20 dp at compact and dense | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Container 32 dp and 28 dp, icon 20 dp at compact and 18 dp at dense | desktop density | [[ADR-0002 Desktop density levels and target sizes]], [[ADR-0029 Desktop density and type scale]] |
 | 48 dp hit area only in touch contexts; pointer contexts use the container with a 24 dp floor | desktop density and WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
 | Sizes xs to xl, width kinds, square shape and pressed squaring (Expressive) only as named adoptions | MD3 baseline is the 2022 scales | [[ADR-0006 MD3 baseline with named Expressive adoptions]] #needs-verification |
 | Icons from Material Design Icons, not Material Symbols | existing icon set | [[ADR-0007 Icon set and Material Symbols deviation]] |
