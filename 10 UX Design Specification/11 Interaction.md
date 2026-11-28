@@ -75,7 +75,7 @@ Keys every Tesserae application MUST honour. A project may add keys; it MUST NOT
 
 ### F6 pane cycling
 
-The config app is the reference: F6 moves focus to the next area in the order Files, Structure, Form, Text, and Problems when it lists something; Shift+F6 moves to the previous one; the keys wrap (`tess-ui:apps/shell_config/README.md`; `REGIONS` in `tess-ui:apps/shell_config/src/tess_shell_config/shortcuts.py`). F6 is the way out of the text editor, which takes Tab for itself.
+The config app is the reference: F6 moves focus to the next area in the order Files, Structure, Editor, View, Properties, Problems (Problems when it lists something; owner decision for the docked layout, 2026-11-27, [[Config App Layout]]; the previous order was Files, Structure, Form, Text, Problems); Shift+F6 moves to the previous one; the keys wrap (`tess-ui:apps/shell_config/README.md`; `REGIONS` in `tess-ui:apps/shell_config/src/tess_shell_config/shortcuts.py`). F6 is the way out of the text editor, which takes Tab for itself.
 
 Rules:
 

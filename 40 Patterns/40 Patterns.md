@@ -19,10 +19,12 @@ Cross-element patterns: empty, loading and error states, validation, notificatio
 - [[Drag and Drop Pattern]]
 - [[Empty States]]
 - [[Error States]]
+- [[Config App Layout]]
 - [[Forms and Settings]]
 - [[Keyboard Navigation]]
 - [[Loading States]]
 - [[Notifications]]
+- [[Preview Pane]]
 - [[Selection]]
 - [[Validation]]
 
