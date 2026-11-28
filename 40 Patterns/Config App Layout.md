@@ -4,9 +4,9 @@ type: pattern
 status: draft
 owner: phil
 created: 2026-11-27
-updated: 2026-11-27
+updated: 2026-11-28
 tags: [pattern, layout, dock, config-app]
-related: ["[[Dock]]", "[[Dock Panel]]", "[[Tabs]]", "[[Splitter]]", "[[Status Bar]]", "[[Preview Pane]]", "[[Keyboard Navigation]]", "[[Forms and Settings]]", "[[11 Interaction]]", "[[15 Writing]]", "[[Spacing and Density]]"]
+related: ["[[Dock]]", "[[Dock Panel]]", "[[Tabs]]", "[[Splitter]]", "[[Status Bar]]", "[[Preview Pane]]", "[[Menu Bar]]", "[[Toolbar]]", "[[Title Bar]]", "[[Iconography]]", "[[Keyboard Navigation]]", "[[Forms and Settings]]", "[[11 Interaction]]", "[[15 Writing]]", "[[Spacing and Density]]", "[[ADR-0029 Desktop density and type scale]]"]
 depends_on: ["[[Dock]]", "[[Preview Pane]]"]
 ---
 
@@ -30,7 +30,7 @@ One agreed layout so the keyboard order, the names read by assistive technology 
 2. Centre zone: panels Editor and View as tabs.
 3. Right zone, full height: the panel Properties (the form of the selected block).
 4. Bottom zone, under the centre only: the panel Problems ([[Dock]] corner rule: side zones run the full height).
-5. Toolbar above the dock and a [[Status Bar]] under it, as today.
+5. [[Menu Bar]] (File, Edit, View, Shell) under the [[Title Bar]], then the [[Toolbar]] of icon buttons above the dock, and a [[Status Bar]] under the dock (see Menus and toolbar).
 
 ## Decisions (owner, 2026-11-27)
 
@@ -41,6 +41,7 @@ One agreed layout so the keyboard order, the names read by assistive technology 
 | Names | Files, Structure, Editor, View, Properties, Problems (sentence case, [[15 Writing]]); "Problems" and not "Errors", because findings include warnings |
 | F6 order | Files, Structure, Editor, View, Properties, Problems |
 | View | a live visual mockup of the shell with the Panel as the desktop, fidelity level A, drawn as a [[Preview Pane]] |
+| Menu map (2026-11-28, decided by bot:Orchestrator for the owner, reversible, the owner is told) | Panels are fixed, so View has "Go to" panel commands and Theme (System, Light, Dark as a radio), no show and hide. Quit (Ctrl+Q) and Reset layout are new commands. No Open, Save as, Find, Cut, Copy, Paste or Close file, because the application has none (a menu never lists a command that does nothing). "Apply as I edit" is a toggle button on the toolbar and a check item in the Shell menu, not a Switch on the toolbar |
 
 ## Layout and sizes
 
@@ -75,12 +76,52 @@ F6 and Shift+F6 cycle Files, Structure, Editor, View, Properties, Problems and w
 - [ ] AC-CFG-6 (scripted input): activating a Problems row moves focus to the Editor with the caret at the row's line and column, and shows the Editor tab when View was shown. Pass: focus owner, caret and shown tab equal.
 - [ ] AC-CFG-7 (scripted input): saving and restoring the layout after resizing every zone and selecting the other tab of each zone gives equal sizes and shown tabs. Pass: equal.
 - [ ] AC-CFG-8 (review): the View obeys every rule of [[Preview Pane]] and shows the Panel as the desktop at fidelity A (the shell's structure and theme, not its behaviour); a reviewer lists no interactive element in the View. Pass: zero violations.
+- [ ] AC-CFG-9 (AT tree assertion, menu bar): below the title bar the window has a `menubar` (today a `group` if the engine lacks the role) named "Menu bar" with the titles File, Edit, View, Shell in that order and the mnemonics F, E, V, S; each menu lists the entries of the menu map with their shortcuts as the key shortcut; no entry exists for a command the application lacks. Pass: names, order, shortcuts equal.
+- [ ] AC-CFG-10 (scripted input, menu commands): from every control including the Editor: Alt+F opens File; Ctrl+S saves once with the menu closed; choosing View, Theme, Dark sets the theme and exactly one radio entry is checked; Shell, Apply as I edit flips the check and the toolbar toggle together. Pass: state and counts equal.
+- [ ] AC-CFG-11 (scripted input, command parity): for each toolbar item, the menu entry of the same name has the same enabled state at every step of a script that edits, saves, checks and reloads; a toolbar command that is not a menu entry fails. Pass: equal at each step.
+- [ ] AC-CFG-12 (geometry check, density): at `compact` the menu bar is 32 dp and the toolbar 40 dp high with 32 dp icon buttons (20 dp icons); the Files and Structure trees are `dense` (24 dp rows, 13/18 text); control heights, switches and dropdowns in Properties are 32 dp ([[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] AC-DEN-2). Pass: rectangles and text roles equal.
+- [ ] AC-CFG-13 (scripted input, toolbar): the toolbar is one Tab stop, Right and Left move between its items and skip the dividers between the three groups, a tooltip shows the name and the shortcut on hover and on keyboard focus, and no toolbar item has visible text. Pass: focus order, tooltip text and tree equal ([[Toolbar]] AC-TLB-15, AC-TLB-16).
+
+## Menus and toolbar
+
+Decisions of this record follow the owner feedback of 2026-11-28 (the top bar of text buttons is not a toolbar; add a top menu with File, Edit, View; make the toolbar a real one) and the specifications [[Menu Bar]] and [[Toolbar]]. The menu map is decided (see Decisions, 2026-11-28).
+
+Order from the top: [[Title Bar]], [[Menu Bar]], [[Toolbar]], the dock, [[Status Bar]]. The Tab order is menu bar, toolbar, then the panels in F6 order; the menu bar is reached by Alt or F10, the toolbar by Tab. Application density is `compact` (32 dp bar, 40 dp toolbar of 32 dp icon buttons with 20 dp icons); the Files and Structure panels are `dense` ([[ADR-0029 Desktop density and type scale]]).
+
+### Menu map
+
+Shortcuts are those the application already has; a blank cell means no shortcut today (none is invented). Mnemonics are the underlined letters; titles `&File`, `&Edit`, `&View`, `&Shell` are unique.
+
+| Menu | Entries (shortcut) |
+|---|---|
+| `&File` | New file... (Ctrl+N); Save (Ctrl+S); separator; Rename file... (F2); Duplicate file (Ctrl+Alt+D); Delete file (Delete in Files); separator; Reload from disk (Ctrl+Shift+L) and Keep my version (Ctrl+Shift+U), enabled only while the file changed on disk; separator; Quit (Ctrl+Q) |
+| `&Edit` | Undo (Ctrl+Z); Redo (Ctrl+Y, Ctrl+Shift+Z shown as Ctrl+Y); separator; Format file; separator; submenu Structure: Add child block... (Ctrl+Shift+N), Duplicate block (Ctrl+Shift+D), Move block into... (Ctrl+Shift+M), Move up (Alt+Up), Move down (Alt+Down), Remove block (Ctrl+Shift+Delete) |
+| `&View` | submenu Theme, radio: System, Light, Dark (Ctrl+Shift+T cycles them); submenu Go to: Files, Structure, Editor, View, Properties, Problems (enabled only when it lists something); the commands show the panel's tab and move focus there, F6 and Shift+F6 cycle them; separator; Reset layout (default zone sizes and tabs) |
+| `&Shell` | Check (F5); Reload shell (Ctrl+Shift+R); separator; Apply as I edit, a check item (Ctrl+Shift+A) |
+
+Quit (Ctrl+Q) and Reset layout are the two commands that do not exist in the application today (read at `origin/main`); they are new commands, decided below. Everything else is an existing command with its existing shortcut. A command that cannot run is disabled and keeps its place (Save while the file is not changed, Undo with nothing to undo, Reload shell while the shell is not running, Reload from disk when the file did not change).
+
+### Toolbar
+
+Icon buttons with tooltips (name and shortcut), in three groups; every toolbar command is also a menu entry, with the same name and shortcut:
+
+| Group | Items (icon, tooltip) |
+|---|---|
+| File | `save` "Save (Ctrl+S)", `undo` "Undo (Ctrl+Z)", `redo` "Redo (Ctrl+Y)" |
+| Edit | `format_align_left` "Format file" |
+| Shell | `task_alt` "Check (F5)", `refresh` "Reload shell (Ctrl+Shift+R)", `autorenew` toggle "Apply as I edit (Ctrl+Shift+A)", on or off |
+
+The icon names are Material Symbols names offered as a starting point; the project picks the icons ([[Iconography]]). The "Apply as I edit" Switch leaves the toolbar (a switch is a setting, not a command, and the desktop toolbar holds none): it becomes the toggle above and the check item in the Shell menu. The title text that shared the toolbar leaves it (the window title carries it). Save is no longer a filled text button: the unsaved state shows as the enabled state of Save.
+
+### Keyboard
+
+Alt or F10 focuses the menu bar; Alt+F, Alt+E, Alt+V and Alt+S open the four menus; Escape returns focus to where it was ([[Menu Bar]]). F6 cycles panels only (the menu bar and the toolbar are not F6 stops); Tab walks the toolbar as one stop ([[Toolbar]]). The existing shortcuts keep working with every menu closed, from any control including the Editor, which takes Tab for itself.
 
 ## Status in code
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | in progress: the docked layout is being built; not re-checked |
+| tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` | in progress: the docked layout is built; the toolbar is still a row of seven controls (text buttons and a Switch) and there is no menu bar (read at `origin/main`, not run; AC-CFG-9 to AC-CFG-13 fail) |
 | tess-shell | not applicable | not applicable |
 | tre | not applicable | not applicable |
 
@@ -94,8 +135,10 @@ F6 and Shift+F6 cycle Files, Structure, Editor, View, Properties, Problems and w
 
 - Whether 380 dp still suits the longest Properties rows: the widest need about 420 px, so such a row is clipped or wrapped at the default ([[10 Layout Overflow and Scrolling]] applies).
 - Corner ownership is specified in [[Dock]] AC-DCK-17; tess-ui's `Dock` behaviour is not re-checked.
+- Help menu (a keyboard shortcuts list, an about view) is not specified: no such view exists.
 
 ## Sources
 
 - Owner decision of 2026-11-27 relayed by the Orchestrator (decisions, not verified claims).
 - [[Dock]], [[Dock Panel]], [[Preview Pane]], [[Keyboard Navigation]], [[11 Interaction]].
+- [[Menu Bar]], [[Toolbar]]: the menu map and the toolbar of the application follow from the owner feedback of 2026-11-28 (a top menu with File, Edit, View and a toolbar of icons with tooltips); the shortcuts are those of `tess-ui:apps/shell_config/src/tess_shell_config/shortcuts.py` (read at `origin/main`, not run).

@@ -28,6 +28,7 @@ Request notes `UXREQ-###` for things a project lacks, routed through the Orchest
 | [[UXREQ-008 Outline property for focus rings]] | tess-re | approved; delivered in tre 0.6.11 (PR 336), audit pending |
 | [[UXREQ-009 First frame hold]] | tess-re | proposed, held; delivered for windows (PR 334) and layer surfaces (PR 340, sway only), KWin pending |
 | [[UXREQ-010 State layer hooks]] | tess-re | approved; delivered in tre 0.6.11 (PR 335; per-state timings PR 338), audit pending |
+| [[UXREQ-011 Menubar role]] | tess-re | proposed (role `menubar`; check items and the popup flag to confirm; `active_descendant` already exists) |
 
 The OS file drop on Wayland (TRE-016) has no request: it is held, an upstream matter ([[Adoption tre]]).
 

@@ -6,7 +6,7 @@ owner: phil
 created: 2026-11-28
 updated: 2026-11-28
 tags: [component, menu, keyboard, desktop]
-related: ["[[Menu]]", "[[Menu Item]]", "[[Popup]]", "[[Toolbar]]", "[[Top App Bar]]", "[[Title Bar]]", "[[Application Window]]", "[[Tooltip]]", "[[Keyboard Navigation]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[Spacing and Density]]", "[[11 Interaction]]", "[[12 Overlays]]", "[[Config App Layout]]", "[[UXREQ-004 Accessibility roles]]", "[[ADR-0029 Desktop density and type scale]]"]
+related: ["[[Menu]]", "[[Menu Item]]", "[[Popup]]", "[[Toolbar]]", "[[Top App Bar]]", "[[Title Bar]]", "[[Application Window]]", "[[Tooltip]]", "[[Keyboard Navigation]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[Spacing and Density]]", "[[11 Interaction]]", "[[12 Overlays]]", "[[Config App Layout]]", "[[UXREQ-004 Accessibility roles]]", "[[UXREQ-011 Menubar role]]", "[[ADR-0029 Desktop density and type scale]]"]
 depends_on: ["[[Menu]]", "[[ADR-0029 Desktop density and type scale]]"]
 ---
 
@@ -133,7 +133,7 @@ The bar has no animation. A menu opens and closes as [[Menu]] says; switching fr
 
 - Role `menubar` for the bar with the name "Menu bar" (a project may name it by the application); each title `menuitem` with the popup flag and `expanded` true while its menu is open; menus `menu` and entries `menuitem`, `menuitemcheckbox` with `checked`, `menuitemradio` ([[Menu]]); disabled entries expose `disabled`; the shortcut is exposed as the key shortcut of the entry (`aria-keyshortcuts` form, for example `Control+S`) and the accessible name excludes it.
 - Keys: WAI-ARIA Authoring Practices menubar pattern (Sources): one Tab stop, Left and Right between titles, Down, Up, Enter and Space open, Escape closes, Home, End and printable characters move.
-- Active descendant: the bar is a roving group; the focused title carries the focus. Inside a menu the highlighted item is the active item ([[Menu]]); the engine does not read an active descendant yet, so the highlighted item must also take node focus ([[Behavior Standard Inventory]]).
+- Active descendant: the bar is a roving group; the focused title carries the focus. Inside a menu the highlighted item is the active item ([[Menu]]); a project either gives the item node focus or keeps focus on the menu and sets `active_descendant` of the menu node to the item (tre has the property, [[UXREQ-011 Menubar role]]); both give the same AT result as far as the tree goes, and neither is checked with a screen reader ([[Behavior Standard Inventory]]).
 - Contrast: `on_surface` on `surface` at least 4.5:1; the state layer must not reduce the title below 4.5:1; the focus ring at least 3:1 against the bar ([[Focus Ring]]).
 - Target size: every title at least 24 by 24 dp.
 - No keyboard trap: Escape, Tab and Alt leave the bar (WCAG 2.2 SC 2.1.2).
@@ -181,7 +181,7 @@ All roles come from the scheme ([[Theme Following the System]]); the bar and the
 |---|---|---|
 | tess-ui | none (text search of `src`, `apps` and `docs` on `origin/main` for menubar or menu bar finds no component); the config app has a `toolbar` container of text buttons in `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl`; the [[Menu]] overlay exists (`tess-ui:src/tess_ui/overlays.py`) and can open under a title | absent. Everything above is new: a bar view, Alt and F10 activation, mnemonics, roving, the hover switch between menus. Read at `origin/main`, nothing run |
 | tess-shell | none; the shell `Bar` is a panel of modules (see [[Bar]]) and the Menu and MenuItem modules exist (`tess-shell:src/tess_shell/shipped/Menu/Menu_Module.tdl`) | absent; the shell has no application window to hold a menu bar, so it is not applicable until an application surface exists |
-| tre | `tre:docs/reference/node.md` (role list) | the role `menubar` is not in the role list (0.6.11 adds `toolbar` but not `menubar`); `menu` and `menuitem` exist. A tre hook: request the role `menubar` ([[UXREQ-004 Accessibility roles]]); until then the bar can use role `group` named "Menu bar", a deviation recorded below. The engine has no `active_descendant` reading, so highlighted items take node focus |
+| tre | `tre:docs/reference/node.md` (role list), `tre:crates/engine-py/src/node_props.rs` | the role `menubar` is not in the role list (0.6.11 adds `toolbar` but not `menubar`); `menu` and `menuitem` exist. A tre hook: the role `menubar` ([[UXREQ-011 Menubar role]]); until then the bar can use role `group` named "Menu bar", a deviation recorded below. The engine has a settable `active_descendant` on any node (TRE-REQ-023, `tre:LOG.md`, read at `origin/main`): the highlighted item can be exposed with it; the screen reader result (AccessKit sends the focused state moving, not `ActiveDescendantChanged`) is not checked with Orca |
 
 ## Deviations from Material Design 3
 
