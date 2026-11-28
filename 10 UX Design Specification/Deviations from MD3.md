@@ -337,6 +337,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Sizes xs, m, l, xl (32 to 136 px) and the square shape, pressed squaring (Expressive) | tess-ui implements Expressive sizes; the baseline is the 2022 scale | [[ADR-0006 MD3 baseline with named Expressive adoptions]] #needs-verification |
 | Pointer hit area is the container (24 dp floor), 48 dp only in touch contexts | desktop density, WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
 | Focus ring 3 dp, 2 dp offset, `secondary` | [[Focus Ring]] | [[ADR-0009 State layer percentages]] |
+| Compact and dense label text follow the desktop type scale (`label_large` at compact, `title_dense` 13/18 at dense) | Desktop density: the label must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Canvas]]
 

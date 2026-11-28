@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, action, owner-feedback]
 related: ["[[Owner Feedback 2026-11-20]]", "[[Icon Button]]", "[[Text Field]]", "[[Switch]]", "[[Form Row]]", "[[Dialog]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Iconography]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Elevation]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]"]
@@ -103,7 +103,7 @@ Values agree with the Sizing table above; compact and dense paddings, minimum wi
 | container | border color | - | N/A: filled, tonal, elevated and text variants draw no border | N/A: filled, tonal, elevated and text variants draw no border | N/A: filled, tonal, elevated and text variants draw no border | [[Button]] Variants table | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | container (outlined variant) | border color | `outline` | `outline` | `outline` | `outline` | [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | container | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half the height) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: no hook; tre: yes (font_size, font_weight, line_height, letter_spacing) |
+| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 13/18/500/0.1 | [[Typography]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: no hook; tre: yes (font_size, font_weight, line_height, letter_spacing) |
 | leading icon | icon size | - | 18 | 18 | 16 | [[Iconography]], [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | loading spinner | icon size | - | 18 | 18 | 16 | the spinner replaces the leading icon; [[Iconography]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | container (filled, tonal, outlined, text) | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
@@ -194,6 +194,7 @@ Evidence: F8 (reset button showed the row tooltip), the shell Launcher hand chec
 | Sizes xs, m, l, xl (32 to 136 px) and the square shape, pressed squaring (Expressive) | tess-ui implements Expressive sizes; the baseline is the 2022 scale | [[ADR-0006 MD3 baseline with named Expressive adoptions]] #needs-verification |
 | Pointer hit area is the container (24 dp floor), 48 dp only in touch contexts | desktop density, WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
 | Focus ring 3 dp, 2 dp offset, `secondary` | [[Focus Ring]] | [[ADR-0009 State layer percentages]] |
+| Compact and dense label text follow the desktop type scale (`label_large` at compact, `title_dense` 13/18 at dense) | Desktop density: the label must match 32 and 28 dp controls | [[ADR-0029 Desktop density and type scale]] |
 
 ## Sources
 
