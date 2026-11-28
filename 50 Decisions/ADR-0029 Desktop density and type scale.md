@@ -70,6 +70,8 @@ The hit row of a Switch, Checkbox and Radio stays 40, 32 and 28 dp: the painted 
 
 **Config app** ([[Config App Layout]]): the application level is `compact`; the Files and Structure panels are `dense` (a region of its own, [[07 Spacing and Density Rules]] rule 4). The config app's project ADR records it.
 
+**Density on every element** (owner direction, 2026-11-28): every element has an optional `Density` property (`default`, `compact`, `dense`; empty inherits). The order of resolution is: an explicit number on the element (size, padding, row height, font size, track size) first, then the element's own `Density`, then the nearest ancestor's `Density` (it cascades), then the application density. The rule and AC-DEN-12 are in [[Spacing and Density]]; it is toolkit-agnostic (tess-ui implements; a TDL file names the value).
+
 ## Consequences
 
 - [[Typography]] gains four desktop roles (`body_dense`, `title_dense`, `page_title_compact`, `page_title_dense`), the density-to-role table and AC-TYP-10. The shell's `$type.label` (13/500/18) is `title_dense` exactly and `$type.body` (14/20) is `body_medium`.

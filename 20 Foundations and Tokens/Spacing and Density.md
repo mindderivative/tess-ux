@@ -91,6 +91,22 @@ Sources: WCAG 2.2 SC 2.5.8 Target Size (Minimum), Level AA: the target for point
 - Chevron hit area in a tree: 24 dp wide and the full row height, extending into the row padding and the icon-to-label gap. At dense that is 4 dp padding + 16 dp box + 4 dp gap = 24 dp; the dense row height is 24 dp, which meets the minimum exactly.
 - Painted icon at compact and dense (20 dp) sits in a container of 32 or 28 dp; the container is the hit area.
 
+## Density is a property of every element
+
+Density is not set only per project or per container: every element has an optional `Density` property with the values `default`, `compact` and `dense`; empty means inherit ([[ADR-0029 Desktop density and type scale]], owner direction 2026-11-28). The sizes of an element come from the first of these that applies, in this order:
+
+1. An explicit number set on the element itself (a height, width, padding, gap, row height, font size or track size): it always wins, for that one property, over every density.
+2. The element's own `Density`.
+3. The `Density` of the nearest ancestor that sets one: density cascades down the tree, so `Density: dense` on a pane changes every descendant that does not set its own.
+4. The application density (the project default, [[07 Spacing and Density Rules]]).
+
+Rules:
+
+- A density sets the whole set of sizes of its level (rule 2 of [[07 Spacing and Density Rules]]); an explicit number replaces only its own property. The other properties of that element still follow the resolved density, so a Button with an explicit `Height` keeps its density padding and text role.
+- The cascade runs through the tree of elements, not the order of drawing: a popup or a menu opened from a `dense` pane takes the density of the element that owns the layer, not of the application.
+- The property names are the specification vocabulary ([[ADR-0001 MD3 role names are the specification vocabulary]]); a project maps `Density` to its own key. The rule is toolkit-agnostic: the toolkit resolves it, a stylesheet or TDL file only names the value.
+- Mixed levels inside one list, tree, form or toolbar stay discouraged ([[07 Spacing and Density Rules]] rule 4); an explicit `Density` on a single element is for the case where the element must differ (a touch-sized primary action in a dense form).
+
 ## Window size classes
 
 Window size classes are taken from MD3 and have the same breakpoints in tess-ui (`tess-ui:src/tess_ui/tokens.py` `WIDTH_CLASSES`, `HEIGHT_CLASSES`). The rules that use them are in [[10 Layout Overflow and Scrolling]].
@@ -165,7 +181,8 @@ Evidence: [[Owner Feedback 2026-11-20]] F3, F4, F7.
 - [ ] AC-DEN-8 (geometry check): no two hit areas overlap, except a child inside its parent's hit area (a chevron inside a row).
 - [ ] AC-DEN-9 (geometry check): in a Text Field and any single-line control, the line box of the text is centred in the control height: the space above differs from the space below by at most 1 px at each level (also AC-LAY-2).
 - [ ] AC-DEN-10 (token test): `width_class(w)` returns compact for 0 to 599, medium for 600 to 839, expanded for 840 to 1199, large for 1200 to 1599 and extra-large for 1600 and up; `height_class(h)` returns compact for 0 to 479, medium for 480 to 899 and expanded for 900 and up.
-- [ ] AC-DEN-11 (review): a density level is declared once per project and per container in a project ADR or a container property; no element sets a height outside the three-value sets above. Pass: reviewer finds no height literal in a stylesheet that is not a density token.
+- [ ] AC-DEN-11 (review): a density level is declared once per project and per container in a project ADR or a container property. A size, padding, row height, font size or track size that is a literal in a stylesheet is an explicit override of one element (rule 1 of [[#Density is a property of every element]]), not a density value; a reviewer lists each literal and its reason, and finds none where the density token would do.
+- [ ] AC-DEN-12 (geometry check, density property): in a window whose application density is `compact`: (a) a Button with no `Density` and no size is 32 dp high; (b) the same Button with an explicit `Height` of 48 is 48 dp high (the hard number wins); (c) a pane with `Density: dense` lays out its descendants at the `dense` sizes (a Button 28 dp, a Switch track 36 by 20, text role `body_dense`) and a Button outside it stays 32 dp; (d) inside that pane a Button with `Density: default` is 40 dp high (the element's own density beats the ancestor's), while its siblings stay 28 dp; (e) an element with an empty `Density` inherits from the nearest ancestor that sets one, else from the application. Pass: the dp values equal in each case.
 
 ## Sources
 
