@@ -43,6 +43,8 @@ Choose exactly one value from a closed set (an enum key, a unit, a mode) and see
 | Dialog | options with long hints, narrow windows (built in the config app) | modal, 440 dp wide, maximum 400 dp high, Cancel action |
 | With filter | more than 12 options | filter field with focus on open |
 | With swatch | colour options | a 20 dp swatch before the label |
+| Plain | enum keys without hints, length units | label-only rows, no swatch, no hint; the button may be content-wide |
+| Command chooser | a choice made for a command (Add child, New file type) | the overlay without a button; opened by a command; hands the chosen row to the command; Escape runs nothing |
 
 ## States
 
@@ -166,6 +168,19 @@ Roles only ([[Theme Following the System]]); a swatch shows the resolved colour 
 
 Anchored popup, no filter at 12 options or fewer, no wrap, placeholder "choose" until a value exists, level per project.
 
+## Uses in the configuration application
+
+The config app has four dropdowns, all closed sets. The Choice Picker is the specification for all four; the table fixes which form each takes. The plain forms carry no swatch, and a hint only where the schema has a documentation line for the value.
+
+| Use | Form | Options | Filter | Notes |
+|---|---|---|---|---|
+| Enum key in Properties (for example `Trigger`, `Animation`) | Choice Picker, anchored popup, button in the [[Form Row]] | the values the schema allows, as written in the file | only above 12 | the option hint is the schema's documentation line for the value (at most 2 lines); the current value shows on the button; "choose" shows while the key is unset and has no default |
+| Length unit beside a number (`px`, `%`, and the like) | Choice Picker, plain, anchored popup, narrow button | the units the key allows | no | no hint; the button is content-wide and at least 56 dp and as high as the neighbouring field; changing the unit keeps the number |
+| Add child (Structure) | Command chooser | the blocks the schema lets the selected block hold | above 12 | no button and no current value; opened by Ctrl+Shift+N, the Edit and Structure menus; returns the chosen block to the command |
+| New file type (Files) | Command chooser | Shell, Module, Style, Stylesheet, Theme, Settings | no | opened by Ctrl+N and the File menu; the name prompt follows ([[Config App Layout]]) |
+
+A command chooser is the overlay of the picker without the button: the same listbox, the same keys (Down, Up, Home, End, Page Up, Page Down, type-ahead, Enter, Escape) and the same rows, opened by a command instead of a button; it has no value of its own, it hands the chosen row to the command, and Escape runs nothing. Overlay form follows the window width class: the anchored popup at 600 dp or wider, the dialog form below ([[Spacing and Density]] window size classes). A picker is never an alternative to a [[Menu]]: if the rows are commands that run at once, use a Menu.
+
 ## Acceptance criteria
 
 - [ ] AC-CHO-1 (geometry check): at default, compact and dense the button is 40, 32 and 28 dp high, a label-only row is 40, 32 and 28 dp high and the chevron icon is 24, 20 and 18 dp, at scale 1.0 and 2.0.
@@ -181,12 +196,18 @@ Anchored popup, no filter at 12 options or fewer, no wrap, placeholder "choose" 
 - [ ] AC-CHO-11 (contrast script): the selected row label on `secondary_container` is at least 4.5:1 and the hint on `surface_container` at least 4.5:1 in light and dark, standard contrast.
 - [ ] AC-CHO-12 (geometry check): the anchored popup is at least as wide as the button, at most 360 dp, and flips above the button when below-space is less than the list height and above-space is larger.
 - [ ] AC-CHO-13 (review): the note records the built dialog form and the not built anchored form, filter and selected check in Status in code.
+- [ ] AC-CHO-14 (geometry check, plain): a plain picker has no swatch and no hint; its rows are label-only (40, 32, 28 dp); a length-unit picker beside a number field is at least 56 dp wide, as wide as its longest label plus the padding and the chevron, and as high as the field (32 dp at compact). Pass: bounds equal.
+- [ ] AC-CHO-15 (scripted input, command chooser): Ctrl+Shift+N on a selected Structure block, the Edit and Structure menu entry and the Menu key entry each open the chooser with the blocks the schema lets that block hold, with focus on the first enabled row (the filter field when there are more than 12); Enter or a press on a row runs the command with that row's value and closes; Escape or a press outside closes, runs nothing and returns focus to the Structure tree. Pass: layer count, focus owner and command calls equal.
+- [ ] AC-CHO-16 (scripted input, new file type): the File menu and Ctrl+N open the chooser with Shell, Module, Style, Stylesheet, Theme and Settings (no filter); choosing one starts the name prompt for that type; cancelling returns focus to the Files tree and creates nothing. Pass: options, order, focus owner and file count equal.
+- [ ] AC-CHO-17 (geometry check, form by width class): at a window width of 600 dp or more the overlay is the anchored popup; below 600 dp (compact width class) it is the dialog form; a command chooser with no button is anchored to the selected row of its tree, else centred in the window. Pass: overlay rectangles equal.
+- [ ] AC-CHO-18 (AT tree assertion, enum key): the button of an enum key is named by the Form Row label with the current value as its value, has `haspopup` and `expanded`, and each option row has `option` with the value as its name and the schema's documentation line for that value as its description when there is one. Pass: names, descriptions and `selected` equal for a key with 5 values.
 
 ## Status in code
 
 | Project | Path | Status |
 |---|---|---|
 | tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (parts `picker`, `picker_list`, `option`), `tess-ui:apps/shell_config/src/tess_shell_config/formcontrol.py` (`pick_option`), `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` (`ChoiceWidget`) | partly meets. A modal Dialog (440 by at most 400) lists options as `listitem` rows with `selected`, swatch, label (fixed 150 dp) and a hint of at most 2 lines; a press picks and closes; Cancel closes. Passes AC-CHO-4 for pointer and Cancel, AC-CHO-8 in part. Fails AC-CHO-1 (no density), AC-CHO-2 and AC-CHO-3 and AC-CHO-5 (no arrow, Home, End, type-ahead keys in `picker_list`), AC-CHO-6 (roles `list` and `listitem`, no `haspopup`), AC-CHO-7 (no filter), AC-CHO-9 (no scrollbar rule applied to the list), AC-CHO-10 (no button tooltip), AC-CHO-12 (no anchored form) |
+| tess-ui (the four dropdown uses of the config app) | `tess-ui:apps/shell_config/src/tess_shell_config/formcontrol.py` (`_open_picker("choice", ...)`), `selector.py`, `widgets.py` (`ChoiceWidget`), `fileactions.py`, `fileops.py` | read at `origin/main`, not run: enum keys and length units go through the dialog form above; the Structure "Add child" and Files "New file" choices are lists opened by a command. None meets the anchored popup, the command chooser or AC-CHO-14 to AC-CHO-18 yet; this note is the target for all four ([[#Uses in the configuration application]]) |
 | tess-ui (dimensions) | `tess-ui:apps/shell_config/src/tess_shell_config/widgets.py` | Differences in [[#Dimensions and defaults]]: option row about 36 (padding 8 around a 20 dp line) at all levels, spec 40, 32 and 24; row horizontal padding 8 at default, spec 12; button is the `xs` config button (32), spec 40, 32 and 28 (AC-CHO-1) |
 | tess-ui | the toolkit has no choice picker view; the toolkit [[Menu]] and Dialog are the parts | absent as a shipped view |
 | tess-shell | none | absent: the shell has a Menu only |
