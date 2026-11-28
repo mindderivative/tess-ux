@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, selection, input]
 related: ["[[Switch]]", "[[Toggle]]", "[[Radio Button]]", "[[Form Row]]", "[[List Item]]", "[[Tree Node]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Validation]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Colour Roles]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Switch]]"]
@@ -75,13 +75,13 @@ A state is never shown by colour alone: the check and dash shapes carry selected
 
 MD3 values (Material Web tokens): container 18 dp, icon 18 dp, state layer 40 dp, outline 2 dp, container shape 2 dp; the Material Web wrapper gives a touch target of 48 dp ([`checkbox/internal/_checkbox.scss`](https://github.com/material-components/material-web/blob/main/checkbox/internal/_checkbox.scss): `margin: max(0px, (48px - container-size) / 2)`, input 48 by 48 dp). Android: minimum size `minTouchTargetSize` (48 dp) ([Checkbox docs](https://github.com/material-components/material-components-android/blob/master/docs/components/Checkbox.md)).
 
-Rule: the row height is the control height of the level; the state layer equals the row height; the box is 18 dp at default and compact and 16 dp at dense; the icon-to-label gap is `density.icon_label_gap` (8, 8, 4 dp).
+Rule: the row height is the control height of the level; the state layer equals the row height; the box is 18 dp at default, 16 dp at compact and 14 dp at dense (compact and dense are Tesserae design choices, [[ADR-0029 Desktop density and type scale]]); the icon-to-label gap is `density.icon_label_gap` (8, 8, 4 dp).
 
 | Level | Row height | Box | State layer | Gap box to label | Mark view box |
 |---|---|---|---|---|---|
 | default | 40 dp | 18 dp | 40 dp | 8 dp | 18 dp |
-| compact | 32 dp | 18 dp | 32 dp | 8 dp | 18 dp |
-| dense | 28 dp | 16 dp | 28 dp | 4 dp | 16 dp |
+| compact | 32 dp | 16 dp | 32 dp | 8 dp | 16 dp |
+| dense | 28 dp | 14 dp | 28 dp | 4 dp | 14 dp |
 
 The compact and dense rows are Tesserae design choices #needs-verification-as-design-choice (MD3 gives one size).
 
@@ -104,15 +104,15 @@ Box sizes and outline come from the Material Web checkbox tokens; row heights, s
 | row | border color | - | N/A: the row draws no border | N/A: the row draws no border | N/A: the row draws no border | [[Spacing and Density]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | row | corner radius | - | N/A: the row draws no container | N/A: the row draws no container | N/A: the row draws no container | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | row | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
-| box | height | - | 18 | 18 | 16 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Checkbox.SIZE); tess-shell: via module override (Height: 18 in Checkbox_Module.tdl); tre: yes (height) |
+| box | height | - | 18 | 16 | 14 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (Checkbox.SIZE); tess-shell: via module override (Height: 18 in Checkbox_Module.tdl); tre: yes (height) |
 | box | border width | - | 2 | 2 | 2 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss) (unselected; 0 when selected) | tess-ui: no hook (box built with stroke_width 2.0 in Checkbox._build); tess-shell: yes (Border_Width); tre: yes (border_width) |
 | box | border color | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | `on_surface_variant` | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss) (unselected rest) | tess-ui: via widget option color (selected colour) and theme roles on_surface_variant and error; tess-shell: yes (Border_Color); tre: yes (border_color) |
 | box | corner radius | - | 2 | 2 | 2 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss), a component value below `shape.extra_small` | tess-ui: no hook (box built with corner_radius 2.0 in Checkbox._build); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | box | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook (box is a Python-drawn node with no elevation option); tess-shell: yes (Elevation percentage on the Checkbox::box Rectangle); tre: yes (shadows) |
-| mark | icon size | - | 18 | 18 | 16 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Checkbox.SIZE and the CHECK path in controls.py); tess-shell: via module override (Width: 18, Height: 18 in Checkbox_Module.tdl); tre: yes (width, height of the svg node) |
-| state layer | height | `density.control_height` | 40 | 32 | 28 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); compact and dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (height) |
+| mark | icon size | - | 18 | 16 | 14 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (Checkbox.SIZE and the CHECK path in controls.py); tess-shell: via module override (Width: 18, Height: 18 in Checkbox_Module.tdl); tre: yes (width, height of the svg node) |
+| state layer | height | `density.control_height` | 40 | 32 | 28 | [md-comp-checkbox](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-checkbox.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (height) |
 | state layer | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]] (half of the layer height) | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (corner_radius) |
-| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; design choice, proposed ADR: control label type role | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height, and no hook for letter spacing); tre: yes (font_size, font_weight, line_height) |
+| label | font | `density.font_body` | `body_medium` 14/20/400/0.25 | `body_medium` 14/20/400/0.25 | `body_dense` 13/18/400/0.25 | [[Typography]]; dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height, and no hook for letter spacing); tre: yes (font_size, font_weight, line_height) |
 | label | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | design choice, [[ADR-0002 Desktop density levels and target sizes]] (the gap above separates label and box) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
 
 ## Layout and overflow
@@ -165,7 +165,7 @@ Density from the container; two-state; unselected; label after the box; no error
 
 ## Acceptance criteria
 
-- [ ] AC-CHK-1 (token test): box, state layer, outline, mark stroke and corner equal the table at each level: 18, 40, 2, 2 and 2 dp at default; 18, 32, 2, 2, 2 at compact; 16, 28, 2, 2, 2 at dense. Pass: all values equal.
+- [ ] AC-CHK-1 (token test): box, state layer, outline, mark stroke and corner equal the table at each level: 18, 40, 2, 2 and 2 dp at default; 16, 32, 2, 2, 2 at compact; 14, 28, 2, 2, 2 at dense. Pass: all values equal.
 - [ ] AC-CHK-2 (geometry check): the row height is 40, 32 and 28 dp at the three levels and the gap box to label is 8, 8 and 4 dp (at scale 1.0 and 2.0). Pass: equal to the dp.
 - [ ] AC-CHK-3 (geometry check): the hit area of a labelled checkbox is at least 24 by 24 dp at every level, a box-only checkbox at least 24 by 24 dp, and at least 48 by 48 dp in the touch context; two adjacent checkboxes do not overlap hit areas. Pass: measured bounds at or above the limits.
 - [ ] AC-CHK-4 (scripted input): focus the checkbox and press Space: `checked` flips once and one change event fires; again: it flips back. On a disabled checkbox Space does nothing and Tab skips it. Pass: state and event counts equal.
@@ -193,7 +193,7 @@ Evidence: tess-ui `Checkbox._tint` and `_paint`; the tess-shell Checkbox module 
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Row height 40, 32, 28 dp; state layer 32 dp at compact and 28 dp at dense; box 16 dp at dense | desktop rows; the layer must not exceed the row | [[ADR-0002 Desktop density levels and target sizes]] |
+| Row height 40, 32, 28 dp; state layer 32 dp at compact and 28 dp at dense; box 16 dp at compact and 14 dp at dense | desktop rows; the layer must not exceed the row | [[ADR-0002 Desktop density levels and target sizes]], [[ADR-0029 Desktop density and type scale]] |
 | Pointer target 24 dp minimum; 48 dp only in touch contexts | WCAG 2.2 SC 2.5.8; desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Focus layer and pressed layer 10 percent; ring 3 dp, offset 2 dp, role `secondary` | foundation rule for all controls | [[ADR-0009 State layer percentages]], [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Space toggles; Enter optional | follows the WAI-ARIA Authoring Practices | [[ADR-0006 MD3 baseline with named Expressive adoptions]] (convention only) |

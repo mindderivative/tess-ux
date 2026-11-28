@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, picker, choice, popup, listbox, keyboard]
 related: ["[[Menu]]", "[[Popup]]", "[[Dialog]]", "[[List]]", "[[List Item]]", "[[Button]]", "[[Text Field]]", "[[Tooltip]]", "[[Scrollbar and Scroll Container]]", "[[Form Row]]", "[[Font List]]", "[[Icon Picker]]", "[[Colour Picker]]", "[[Spacing and Density]]", "[[Focus Ring]]", "[[State Layers]]", "[[Colour Roles]]", "[[10 Layout Overflow and Scrolling]]", "[[12 Overlays]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[Deviations from MD3]]"]
 depends_on: ["[[Menu]]", "[[Popup]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]"]
@@ -66,7 +66,7 @@ Choose exactly one value from a closed set (an enum key, a unit, a mode) and see
 | Part | default | compact | dense | Code today |
 |---|---|---|---|---|
 | Button height | 40 | 32 | 28 | the config app's `xs` button |
-| Option row, label only | 40 | 32 | 24 | label row padding 8 around a 20 dp line (about 36) |
+| Option row, label only | 40 | 32 | 28 | label row padding 8 around a 20 dp line (about 36) |
 | Option row with a hint | label row plus hint lines, at least the row height | same | same | padding 8, hint up to 2 lines |
 | Row horizontal padding | 12 | 8 | 4 | 8 |
 | Icon (swatch) to label gap | 8 | 8 | 4 | 8 |
@@ -89,8 +89,8 @@ The button follows the outlined [[Button]] (heights from the control height; pad
 | Button | border width | - | 1 | 1 | 1 | [[Button]] Variants (outlined) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Button | border color | `outline` | `outline` | `outline` | `outline` | [[Button]] Variants, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Button | corner radius | `shape.full` | 20 | 16 | 14 | [[Shape]], [[Button]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Button chevron | icon size | - | 18 | 18 | 16 | [[Iconography]] (icon next to a button label) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | `title_dense` 13/18/500/0.1 | [[Button]], [[Typography]]; dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Button chevron | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Iconography]], [[Icon Button]]; compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Popup | min width | - | 160 | 160 | 160 | [[Choice Picker]] Sizing (button width, at least 160, at most 360) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Popup | padding | - | 8 0 8 0 | 4 0 4 0 | 4 0 4 0 | [[Menu]] Sizing (container vertical padding) | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Popup | margin | `space.3` | 8 8 8 8 | 8 8 8 8 | 8 8 8 8 | [[Choice Picker]] Layout and overflow (window less 8 dp margin) | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
@@ -102,18 +102,18 @@ The button follows the outlined [[Button]] (heights from the control height; pad
 | Dialog | height | - | 400 | 400 | 400 | [[Choice Picker]] Sizing (maximum height; width 440) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Dialog | corner radius | `shape.extra_large` | 28 | 28 | 28 | [[Choice Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Dialog | elevation | `elevation.level3` | 3 | 3 | 3 | [[Choice Picker]] Tokens used, [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Option row | height | `density.row_height` | 40 | 32 | 24 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option row | height | `density.menu_item_height` | 40 | 32 | 28 | [[Menu Item]], [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Option row | padding | `density.row_padding_x` | 0 12 0 12 | 0 8 0 8 | 0 4 0 4 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Option row | margin | - | N/A: rows abut in the list; the list sets no outer space per row | N/A: same as default | N/A: same as default | [[Choice Picker]] Layout and overflow | tess-ui: n/a: the default is N/A so the element has no such value; tess-shell: n/a: the default is N/A so the element has no such value; tre: n/a: the default is N/A so the element has no such value |
 | Option row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Choice Picker]] Sizing, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Option row | corner radius | `shape.small` | 8 | 8 | 8 | [[Choice Picker]] Tokens used, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Option label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Choice Picker]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Option label | font | `density.font_body` | `body_medium` 14/20/400/0.25 | `body_medium` 14/20/400/0.25 | `body_dense` 13/18/400/0.25 | [[Choice Picker]] Anatomy part 5, [[Typography]]; dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Option hint | font | `body_small` | 12/16/400/0.4 | 12/16/400/0.4 | 12/16/400/0.4 | [[Choice Picker]] Anatomy part 5, [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Colour swatch | height | - | 20 | 20 | 20 | [[Choice Picker]] Anatomy part 5 | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Colour swatch | border width | - | 1 | 1 | 1 | [[Choice Picker]] Anatomy part 5 | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Colour swatch | border color | `outline` | `outline` | `outline` | `outline` | [[Choice Picker]] Anatomy part 5, [[Colour Roles]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 | Colour swatch | corner radius | `shape.extra_small` | 4 | 4 | 4 | [[Choice Picker]] Anatomy part 5, [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
-| Selected check | icon size | - | 24 | 20 | 16 | [[Iconography]] (trailing icon in a list row) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
+| Selected check | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Iconography]] (trailing icon in a list row); compact and dense: [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: n/a: element absent in tre |
 
 ## Layout and overflow
 
@@ -168,7 +168,7 @@ Anchored popup, no filter at 12 options or fewer, no wrap, placeholder "choose" 
 
 ## Acceptance criteria
 
-- [ ] AC-CHO-1 (geometry check): at default, compact and dense the button is 40, 32 and 28 dp high and a label-only row is 40, 32 and 24 dp high, at scale 1.0 and 2.0.
+- [ ] AC-CHO-1 (geometry check): at default, compact and dense the button is 40, 32 and 28 dp high, a label-only row is 40, 32 and 28 dp high and the chevron icon is 24, 20 and 18 dp, at scale 1.0 and 2.0.
 - [ ] AC-CHO-2 (scripted input): Enter, Space and Alt+Down on the focused button open the overlay with focus on the selected row; with no value, on the first enabled row.
 - [ ] AC-CHO-3 (scripted input): with 6 options Down, Up, Home, End and Page Down move by one, one, to 0, to 5, to the last row of the page and never wrap or leave the list; disabled options are skipped.
 - [ ] AC-CHO-4 (scripted input): Enter and Space on the cursor row write the value, call the change handler once, close the overlay and put focus on the button within one frame; Escape closes without a write.
@@ -198,7 +198,7 @@ Anchored popup, no filter at 12 options or fewer, no wrap, placeholder "choose" 
 |---|---|---|
 | Built as a modal Dialog, not an anchored menu | the config app picks options with long hints in a narrow window; recorded as built, anchored form is the target | [[ADR-0006 MD3 baseline with named Expressive adoptions]] |
 | Hint as supporting text, not as a tooltip | tooltips are for controls only | [[ADR-0004 Tooltip rule]] |
-| Rows 40, 32, 24 dp (Material Web menu item 48 dp) | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Rows 40, 32, 28 dp (Material Web menu item 48 dp); button text 13/18 and chevron 18 dp at dense | desktop density | [[ADR-0002 Desktop density levels and target sizes]], [[ADR-0029 Desktop density and type scale]] |
 | Type-ahead buffer 1 s (Material Web 200 ms) | consistent with [[List]] | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 ## Sources

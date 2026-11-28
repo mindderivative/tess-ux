@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, navigation, tabs]
 related: ["[[Top App Bar]]", "[[Toolbar]]", "[[Pagination]]", "[[Status Bar]]", "[[Segmented Button]]", "[[Navigation Rail]]", "[[Dock Panel]]", "[[Badge]]", "[[Divider]]", "[[Tooltip]]", "[[Menu]]", "[[Icon Button]]", "[[Scrollbar and Scroll Container]]", "[[Keyboard Navigation]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Typography]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[Iconography]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0003 Scrollbar rule]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Colour Roles]]", "[[Typography]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]"]
@@ -30,8 +30,8 @@ The user chooses one of several parallel views (General, Keys, Advanced) and see
 
 1. Bar container (role `tablist`), full width of the region, on `surface`.
 2. Tab (role `tab`): hit area, state layer, label, optional icon, optional [[Badge]].
-3. Label, `title_small`.
-4. Icon (optional), 24 dp at default, 20 dp at compact and dense ([[Iconography]]).
+3. Label, `title_small` (`title_dense` at dense).
+4. Icon (optional), 24 dp at default, 20 dp at compact, 18 dp at dense ([[Iconography]]).
 5. Active indicator under the selected tab.
 6. Divider along the bottom edge ([[Divider]]).
 7. Panel (role `tabpanel`): the content of the selected tab, owned by the author, adjacent to the bar.
@@ -74,27 +74,27 @@ The selected state differs from inactive by the indicator (a shape) as well as c
 
 MD3: bar 48 dp, 64 dp for icon above label, indicator 3 dp (primary) or 2 dp (secondary).
 
-Tesserae by density ([[ADR-0002 Desktop density levels and target sizes]]; the bar heights are derived from the control heights 40, 32, 28 plus 8, a design choice):
+Tesserae by density ([[ADR-0029 Desktop density and type scale]], token `density.tab_height`; the default 48 dp is the MD3 value, compact 32 and dense 28 are Tesserae design choices matching the control heights of the level):
 
 | Level | Bar height | Icon above label (primary) | Icon beside label | Icon | Tab horizontal padding | Icon to label gap |
 |---|---|---|---|---|---|---|
 | default | 48 dp | 64 dp | allowed (48 dp) | 24 dp | 12 dp | 8 dp |
-| compact | 40 dp | not offered (icon beside label) | 40 dp | 20 dp | 12 dp | 8 dp |
-| dense | 32 dp | not offered (icon beside label) | 32 dp | 20 dp | 8 dp | 4 dp |
+| compact | 32 dp | not offered (icon beside label) | 32 dp | 20 dp | 12 dp | 8 dp |
+| dense | 28 dp | not offered (icon beside label) | 28 dp | 18 dp | 8 dp | 4 dp |
 
 - Indicator height is 3 dp (primary) and 2 dp (secondary) at all levels.
 - Tab minimum width 72 dp (scrollable, Android `tabMinWidth`), maximum 264 dp (`tabMaxWidth`); a fixed bar gives each tab bar width divided by tab count and switches to scrollable when that quotient falls below 72 dp.
-- The hit area is the whole tab (full bar height by tab width), at least 24 dp by 24 dp; 48 dp high in a touch context ([[Spacing and Density]], WCAG 2.2 SC 2.5.8).
-- The label line box (20 dp) is centred vertically by construction: 14, 10 and 6 dp above and below at 48, 40 and 32 dp (derived, not tokens). With an icon beside the label both are centred on the bar's middle line.
+- The hit area is the whole tab (full bar height by tab width), at least 24 dp by 24 dp at every level (the dense bar of 28 dp stays above the floor); 48 dp high in a touch context ([[Spacing and Density]], WCAG 2.2 SC 2.5.8).
+- The label line box is centred vertically by construction: 14 dp above and below at 48 dp (20 dp line), 6 dp at 32 dp (20 dp line) and 5 dp at 28 dp (18 dp line of `title_dense`) (derived, not tokens). With an icon beside the label both are centred on the bar's middle line.
 
 ## Dimensions and defaults
 
-Values agree with Sizing and density above; bar heights and compact and dense paddings are Tesserae choices #needs-verification-as-design-choice.
+Values agree with Sizing and density above; compact and dense bar heights, paddings and fonts are Tesserae choices #needs-verification-as-design-choice.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| bar | height | `density.control_height` plus 8 | 48 | 40 | 32 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss (48), design choice, proposed ADR: tab bar height per density, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
-| bar, primary with icon above label | height | - | 64 | N/A: not offered, the icon sits beside the label (40) | N/A: not offered, the icon sits beside the label (32) | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| bar | height | `density.tab_height` | 48 | 32 | 28 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss (48); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| bar, primary with icon above label | height | - | 64 | N/A: not offered, the icon sits beside the label (32) | N/A: not offered, the icon sits beside the label (28) | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | bar | padding | - | N/A: the tab carries the horizontal padding, the bar none | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Sizing and density | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | bar | margin | - | N/A: the region sets the outer space; the panel sits directly under the divider | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Layout and overflow | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
 | bar | gap | - | 0 | 0 | 0 | [[Tabs]] Anatomy (tabs touch, each carries its own padding) | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
@@ -104,11 +104,11 @@ Values agree with Sizing and density above; bar heights and compact and dense pa
 | bar | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 | tab | min width | - | 72 | 72 | 72 | https://github.com/material-components/material-components-android/blob/master/docs/components/Tabs.md (`tabMinWidth`) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | tab | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
-| tab | padding | `space.4`, `space.3` | 0 12 0 12 | 0 12 0 12 | 0 8 0 8 | design choice, proposed ADR: tab bar height per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| tab | padding | `space.4`, `space.3` | 0 12 0 12 | 0 12 0 12 | 0 8 0 8 | design choice, [[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | tab | margin | - | N/A: tabs touch; spacing is the tab padding | N/A: same as the default level | N/A: same as the default level | [[Tabs]] Sizing and density | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
 | tab | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Tabs]] Sizing and density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
-| tab | font | `title_small` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
-| tab | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Iconography]], [[Spacing and Density]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| tab | font | `title_small` | 14/20/500/0.1 | `title_small` 14/20/500/0.1 | `title_dense` 13/18/500/0.1 | [[Typography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| tab | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Iconography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | tab | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | tab | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 | active indicator, primary | height | - | 3 | 3 | 3 | https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-primary-navigation-tab.scss | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
@@ -164,7 +164,7 @@ Primary, fixed, automatic activation, density per container (default 48 dp), ind
 
 ## Acceptance criteria
 
-- [ ] AC-TBS-1 (token test): bar heights 48, 40, 32 dp at default, compact, dense; 64 dp for the icon-above-label primary bar at default only; indicator 3 dp (primary) and 2 dp (secondary) at all levels; icon 24, 20, 20 dp. Pass: values equal.
+- [ ] AC-TBS-1 (token test): bar heights 48, 32, 28 dp at default, compact, dense (`density.tab_height`); 64 dp for the icon-above-label primary bar at default only; indicator 3 dp (primary) and 2 dp (secondary) at all levels; icon 24, 20, 18 dp; label `title_small`, `title_small`, `title_dense`. Pass: values equal.
 - [ ] AC-TBS-2 (geometry check): the label line box is vertically centred in the bar at each level and scale 1.0 and 2.0 (space above equals space below within 0.5 dp); with an icon beside the label both centres lie on the bar's middle line within 0.5 dp. Pass: offsets within tolerance.
 - [ ] AC-TBS-3 (geometry check): tab minimum width 72 dp and maximum 264 dp; in a fixed bar each tab is bar width over tab count, and a bar with count times 72 dp greater than its width is scrollable. Pass: widths equal the rule.
 - [ ] AC-TBS-4 (geometry check): hit area of every tab at least 24 dp by 24 dp (48 dp high in a touch context) and tab hit areas do not overlap. Pass: bounds at or above the limits, zero intersection.
@@ -196,8 +196,8 @@ Evidence: no app or example in tess-ui uses `Tabs` outside the gallery; the conf
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Bar heights 48, 40, 32 dp; icon above label only at default | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
-| Icon 20 dp at compact and dense | smaller container | [[ADR-0002 Desktop density levels and target sizes]] |
+| Bar heights 48, 32, 28 dp; icon above label only at default | desktop density | [[ADR-0029 Desktop density and type scale]] |
+| Icon 20 dp at compact and 18 dp at dense; dense label `title_dense` 13/18 | smaller container | [[ADR-0029 Desktop density and type scale]] |
 | Hit area is the tab, 24 dp floor, 48 dp in touch contexts | desktop target size | [[ADR-0002 Desktop density levels and target sizes]] |
 | Tab bar overflow scrolls with a visible scrollbar thumb | scrollbar rule: content never silently clipped | [[ADR-0003 Scrollbar rule]] |
 | Focus ring inward, 3 dp, `secondary` | the ring must not be clipped by the bar or a scroller | [[ADR-0009 State layer percentages]] |

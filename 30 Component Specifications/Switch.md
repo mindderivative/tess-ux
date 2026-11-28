@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, selection, owner-feedback]
 related: ["[[Owner Feedback 2026-11-20]]", "[[Form Row]]", "[[Text Field]]", "[[Tooltip]]", "[[Icon Button]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Shape]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]"]
 depends_on: ["[[Colour Roles]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Tooltip]]"]
@@ -65,22 +65,22 @@ State changes show more than colour: the handle moves and changes size, and the 
 
 MD3 track 52 by 32 dp, handles 16, 24, 28 dp, state layer 40 dp, track border 2 dp, handle icon 16 dp: [Material Web switch tokens](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss).
 
-Rule: track height equals the smaller of 32 dp and the control height of the density level; track width is 52/32 of the height; the handle sizes, the handle icon, the border and the state layer scale by the same factor `s = track height / 32`, rounded to whole dp at scale 1.0. Control heights come from [[Spacing and Density]] ([[ADR-0002 Desktop density levels and target sizes]]).
+Rule: the track size is set per density level by the tokens `density.switch_track_w` and `density.switch_track_h` ([[ADR-0029 Desktop density and type scale]], amending [[ADR-0002 Desktop density levels and target sizes]]); it is not derived by a scale factor. The track is painted smaller than the hit row (row 40/32/28 dp), centred in it, so the hit area stays at least 24 dp.
 
-| Level | Control (row) height | Track | Handle off, on, pressed | State layer | Label gap to track |
-|---|---|---|---|---|---|
-| default | 40 dp | 52 by 32 dp | 16, 24, 28 dp | 40 dp | 8 dp |
-| compact | 32 dp | 52 by 32 dp | 16, 24, 28 dp | 32 dp | 8 dp |
-| dense | 28 dp | 46 by 28 dp | 14, 21, 24 dp | 28 dp | 4 dp |
+| Level | Control (row) height | Track | Handle off, on, pressed | Handle icon | State layer | Label gap to track |
+|---|---|---|---|---|---|---|
+| default | 40 dp | 52 by 32 dp | 16, 24, 28 dp | 16 dp | 40 dp | 8 dp |
+| compact | 32 dp | 40 by 24 dp | 12, 18, 20 dp | 12 dp | 32 dp | 8 dp |
+| dense | 28 dp | 36 by 20 dp | 10, 15, 17 dp | 10 dp | 28 dp | 4 dp |
 
-The compact and dense rows are Tesserae design choices #needs-verification-as-design-choice (MD3 gives one size). Compact keeps the MD3 track because the track height equals the 32 dp control height.
+The compact and dense rows are Tesserae design choices (MD3 gives one size), a design proposal with Fluent 40 by 20 as the nearest published form #needs-verification-as-design-choice. Track corner radius is half the track height (16, 12, 10 dp) and the handle radius half the on handle (12, 9, 7.5 dp).
 
 - Pointer target: the track and label together; at least 24 dp by 24 dp ([WCAG 2.2 SC 2.5.8](https://www.w3.org/TR/WCAG22/#target-size-minimum)); in touch contexts the hit area extends to 48 dp high, centred on the track, beyond the visual track and without overlapping a neighbouring control's hit area.
 - Row horizontal padding and gaps follow [[Spacing and Density]].
 
 ## Dimensions and defaults
 
-Track, handle, icon and border come from the Material Web switch tokens; compact is the MD3 size and dense scales by `s` = 28/32 (#needs-verification-as-design-choice for the compact and dense values and for the label font, which the tokens do not set).
+Track, handle, icon and border come from the Material Web switch tokens at default; compact and dense are Tesserae design choices ([[ADR-0029 Desktop density and type scale]]): the track is 40 by 24 and 36 by 20 dp, nearest published form Fluent 40 by 20 (#needs-verification-as-design-choice, also for the 2 dp border, the derived handle icon sizes and the label font, which the tokens do not set). The painted track is smaller than the 40/32/28 dp hit row, which keeps the hit area at least 24 dp high.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
@@ -90,18 +90,18 @@ Track, handle, icon and border come from the Material Web switch tokens; compact
 | row | padding | `space.0` | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | design choice, [[ADR-0002 Desktop density levels and target sizes]] (the track is centred in the row height) | tess-ui: yes (style padding); tess-shell: yes (Padding); tre: yes (padding) |
 | row | margin | - | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | N/A: the parent container sets the outer space | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: yes (Margin); tre: yes (margin) |
 | row | gap | `density.icon_label_gap` | 8 | 8 | 4 | [[Spacing and Density]] (label to track) | tess-ui: yes (style gap); tess-shell: yes (Spacing); tre: yes (gap) |
-| track | height | - | 32 | 32 | 28 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.HEIGHT); tess-shell: via module override (Height: 22 in Toggle_Module.tdl); tre: yes (height) |
-| track | min width | - | 52 | 52 | 46 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.WIDTH); tess-shell: via module override (Width: 40 in Toggle_Module.tdl); tre: yes (min_width) |
-| track | border width | - | 2 | 2 | 2 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (off; 0 when on); the scaled 1.75 rounds to 2 | tess-ui: no hook (track border literal in Switch._build); tess-shell: yes (Border_Width); tre: yes (border_width) |
+| track | height | `density.switch_track_h` | 32 | 24 | 20 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (Switch.HEIGHT); tess-shell: via module override (Height: 22 in Toggle_Module.tdl); tre: yes (height) |
+| track | min width | `density.switch_track_w` | 52 | 40 | 36 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (Switch.WIDTH); tess-shell: via module override (Width: 40 in Toggle_Module.tdl); tre: yes (min_width) |
+| track | border width | - | 2 | 2 | 2 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (off; 0 when on); compact and dense keep 2 dp: design choice #needs-verification-as-design-choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (track border literal in Switch._build); tess-shell: yes (Border_Width); tre: yes (border_width) |
 | track | border color | `outline` | `outline` | `outline` | `outline` | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (off rest) | tess-ui: via widget option color (on colour) and theme role outline; tess-shell: yes (Border_Color); tre: yes (border_color) |
-| track | corner radius | `shape.full` | 16 | 16 | 14 | [[Shape]] (half of the track height) | tess-ui: no hook (half of Switch.HEIGHT); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
+| track | corner radius | `shape.full` | 16 | 12 | 10 | [[Shape]] (half of the track height) | tess-ui: no hook (half of Switch.HEIGHT); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | track | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: no hook (track is a Python-drawn node with no elevation option); tess-shell: yes (Elevation percentage on the Toggle::track Rectangle); tre: yes (shadows) |
-| handle | height | - | 24 | 24 | 21 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (on; off 16, 16, 14; pressed 28, 28, 24); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (Switch.OFF, ON and PRESSED); tess-shell: via module override (Diameter: 16 in Toggle_Module.tdl); tre: yes (height) |
-| handle | corner radius | `shape.full` | 12 | 12 | 10.5 | [[Shape]] (half of the on handle) | tess-ui: no hook (half of the handle size); tess-shell: n/a: a Circle part has no corner radius, it follows its Diameter; tre: yes (corner_radius) |
+| handle | height | - | 24 | 18 | 15 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (on; off 16, 12, 10; pressed 28, 20, 17); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (Switch.OFF, ON and PRESSED); tess-shell: via module override (Diameter: 16 in Toggle_Module.tdl); tre: yes (height) |
+| handle | corner radius | `shape.full` | 12 | 9 | 7.5 | [[Shape]] (half of the on handle) | tess-ui: no hook (half of the handle size); tess-shell: n/a: a Circle part has no corner radius, it follows its Diameter; tre: yes (corner_radius) |
 | handle | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]], [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss) (disabled and rest handle at level 0) #needs-verification | tess-ui: no hook (handle is a Python-drawn node with no elevation option); tess-shell: n/a: Elevation is not a key of a Circle part; tre: yes (shadows) |
-| handle icon | icon size | - | 16 | 16 | 14 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: via widget option icons (on or off), the glyph size has no hook; tess-shell: n/a: the Toggle has no icon variant; tre: yes (width, height of the svg node) |
-| state layer | height | `density.control_height` | 40 | 32 | 28 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (height) |
-| label | font | `body_medium` | 14/20/400/0.25 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; design choice, proposed ADR: control label type role | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height, and no hook for letter spacing); tre: yes (font_size, font_weight, line_height) |
+| handle icon | icon size | - | 16 | 12 | 10 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, derived, [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget option icons (on or off), the glyph size has no hook; tess-shell: n/a: the Toggle has no icon variant; tre: yes (width, height of the svg node) |
+| state layer | height | `density.control_height` | 40 | 32 | 28 | [md-comp-switch v0_192](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-switch.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: no hook (STATE_LAYER_SIZE 40 in controls.py); tess-shell: no hook (no state layer in the key table); tre: yes (height) |
+| label | font | `density.font_body` | `body_medium` 14/20/400/0.25 | `body_medium` 14/20/400/0.25 | `body_dense` 13/18/400/0.25 | [[Typography]]; compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height, and no hook for letter spacing); tre: yes (font_size, font_weight, line_height) |
 
 ## Layout and overflow
 
@@ -147,7 +147,7 @@ Density from the container; plain variant; label after the track; both `Selected
 
 ## Acceptance criteria
 
-- [ ] AC-SWI-1: Token test. Track, handle, icon and state-layer sizes equal the table at each density (52 by 32, 16/24/28 and 40 dp at default; 52 by 32 and 32 dp at compact; 46 by 28, 14/21/24 and 28 dp at dense). Pass: all values equal.
+- [ ] AC-SWI-1: Token test. Track, handle, icon and state-layer sizes equal the table at each density (52 by 32, handles 16/24/28, icon 16 and state layer 40 dp at default; 40 by 24, 12/18/20, icon 12 and 32 dp at compact; 36 by 20, 10/15/17, icon 10 and 28 dp at dense). Pass: all values equal.
 - [ ] AC-SWI-2: Geometry check. The handle centre travels from track-height/2 to track-width minus track-height/2 and never leaves the track; the handle never overlaps the track border in the on state. Pass: handle bounds inside track bounds at every animation frame of a captured toggle.
 - [ ] AC-SWI-3: Scripted input. Focus the switch, press Space: `checked` flips once and `On_Change` fires once; a second Space flips it back. On a disabled switch Space does nothing and the switch cannot take focus. Pass: state and event counts equal.
 - [ ] AC-SWI-4: Scripted input. Press and release the pointer on the track toggles once; press on the track, move the pointer outside, release toggles nothing. Pass: state unchanged in the second case.
@@ -155,7 +155,7 @@ Density from the container; plain variant; label after the track; both `Selected
 - [ ] AC-SWI-6: AT tree assertion. The node has role `switch`, a non-empty name, `checked` equal to the state, and `disabled` equal to the state. Pass: all equal.
 - [ ] AC-SWI-7: Contrast script. Light and dark scheme: handle against track at least 3 to 1 in off and on; track (or its border in off) against the adjacent surface at least 3 to 1; label against surface at least 4.5 to 1. Pass: ratios at or above the limits.
 - [ ] AC-SWI-8: Scripted input (F8). Hover the switch for 600 ms: exactly the switch's own tooltip (if it has one) is visible and no row or group tooltip is; hover the row's label: only the label's tooltip. Pass: visible tooltip count and owners equal.
-- [ ] AC-SWI-9: Geometry check. The hit area is at least 24 dp by 24 dp at every density, and 48 dp high in the touch context. Pass: measured bounds at or above the limits.
+- [ ] AC-SWI-9: Geometry check. The hit row is at least 24 dp by 24 dp at every density (40, 32 and 28 dp high; the painted track is smaller than the row), and 48 dp high in the touch context. Pass: measured bounds at or above the limits.
 - [ ] AC-SWI-10: Scripted input. With reduced motion on, a toggle completes the state change within one frame. Pass: handle at final position in the first frame after the event.
 - [ ] AC-SWI-11: Token test. The state layer opacities resolve to the [[State Layers]] tokens and the disabled colours to 12 and 38 percent. Pass: values equal.
 - [ ] AC-SWI-12: Geometry check. A switch inside a [[Form Row]] stays vertically centred on the row at every density (±0.5 dp). Pass: offset at most 0.5 dp.
@@ -165,7 +165,7 @@ Density from the container; plain variant; label after the track; both `Selected
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/controls.py` (`Switch`) | partly meets: 52 by 32, handles 16/24/28, role `switch` with `checked`, Space and Enter toggle, pointer cancel handled, reduced motion handled in durations (AC-SWI-1 meets at default, AC-SWI-3, AC-SWI-4, AC-SWI-6 meet by reading the code, unrun); disabled colours use 12 and 38 percent (AC-SWI-11 partly); no density scaling (AC-SWI-1 fails at compact and dense); the tooltip of the config form sits on the label box only per the 2026-11-21 bot facts, so F8 against the switch is addressed in the config form but the toolkit allows tooltips on rows (AC-SWI-8 unmeasured); F9 not reproduced in code, unmeasured (AC-SWI-5); settable: track, handle and state layer sizes and radii are class constants of `Switch`, with no style or token hook |
-| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: role SWITCH with `checked`, Space toggles, Enter does not, disabled takes no focus or key (AC-SWI-3 meets by reading); 40 by 22 dp track with a 16 dp thumb: not the MD3 or density size (AC-SWI-1 fails); state looks are opacity 0.85 hover, 0.7 pressed, 0.5 disabled literals, not State Layers (AC-SWI-11 fails; status `absent` for State Layers); no icon variant; settable: track and thumb sizes are literals in `Toggle_Module.tdl` (a same-named module file overrides them); the state layer has no hook (absent) |
+| tess-shell | `tess-shell:src/tess_shell/shipped/Toggle/Toggle_Module.tdl`, `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` | partly meets: role SWITCH with `checked`, Space toggles, Enter does not, disabled takes no focus or key (AC-SWI-3 meets by reading); 40 by 22 dp track with a 16 dp thumb: close to the compact track (40 by 24, handles 12/18/20) but not equal, and not the default or dense size (AC-SWI-1 fails); state looks are opacity 0.85 hover, 0.7 pressed, 0.5 disabled literals, not State Layers (AC-SWI-11 fails; status `absent` for State Layers); no icon variant; settable: track and thumb sizes are literals in `Toggle_Module.tdl` (a same-named module file overrides them); the state layer has no hook (absent) |
 | tre | none (no switch primitive; composed from box and path nodes) | not applicable |
 
 Evidence: F8, F9 in [[Owner Feedback 2026-11-20]].
@@ -182,8 +182,9 @@ Evidence: F8, F9 in [[Owner Feedback 2026-11-20]].
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Track 46 by 28 dp with scaled handles at dense | dense row height 28 dp | [[ADR-0002 Desktop density levels and target sizes]] |
-| 40 dp state layer is 32 dp at compact and 28 dp at dense | the layer must not exceed the row | [[ADR-0002 Desktop density levels and target sizes]] |
+| Track 40 by 24 dp (compact) and 36 by 20 dp (dense) with handles 12/18/20 and 10/15/17 dp, handle icon 12 and 10 dp, track radius 12 and 10 dp | desktop density; the dense size is near Fluent 40 by 20, a design proposal #needs-verification-as-design-choice | [[ADR-0029 Desktop density and type scale]] |
+| The painted track is smaller than the 40/32/28 dp hit row and state layer | the hit area stays at least 24 dp high | [[ADR-0029 Desktop density and type scale]] |
+| Label text `body_dense` 13/18 at dense | desktop type scale | [[ADR-0029 Desktop density and type scale]] |
 | Keyboard focus ring 3 dp, 2 dp offset, role `secondary` | [[Focus Ring]] rule for all controls | [[ADR-0009 State layer percentages]] |
 | Enter optional for toggling | follows the WAI-ARIA Authoring Practices | [[ADR-0006 MD3 baseline with named Expressive adoptions]] (convention only) |
 

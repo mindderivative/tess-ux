@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, selection, input, chip]
 related: ["[[Button]]", "[[Icon Button]]", "[[Checkbox]]", "[[Radio Button]]", "[[Segmented Button]]", "[[Text Field]]", "[[Tooltip]]", "[[Form Row]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Typography]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]", "[[ADR-0013 Focus and pressed state layer 10 percent]]"]
 depends_on: ["[[Colour Roles]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[Button]]"]
@@ -73,13 +73,13 @@ The suggestion label colour is the value of the latest token set; the v0_192 set
 
 MD3 values (Material Web tokens, all four chip kinds): container height 32 dp, shape `corner-small`, leading icon 18 dp, avatar 24 dp, trailing icon 18 dp, outline 1 dp (0 dp selected); Material Web gives a touch target of 48 dp ([`chips/internal/_shared.scss`](https://github.com/material-components/material-web/blob/main/chips/internal/_shared.scss): `.touch { height: 48px }`); Android: `chipMinHeight` 32 dp and `chipMinTouchTargetSize` 48 dp ([Chip docs](https://github.com/material-components/material-components-android/blob/master/docs/components/Chip.md)). Horizontal padding 16 dp (8 dp beside an icon, avatar or close) and the gap of 8 dp between parts are those of tess-ui's chip stylesheet #needs-verification (not read from the Material Web internals).
 
-Rule: container height is 32 dp at default, 28 dp at compact and 24 dp at dense (the dense row of a list); icon, avatar and close icon scale down with the height.
+Rule ([[ADR-0029 Desktop density and type scale]]): container height is 32 dp at default, 28 dp at compact and 24 dp at dense (the dense row of a list); icon, avatar and close icon scale down with the height. Label: `label_large` at default and compact, `title_dense` 13/18/500/0.1 at dense.
 
 | Level | Container height | Icon and close icon | Avatar | Padding, no leading part | Padding beside icon, avatar, close | Gap between parts | Gap between chips |
 |---|---|---|---|---|---|---|---|
 | default | 32 dp | 18 dp | 24 dp | 16 dp | 8 dp | 8 dp | 8 dp |
-| compact | 28 dp | 18 dp | 20 dp | 12 dp | 8 dp | 8 dp | 8 dp |
-| dense | 24 dp | 16 dp | 18 dp | 8 dp | 4 dp | 4 dp | 4 dp |
+| compact | 28 dp | 16 dp | 20 dp | 12 dp | 8 dp | 8 dp | 8 dp |
+| dense | 24 dp | 14 dp | 18 dp | 8 dp | 4 dp | 4 dp | 4 dp |
 
 The compact and dense rows are Tesserae design choices #needs-verification-as-design-choice.
 
@@ -92,7 +92,7 @@ Container, icon, avatar, outline and shape come from the Material Web chip token
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| container | height | - | 32 | 28 | 24 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss); compact and dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container | height | - | 32 | 28 | 24 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | container | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.5.8 | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | container | min height | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.5.8 | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
 | container | padding | `space.5` | 0 16 0 16 | 0 12 0 12 | 0 8 0 8 | tess-ui:src/tess_ui/views/Chip_Stylesheet.tdl (no leading part); compact and dense: design choice, proposed ADR: chip paddings | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
@@ -105,14 +105,14 @@ Container, icon, avatar, outline and shape come from the Material Web chip token
 | container | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | container | elevation | `elevation.level0` | 0 | 0 | 0 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss) (flat; the elevated modifier is level 1) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 | container (elevated) | elevation | `elevation.level1` | 1 | 1 | 1 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss) | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
-| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
-| leading icon | icon size | - | 18 | 18 | 16 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| label | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | `title_dense` 13/18/500/0.1 | [[Typography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| leading icon | icon size | - | 18 | 16 | 14 | [md-comp-filter-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-filter-chip.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | avatar | height | - | 24 | 20 | 18 | [md-comp-input-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-input-chip.scss); compact and dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | avatar | corner radius | `shape.full` | 12 | 10 | 9 | [[Shape]] (half of the avatar) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | avatar | font | `label_medium` | 12/16/500/0.5 | 12/16/500/0.5 | 12/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | close button | height | - | 32 | 28 | 24 | [[Chip]], Sizing and density (the full container height) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | close button | min width | `target.min` | 24 | 24 | 24 | [[Spacing and Density]], WCAG 2.5.8 | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
-| close button | icon size | - | 18 | 18 | 16 | [md-comp-input-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-input-chip.scss); dense: design choice, [[ADR-0002 Desktop density levels and target sizes]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| close button | icon size | - | 18 | 16 | 14 | [md-comp-input-chip](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-comp-input-chip.scss); compact and dense: design choice, [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | close button | corner radius | `shape.full` | 16 | 14 | 12 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 
 ## Layout and overflow
@@ -168,7 +168,7 @@ Assist variant; outlined (not elevated); density from the container; no icon, no
 
 ## Acceptance criteria
 
-- [ ] AC-CHP-1 (token test): container height is 32, 28 and 24 dp, corner 8 dp, outline 1 dp (0 dp selected), icon 18, 18 and 16 dp, avatar 24, 20 and 18 dp at the three levels. Pass: all values equal.
+- [ ] AC-CHP-1 (token test): container height is 32, 28 and 24 dp, corner 8 dp, outline 1 dp (0 dp selected), icon 18, 16 and 14 dp, avatar 24, 20 and 18 dp, label `label_large`, `label_large`, `title_dense` at the three levels. Pass: all values equal.
 - [ ] AC-CHP-2 (geometry check): padding (16, 12, 8 dp without leading part; 8, 8, 4 dp beside icon, avatar or close), gap between parts (8, 8, 4 dp) and gap between chips (8, 8, 4 dp) at the three levels at scale 1.0 and 2.0. Pass: equal to the dp.
 - [ ] AC-CHP-3 (geometry check): the hit area of every chip is at least 24 by 24 dp at every level; the close button's hit area is at least 24 dp wide and the full container height; in a touch context the chip's hit area is at least 48 dp high; close and label hit areas do not overlap. Pass: measured bounds at or above the limits.
 - [ ] AC-CHP-4 (token test): colours per the States table for the four variants, selected and unselected, and elevated: container, outline width and colour, label, icon, layer opacities 0.08, 0.10, 0.10, disabled label 0.38 and disabled outline 0.12. Pass: values equal.
@@ -195,7 +195,7 @@ Assist variant; outlined (not elevated); density from the container; no icon, no
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Container 28 dp at compact and 24 dp at dense (MD3 32 dp) | desktop rows; 24 dp keeps the minimum target | [[ADR-0002 Desktop density levels and target sizes]] |
+| Container 28 dp at compact and 24 dp at dense (MD3 32 dp); icon 16 and 14 dp (MD3 18 dp); dense label `title_dense` 13/18 | desktop rows; 24 dp keeps the minimum target | [[ADR-0029 Desktop density and type scale]] |
 | Pointer target 24 dp minimum, 48 dp in touch contexts | WCAG 2.2 SC 2.5.8 | [[ADR-0002 Desktop density levels and target sizes]] |
 | Focus and pressed layer 10 percent; focus ring 3 dp, offset 2 dp, role `secondary` instead of the outline colour change | foundation rule for all controls | [[ADR-0009 State layer percentages]], [[ADR-0013 Focus and pressed state layer 10 percent]] |
 | Delete or Backspace removes a focused input chip; the close button is not a keyboard stop | desktop keyboard-first use; fewer Tab stops | [[ADR-0006 MD3 baseline with named Expressive adoptions]] (convention only) |

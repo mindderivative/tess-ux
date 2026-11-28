@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, tree, density, owner-feedback]
 related: ["[[Tree]]", "[[List Item]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[Motion]]", "[[Iconography]]", "[[Owner Feedback 2026-11-20]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0009 State layer percentages]]"]
@@ -75,8 +75,8 @@ The numbers are the binding density table of [[ADR-0002 Desktop density levels a
 | Indent per level (`I`) | 20 dp | 16 dp | 12 dp |
 | Chevron box (`C`) | 24 dp | 20 dp | 16 dp |
 | Gap between parts (`G`) | 8 dp | 8 dp | 4 dp |
-| Icon size | 24 dp | 20 dp | 20 dp |
-| Label type | `body_large` 16/24 | `body_medium` 14/20 | `body_medium` 14/20 |
+| Icon size | 24 dp | 20 dp | 18 dp |
+| Label type | `body_large` 16/24 | `body_medium` 14/20 | `body_dense` 13/18 |
 
 Icon sizes follow the icon button rule of the density table; the label types are a Tesserae choice (MD3 list items use `body_large` only). #needs-verification (design choice).
 
@@ -100,7 +100,7 @@ The label right edge never exceeds the row width minus `P`. A pointer target is 
 
 ## Dimensions and defaults
 
-These are the binding density values of [[Spacing and Density]] and [[ADR-0002 Desktop density levels and target sizes]]; the icon size and the label type are Tesserae choices #needs-verification-as-design-choice (proposed ADR: tree row label type by density). The icon size follows [[Iconography]] (24, 20, 20). The left padding of a row at depth `d` is the row padding plus the indent times `d`; the indent row gives the per-level step.
+These are the binding density values of [[Spacing and Density]] and [[ADR-0002 Desktop density levels and target sizes]]; the icon size and the label type follow [[ADR-0029 Desktop density and type scale]] (Tesserae design choices, #needs-verification-as-design-choice). The icon size follows [[Iconography]] (24, 20, 18). The left padding of a row at depth `d` is the row padding plus the indent times `d`; the indent row gives the per-level step. The config app Files and Structure trees are dense: 24 dp rows with 13/18 text.
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
@@ -115,8 +115,8 @@ These are the binding density values of [[Spacing and Density]] and [[ADR-0002 D
 | row | border width | - | 0 | 0 | 0 | design choice, proposed ADR (tree row appearance); [[Tree Node#States]] (the row has a fill state and a focus ring, no border) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | row | border color | - | N/A: the row draws no border; selection is a fill and focus is the inset ring | N/A: same as default | N/A: same as default | [[Tree Node#States]] | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | row | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] (the row is a one-line [[List Item]] indented by depth, container shape none) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| label | font | `body_large`, `body_medium`, `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]]; design choice, proposed ADR (tree row icon size and label type by density) | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
-| icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Tree Node#Sizing and density]]; design choice, proposed ADR (tree row icon size and label type by density) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| label | font | `body_large`, `body_medium`, `body_dense` | 16/24/400/0.5 | `body_medium` 14/20/400/0.25 | `body_dense` 13/18/400/0.25 | [[ADR-0029 Desktop density and type scale]] (default column: MD3 `body_large`) | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
+| icon | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[ADR-0029 Desktop density and type scale]] (dense 18, was 20) | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | chevron glyph | icon size | `density.chevron_box` | 24 | 20 | 16 | [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | row | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 
@@ -177,8 +177,8 @@ Density `compact` in configuration tools, `default` elsewhere (set by the projec
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/views/TreeNode_View.tdl`, `TreeNode_Stylesheet.tdl` | partly meets. Library default (origin/main after PRs #328 to #330): row 56 px (Compact 40), left 16 plus 24 per level, right 16, gap 8, chevron 24 by 24, leaf spacer 24, label `body_large` with `Max_Lines: 1` and ellipsis. Against `default`: height 56 vs 40, padding 16 vs 12, indent 24 vs 20 (fails AC-TRN-02, 03, 04, 05); chevron and gap meet. Chevron turn 200 ms meets AC-TRN-13; hover, focus and press layers are not part of the tree stylesheet (AC-TRN-10 fails); no label tooltip (AC-TRN-08 fails) |
-| tess-ui (config app) | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_Stylesheet.tdl` | partly meets. Override: `Compact: true` rows 40, left 4 plus 16 per level, right 4, gap 4, label `Flex: expand_horizontal` with `Min_Width: 0` and ellipsis; chevron box stays 24. Depth 0, 1, 2 chevron x: 4, 20, 36 (label x 32, 48, 64). Against `compact` (8, 16, 20, 8; row 32): indent 16 meets AC-TRN-04; row 40 vs 32, padding 4 vs 8, gap 4 vs 8, chevron 24 vs 20 fail AC-TRN-02, 03, 05, 06; against `dense` only depth 0 x (4) and gap 4 match. Ellipsis meets AC-TRN-07 as designed (not measured). Folder path label has a tooltip, tree labels have none |
+| tess-ui | `tess-ui:src/tess_ui/views/TreeNode_View.tdl`, `TreeNode_Stylesheet.tdl`, `tess-ui:src/tess_ui/tokens.py` | partly meets (read at origin/main; not run). With no app density (`App(density=)` empty) a row keeps the Material size: 56 px (40 with `Compact`), left 16 plus 24 per level, right 16, gap 8, chevron 24 by 24. With a `Density` param or app density set, row height, padding, indent, gap and chevron box come from `density_token` (`row_height` 40, 32, 24; `row_padding_x`; `tree_indent`; `icon_label_gap`; `chevron_box`). Label text is always `body_large` (`Typography_Role` in the view): no `body_medium` at compact or `body_dense` at dense (fails the label font rows of ADR-0029); the leaf icon is a fixed 24 by 24 (fails the dense 18 icon). Chevron turn 200 ms; hover, focus and press layers are not part of the tree stylesheet (AC-TRN-10 fails); no label tooltip (AC-TRN-08 fails) |
+| tess-ui (config app) | `tess-ui:apps/shell_config/src/tess_shell_config/app.py` | partly meets (read at origin/main; not run). `app.py` sets `density` to `compact` by default (comment: replaces the earlier tree override); `Main_Stylesheet.tdl` no longer carries a tree override. So the trees follow the compact tokens (row 32, indent 16, chevron 20), not the dense level the owner wants for Files and Structure (24 dp rows, 13/18 text); no per-tree `Density` setting is passed in the files read here (not searched in the Views). Label ellipsis through `Flex: expand_horizontal` and `Min_Width: 0` in the library stylesheet (AC-TRN-07, not measured) |
 | tess-shell | none | absent (no tree widget; the Config structure tree is planned in the shell vault) |
 | tre | `tre:crates/engine-core/src/node.rs` (`role` treeitem only) | not applicable (the engine has roles and text ellipsis, no tree row) |
 
@@ -190,7 +190,8 @@ Evidence: F3, F4, F5, F8 in [[Owner Feedback 2026-11-20]]. The demo ran before P
 |---|---|---|
 | A tree row exists although MD3 has no tree | hierarchical data in the config app and shell | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Row heights 40, 32, 24 dp instead of the 56 dp one-line list item | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
-| Label type `body_medium` at `compact` and `dense` | fits 32 and 24 dp rows | [[ADR-0002 Desktop density levels and target sizes]] |
+| Label type `body_medium` at `compact`, `body_dense` at `dense` | fits 32 and 24 dp rows | [[ADR-0029 Desktop density and type scale]] |
+| Icon 18 dp at `dense` instead of 20 | fits the 24 dp row | [[ADR-0029 Desktop density and type scale]] |
 | Row padding 12, 8, 4 dp instead of 16 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 
 ## Sources

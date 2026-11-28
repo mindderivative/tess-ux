@@ -16,7 +16,7 @@ depends_on: []
 > `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-21. The owner can overturn it. Question: OQ-03 in [[Open Questions]].
 
 > [!note] Amended
-> [[ADR-0029 Desktop density and type scale]] (proposed, 2026-11-28) adds the desktop type scale, the Switch, Tabs, Checkbox, Radio and Chip sizes per level, and widens the scope of a density from a project or a container to every element: each element has an optional `Density`, which cascades, and an explicit number on an element overrides any density ([[Spacing and Density]]). The levels, the container heights and the 24 and 48 dp targets of this record are unchanged.
+> [[ADR-0029 Desktop density and type scale]] (accepted, 2026-11-28) adds the desktop type scale, the Switch, Tabs, Checkbox, Radio and Chip sizes per level, and widens the scope of a density from a project or a container to every element: each element has an optional `Density`, which cascades, and an explicit number on an element overrides any density ([[Spacing and Density]]). The levels, the container heights and the 24 and 48 dp targets of this record are unchanged.
 
 ## Context
 

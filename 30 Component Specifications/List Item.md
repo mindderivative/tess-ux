@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, list, density]
 related: ["[[List]]", "[[Tree Node]]", "[[Form Row]]", "[[Scrollbar and Scroll Container]]", "[[Tooltip]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[State Layers]]", "[[Focus Ring]]", "[[Typography]]", "[[Iconography]]", "[[Shape]]", "[[Elevation]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]", "[[Deviations from MD3]]"]
 depends_on: ["[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0009 State layer percentages]]"]
@@ -85,7 +85,7 @@ The line-height rows give 24 + 20 = 44 for two lines at `default`; with 16 dp pa
 
 ## Dimensions and defaults
 
-Heights are the binding density table for one line and the derived rule of [[List Item#Sizing and density]] for two and three lines. The icon sizes follow [[Iconography]] (24, 20, 20).
+Heights are the binding density table for one line and the derived rule of [[List Item#Sizing and density]] for two and three lines. The icon sizes follow [[Iconography]] (24, 20, 18).
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
@@ -104,11 +104,11 @@ Heights are the binding density table for one line and the derived rule of [[Lis
 | divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[List Item#Layout and overflow]] | tess-ui: yes (style border_color); tess-shell: yes (Border_Color); tre: yes (border_color) |
 | container | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] ([[List Item#Tokens used]]) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
 | container (in a card list) | corner radius | `shape.small` | 8 | 8 | 8 | [[Shape]] ([[List Item#Tokens used]]) | tess-ui: yes (style corner_radius); tess-shell: yes (Corner_Radius); tre: yes (corner_radius) |
-| headline | font | `body_large`, `body_medium`, `body_medium` | 16/24/400/0.5 | 14/20/400/0.25 | 14/20/400/0.25 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
+| headline | font | `body_large`, `body_medium`, `body_dense` | 16/24/400/0.5 | `body_medium` 14/20/400/0.25 | `body_dense` 13/18/400/0.25 | [[ADR-0029 Desktop density and type scale]] (default column: MD3 `body_large`) | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | supporting text | font | `body_medium`, `body_small`, `body_small` | 14/20/400/0.25 | 12/16/400/0.4 | 12/16/400/0.4 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
 | overline, trailing text | font | `label_small` | 11/16/500/0.5 | 11/16/500/0.5 | 11/16/500/0.5 | [[Typography]] | tess-ui: via type role in the theme; tess-shell: yes (Font_Size, Font_Weight, Line_Height); tre: yes (font_size, font_weight, line_height) |
-| leading icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Item#Sizing and density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
-| trailing icon | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[List Item#Sizing and density]] | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| leading icon | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[ADR-0029 Desktop density and type scale]] (dense 18, was 20) | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
+| trailing icon | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[ADR-0029 Desktop density and type scale]] (dense 18, was 20) | tess-ui: via widget icon size; tess-shell: yes (Width, Height of the SVG block); tre: yes (width, height of the svg node) |
 | container | elevation | `elevation.level_0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 | container (dragged) | elevation | `elevation.level_4` | 4 | 4 | 4 | [[Elevation]] (planned; MD3 `dragged-container-elevation`) | tess-ui: yes (style elevation); tess-shell: yes (Elevation percentage); tre: yes (shadows) |
 
@@ -166,7 +166,7 @@ One line, no leading, no trailing, no divider, not selectable, `default` density
 
 | Project | Path | Status per spec |
 |---|---|---|
-| tess-ui | `tess-ui:src/tess_ui/views/ListItem_View.tdl`, `ListItem_Stylesheet.tdl`, `tess-ui:docs/stylesheets/lists/` | partly meets. Heights 56, 72, 88 (MD3 values, no density: fails AC-LSI-02); padding 16 and gap 16 with 8 dp top and bottom (fails AC-LSI-03); headline `body_large`, supporting `body_medium` with ellipsis (meets AC-LSI-04 as designed); avatar 40, image 56, icons 24 (default only); role `listitem` with `Selected` and `Description` (AC-LSI-09 partly: no `option` role in a selectable list); selected `secondary_container`; state layer and ripple through the interaction layer (AC-LSI-06 not measured); divider from 16 dp to the right edge, not inset at both ends (AC-LSI-10 fails); swipe and drag not built |
+| tess-ui | `tess-ui:src/tess_ui/views/ListItem_View.tdl`, `ListItem_Stylesheet.tdl`, `tess-ui:src/tess_ui/tokens.py`, `tess-ui:tests/test_density_lists.py` | partly meets (read at origin/main; not run). With no app density: heights 56, 72, 88, padding 16, gap 16 (MD3 values). With `App(density=)` set: one-line height is `row_height` (40, 32, 24), two and three lines add 20 each, padding and gap from `row_padding_x` and `icon_label_gap`; a test asserts the row heights 40, 32, 24. Text roles are fixed (`title_medium`, `body_large`, `body_medium`, `label_small` in the view): no `body_medium` or `body_dense` headline at compact or dense (fails the ADR-0029 font row); avatar 40, image 56, icons 24 at every density (fail the compact and dense sizes); role `listitem` with `Selected` and `Description` (AC-LSI-09 partly: no `option` role in a selectable list); selected `secondary_container`; state layer and ripple through the interaction layer (AC-LSI-06 not measured); divider from 16 dp to the right edge (AC-LSI-10 not re-read); swipe and drag not built |
 | tess-shell | `tess-shell:src/tess_shell/shipped/Stylesheets/Default_Stylesheet.tdl` (`.list_item`) | partly meets. Padding `[10, 6, 10, 6]`, radius small; hover `surface_raised`; selected raised fill with 2 px border; disabled opacity 0.5; no density levels (fails AC-LSI-01 to 03, 06, 08 value 0.38 vs 0.5) |
 | tre | none | not applicable (no list item; roles `list`, `listitem` available) |
 
@@ -176,6 +176,7 @@ One line, no leading, no trailing, no divider, not selectable, `default` density
 |---|---|---|
 | Heights 40, 32, 24 (one line) instead of 56 | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
 | Padding 12, 8, 4 dp and gap 8, 8, 4 dp instead of 16 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
+| Headline `body_medium` at `compact`, `body_dense` at `dense`; icons 18 dp at `dense` | desktop type scale | [[ADR-0029 Desktop density and type scale]] |
 | Disabled text 0.38 instead of MD3 label opacity 0.30 | one disabled content value across Tesserae ([[State Layers]]) | [[ADR-0009 State layer percentages]] |
 | State layer focus and pressed 10 percent instead of the 12 percent listed in the Material Web tokens | decided state layer scale | [[ADR-0009 State layer percentages]] |
 | Selected container `secondary_container` | MD3 list tokens give no selected container | [[ADR-0001 MD3 role names are the specification vocabulary]] |
