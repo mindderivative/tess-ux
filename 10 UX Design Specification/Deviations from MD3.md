@@ -172,7 +172,6 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Menu item 40 dp at default (Material Web 48 px) | same | [[ADR-0002 Desktop density levels and target sizes]] |
 | Row padding 12, 8, 4 (MD3 16) and icon gap 8, 8, 4 (MD3 16) | narrow side panels | [[ADR-0002 Desktop density levels and target sizes]] |
 | Project deviation, declared 2026-11-21: tess-ui toolkit default density is the legacy Material sizing (for example 56 px tree rows) until an App asks for a level; the spec level `default` (40 dp rows) applies when an App asks `density='default'`; the config app asks `compact` | migration without a visual change to existing apps | [[ADR-0002 Desktop density levels and target sizes]]; review: make `default` the toolkit default in a later major version once the apps are migrated ([[Adoption tess-ui]], TUI-002 to TUI-006) |
-| Known deviation (tess-shell, 2026-11-28): a Popup is its own surface and takes the shell's application density, not the density of its opener; tess-shell is evaluating the cost of passing the opener's density to the surface | the spec rule is that an overlay takes the density of the element that opened it (rule below); the shell cannot do it today | [[ADR-0029 Desktop density and type scale]]; review: close when the shell Popup resolves its opener's density ([[Adoption tess-shell]]) |
 | Spacing token set with a 2 dp half step | the shell already ships a 2 dp step; focus ring offset is 2 dp | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
 ## [[State Layers]]
