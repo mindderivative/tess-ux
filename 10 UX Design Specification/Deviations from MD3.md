@@ -1265,4 +1265,12 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 |---|---|---|
 | Element added that MD3 lacks | a live picture of edited data | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 
+## [[Menu Bar]]
+
+| Deviation | Reason | ADR |
+|---|---|---|
+| A desktop menu bar, which MD3 does not have | The owner asked for a top menu (File, Edit, View) in the config app; the commands of a desktop application belong in menus with shortcuts | [[ADR-0029 Desktop density and type scale]] |
+| Bar height 40, 32 and 28 dp and item padding 12, 8 and 8 dp | Desktop density levels; a 32 dp bar keeps a compact toolkit window uncluttered | [[ADR-0029 Desktop density and type scale]] |
+| Hover on a title opens its menu at once while another menu of the bar is open | Desktop menu bar convention (Windows, KDE, GTK) and the APG pattern; MD3 menus open from one button | [[ADR-0029 Desktop density and type scale]] |
+
 Back to [[10 UX Design Specification]].

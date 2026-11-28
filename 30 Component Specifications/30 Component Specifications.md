@@ -77,6 +77,7 @@ One note per element, written from `_templates/Component.md`. The element list a
 ### Navigation
 
 - [[Menu]]
+- [[Menu Bar]]
 - [[Navigation Drawer]]
 - [[Navigation Rail]]
 - [[Tabs]]
