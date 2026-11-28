@@ -15,6 +15,9 @@ depends_on: []
 > [!important] Status
 > `accepted`: accepted by bot:Orchestrator under the owner's delegation, 2026-11-21. The owner can overturn it. Question: OQ-03 in [[Open Questions]].
 
+> [!note] Amended
+> [[ADR-0029 Desktop density and type scale]] (proposed, 2026-11-28) adds the desktop type scale and the Switch, Tabs, Checkbox, Radio and Chip sizes per level. The levels, the container heights and the 24 and 48 dp targets of this record are unchanged.
+
 ## Context
 
 No project has a density scale; tess-ui has `Compact` on `Tree` only (rows 40 px against 56) and the shell hard-codes control heights. Owner feedback F3 and F4 (tree gaps too large). MD3 sizes target touch.

@@ -4,7 +4,7 @@ type: register
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-27
+updated: 2026-11-28
 tags: [register, md3]
 related: ["[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[10 UX Design Specification]]"]
 depends_on: []
@@ -197,6 +197,7 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 | Dimensions in dp equal px at scale 1.0 | Projects scale by the window scale factor | [[ADR-0002 Desktop density levels and target sizes]] |
 | The 5 shell type roles map to the nearest MD3 role | Shell keeps its own flat token set | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Single-line text vertical centring and ellipsis rules | Desktop controls; owner feedback F5 and F7 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Four desktop roles (`body_dense` 13/18, `title_dense` 13/18/500, `page_title_compact` 20/28, `page_title_dense` 18/24) and a density-to-role table | MD3 has one type scale for touch; at 32 and 28 dp controls the 16 and 14 dp body text reads large beside the control (owner feedback on the config app, 2026-11-28) | [[ADR-0029 Desktop density and type scale]] |
 
 ## [[Accessibility Tree]]
 

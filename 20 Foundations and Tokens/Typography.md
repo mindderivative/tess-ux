@@ -4,9 +4,9 @@ type: foundation
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [foundation, typography, tokens]
-related: ["[[Colour Roles]]", "[[Shape]]", "[[Spacing and Density]]", "[[Text Field]]", "[[Tooltip]]", "[[Existing Tokens]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[Owner Feedback 2026-11-20]]"]
+related: ["[[Colour Roles]]", "[[Shape]]", "[[Spacing and Density]]", "[[Text Field]]", "[[Tooltip]]", "[[Existing Tokens]]", "[[ADR-0001 MD3 role names are the specification vocabulary]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]", "[[ADR-0029 Desktop density and type scale]]", "[[Owner Feedback 2026-11-20]]"]
 depends_on: ["[[ADR-0001 MD3 role names are the specification vocabulary]]"]
 ---
 
@@ -43,6 +43,30 @@ Values from the published Material Web token source [md-sys-typescale v0_192](ht
 | `label_medium` | 12 | 16 | 500 | 0.5 | Roboto |
 | `label_small` | 11 | 16 | 500 | 0.5 | Roboto |
 
+### Desktop roles
+
+Four roles added for the `compact` and `dense` density levels ([[ADR-0029 Desktop density and type scale]]). They have no MD3 counterpart; the sizes come from the Researcher's desktop scale and the tracking is a design choice (the nearest MD3 role's value) `#needs-verification`. Family Roboto.
+
+| Role | Size (dp) | Line height (dp) | Weight | Tracking (dp) |
+|---|---|---|---|---|
+| `body_dense` | 13 | 18 | 400 | 0.25 |
+| `title_dense` | 13 | 18 | 500 | 0.1 |
+| `page_title_compact` | 20 | 28 | 400 | 0 |
+| `page_title_dense` | 18 | 24 | 400 | 0 |
+
+### Type by density
+
+A control or container takes its text role from its density level. The token `density.font_body` holds the body role at `default`, `compact` and `dense`.
+
+| Use | default | compact | dense |
+|---|---|---|---|
+| Body, field text, row label | `body_large` 16/24 | `body_medium` 14/20 | `body_dense` 13/18 |
+| Small text, helper, caption | `body_small` 12/16 | `body_small` 12/16 | `body_small` 12/16 |
+| Section title | `title_medium` 16/24/500 | `title_small` 14/20/500 | `title_dense` 13/18/500 |
+| Page title | `title_large` 22/28 | `page_title_compact` 20/28 | `page_title_dense` 18/24 |
+
+`default` is the touch size and equals the MD3 roles; the config app uses `compact` with the Files and Structure panels `dense` ([[Config App Layout]]). The component notes still name `body_large` and `body_medium` in their Default column; their `compact` and `dense` columns follow this table.
+
 ### Prominent label weight
 
 `label_large` and `label_medium` have a prominent weight of 700 (`label-large-weight-prominent`, `label-medium-weight-prominent` in the same source). It marks a selected or emphasised label.
@@ -58,7 +82,7 @@ tess-shell has 5 roles (`tess-shell:src/tess_shell/shipped/Themes/Default_Theme.
 | Shell role | Size / weight / line height | Nearest MD3 role | Match |
 |---|---|---|---|
 | `$type.caption` | 12 / 400 / 16 | `body_small` (12 / 400 / 16, tracking 0.4) | exact in size, weight and line height |
-| `$type.label` | 13 / 500 / 18 | `label_large` (14 / 500 / 20) | nearest; 13 is between `label_large` 14 and `label_medium` 12 |
+| `$type.label` | 13 / 500 / 18 | `title_dense` (13 / 500 / 18, a desktop role above); nearest MD3 role `label_large` (14 / 500 / 20) | exact against `title_dense`; between `label_large` 14 and `label_medium` 12 |
 | `$type.body` | 14 / 400 / 20 | `body_medium` (14 / 400 / 20, tracking 0.25) | exact in size, weight and line height |
 | `$type.title` | 18 / 500 / 24 | `title_medium` (16 / 500 / 24) | nearest; no MD3 role has size 18 |
 | `$type.display` | 28 / 400 / 36 | `headline_medium` (28 / 400 / 36) | exact; the shell name `display` is an MD3 `headline` size |
@@ -74,6 +98,7 @@ tess-shell has 5 roles (`tess-shell:src/tess_shell/shipped/Themes/Default_Theme.
 7. Roboto is the default family. The fallback chain is Roboto, then the desktop UI font, then the platform sans. Missing glyphs fall back per glyph.
 8. Text colour comes from an `on_` role ([[Colour Roles]]); text smaller than 24 dp regular meets 4.5:1.
 9. Expressive emphasised type styles ([md-sys-typescale-emphasized](https://github.com/material-components/material-web/blob/main/tokens/versions/latest/sass/_md-sys-typescale-emphasized.scss) exists in the latest tokens) are not part of the baseline; a project adopts one only through a named entry in [[Deviations from MD3]].
+10. Text size follows the density of its container: the role of each use at `default`, `compact` and `dense` is the density-to-role table. A control reads its body role from `density.font_body`, so a 32 dp field never carries `body_large` and a 28 dp row never carries `body_medium` ([[ADR-0029 Desktop density and type scale]]).
 
 ## Acceptance criteria
 
@@ -86,6 +111,8 @@ tess-shell has 5 roles (`tess-shell:src/tess_shell/shipped/Themes/Default_Theme.
 - [ ] AC-TYP-7: Scripted input. Hover the truncated label of AC-TYP-6 for 500 ms. Pass: a tooltip on that label shows the full text ([[Tooltip]] rules).
 - [ ] AC-TYP-8: Token test. The smallest size in the theme is 11 dp. Pass: no role below 11.
 - [ ] AC-TYP-9: Review. Each text role in a component spec names an MD3 role from the table. Pass: reviewer finds none that uses a literal size.
+- [ ] AC-TYP-10: Static scan and geometry check. In a container at `compact` or `dense` density no text node takes `body_large`, `title_medium` or `title_large`; the body role of a compact container is `body_medium` and of a dense container `body_dense`. Pass: zero hits in the stylesheets and in a rendered config app (compact application, dense Files and Structure panels).
+- [ ] AC-TYP-11: Token test. The four desktop roles return the sizes, line heights, weights and tracking of the desktop roles table ([[ADR-0029 Desktop density and type scale]]). Pass: exact match; `body_dense` is 13/18/400 and no role below 11 dp (AC-TYP-8).
 
 ## Status in code
 
@@ -103,3 +130,4 @@ tess-shell has 5 roles (`tess-shell:src/tess_shell/shipped/Themes/Default_Theme.
 | Dimensions in dp equal px at scale 1.0 | Projects scale by the window scale factor | [[ADR-0002 Desktop density levels and target sizes]] |
 | The 5 shell type roles map to the nearest MD3 role | Shell keeps its own flat token set | [[ADR-0001 MD3 role names are the specification vocabulary]] |
 | Single-line text vertical centring and ellipsis rules | Desktop controls; owner feedback F5 and F7 | [[ADR-0002 Desktop density levels and target sizes]] |
+| Four desktop roles (`body_dense` 13/18, `title_dense` 13/18/500, `page_title_compact` 20/28, `page_title_dense` 18/24) and a density-to-role table | MD3 has one type scale for touch; at 32 and 28 dp controls the 16 and 14 dp body text reads large beside the control (owner feedback on the config app, 2026-11-28) | [[ADR-0029 Desktop density and type scale]] |

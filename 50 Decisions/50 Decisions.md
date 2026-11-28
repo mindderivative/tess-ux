@@ -44,5 +44,6 @@ Architecture decision records, one per decision, from `_templates/ADR.md`. ADR-0
 - [[ADR-0026 Selection highlight radius 2 dp]]
 - [[ADR-0027 Shell popup and tooltip fade]]
 - [[ADR-0028 Tree rows are flat in the accessibility tree]]
+- [[ADR-0029 Desktop density and type scale]] (proposed)
 
 Back to [[Index]].
