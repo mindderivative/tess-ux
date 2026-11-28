@@ -41,6 +41,7 @@ One agreed layout so the keyboard order, the names read by assistive technology 
 | Names | Files, Structure, Editor, View, Properties, Problems (sentence case, [[15 Writing]]); "Problems" and not "Errors", because findings include warnings |
 | F6 order | Files, Structure, Editor, View, Properties, Problems |
 | View | a live visual mockup of the shell with the Panel as the desktop, fidelity level A, drawn as a [[Preview Pane]] |
+| Menu map (2026-11-28, decided by bot:Orchestrator for the owner, reversible, the owner is told) | Panels are fixed, so View has "Go to" panel commands and Theme (System, Light, Dark as a radio), no show and hide. Quit (Ctrl+Q) and Reset layout are new commands. No Open, Save as, Find, Cut, Copy, Paste or Close file, because the application has none (a menu never lists a command that does nothing). "Apply as I edit" is a toggle button on the toolbar and a check item in the Shell menu, not a Switch on the toolbar |
 
 ## Layout and sizes
 
@@ -83,7 +84,7 @@ F6 and Shift+F6 cycle Files, Structure, Editor, View, Properties, Problems and w
 
 ## Menus and toolbar
 
-Decisions of this record follow the owner feedback of 2026-11-28 (the top bar of text buttons is not a toolbar; add a top menu with File, Edit, View; make the toolbar a real one) and the specifications [[Menu Bar]] and [[Toolbar]]. They are proposals until the owner confirms the menu map.
+Decisions of this record follow the owner feedback of 2026-11-28 (the top bar of text buttons is not a toolbar; add a top menu with File, Edit, View; make the toolbar a real one) and the specifications [[Menu Bar]] and [[Toolbar]]. The menu map is decided (see Decisions, 2026-11-28).
 
 Order from the top: [[Title Bar]], [[Menu Bar]], [[Toolbar]], the dock, [[Status Bar]]. The Tab order is menu bar, toolbar, then the panels in F6 order; the menu bar is reached by Alt or F10, the toolbar by Tab. Application density is `compact` (32 dp bar, 40 dp toolbar of 32 dp icon buttons with 20 dp icons); the Files and Structure panels are `dense` ([[ADR-0029 Desktop density and type scale]]).
 
@@ -98,7 +99,7 @@ Shortcuts are those the application already has; a blank cell means no shortcut 
 | `&View` | submenu Theme, radio: System, Light, Dark (Ctrl+Shift+T cycles them); submenu Go to: Files, Structure, Editor, View, Properties, Problems (enabled only when it lists something); the commands show the panel's tab and move focus there, F6 and Shift+F6 cycle them; separator; Reset layout (default zone sizes and tabs) |
 | `&Shell` | Check (F5); Reload shell (Ctrl+Shift+R); separator; Apply as I edit, a check item (Ctrl+Shift+A) |
 
-Quit (Ctrl+Q) and Reset layout are the two commands that do not exist in the application today (read at `origin/main`); they are proposed here. Everything else is an existing command with its existing shortcut. A command that cannot run is disabled and keeps its place (Save while the file is not changed, Undo with nothing to undo, Reload shell while the shell is not running, Reload from disk when the file did not change).
+Quit (Ctrl+Q) and Reset layout are the two commands that do not exist in the application today (read at `origin/main`); they are new commands, decided below. Everything else is an existing command with its existing shortcut. A command that cannot run is disabled and keeps its place (Save while the file is not changed, Undo with nothing to undo, Reload shell while the shell is not running, Reload from disk when the file did not change).
 
 ### Toolbar
 
@@ -134,9 +135,7 @@ Alt or F10 focuses the menu bar; Alt+F, Alt+E, Alt+V and Alt+S open the four men
 
 - Whether 380 dp still suits the longest Properties rows: the widest need about 420 px, so such a row is clipped or wrapped at the default ([[10 Layout Overflow and Scrolling]] applies).
 - Corner ownership is specified in [[Dock]] AC-DCK-17; tess-ui's `Dock` behaviour is not re-checked.
-- Panels are fixed (decision above), so the View menu offers "Go to" commands and the tab choice, not show and hide; if the owner wants panels hidden by the user, that reverses the decision of 2026-11-27 and needs a new record.
-- Not in the menus because the application has no such command today (read at `origin/main`): Open (the Files panel opens a file), Save as (Duplicate file and Rename file do it), Close file, Find, Cut, Copy, Paste, Select all (the Editor has its own keys). Add them when the command exists; a menu never lists a command that does nothing.
-- Help menu (keyboard shortcuts list, about) is not specified: no such view exists.
+- Help menu (a keyboard shortcuts list, an about view) is not specified: no such view exists.
 
 ## Sources
 
