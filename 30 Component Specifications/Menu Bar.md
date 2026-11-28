@@ -100,7 +100,7 @@ Compact and dense values follow the density tokens; the bar is a Tesserae elemen
 ## Layout and overflow
 
 - Items lie left to right in the order of the menu list, start-aligned (right-aligned in right-to-left). The bar never wraps and never scrolls.
-- When the window is too narrow the titles that do not fit move, from the end, into a trailing overflow item (a "More" item with the icon `more_horiz`); its menu lists those titles as submenu items in order. A title is never truncated; the bar shows whole titles or none.
+- When the window is too narrow the titles that do not fit move, from the end, into a trailing overflow item (a "More" item with the icon `dots_horizontal`); its menu lists those titles as submenu items in order. A title is never truncated; the bar shows whole titles or none.
 - A title is one line; a menu label with a mnemonic shows the letter underlined and keeps the full text as its accessible name.
 - Menu placement: a menu opens under its item, start-aligned with the item's start edge, 0 dp gap, its top edge on the bar's bottom edge; it flips above when there is no room below and more above, then slides to stay at least 8 dp inside the window (the popup edge margin of the shell, see [[Popup]]). A submenu opens at its item's end edge and flips to the start side when it does not fit ([[Menu]]).
 

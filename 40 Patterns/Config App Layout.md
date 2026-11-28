@@ -107,11 +107,11 @@ Icon buttons with tooltips (name and shortcut), in three groups; every toolbar c
 
 | Group | Items (icon, tooltip) |
 |---|---|
-| File | `save` "Save (Ctrl+S)", `undo` "Undo (Ctrl+Z)", `redo` "Redo (Ctrl+Y)" |
+| File | `content_save` "Save (Ctrl+S)", `undo` "Undo (Ctrl+Z)", `redo` "Redo (Ctrl+Y)" |
 | Edit | `format_align_left` "Format file" |
-| Shell | `task_alt` "Check (F5)", `refresh` "Reload shell (Ctrl+Shift+R)", `autorenew` toggle "Apply as I edit (Ctrl+Shift+A)", on or off |
+| Shell | `check_circle` "Check (F5)", `refresh` "Reload shell (Ctrl+Shift+R)", `sync` toggle "Apply as I edit (Ctrl+Shift+A)", on or off |
 
-The icon names are Material Symbols names offered as a starting point; the project picks the icons ([[Iconography]]). The "Apply as I edit" Switch leaves the toolbar (a switch is a setting, not a command, and the desktop toolbar holds none): it becomes the toggle above and the check item in the Shell menu. The title text that shared the toolbar leaves it (the window title carries it). Save is no longer a filled text button: the unsaved state shows as the enabled state of Save.
+The icon names are the names of the tess-ui icon set (`tess-ui:src/tess_ui/icon_data/mdi.json`, read at `origin/main`), so the specification and the code use the same words ([[Iconography]]). The "Apply as I edit" Switch leaves the toolbar (a switch is a setting, not a command, and the desktop toolbar holds none): it becomes the toggle above and the check item in the Shell menu. The title text that shared the toolbar leaves it (the window title carries it). Save is no longer a filled text button: the unsaved state shows as the enabled state of Save.
 
 ### Keyboard
 
