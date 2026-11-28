@@ -22,8 +22,8 @@ Choose exactly one value from a closed set (an enum key, a unit, a mode) and see
 ## When to use and not
 
 - Use when: the set is closed, has 2 to about 12 options, and each option may need a hint to explain it.
-- Do not use when: the set is open or long and searchable ([[Font List]], [[Icon Picker]]); the value is a colour ([[Colour Picker]]); the choices are commands ([[Menu]]); there are 2 options that read as on and off ([[Switch]]).
-- Over about 12 options the picker adds a search field (filter, specified below).
+- Do not use when: the set is open or long and searchable ([[Autocomplete]], [[Font List]], [[Icon Picker]]); the value is a colour ([[Colour Picker]]); the choices are commands ([[Menu]]); there are 2 options that read as on and off ([[Switch]]).
+- Over about 12 options the picker adds a search field (filter, specified below); where the control is a field in a form row and the value is a name the person types, use the [[Autocomplete]] instead.
 
 ## Anatomy
 

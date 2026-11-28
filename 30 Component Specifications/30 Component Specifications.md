@@ -108,6 +108,7 @@ One note per element, written from `_templates/Component.md`. The element list a
 - [[Font List]]
 - [[Icon Picker]]
 - [[Choice Picker]]
+- [[Autocomplete]]
 - [[List Editor]]
 
 ### Shell surfaces
