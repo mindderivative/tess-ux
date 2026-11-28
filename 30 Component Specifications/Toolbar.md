@@ -4,7 +4,7 @@ type: component
 status: draft
 owner: phil
 created: 2026-11-21
-updated: 2026-11-21
+updated: 2026-11-28
 tags: [component, navigation, toolbar, owner-feedback]
 related: ["[[Top App Bar]]", "[[Tabs]]", "[[Status Bar]]", "[[Pagination]]", "[[Icon Button]]", "[[Button]]", "[[Floating Action Button]]", "[[Menu]]", "[[Switch]]", "[[Tooltip]]", "[[Divider]]", "[[Scrollbar and Scroll Container]]", "[[Keyboard Navigation]]", "[[Owner Feedback 2026-11-20]]", "[[Spacing and Density]]", "[[Colour Roles]]", "[[Shape]]", "[[Elevation]]", "[[Motion]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]", "[[14 Accessibility Basics]]", "[[Accessibility Rules]]", "[[Test Method]]", "[[ADR-0002 Desktop density levels and target sizes]]", "[[ADR-0004 Tooltip rule]]", "[[ADR-0006 MD3 baseline with named Expressive adoptions]]"]
 depends_on: ["[[Icon Button]]", "[[Menu]]", "[[Spacing and Density]]", "[[State Layers]]", "[[Focus Ring]]", "[[10 Layout Overflow and Scrolling]]"]
@@ -42,7 +42,8 @@ Groups the commands that act on the content around it (format text, save, undo, 
 | Floating | a pill over content | shape `full`, elevation level 3 (tess-ui `Elevation: 3`), as long as its items, `Max_Length` for overflow |
 | Vertical (floating only) | an edge rail of tools | a column, thickness equal to the docked height |
 | Vibrant | emphasis | container `primary_container`, icons `on_primary_container` |
-| Labelled (Tesserae) | commands whose names must be visible (a config tool: Save, Undo, Check) | items are [[Button]]s with text; same keyboard, overflow and density rules |
+| Icon (Tesserae desktop) | the toolbar of a desktop application at compact and dense | icon-only [[Icon Button]]s with tooltips (name and shortcut), toggles, group dividers, overflow; no text |
+| Labelled (Tesserae) | a command whose icon alone is ambiguous, or the primary action of the window (at most two per toolbar) | items are [[Button]]s with text; same keyboard, overflow and density rules |
 
 Docked and floating, vibrant and standard are the MD3 forms; the MD3 toolbar page is script-rendered and its token values could not be fetched #needs-verification (they are the Expressive toolbar, [[ADR-0006 MD3 baseline with named Expressive adoptions]]). The labelled variant has no MD3 counterpart; MD3 toolbars hold icon buttons.
 
@@ -54,6 +55,7 @@ The toolbar itself has no state layer. Each item has the states of [[Icon Button
 |---|---|---|
 | Rest | container per variant | `surface_container`, `primary_container` (vibrant) |
 | Item disabled | the item at 38 percent, no focus, pointer or key; skipped by arrow keys | [[State Layers]] |
+| Toggle on (`pressed`) | the item container `secondary_container` and icon `on_secondary_container`, with the state layers of the item over it | [[Icon Button]] toggle (selected) |
 | All disabled (`Disabled`) | every item and the action button disabled | review |
 | Hidden (`Hidden`) | faded out (opacity 0, 200 ms), items out of the Tab order and the accessibility tree | tess-ui |
 | More open | the More button `expanded` true, the menu open | [[Menu]] |
@@ -64,13 +66,13 @@ The toolbar itself has no state layer. Each item has the states of [[Icon Button
 
 ## Sizing and density
 
-Item sizes come from [[Icon Button]] (container 40, 32, 28 dp; icon 24, 20, 20 dp) and [[Button]] (40, 32, 28 dp). The toolbar thickness is the item size plus a padding on each side (design choice; the default equals MD3 and tess-ui at 64 dp):
+Item sizes come from [[Icon Button]] (container 40, 32, 28 dp; icon 24, 20, 18 dp) and [[Button]] (40, 32, 28 dp). The toolbar thickness is the item size plus a padding on each side (design choice; the default equals MD3 and tess-ui at 64 dp; compact and dense are a desktop toolbar, one item plus 4 and 2 dp, [[ADR-0029 Desktop density and type scale]]):
 
 | Level | Thickness (docked, floating, vertical) | Item | Padding across | Padding along (docked) | Gap between items | Gap to action button |
 |---|---|---|---|---|---|---|
 | default | 64 dp | 40 dp | 12 dp | 16 dp | 4 dp | 8 dp |
-| compact | 48 dp | 32 dp | 8 dp | 8 dp | 4 dp | 8 dp |
-| dense | 36 dp | 28 dp | 4 dp | 8 dp | 2 dp | 4 dp |
+| compact | 40 dp | 32 dp | 4 dp | 8 dp | 4 dp | 8 dp |
+| dense | 32 dp | 28 dp | 2 dp | 8 dp | 2 dp | 4 dp |
 
 - Floating padding along the length: 8 dp default, 4 dp compact and dense; the pill is as long as its items plus padding.
 - Every item hit area is at least 24 dp by 24 dp; adjacent hit areas do not overlap; in a touch context 48 dp ([[Spacing and Density]]).
@@ -82,22 +84,22 @@ Values agree with Sizing and density above; the thickness, paddings and gaps are
 
 | Part | Property | Token | Default | Compact | Dense | Source | Settable |
 |---|---|---|---|---|---|---|---|
-| container | height | - | 64 | 48 | 36 | design choice, proposed ADR: toolbar thickness per density; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
-| container, docked | padding | `space.4`, `space.5`, `space.3`, `space.2` | 12 16 12 16 | 8 8 8 8 | 4 8 4 8 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
-| container, floating | padding | `space.4`, `space.3`, `space.2` | 12 8 12 8 | 8 4 8 4 | 4 4 4 4 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container | height | - | 64 | 40 | 32 | design choice, [[ADR-0029 Desktop density and type scale]]; default equals tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
+| container, docked | padding | `space.4`, `space.5`, `space.3`, `space.2`, `space.1` | 12 16 12 16 | 4 8 4 8 | 2 8 2 8 | design choice, [[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
+| container, floating | padding | `space.4`, `space.3`, `space.2`, `space.1` | 12 8 12 8 | 4 4 4 4 | 2 4 2 4 | design choice, [[ADR-0029 Desktop density and type scale]], [[Spacing and Density]] | tess-ui: yes (style padding); tess-shell: n/a: element absent in tess-shell; tre: yes (padding) |
 | container | margin | - | N/A: the parent places the toolbar; a floating toolbar's offset is the author's | N/A: same as the default level | N/A: same as the default level | [[Spacing and Density]] | tess-ui: yes (style margin); tess-shell: n/a: element absent in tess-shell; tre: yes (margin) |
 | container | gap | `space.2`, `space.1` | 4 | 4 | 2 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
 | container, with action button | gap | `space.3`, `space.2` | 8 | 8 | 4 | design choice, proposed ADR: toolbar thickness per density, [[Spacing and Density]] | tess-ui: yes (style gap); tess-shell: n/a: element absent in tess-shell; tre: yes (gap) |
 | container | border width | - | 0 | 0 | 0 | [[Toolbar]] Variants (no border drawn) | tess-ui: yes (style border_width); tess-shell: n/a: element absent in tess-shell; tre: yes (border_width) |
 | container | border color | - | N/A: the toolbar draws no border; the container colour or the shadow separates it | N/A: same as the default level | N/A: same as the default level | [[Toolbar]] Variants | tess-ui: yes (style border_color); tess-shell: n/a: element absent in tess-shell; tre: yes (border_color) |
 | container, docked | corner radius | `shape.none` | 0 | 0 | 0 | [[Shape]] | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
-| container, floating | corner radius | `shape.full` | 32 | 24 | 18 | [[Shape]] (half the thickness) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
+| container, floating | corner radius | `shape.full` | 32 | 20 | 16 | [[Shape]] (half the thickness) | tess-ui: yes (style corner_radius); tess-shell: n/a: element absent in tess-shell; tre: yes (corner_radius) |
 | container, docked | elevation | `elevation.level0` | 0 | 0 | 0 | [[Elevation]] | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 | container, floating | elevation | `elevation.level3` | 3 | 3 | 3 | [[Elevation]], tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl | tess-ui: yes (style elevation); tess-shell: n/a: element absent in tess-shell; tre: yes (shadows) |
 | item | height | `density.control_height` | 40 | 32 | 28 | [[Icon Button]], [[Button]], [[Spacing and Density]] | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | item | min width | - | 40 | 32 | 28 | [[Icon Button]] (square container) | tess-ui: yes (style min_width); tess-shell: n/a: element absent in tess-shell; tre: yes (min_width) |
 | item | min height | - | 24 | 24 | 24 | WCAG 2.2 SC 2.5.8, [[Spacing and Density]] | tess-ui: yes (style min_height); tess-shell: n/a: element absent in tess-shell; tre: yes (min_height) |
-| item | icon size | `density.icon_button_icon` | 24 | 20 | 20 | [[Icon Button]], [[Iconography]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
+| item | icon size | `density.icon_button_icon` | 24 | 20 | 18 | [[Icon Button]], [[Iconography]], [[ADR-0029 Desktop density and type scale]] | tess-ui: via widget icon size; tess-shell: n/a: element absent in tess-shell; tre: yes (width, height of the svg node) |
 | item, labelled | font | `label_large` | 14/20/500/0.1 | 14/20/500/0.1 | 14/20/500/0.1 | [[Button]], [[Typography]] | tess-ui: via type role in the theme; tess-shell: n/a: element absent in tess-shell; tre: yes (font_size, font_weight, line_height) |
 | group divider | height | - | 1 | 1 | 1 | [[Divider]] (vertical line, 1 dp wide) | tess-ui: yes (style height); tess-shell: n/a: element absent in tess-shell; tre: yes (height) |
 | group divider | border color | `outline_variant` | `outline_variant` | `outline_variant` | `outline_variant` | [[Divider]] | tess-ui: yes (style background); tess-shell: n/a: element absent in tess-shell; tre: yes (background) |
@@ -119,12 +121,13 @@ Config app evidence (`tess-ui:apps/shell_config/src/tess_shell_config/Views/Main
 
 - Pointer: as the items. The More button opens the Menu on press; a press elsewhere closes it.
 - Keyboard ([WAI-ARIA toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/), [[Keyboard Navigation]]): the toolbar is one Tab stop (roving focus); Tab enters on the item that last had focus (the first on first entry); Left and Right (Up and Down in a vertical toolbar) move to the previous and next enabled item and wrap; Home and End go to the first and last; Enter or Space activates; Tab and Shift+Tab leave. Disabled items are skipped. The project documents a shortcut that moves focus to the toolbar from the content (APG recommends it where access is frequent). Escape in the open More menu closes it and returns focus to the More button.
+- Desktop icon toolbar ([[ADR-0029 Desktop density and type scale]]): the items are [[Icon Button]]s with no text; a text label is allowed only where the icon alone is ambiguous or the command is the primary action of the window, at most two per toolbar. Commands that belong together form a group; groups are separated by a divider. A toggle command is a toggle [[Icon Button]] (`pressed`), not a [[Switch]]; the desktop form holds no Switch. Every command of the toolbar is also in the [[Menu Bar]] with the same name and shortcut; the toolbar is a shortcut to frequent commands, never the only place. A disabled command is disabled in both.
 - Touch: tap on 48 dp hit areas in a touch context; no swipe.
 - Hidden toolbar: `Hidden` removes the items from the Tab order; a hidden toolbar takes no focus.
 
 ## Tooltip and overlay behaviour
 
-Each icon item carries a tooltip with its name on the item itself ([[ADR-0004 Tooltip rule]], [[Tooltip]]): 500 ms hover, immediate on keyboard focus, dismissed on press. A labelled button needs one only when its label is truncated or it has a shortcut to show ("Save, Ctrl+S" in the description). The toolbar container has no tooltip. The only overlay is the overflow [[Menu]]; it opens below the More button (above for a bottom toolbar, to the side for a vertical one), takes focus on its first item and returns focus to the More button on close.
+Each icon item carries a tooltip on the item itself with its name, and its shortcut in parentheses when it has one ("Undo (Ctrl+Z)") ([[ADR-0004 Tooltip rule]], [[Tooltip]]): 500 ms hover, immediate on keyboard focus, dismissed on press. A labelled button needs one only when its label is truncated or it has a shortcut to show. The toolbar container has no tooltip. The only overlay is the overflow [[Menu]]; it opens below the More button (above for a bottom toolbar, to the side for a vertical one), takes focus on its first item and returns focus to the More button on close.
 
 ## Motion
 
@@ -132,8 +135,8 @@ Hide and show fade 200 ms (`short4`) in tess-ui; MD3 slides a floating toolbar o
 
 ## Accessibility
 
-- Role: `toolbar` ([WAI-ARIA toolbar](https://www.w3.org/TR/wai-aria-1.2/#toolbar)) with an accessible name ("Actions", "Text formatting") and an orientation. The engine has no `toolbar` role (`tre:docs/reference/node.md`), so the container is a `group` with the same name today (candidate request below).
-- Items: role `button` (toggle items `pressed`), name from the visible label or the icon's name; descriptions carry shortcuts.
+- Role: `toolbar` ([WAI-ARIA toolbar](https://www.w3.org/TR/wai-aria-1.2/#toolbar)) with an accessible name ("Actions", "Text formatting") and an orientation. The tre role list of 0.6.11 includes `toolbar` (`tre:docs/reference/node.md`); a project on an older engine uses a `group` with the same name (candidate request below).
+- Items: role `button` (toggle items `pressed`); the accessible name is the command name from the visible label or the icon's name, never the shortcut; the shortcut is the key shortcut of the item and appears in the tooltip ([[ADR-0004 Tooltip rule]]); an icon-only item has no visible text.
 - More: name "More actions", `expanded` follows the menu.
 - Keys: as in Behaviour; labelled and unlabelled items follow the same keys.
 - Contrast: icons and labels at least 3 to 1 for icons, 4.5 to 1 for text against the container, in both schemes and for vibrant (WCAG 2.2 SC 1.4.3, 1.4.11).
@@ -150,7 +153,7 @@ Docked, standard (not vibrant), horizontal, `surface_container`, density per con
 
 ## Acceptance criteria
 
-- [ ] AC-TLB-1 (token test): thickness 64, 48, 36 dp at default, compact, dense; items 40, 32, 28 dp; paddings and gaps equal the Sizing table. Pass: values equal.
+- [ ] AC-TLB-1 (token test): thickness 64, 40, 32 dp at default, compact, dense; items 40, 32, 28 dp; paddings and gaps equal the Sizing table. Pass: values equal.
 - [ ] AC-TLB-2 (geometry check): each item is vertically centred in a docked toolbar at each level (space above equals space below within 0.5 dp) and a trailing text line is centred on the same line. Pass: offsets within 0.5 dp.
 - [ ] AC-TLB-3 (geometry check): item hit areas at least 24 dp by 24 dp (48 dp in a touch context) and do not overlap. Pass: bounds at or above limits, zero intersection.
 - [ ] AC-TLB-4 (scripted input): the toolbar is exactly one Tab stop; Tab enters on the item that last had focus; Right, Left, Home, End (Down, Up, Home, End in a vertical toolbar) move to the next, previous (both wrapping), first and last enabled item; disabled items are skipped. Pass: focus owner equals after each key.
@@ -163,22 +166,28 @@ Docked, standard (not vibrant), horizontal, `surface_container`, density per con
 - [ ] AC-TLB-11 (contrast script): in light, dark and high contrast, item icons against the container at least 3 to 1, labels at least 4.5 to 1, for standard and vibrant. Pass: ratios at or above limits.
 - [ ] AC-TLB-12 (scripted input): with `Hidden` true the items take no Tab stop and are absent from the accessibility tree; fade completes in 200 ms, within one frame with reduced motion simulated. Pass: tree walk and frame counts equal.
 - [ ] AC-TLB-13 (geometry check): a labelled toolbar's text label that does not fit ends with an ellipsis and the full label is the accessible name. Pass: ellipsis present, zero pixels outside.
+- [ ] AC-TLB-14 (geometry check, desktop sizes): at compact the docked toolbar is 40 dp high with 32 dp items and 20 dp icons; at dense 32 dp high with 28 dp items and 18 dp icons; every item is centred within 0.5 dp and its hit area is at least 24 by 24 dp. Pass: bounds equal.
+- [ ] AC-TLB-15 (AT tree assertion, icon items): an icon-only item has role `button`, an accessible name equal to the command name without the shortcut ("Save"), the key shortcut exposed as its key shortcut (`Control+S`), and no visible text; a toggle has `pressed` true or false. Pass: properties equal for every item of the config app toolbar.
+- [ ] AC-TLB-16 (scripted input, tooltip): hovering an icon item for 500 ms and focusing it by keyboard each show a tooltip reading the name followed by the shortcut in parentheses ("Save (Ctrl+S)"); an item without a shortcut shows the name only; a labelled item shows a tooltip only when its label is truncated or it has a shortcut ([[Tooltip]] AC-TIP-19: the tip is hidden from the tree and its text is the item's description). Pass: text, delay and tree equal.
+- [ ] AC-TLB-17 (scripted input, toggle): Enter or Space on a toggle flips `pressed` once and runs its action; the pressed state shows container `secondary_container` and icon `on_secondary_container` and an unpressed one the plain item colours; the pressed state is not conveyed by colour alone (the `pressed` property is set and the tooltip says "on" or "off", for example "Apply as I edit, on"). Pass: state, colours and property equal in light and dark.
+- [ ] AC-TLB-18 (geometry check, groups): items of one group have the item gap; a divider (1 dp wide, `outline_variant`, as high as an item minus 8 dp) with a `space.3` gap on each side separates two groups; a divider is not focusable and arrow keys skip it; overflow moves whole items, from the end, and a divider that would end a visible run or start the menu is dropped. Pass: rectangles equal, focus order skips dividers.
 
 ## Status in code
 
 | Project | Path | Status per spec |
 |---|---|---|
 | tess-ui | `tess-ui:src/tess_ui/views/Toolbar_View.tdl`, `tess-ui:src/tess_ui/views/Toolbar_Stylesheet.tdl`, `tess-ui:src/tess_ui/widgets/navigation.py` | partly meets. Docked and floating, vertical, vibrant, icon items with name and tooltip, `Fit` overflow into a Menu, action button, `Hidden`, `Focus_Group: both` (one Tab stop, arrows wrap, Home and End); thickness 64 dp fixed (AC-TLB-1 partly: default only, no density); `Fit` assumes 44 px per item and 48 px for More, so it fails for compact, dense and labelled buttons (AC-TLB-5, AC-TLB-6); role `group` not `toolbar` (AC-TLB-8); no pinned items; slide-away not built; docked padding 16 and gap 8 (the group gap is 4); icons only, no labelled buttons (AC-TLB-13); focus return to More not read (AC-TLB-7 unmeasured) |
-| tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (container `toolbar`) | partly meets: hand-built Container of seven controls; no `Focus_Group` so seven Tab stops (AC-TLB-4 fails); no overflow rule (AC-TLB-5, AC-TLB-6 fail at narrow widths); height 56 dp (AC-TLB-1 fails at compact); role `group` named "Actions" (AC-TLB-8 partly); title ellipsis meets AC-TLB-13; buttons have name and description |
+| tess-ui | `tess-ui:apps/shell_config/src/tess_shell_config/Views/Main_View.tdl` (container `toolbar`) | partly meets: hand-built Container of seven controls (text buttons and a Switch; read at `origin/main`, not run); no `Focus_Group` so seven Tab stops (AC-TLB-4 fails); no overflow rule (AC-TLB-5, AC-TLB-6 fail at narrow widths); height 56 dp (AC-TLB-1 and AC-TLB-14 fail); text buttons instead of icon buttons with tooltips (AC-TLB-15, AC-TLB-16 fail); role `group` named "Actions" (AC-TLB-8 partly); title ellipsis meets AC-TLB-13; buttons have name and description. The owner's feedback of 2026-11-28 asks for the icon form; the command split between menu bar and toolbar is in [[Config App Layout]] |
 | tess-shell | none (the shell has module bars, not toolbars; see [[Bar]]) | absent |
-| tre | `tre:docs/reference/node.md` | not applicable: no toolbar primitive, no `toolbar` role |
+| tre | `tre:docs/reference/node.md` | not applicable as a component: no toolbar primitive. The role list of 0.6.11 in `node.md` includes `toolbar` (read on `origin/main`); whether a released tre ships it and whether tess-ui sets it were not checked |
 
 ## Deviations from Material Design 3
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Thickness 64, 48, 36 dp; items 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
-| Labelled variant with text buttons and a Switch in the trailing slot | desktop commands need visible names; the config app already needs it | none (Tesserae-only variant) |
+| Thickness 64, 40, 32 dp; items 40, 32, 28 dp | desktop density; the compact and dense toolbars are one item plus a 4 or 2 dp padding on each side | [[ADR-0029 Desktop density and type scale]] (amends [[ADR-0002 Desktop density levels and target sizes]]) |
+| Labelled variant (text buttons, an optional Switch in the trailing slot), now limited to commands whose icon is ambiguous or that are the primary action of the window | desktop commands need visible names only where an icon cannot carry the meaning | none (Tesserae-only variant) |
+| Desktop icon toolbar: thickness 40 dp at compact and 32 dp at dense (MD3 64 dp), dense icon 18 dp, toggle buttons with a `pressed` state, tooltip with name and shortcut | The owner's feedback on the config app: the top bar of text buttons is not a toolbar and the sizes read as mobile; a desktop toolbar is a row of compact icon buttons with tooltips | [[ADR-0029 Desktop density and type scale]] |
 | Overflow always by menu, never scroll or wrap | no hidden or clipped command (chapter 10 rule 3) | none (chapter 10) |
 | Roving focus with Home, End and wrap; one Tab stop | WAI-ARIA toolbar, desktop keyboard-first | none |
 | Fade, not slide, to hide | engine has no scroll-linked slide | none (code limit) |

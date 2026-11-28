@@ -1074,8 +1074,9 @@ The register of every departure from Material Design 3 recorded in the notes, wi
 
 | Deviation | Reason | ADR |
 |---|---|---|
-| Thickness 64, 48, 36 dp; items 40, 32, 28 dp | desktop density | [[ADR-0002 Desktop density levels and target sizes]] |
-| Labelled variant with text buttons and a Switch in the trailing slot | desktop commands need visible names; the config app already needs it | none (Tesserae-only variant) |
+| Thickness 64, 40, 32 dp; items 40, 32, 28 dp | desktop density; the compact and dense toolbars are one item plus a 4 or 2 dp padding on each side | [[ADR-0029 Desktop density and type scale]] (amends [[ADR-0002 Desktop density levels and target sizes]]) |
+| Labelled variant (text buttons, an optional Switch in the trailing slot), now limited to commands whose icon is ambiguous or that are the primary action of the window | desktop commands need visible names only where an icon cannot carry the meaning | none (Tesserae-only variant) |
+| Desktop icon toolbar: thickness 40 dp at compact and 32 dp at dense (MD3 64 dp), dense icon 18 dp, toggle buttons with a `pressed` state, tooltip with name and shortcut | The owner's feedback on the config app: the top bar of text buttons is not a toolbar and the sizes read as mobile; a desktop toolbar is a row of compact icon buttons with tooltips | [[ADR-0029 Desktop density and type scale]] |
 | Overflow always by menu, never scroll or wrap | no hidden or clipped command (chapter 10 rule 3) | none (chapter 10) |
 | Roving focus with Home, End and wrap; one Tab stop | WAI-ARIA toolbar, desktop keyboard-first | none |
 | Fade, not slide, to hide | engine has no scroll-linked slide | none (code limit) |
